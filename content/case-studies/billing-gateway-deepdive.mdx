@@ -1,0 +1,12 @@
+---
+title: "POSIX Address Page Optimization in C11 Data Ingestion"
+targetProduct: "Billing Data Gateway v1.0.0"
+metrics: "487,421 rec/s | 2,051 ns Latency"
+platformUrl: "https://linkedin.com/in/bukya-naresh-cn2"
+---
+
+### The Problem Friction
+Traditional userland file ingestion overheads thrash the Linux heap manager through continuous `malloc` and `free` allocation commands, creating major processing bottlenecks during multi-gigabyte cloud expense data parsing updates.
+
+### The Engineering Solution
+By mapping incoming system file descriptors directly into virtual memory pages using native POSIX `mmap()` boundaries, the ingestion core eliminates execution buffer shifts. Fixed-point arithmetic limits calculations strictly to int64_t fields ($1.00 = 1,000,000µ), completely stopping binary float tracking losses.

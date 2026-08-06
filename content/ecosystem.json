@@ -1,0 +1,50 @@
+{
+    "engineering": [
+        {
+            "name": "GitHub Laboratory",
+            "url": "https://github.com/naresh-cn2",
+            "metrics": "20+ active repos"
+        },
+        {
+            "name": "Hugging Face",
+            "url": "https://huggingface.co",
+            "metrics": "AI model assets"
+        }
+    ],
+    "professional": [
+        {
+            "name": "LinkedIn Corporate HQ",
+            "url": "https://linkedin.com/in/bukya-naresh-cn2",
+            "metrics": "Technical network"
+        },
+        {
+            "name": "Contra Studio",
+            "url": "https://contra.com/mrcn2",
+            "metrics": "Zero-fee client engine"
+        }
+    ],
+    "freelance": [
+        {
+            "name": "Upwork Console",
+            "url": "https://upwork.com",
+            "metrics": "B2B infrastructure gigs"
+        },
+        {
+            "name": "Fiverr Pro Storefront",
+            "url": "https://fiverr.com",
+            "metrics": "Productized modules"
+        }
+    ],
+    "authority_writing": [
+        {
+            "name": "DEV.to Publications",
+            "url": "https://dev.to",
+            "metrics": "Engineering briefs"
+        },
+        {
+            "name": "Hashnode Blog",
+            "url": "https://hashnode.com",
+            "metrics": "System insights"
+        }
+    ]
+}
