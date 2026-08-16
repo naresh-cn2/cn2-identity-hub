@@ -17,13 +17,17 @@ export const metadata: Metadata = {
   description: "Digital presence of Bukya Naresh, AI-Native Systems Architect. Designing and engineering intelligent systems for complex problems.",
 };
 
+import PageTransition from '@/components/PageTransition';
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <PageTransition>{children}</PageTransition>
+      </body>
     </html>
   );
 }

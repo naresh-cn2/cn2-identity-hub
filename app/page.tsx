@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import { getProjects, getCertifications, getServices } from '@/lib/content';
 import fs from 'fs';
 import path from 'path';
+import BuildsGateway from '@/components/BuildsGateway';
 
 export default function EngineeringPortfolio() {
   const projects = getProjects();
@@ -25,6 +26,9 @@ export default function EngineeringPortfolio() {
       
       <main>
         <Hero />
+
+        {/* SECTION 02: BUILDS GATEWAY */}
+        <BuildsGateway />
 
         {/* SELECTED ENGINEERING WORK */}
         <section id="projects" className="py-24 px-6 max-w-5xl mx-auto border-t border-subtle">
