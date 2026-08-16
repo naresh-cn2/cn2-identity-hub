@@ -1,0 +1,50 @@
+[
+    {
+        "id": "cap-sys-infra",
+        "capability": "Systems Infrastructure",
+        "mission": "Engineering zero-dependency, low-latency computational utilities, bare-metal acceleration layers, and custom POSIX file system daemons.",
+        "coreEngineeringConcepts": [
+            "Virtual Memory Address Projection (mmap)",
+            "Zero-Copy Memory Footprint Control",
+            "Manual Page Boundary Manipulation",
+            "64-Bit Fixed-Point Arithmetic (Int64_t Scaling)"
+        ],
+        "currentProofAssets": [
+            {
+                "name": "Billing Data Gateway v1.0.0",
+                "slug": "billing-data-gateway",
+                "metrics": "487,421 rec/s | 31.89 MB/s | 2,051 ns"
+            }
+        ],
+        "supportingTechnologies": [
+            "C11",
+            "Linux POSIX API",
+            "GCC Optimization Flags (-O3)",
+            "Make"
+        ]
+    },
+    {
+        "id": "cap-data-intel",
+        "capability": "Enterprise Data Intelligence",
+        "mission": "Automating massive cloud-native database ingestion pipelines and structural multi-tenant ledger transformations while eliminating serialization overhead.",
+        "coreEngineeringConcepts": [
+            "Dynamic File System Streams Ingestion",
+            "Relational Schema Normalization Engines",
+            "Intermediate Financial Data Modeling",
+            "Asynchronous Batch IO Operations"
+        ],
+        "currentProofAssets": [
+            {
+                "name": "CN2 Identity Hub Core",
+                "slug": "cn2-identity-hub",
+                "metrics": "Dynamic MDX/JSON Parsing Loop Engine"
+            }
+        ],
+        "supportingTechnologies": [
+            "Python",
+            "SQL Optimization",
+            "Shell Scripting",
+            "Docker"
+        ]
+    }
+]
