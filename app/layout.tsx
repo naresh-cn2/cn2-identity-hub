@@ -1,32 +1,86 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
+import CommandPalette from "@/components/layout/command-palette";
+import PageTransition from "@/components/layout/page-transition";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const archivo = Archivo({
   subsets: ["latin"],
+  variable: "--font-archivo",
+  axes: ["wdth"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
 });
 
 export const metadata: Metadata = {
-  title: "Bukya Naresh | AI-Native Systems Architect",
-  description: "Digital presence of Bukya Naresh, AI-Native Systems Architect. Designing and engineering intelligent systems for complex problems.",
+  metadataBase: new URL("https://naresh.dev"),
+  title: {
+    default: "Naresh — Quantitative Intelligence",
+    template: "%s — Naresh / Quantitative Intelligence",
+  },
+  description:
+    "Building quantitative research systems, market-data infrastructure and computational tools for understanding markets. Research · Markets · Data · Engineering.",
+  keywords: [
+    "quantitative research",
+    "systematic trading",
+    "market data infrastructure",
+    "backtesting",
+    "risk engineering",
+    "Naresh",
+  ],
+  openGraph: {
+    title: "Naresh — Quantitative Intelligence",
+    description:
+      "Quantitative research systems, market-data infrastructure and computational tools for understanding markets.",
+    type: "website",
+    siteName: "Naresh — Quantitative Intelligence",
+  },
+  robots: { index: true, follow: true },
 };
 
-import PageTransition from '@/components/PageTransition';
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0c" },
+    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
+  ],
+};
+
+const themeInit = `(function(){try{var t=localStorage.getItem('ni-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.classList.toggle('dark',t==='dark');}catch(e){document.documentElement.classList.add('dark');}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${archivo.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <PageTransition>{children}</PageTransition>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
+      <body className="min-h-screen antialiased">
+        <ThemeProvider>
+          <a
+            href="#main"
+            className="label-mono fixed left-4 top-4 z-[100] -translate-y-24 bg-signal px-4 py-2 text-white transition-transform focus:translate-y-0"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <CommandPalette />
+          <PageTransition>
+            <main id="main">{children}</main>
+          </PageTransition>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
