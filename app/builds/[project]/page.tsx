@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import CaseStudy from "@/components/case-study/case-study";
+import ProjectOverview from "@/components/builds/project-overview";
 import TierTwoCaseStudy from "@/components/builds/tier-two-case-study";
-import FlagshipInstrument from "@/components/builds/flagship-instrument";
 import Reveal from "@/components/ui/reveal";
 import { archiveProjects, getArchiveProject, getFlagship } from "@/data/archive";
 import { researchEntries } from "@/data/research";
@@ -62,7 +61,7 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
       </div>
 
       {flagship ? (
-        <CaseStudy project={flagship} instrument={<FlagshipInstrument project={flagship} />} />
+        <ProjectOverview project={flagship} />
       ) : (
         <TierTwoCaseStudy project={record} />
       )}
@@ -99,12 +98,22 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
       <section aria-label="Archive navigation" className="border-t border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8">
           <div className="flex flex-wrap items-center justify-between gap-6">
-            <Link
-              href="/builds"
-              className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
-            >
-              ← COMPLETE ARCHIVE
-            </Link>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/builds"
+                className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+              >
+                ← COMPLETE ARCHIVE
+              </Link>
+              {flagship && (
+                <Link
+                  href={`/case-studies/${flagship.id}`}
+                  className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-signal hover:text-signal"
+                >
+                  CASE STUDY →
+                </Link>
+              )}
+            </div>
             <div className="flex flex-wrap gap-6">
               <Link href="/research" className="link-line label-mono text-xs text-muted hover:text-research">
                 RESEARCH →

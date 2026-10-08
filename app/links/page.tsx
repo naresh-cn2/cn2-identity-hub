@@ -6,7 +6,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Links",
   description:
-    "BUKYA NARESH / QUANT.DEV — GitHub, LinkedIn, email, CV, builds, research and lab in one place.",
+    "BUKYA NARESH / CN2.DEV — GitHub, LinkedIn, email, CV, builds, research and lab in one place.",
   alternates: { canonical: "/links" },
 };
 

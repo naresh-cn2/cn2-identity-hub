@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "A research archive across market structure, backtesting, data integrity, risk and quantitative methods. Every entry carries its question, hypothesis, method, evidence, result, limitation and conclusion — including the ones still in progress.",
   alternates: { canonical: "/research" },
   openGraph: {
-    title: "Research — Bukya Naresh / Quant.Dev",
+    title: "Research — Bukya Naresh / CN2.dev",
     description:
       "Questions before conclusions: falsifiable market questions, deterministic methods and published limitations.",
   },

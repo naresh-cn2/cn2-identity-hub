@@ -69,7 +69,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {site.name} — ALL SYSTEMS SELF-ENGINEERED
           </p>
           <p className="num-mono text-[10px] text-faint">
-            STATUS / RESEARCH · DOMAIN / QUANT · MODE / BUILDING
+            STATUS / RESEARCH · DOMAIN / CN2.DEV · MODE / BUILDING
           </p>
         </div>
       </div>

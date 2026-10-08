@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Engineering notes on quantitative systems, market data and research infrastructure — written from work that exists, with the limits stated.",
   alternates: { canonical: "/articles" },
   openGraph: {
-    title: "Articles — Bukya Naresh / Quant.Dev",
+    title: "Articles — Bukya Naresh / CN2.dev",
     description:
       "Engineering notes on quantitative systems, market data and research infrastructure.",
   },

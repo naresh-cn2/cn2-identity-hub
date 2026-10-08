@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
 /**
- * Information architecture v2.
- * Flagship work now lives under /builds/<project>; research entries own
- * /research/<entry>. The previous /quant, /career and /intelligence
- * destinations are preserved as permanent redirects so no inbound link
+ * Information architecture v3.
+ * Flagship work lives under /builds/<project> (product overview) with the deep
+ * proof at /case-studies/<project>; research entries own /research/<entry>.
+ * /intelligence is now a real route, so its legacy redirect is removed. The
+ * previous /quant and /career destinations stay redirected so no inbound link
  * or indexed URL breaks.
  */
 const nextConfig: NextConfig = {
@@ -17,7 +18,6 @@ const nextConfig: NextConfig = {
       { source: "/research/market-data-replay", destination: "/builds/market-data-replay", permanent: true },
       { source: "/research/qrsip", destination: "/builds/qrsip", permanent: true },
       { source: "/career", destination: "/capabilities", permanent: true },
-      { source: "/intelligence", destination: "/research", permanent: true },
     ];
   },
 };

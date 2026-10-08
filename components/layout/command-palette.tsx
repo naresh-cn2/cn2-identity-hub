@@ -36,24 +36,6 @@ const commands: Command[] = [
     action: "route",
     target: workRoute.href,
   },
-  {
-    id: "nav-links",
-    label: "LINKS",
-    group: "NAVIGATION",
-    hint: "10",
-    keywords: "links hub social contact email github linkedin",
-    action: "route",
-    target: "/links",
-  },
-  {
-    id: "nav-cv",
-    label: "CV",
-    group: "NAVIGATION",
-    hint: "09",
-    keywords: "cv resume curriculum vitae download print career",
-    action: "route",
-    target: "/cv",
-  },
   ...flagshipProjects.map((p) => ({
     id: `project-${p.id}`,
     label: p.shortTitle,
@@ -96,14 +78,6 @@ const commands: Command[] = [
     keywords: "linkedin open profile professional network",
     action: "external",
     target: site.links.linkedin,
-  },
-  {
-    id: "action-contact",
-    label: "CONTACT",
-    group: "ACTIONS",
-    keywords: "contact email work with me hire",
-    action: "external",
-    target: site.links.email,
   },
 ];
 
@@ -222,9 +196,8 @@ export default function CommandPalette() {
 
   return (
     <div
-      className={`fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[14vh] transition-opacity duration-200 print:hidden ${
-        open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-      }`}
+      className={`fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[14vh] transition-opacity duration-200 print:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        }`}
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
@@ -237,9 +210,8 @@ export default function CommandPalette() {
         aria-hidden="true"
       />
       <div
-        className={`relative w-full max-w-xl border border-line bg-background shadow-2xl transition-all duration-200 ${
-          open ? "translate-y-0 scale-100 opacity-100" : "-translate-y-2 scale-[0.98] opacity-0"
-        }`}
+        className={`relative w-full max-w-xl border border-line bg-background shadow-2xl transition-all duration-200 ${open ? "translate-y-0 scale-100 opacity-100" : "-translate-y-2 scale-[0.98] opacity-0"
+          }`}
       >
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
           <span className="num-mono text-xs text-signal">›_</span>
@@ -259,7 +231,7 @@ export default function CommandPalette() {
         <div ref={listRef} role="listbox" aria-label="Commands" className="max-h-[46vh] overflow-y-auto py-2">
           {flat.length === 0 && (
             <p className="label-mono px-4 py-6 text-center text-xs text-faint">
-              NO MATCHES — TRY “QUANT”, “LAB”, “GITHUB”
+              NO MATCHES — TRY “PROOF”, “INTELLIGENCE”, “GITHUB”
             </p>
           )}
           {grouped.map(({ group, items }) => (
@@ -276,9 +248,8 @@ export default function CommandPalette() {
                     data-active={isActive}
                     onMouseEnter={() => setActive(idx)}
                     onClick={() => run(cmd)}
-                    className={`flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left transition-colors duration-100 ${
-                      isActive ? "bg-signal-soft text-foreground" : "text-muted hover:text-foreground"
-                    }`}
+                    className={`flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left transition-colors duration-100 ${isActive ? "bg-signal-soft text-foreground" : "text-muted hover:text-foreground"
+                      }`}
                   >
                     <span className="label-mono text-xs">{cmd.label}</span>
                     <span className="num-mono text-[10px] text-faint">{cmd.hint}</span>

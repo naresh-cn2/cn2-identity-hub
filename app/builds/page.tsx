@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "The complete build archive — quantitative systems, market-data infrastructure, research tooling and financial data engines. Every figure carries its provenance.",
   alternates: { canonical: "/builds" },
   openGraph: {
-    title: "Builds — Bukya Naresh / Quant.Dev",
+    title: "Builds — Bukya Naresh / CN2.dev",
     description:
       "Quantitative systems, market-data infrastructure, research tooling and financial data engines, with evidence per claim.",
   },

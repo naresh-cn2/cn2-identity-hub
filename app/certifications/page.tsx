@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "Credential record for Bukya Naresh. Nothing is claimed that was not earned — currently no formal credential is listed, and self-directed study is labelled as self-directed.",
   alternates: { canonical: "/certifications" },
   openGraph: {
-    title: "Certifications — Bukya Naresh / Quant.Dev",
+    title: "Certifications — Bukya Naresh / CN2.dev",
     description:
       "An evidence-first credential record: no unearned certificate, no self-directed study presented as accreditation.",
   },
@@ -187,7 +187,7 @@ export default function CertificationsPage() {
       </section>
 
       {/* ---- self-directed study ---- */}
-      <section aria-label="Self-directed study" className="border-b border-line">
+      <section id="study" aria-label="Self-directed study" className="scroll-mt-28 border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import AnonymousFigure from "@/components/viz/anonymous-figure";
 import { site, utilityLinks } from "@/data/site";
 import { studyTracks } from "@/data/certifications";
 import { capabilities } from "@/data/capabilities";
@@ -9,10 +9,10 @@ import Reveal from "@/components/ui/reveal";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Bukya Naresh — Quant.Dev. Quantitative intelligence through research, markets, data and engineering. Current direction, active study and research philosophy.",
+    "Bukya Naresh — CN2.dev. Quantitative intelligence through research, markets, data and engineering. Current direction, active study and research philosophy.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About — Bukya Naresh / Quant.Dev",
+    title: "About — Bukya Naresh / CN2.dev",
     description:
       "Quantitative intelligence through research, markets, data and engineering.",
   },
@@ -24,7 +24,7 @@ const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Bukya Naresh",
-  alternateName: "Quant.Dev",
+  alternateName: "CN2.dev",
   description: site.description,
   url: site.url,
   email: site.email,
@@ -76,42 +76,18 @@ export default function AboutPage() {
         </div>
       </header>
 
-      {/* ---- PORTRAIT MOMENT — editorial spread, not an avatar ---- */}
-      <section aria-label="Portrait" className="border-b border-line">
+      {/* ---- FIGURE MOMENT — anonymous brand symbol, editorial spread, not an avatar ---- */}
+      <section aria-label="Identity figure" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-20">
             <Reveal>
               <figure className="relative mx-auto w-full max-w-[30rem] lg:mx-0">
-                <div className="corner-ticks film-grain relative aspect-[3/4] w-full overflow-hidden border border-line-strong bg-surface">
-                  <Image
-                    src="/images/identity/portrait.webp"
-                    alt="Monochrome editorial portrait of Bukya Naresh looking to the side, against a textured wall"
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 92vw, 480px"
-                    className="object-cover object-[50%_24%] grayscale contrast-125 brightness-95"
+                <div className="corner-ticks relative aspect-[3/4] w-full overflow-hidden border border-line-strong bg-surface">
+                  <AnonymousFigure
+                    className="absolute inset-0 h-full w-full"
+                    plate="001"
+                    system={site.system}
                   />
-                  <div
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"
-                    aria-hidden="true"
-                  />
-                  <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between px-4 py-3">
-                    <span className="label-mono text-[9px] text-white/70">IDENTITY PLATE / 001</span>
-                    <span className="label-mono text-[9px] text-signal">{site.system}</span>
-                  </div>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-4">
-                    <p className="label-mono text-[10px] text-white/90">{site.name}</p>
-                    <p className="label-mono text-[10px] text-white/60">
-                      {site.identity} — {site.descriptor}
-                    </p>
-                  </div>
-                  {/* coordinate rulers */}
-                  <div className="pointer-events-none absolute inset-y-0 left-0 w-3" aria-hidden="true">
-                    <div className="grid-field-fine h-full w-full opacity-40" />
-                  </div>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3" aria-hidden="true">
-                    <div className="grid-field-fine h-full w-full opacity-40" />
-                  </div>
                 </div>
                 <figcaption className="mt-4 grid gap-2 sm:grid-cols-2">
                   <p className="label-mono text-[10px] leading-relaxed text-faint">

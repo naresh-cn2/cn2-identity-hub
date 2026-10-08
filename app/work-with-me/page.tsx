@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Open to quantitative research, market-data systems, FinTech engineering, research tooling and technical collaboration. Scoped honestly — what gets delivered is what can be evidenced.",
   alternates: { canonical: "/work-with-me" },
   openGraph: {
-    title: "Work With Me — Bukya Naresh / Quant.Dev",
+    title: "Work With Me — Bukya Naresh / CN2.dev",
     description:
       "Quantitative research, market-data systems, FinTech engineering and technical collaboration.",
   },

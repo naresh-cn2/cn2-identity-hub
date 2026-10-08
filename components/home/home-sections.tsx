@@ -255,7 +255,13 @@ export function SelectedBuilds() {
                     href={p.route}
                     className="label-mono border border-line-strong px-5 py-2.5 text-foreground transition-colors hover:border-signal hover:text-signal"
                   >
-                    OPEN CASE STUDY →
+                    OPEN BUILD →
+                  </Link>
+                  <Link
+                    href={`/case-studies/${p.id}`}
+                    className="link-line label-mono text-xs text-muted hover:text-signal"
+                  >
+                    CASE STUDY →
                   </Link>
                   <a
                     href={p.github}
@@ -313,13 +319,12 @@ export function ResearchTeaser() {
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="label-mono text-research">{e.category}</span>
                   <span
-                    className={`label-mono border px-2 py-0.5 text-[10px] ${
-                      e.status === "VERIFIED"
+                    className={`label-mono border px-2 py-0.5 text-[10px] ${e.status === "VERIFIED"
                         ? "border-line-strong text-foreground"
                         : e.status === "DOCUMENTED"
                           ? "border-line text-muted"
                           : "border-signal text-signal"
-                    }`}
+                      }`}
                   >
                     {e.status}
                   </span>
@@ -570,9 +575,14 @@ export function ContactFinale() {
               <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
               {site.status}
             </p>
-            <Link href="/links" className="link-line label-mono text-[10px] text-muted hover:text-signal">
-              ALL LINKS →
-            </Link>
+            <div className="flex flex-wrap items-center gap-6">
+              <Link href="/contact" className="link-line label-mono text-[10px] text-muted hover:text-signal">
+                CONTACT →
+              </Link>
+              <Link href="/links" className="link-line label-mono text-[10px] text-muted hover:text-signal">
+                ALL LINKS →
+              </Link>
+            </div>
           </div>
         </Reveal>
       </div>

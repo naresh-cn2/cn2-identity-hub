@@ -20,13 +20,13 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://naresh.dev"),
+  metadataBase: new URL("https://cn2-identity-hub.vercel.app"),
   title: {
-    default: "Bukya Naresh — Quant.Dev",
-    template: "%s — Bukya Naresh / Quant.Dev",
+    default: "Bukya Naresh — CN2.dev",
+    template: "%s — Bukya Naresh / CN2.dev",
   },
   description:
-    "Quantitative intelligence through research, markets, data and engineering. Building deterministic systems for understanding markets.",
+    "CN2.dev — the digital headquarters of Bukya Naresh. Quantitative intelligence through research, markets, data and engineering: deterministic systems for understanding markets.",
   alternates: { canonical: "/" },
   keywords: [
     "quantitative research",
@@ -35,22 +35,22 @@ export const metadata: Metadata = {
     "backtesting",
     "risk engineering",
     "Bukya Naresh",
-    "Quant.Dev",
+    "CN2.dev",
     "CN2",
   ],
   authors: [{ name: "Bukya Naresh" }],
   creator: "Bukya Naresh",
   openGraph: {
-    title: "Bukya Naresh — Quant.Dev",
+    title: "Bukya Naresh — CN2.dev",
     description:
       "Quantitative intelligence through research, markets, data and engineering.",
     type: "website",
-    siteName: "Bukya Naresh — Quant.Dev",
+    siteName: "Bukya Naresh — CN2.dev",
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bukya Naresh — Quant.Dev",
+    title: "Bukya Naresh — CN2.dev",
     description:
       "Quantitative intelligence through research, markets, data and engineering.",
   },

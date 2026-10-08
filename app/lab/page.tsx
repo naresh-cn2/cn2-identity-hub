@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Interactive quantitative instruments — risk simulator, point-in-time replay lab, strategy visualizer, risk/return surface and experiment explorer.",
   alternates: { canonical: "/lab" },
   openGraph: {
-    title: "Quant Lab — Bukya Naresh / Quant.Dev",
+    title: "Quant Lab — Bukya Naresh / CN2.dev",
     description:
       "Interactive quantitative instruments: risk, replay, strategy geometry, risk/return surface and experiment governance.",
   },

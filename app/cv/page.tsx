@@ -8,7 +8,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "CV",
   description:
-    "Print-ready CV — BUKYA NARESH / QUANT.DEV. Quantitative engines, market-data infrastructure, research governance and performance systems, with every metric's provenance tagged.",
+    "Print-ready CV — BUKYA NARESH / CN2.DEV. Quantitative engines, market-data infrastructure, research governance and performance systems, with every metric's provenance tagged.",
   alternates: { canonical: "/cv" },
 };
 

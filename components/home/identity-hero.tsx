@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import HeroField from "@/components/viz/hero-field";
+import AnonymousFigure from "@/components/viz/anonymous-figure";
 import Magnetic from "@/components/ui/magnetic";
 import Reveal from "@/components/ui/reveal";
 import { site, utilityLinks } from "@/data/site";
@@ -8,10 +8,10 @@ import { site, utilityLinks } from "@/data/site";
 /**
  * ACT I — IDENTITY.
  *
- * The portrait is the primary editorial moment, not an avatar: a tall framed
- * plate with technical metadata, set against the computational field. All
- * identity text is real HTML, so the hero still reads completely if the canvas
- * never paints.
+ * The figure is the primary editorial moment: an original anonymous silhouette
+ * set in a market-topology field — a brand symbol, explicitly NOT a portrait of
+ * the person. All identity text is real HTML, so the hero still reads completely
+ * if the canvas never paints.
  */
 export default function IdentityHero() {
   return (
@@ -34,7 +34,7 @@ export default function IdentityHero() {
           <Reveal>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <p className="label-mono text-muted">
-                <span className="text-signal">CN2 /</span> QUANT.DEV
+                <span className="text-signal">{site.identity}</span> — DIGITAL HEADQUARTERS
               </p>
               <p className="label-mono text-research">{site.descriptor}</p>
             </div>
@@ -113,50 +113,31 @@ export default function IdentityHero() {
                 {site.status}
               </p>
               <p className="num-mono text-[10px] text-faint">
-                01 — IDENTITY · {site.name} / {site.identity} / {site.system}
+                01 — IDENTITY · {site.name} / {site.identity}
               </p>
             </div>
           </Reveal>
         </div>
 
-        {/* ---- portrait plate ---- */}
+        {/* ---- anonymous figure plate (brand symbol, not a portrait) ---- */}
         <Reveal delay={220}>
           <figure className="relative mx-auto w-full max-w-[22rem] lg:mx-0 lg:ml-auto lg:max-w-[24rem]">
-            <div className="corner-ticks film-grain relative aspect-[3/4] w-full overflow-hidden border border-line-strong bg-surface">
-              <Image
-                src="/images/identity/portrait.webp"
-                alt="Editorial monochrome portrait of Bukya Naresh"
-                fill
-                priority
-                sizes="(max-width: 1024px) 88vw, 384px"
-                className="object-cover object-[50%_22%] grayscale contrast-125 brightness-90"
+            <div className="corner-ticks relative aspect-[3/4] w-full overflow-hidden border border-line-strong bg-surface">
+              <AnonymousFigure
+                className="absolute inset-0 h-full w-full"
+                plate="001"
+                system={site.system}
               />
-              {/* technical overlay */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25" />
-              <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between px-4 py-3">
-                <span className="label-mono text-[9px] text-white/70">PORTRAIT / 001</span>
-                <span className="label-mono text-[9px] text-signal">{site.system}</span>
-              </div>
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-4">
-                <p className="label-mono text-[10px] text-white/90">{site.name}</p>
-                <p className="label-mono text-[10px] text-white/60">{site.identity}</p>
-              </div>
-              {/* coordinate ruler */}
-              <div className="pointer-events-none absolute left-0 top-0 h-full w-3" aria-hidden="true">
-                <div className="grid-field-fine h-full w-full opacity-40" />
-              </div>
             </div>
 
             <figcaption className="mt-4 flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
               <div>
-                <p className="label-mono text-[10px] text-foreground">BUKYA NARESH</p>
-                <p className="label-mono text-[10px] text-signal">{site.identity}</p>
+                <p className="label-mono text-[10px] text-foreground">{site.identity}</p>
+                <p className="label-mono text-[10px] text-signal">SYMBOLIC FIGURE — NOT A PORTRAIT</p>
               </div>
               <div className="text-right">
-                <p className="label-mono text-[10px] text-faint">INDIA / RESEARCH · MARKETS · DATA</p>
-                <p className="label-mono text-[10px] text-faint">
-                  {site.system} / QUANTITATIVE INTELLIGENCE
-                </p>
+                <p className="label-mono text-[10px] text-faint">{site.descriptor}</p>
+                <p className="label-mono text-[10px] text-faint">{site.subtitle}</p>
               </div>
             </figcaption>
           </figure>
