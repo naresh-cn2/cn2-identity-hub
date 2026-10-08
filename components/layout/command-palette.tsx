@@ -147,16 +147,20 @@ export default function CommandPalette() {
 
   useEffect(() => {
     if (open) {
-      setQuery("");
-      setActive(0);
-      requestAnimationFrame(() => inputRef.current?.focus());
+      // reset state + focus on the next frame (sync setState in effects is disallowed)
+      const raf = requestAnimationFrame(() => {
+        setQuery("");
+        setActive(0);
+        inputRef.current?.focus();
+      });
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+      return () => {
+        cancelAnimationFrame(raf);
+        document.body.style.overflow = "";
+      };
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = "";
+    return undefined;
   }, [open]);
 
   useEffect(() => {
@@ -178,8 +182,10 @@ export default function CommandPalette() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, flat, active, run]);
 
+  // reset selection when the query changes (deferred — sync setState in effects is disallowed)
   useEffect(() => {
-    setActive(0);
+    const raf = requestAnimationFrame(() => setActive(0));
+    return () => cancelAnimationFrame(raf);
   }, [query]);
 
   useEffect(() => {

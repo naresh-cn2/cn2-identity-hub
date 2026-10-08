@@ -11,8 +11,8 @@ export function useVisible<T extends HTMLElement>(threshold = 0.2) {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
+      const raf = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(raf);
     }
     const io = new IntersectionObserver(
       (entries) => {

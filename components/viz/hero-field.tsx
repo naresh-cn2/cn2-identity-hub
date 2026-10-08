@@ -65,7 +65,7 @@ export default function HeroField({ className = "", seed = 20 }: HeroFieldProps)
       return project(gx, h * 0.42 - 0.1, gz, cam);
     };
 
-    const draw = (t: number) => {
+    const draw = () => {
       const cam: Camera = {
         rotY: rotY + rotYOffset,
         rotX: 0.62 + rotXOffset,
@@ -149,12 +149,12 @@ export default function HeroField({ className = "", seed = 20 }: HeroFieldProps)
       ctx.globalAlpha = 1;
     };
 
-    const tick = (t: number) => {
+    const tick = () => {
       if (!running) return;
       rotYOffset += (targetRotYOffset - rotYOffset) * 0.04;
       rotXOffset += (targetRotXOffset - rotXOffset) * 0.04;
       if (!reduced) rotY += 0.0009;
-      draw(t);
+      draw();
       raf = requestAnimationFrame(tick);
     };
 
@@ -163,13 +163,13 @@ export default function HeroField({ className = "", seed = 20 }: HeroFieldProps)
 
     const ro = new ResizeObserver(() => {
       resize();
-      if (reduced) draw(0);
+      if (reduced) draw();
     });
     if (canvas.parentElement) ro.observe(canvas.parentElement);
 
     const mo = new MutationObserver(() => {
       readColors();
-      if (reduced) draw(0);
+      if (reduced) draw();
     });
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
@@ -191,7 +191,7 @@ export default function HeroField({ className = "", seed = 20 }: HeroFieldProps)
     document.addEventListener("visibilitychange", onVisibility);
 
     if (reduced) {
-      draw(0);
+      draw();
     } else {
       raf = requestAnimationFrame(tick);
     }

@@ -15,8 +15,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    // the inline pre-hydration script already applied the persisted theme
-    setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light");
+    // the inline pre-hydration script already applied the persisted theme;
+    // sync React state on the next frame (sync setState in effects is disallowed)
+    const raf = requestAnimationFrame(() =>
+      setTheme(document.documentElement.classList.contains("dark") ? "dark" : "light")
+    );
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   const toggle = useCallback(() => {

@@ -19,8 +19,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // close the menu on navigation (deferred — sync setState in effects is disallowed)
   useEffect(() => {
-    setMenuOpen(false);
+    const t = setTimeout(() => setMenuOpen(false), 0);
+    return () => clearTimeout(t);
   }, [pathname]);
 
   useEffect(() => {

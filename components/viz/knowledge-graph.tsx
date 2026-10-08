@@ -41,7 +41,6 @@ export default function KnowledgeGraph({ className = "" }: { className?: string 
         {knowledgeEdges.map(([a, b]) => {
           const pa = positions[a];
           const pb = positions[b];
-          const isActive = !active || connected?.has(a) === true;
           const dim = active && !(connected?.has(a) && connected?.has(b));
           return (
             <line
