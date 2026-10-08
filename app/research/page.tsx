@@ -3,6 +3,9 @@ import Link from "next/link";
 import { researchEntries } from "@/data/research";
 import { getProject } from "@/data/projects";
 import Reveal from "@/components/ui/reveal";
+import { DataField } from "@/components/viz/quant-primitives";
+import ResearchVisualArtifacts from "@/components/research/research-visual-artifacts";
+
 
 export const metadata: Metadata = {
   title: "Research",
@@ -34,6 +37,11 @@ export default function ResearchPage() {
               Questions before conclusions. Every entry carries its question, hypothesis, method,
               evidence, result, limitation and conclusion — including the ones still in progress.
             </p>
+          </Reveal>
+          <Reveal delay={280}>
+            <div className="mt-10 h-64 w-full max-w-4xl">
+              <DataField seed={99} gridSize={20} amplitude={0.4} showSignalTrace />
+            </div>
           </Reveal>
         </div>
       </header>
@@ -139,6 +147,10 @@ export default function ResearchPage() {
                         </p>
                       )}
                     </div>
+                    {/* Visual artifact per entry */}
+                    <ResearchVisualArtifacts 
+                      entries={[{ category: entry.category, index: i }]} 
+                    />
                   </div>
                 </details>
               </Reveal>

@@ -1,9 +1,11 @@
 export const site = {
-  name: "NARESH",
-  identity: "QUANTITATIVE INTELLIGENCE",
+  name: "BUKYA NARESH",
+  identity: "QUANT.DEV",
+  system: "CN2",
+  descriptor: "QUANTITATIVE INTELLIGENCE",
   subtitle: "Research · Markets · Data · Engineering",
   description:
-    "Building quantitative research systems, market-data infrastructure and computational tools for understanding markets.",
+    "Quantitative intelligence through research, markets, data and engineering. Building deterministic systems for understanding markets.",
   url: "https://naresh.dev",
   email: "bukyanaresh2003@gmail.com",
   links: {

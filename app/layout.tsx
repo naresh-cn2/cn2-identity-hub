@@ -22,25 +22,27 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://naresh.dev"),
   title: {
-    default: "Naresh — Quantitative Intelligence",
-    template: "%s — Naresh / Quantitative Intelligence",
+    default: "Bukya Naresh — Quant.Dev",
+    template: "%s — Bukya Naresh / Quant.Dev",
   },
   description:
-    "Building quantitative research systems, market-data infrastructure and computational tools for understanding markets. Research · Markets · Data · Engineering.",
+    "Quantitative intelligence through research, markets, data and engineering. Building deterministic systems for understanding markets.",
   keywords: [
     "quantitative research",
     "systematic trading",
     "market data infrastructure",
     "backtesting",
     "risk engineering",
-    "Naresh",
+    "Bukya Naresh",
+    "Quant.Dev",
+    "CN2",
   ],
   openGraph: {
-    title: "Naresh — Quantitative Intelligence",
+    title: "Bukya Naresh — Quant.Dev",
     description:
-      "Quantitative research systems, market-data infrastructure and computational tools for understanding markets.",
+      "Quantitative intelligence through research, markets, data and engineering.",
     type: "website",
-    siteName: "Naresh — Quantitative Intelligence",
+    siteName: "Bukya Naresh — Quant.Dev",
   },
   robots: { index: true, follow: true },
 };

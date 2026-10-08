@@ -48,7 +48,7 @@ export default function Navbar() {
             scrolled ? "py-3" : "py-5"
           }`}
         >
-          <Link href="/" className="group flex items-baseline gap-3" aria-label="Naresh — home">
+          <Link href="/" className="group flex items-baseline gap-3" aria-label="Bukya Naresh — home">
             <span className="display text-lg tracking-tight md:text-xl">{site.name}</span>
             <span
               className={`label-mono hidden text-faint transition-opacity duration-500 sm:inline ${
@@ -56,6 +56,13 @@ export default function Navbar() {
               }`}
             >
               {site.identity}
+            </span>
+            <span
+              className={`label-mono hidden text-signal transition-opacity duration-500 sm:inline ${
+                scrolled ? "opacity-0" : "opacity-100"
+              }`}
+            >
+              {site.system}
             </span>
           </Link>
 
@@ -144,6 +151,7 @@ export default function Navbar() {
         </nav>
         <div className="flex items-center justify-between border-t border-line px-6 py-5">
           <p className="label-mono text-faint">{site.identity}</p>
+          <p className="label-mono text-signal">{site.system}</p>
           <button onClick={openPalette} className="label-mono text-muted" aria-label="Open command palette">
             ⌘K
           </button>

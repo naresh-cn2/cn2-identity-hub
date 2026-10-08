@@ -3,6 +3,7 @@ import Link from "next/link";
 import { labModules } from "@/data/lab";
 import Reveal from "@/components/ui/reveal";
 import RiskSurface from "@/components/lab/risk-surface";
+import { DataField } from "@/components/viz/quant-primitives";
 
 export const metadata: Metadata = {
   title: "Quant Lab",
@@ -31,13 +32,18 @@ export default function LabPage() {
               outputs, and derives from the same rules as the systems it illustrates.
             </p>
           </Reveal>
+          <Reveal delay={280}>
+            <div className="mt-10 h-64 w-full max-w-4xl">
+              <DataField seed={77} gridSize={20} amplitude={0.4} showSignalTrace />
+            </div>
+          </Reveal>
         </div>
       </header>
 
       {/* ---- module index ---- */}
       <section aria-label="Lab modules" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
-          <div className="grid gap-px bg-line md:grid-cols-2">
+          <div className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
             {labModules
               .filter((m) => m.href !== "/lab#surface")
               .map((m, i) => (

@@ -3,11 +3,12 @@ import Link from "next/link";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
 import Reveal from "@/components/ui/reveal";
+import { DataField } from "@/components/viz/quant-primitives";
 
 export const metadata: Metadata = {
   title: "Career",
   description:
-    "What Naresh builds, studies and can contribute — quantitative engines, market-data infrastructure, research governance and performance systems, with evidence per claim.",
+    "What Bukya Naresh builds, studies and can contribute — quantitative engines, market-data infrastructure, research governance and performance systems, with evidence per claim.",
   alternates: { canonical: "/career" },
 };
 
@@ -23,13 +24,22 @@ export default function CareerPage() {
             </p>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">CAREER</h1>
+            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">
+              {site.name}
+              <br />
+              <span className="text-signal">{site.identity}</span>
+            </h1>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
               Not a resume wall. What is built, what is studied, what can be contributed — and the
               evidence behind each claim.
             </p>
+          </Reveal>
+          <Reveal delay={280}>
+            <div className="mt-10 h-64 w-full max-w-4xl">
+              <DataField seed={44} gridSize={20} amplitude={0.4} showSignalTrace />
+            </div>
           </Reveal>
         </div>
       </header>
@@ -85,6 +95,40 @@ export default function CareerPage() {
                 <div className="corner-ticks h-full bg-background p-6">
                   <h3 className="display text-lg md:text-xl">{c.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted">{c.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* what I'm open to */}
+      <section aria-label="What I'm open to" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <Reveal>
+            <h2 className="display text-3xl md:text-5xl">WHAT I&apos;M OPEN TO</h2>
+          </Reveal>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
+            Available for quantitative development, research, and engineering roles. Open to
+            freelance/contract work in quant/FinTech domains. Interested in research collaboration
+            and technical partnerships.
+          </p>
+          <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
+            {[
+              "Quantitative Development",
+              "Quantitative Research",
+              "Market Data Engineering",
+              "FinTech Engineering",
+              "Data / AI Engineering",
+              "Research Engineering",
+              "Technical Freelance",
+              "Quant / FinTech Projects",
+              "Research Collaboration",
+            ].map((item, i) => (
+              <Reveal key={item} delay={Math.min(i, 3) * 60}>
+                <div className="bg-background p-5 hover:bg-surface transition-colors">
+                  <span className="num-mono text-xs text-signal">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="mt-2 display text-lg">{item}</p>
                 </div>
               </Reveal>
             ))}

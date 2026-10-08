@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProject } from "@/data/projects";
 import CaseStudy from "@/components/case-study/case-study";
+import ReplayLab from "@/components/research/replay-lab";
 
 const project = getProject("market-data-replay");
 
@@ -14,5 +15,16 @@ export const metadata: Metadata = {
 
 export default function MarketDataReplayPage() {
   if (!project) notFound();
-  return <CaseStudy project={project} />;
+
+  return (
+    <>
+      <CaseStudy project={project} />
+      {/* Enhanced Replay Lab Section */}
+      <section id="replay-lab" className="border-t border-line" aria-label="Replay Lab">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <ReplayLab />
+        </div>
+      </section>
+    </>
+  );
 }

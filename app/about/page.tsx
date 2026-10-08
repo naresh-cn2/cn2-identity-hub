@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { site } from "@/data/site";
 import Reveal from "@/components/ui/reveal";
+import { DataField } from "@/components/viz/quant-primitives";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Naresh — Quantitative Intelligence. Markets, mathematics, data, computation and research, engineered into deterministic systems.",
+    "Bukya Naresh — Quant.Dev. Quantitative intelligence through research, markets, data and engineering.",
   alternates: { canonical: "/about" },
 };
 
@@ -25,12 +27,17 @@ export default function AboutPage() {
           </Reveal>
           <Reveal delay={100}>
             <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">
-              NARESH
+              {site.name}
               <br />
-              <span className="text-signal">QUANTITATIVE</span>
+              <span className="text-signal">{site.identity}</span>
               <br />
-              INTELLIGENCE
+              <span className="display-condensed text-muted">{site.system} / {site.descriptor}</span>
             </h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="mt-10 h-64 w-full max-w-4xl">
+              <DataField seed={55} gridSize={20} amplitude={0.4} showSignalTrace />
+            </div>
           </Reveal>
         </div>
       </header>
@@ -76,6 +83,27 @@ export default function AboutPage() {
               </p>
             </Reveal>
           </div>
+
+          {/* Portrait */}
+          <Reveal delay={180}>
+            <div className="mt-16 flex items-center justify-center md:justify-start">
+              <div className="relative w-40 h-40 md:w-52 md:h-52 lg:w-64 lg:h-64 rounded-full border border-line-strong bg-background/50 backdrop-blur-sm overflow-hidden">
+                <Image
+                  src="/portrait.png"
+                  alt="Bukya Naresh — Quant.Dev"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 160px, 256px"
+                  className="object-cover grayscale contrast-125 brightness-90"
+                />
+              </div>
+              <div className="ml-8 md:ml-12">
+                <p className="label-mono text-signal tracking-widest">{site.name}</p>
+                <p className="label-mono text-faint text-sm">{site.identity}</p>
+                <p className="label-mono text-signal text-sm">{site.system}</p>
+              </div>
+            </div>
+          </Reveal>
 
           <Reveal delay={200}>
             <div className="mt-16 flex flex-wrap items-center gap-6">

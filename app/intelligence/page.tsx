@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notes } from "@/data/intelligence";
 import Reveal from "@/components/ui/reveal";
 import KnowledgeGraph from "@/components/viz/knowledge-graph";
+import { DataField } from "@/components/viz/quant-primitives";
 
 export const metadata: Metadata = {
   title: "Intelligence",
@@ -30,6 +31,11 @@ export default function IntelligencePage() {
               systems. What the engineer believed when the code was written.
             </p>
           </Reveal>
+          <Reveal delay={280}>
+            <div className="mt-10 h-64 w-full max-w-4xl">
+              <DataField seed={88} gridSize={20} amplitude={0.4} showSignalTrace />
+            </div>
+          </Reveal>
         </div>
       </header>
 
@@ -40,7 +46,7 @@ export default function IntelligencePage() {
             <h2 className="display text-3xl md:text-5xl">THE MAP</h2>
             <p className="mt-4 max-w-xl text-base text-muted">
               Hover a node to isolate its relationships. Every edge is a working dependency, not
-              decoration.
+              decoration. Research sits at the center connecting all domains.
             </p>
           </Reveal>
           <Reveal delay={120}>

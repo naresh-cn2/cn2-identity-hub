@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { engagementAreas } from "@/data/lab";
 import { site } from "@/data/site";
 import Reveal from "@/components/ui/reveal";
+import { DataField } from "@/components/viz/quant-primitives";
 
 export const metadata: Metadata = {
   title: "Work With Me",
@@ -23,9 +24,9 @@ export default function WorkWithMePage() {
           </Reveal>
           <Reveal delay={100}>
             <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">
-              WORK
+              {site.name}
               <br />
-              WITH ME
+              <span className="text-signal">{site.identity}</span>
             </h1>
           </Reveal>
           <Reveal delay={200}>
@@ -33,6 +34,11 @@ export default function WorkWithMePage() {
               Research-grade engineering for quantitative problems. The work is scoped honestly —
               what gets delivered is what can be evidenced.
             </p>
+          </Reveal>
+          <Reveal delay={280}>
+            <div className="mt-10 h-64 w-full max-w-4xl">
+              <DataField seed={66} gridSize={20} amplitude={0.4} showSignalTrace />
+            </div>
           </Reveal>
         </div>
     </header>
