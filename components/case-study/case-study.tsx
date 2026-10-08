@@ -76,7 +76,14 @@ function BulletList({ items }: { items: string[] }) {
   );
 }
 
-export default function CaseStudy({ project }: { project: FlagshipProject }) {
+export default function CaseStudy({
+  project,
+  instrument,
+}: {
+  project: FlagshipProject;
+  /** Project-specific interactive instrument, rendered between the hero and the chapter body. */
+  instrument?: React.ReactNode;
+}) {
   return (
     <article>
       {/* ---- case study hero ---- */}
@@ -113,6 +120,20 @@ export default function CaseStudy({ project }: { project: FlagshipProject }) {
           </Reveal>
         </div>
       </header>
+
+      {/* ---- project instrument ---- */}
+      {instrument && (
+        <section aria-label="System instrument" className="border-b border-line">
+          <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 md:py-16">
+            <Reveal>
+              <p className="label-mono text-faint">
+                EVIDENCE INSTRUMENT <span className="text-signal">/</span> PROJECT-SPECIFIC
+              </p>
+            </Reveal>
+            <div className="mt-8">{instrument}</div>
+          </div>
+        </section>
+      )}
 
       {/* ---- body with sticky chapter nav ---- */}
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8">

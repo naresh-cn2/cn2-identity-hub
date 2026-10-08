@@ -2,7 +2,7 @@ import type { FlagshipProject } from "./types";
 
 export const automatedTradingOs: FlagshipProject = {
   id: "automated-trading-os",
-  route: "/quant/automated-trading-os",
+  route: "/builds/automated-trading-os",
   index: "02",
   title: "AUTOMATED TRADING OS",
   shortTitle: "TRADING OS",
@@ -135,7 +135,7 @@ export const automatedTradingOs: FlagshipProject = {
     {
       title: "PIPELINE EXPLORER",
       description: "Walk a trade through all six pipeline stages with each control applied.",
-      href: "/quant/automated-trading-os#interactive",
+      href: "/builds/automated-trading-os#interactive",
     },
   ],
   github: "https://github.com/naresh-cn2/automated_trading_os",

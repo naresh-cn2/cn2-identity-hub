@@ -7,7 +7,7 @@ interface ResearchVisualArtifactProps {
   seed: number;
 }
 
-function ResearchVisualArtifact({ category, seed }: ResearchVisualArtifactProps) {
+export function ResearchArtifact({ category, seed }: ResearchVisualArtifactProps) {
   const [reduced, setReduced] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -194,27 +194,6 @@ function ResearchVisualArtifact({ category, seed }: ResearchVisualArtifactProps)
       aria-hidden="true"
       className="w-full h-full"
     />
-  );
-}
-
-interface ResearchVisualArtifactsProps {
-  entries: Array<{ category: string; index: number }>;
-}
-
-export default function ResearchVisualArtifacts({ entries }: ResearchVisualArtifactsProps) {
-  return (
-    <>
-      {entries.map(({ category, index }) => (
-        <div key={category} className="md:col-span-3 lg:col-span-3">
-          <div className="mt-6 h-48 w-full max-w-2xl border border-line bg-background/50">
-            <ResearchVisualArtifact category={category} seed={index + 100} />
-          </div>
-          <p className="label-mono mt-2 text-faint text-xs">
-            ILLUSTRATIVE — GENERATIVE VISUAL FOR {category}
-          </p>
-        </div>
-      ))}
-    </>
   );
 }
 

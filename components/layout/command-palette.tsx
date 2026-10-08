@@ -2,14 +2,15 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { navRoutes, site } from "@/data/site";
+import { navRoutes, site, workRoute } from "@/data/site";
 import { flagshipProjects } from "@/data/projects";
+import { researchEntries } from "@/data/research";
 import { useTheme } from "@/components/providers/theme-provider";
 
 type Command = {
   id: string;
   label: string;
-  group: "NAVIGATION" | "PROJECTS" | "ACTIONS";
+  group: "NAVIGATION" | "PROJECTS" | "RESEARCH" | "ACTIONS";
   hint?: string;
   keywords: string;
   action: "route" | "external" | "theme";
@@ -27,22 +28,49 @@ const commands: Command[] = [
     target: r.href,
   })),
   {
-    id: "nav-home",
-    label: "HOME",
+    id: "nav-work",
+    label: workRoute.label,
     group: "NAVIGATION",
-    hint: "00",
-    keywords: "home / index navigation go",
+    hint: workRoute.code,
+    keywords: "work with me hire freelance contract collaboration open to",
     action: "route",
-    target: "/",
+    target: workRoute.href,
+  },
+  {
+    id: "nav-links",
+    label: "LINKS",
+    group: "NAVIGATION",
+    hint: "10",
+    keywords: "links hub social contact email github linkedin",
+    action: "route",
+    target: "/links",
+  },
+  {
+    id: "nav-cv",
+    label: "CV",
+    group: "NAVIGATION",
+    hint: "09",
+    keywords: "cv resume curriculum vitae download print career",
+    action: "route",
+    target: "/cv",
   },
   ...flagshipProjects.map((p) => ({
     id: `project-${p.id}`,
     label: p.shortTitle,
     group: "PROJECTS" as const,
     hint: p.category,
-    keywords: `${p.shortTitle} ${p.title} ${p.category} project`,
+    keywords: `${p.shortTitle} ${p.title} ${p.category} project build`,
     action: "route" as const,
     target: p.route,
+  })),
+  ...researchEntries.map((e) => ({
+    id: `research-${e.id}`,
+    label: e.title,
+    group: "RESEARCH" as const,
+    hint: e.category,
+    keywords: `${e.title} ${e.category} ${e.status} research entry`,
+    action: "route" as const,
+    target: `/research/${e.id}`,
   })),
   {
     id: "action-theme",
@@ -62,6 +90,14 @@ const commands: Command[] = [
     target: site.links.github,
   },
   {
+    id: "action-linkedin",
+    label: "OPEN LINKEDIN",
+    group: "ACTIONS",
+    keywords: "linkedin open profile professional network",
+    action: "external",
+    target: site.links.linkedin,
+  },
+  {
     id: "action-contact",
     label: "CONTACT",
     group: "ACTIONS",
@@ -69,18 +105,9 @@ const commands: Command[] = [
     action: "external",
     target: site.links.email,
   },
-  {
-    id: "action-resume",
-    label: "VIEW RESUME",
-    group: "ACTIONS",
-    hint: "CV",
-    keywords: "resume cv career evidence",
-    action: "route",
-    target: "/career",
-  },
 ];
 
-const GROUP_ORDER: Command["group"][] = ["NAVIGATION", "PROJECTS", "ACTIONS"];
+const GROUP_ORDER: Command["group"][] = ["NAVIGATION", "PROJECTS", "RESEARCH", "ACTIONS"];
 
 export default function CommandPalette() {
   const router = useRouter();
@@ -195,7 +222,7 @@ export default function CommandPalette() {
 
   return (
     <div
-      className={`fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[14vh] transition-opacity duration-200 ${
+      className={`fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[14vh] transition-opacity duration-200 print:hidden ${
         open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
       }`}
       role="dialog"

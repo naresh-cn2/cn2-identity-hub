@@ -1,31 +1,58 @@
 import type { Metadata } from "next";
 import IdentityHero from "@/components/home/identity-hero";
-import CapabilityField from "@/components/home/capability-field";
-import QuantSystems from "@/components/home/quant-systems";
-import ResearchTeaser from "@/components/home/research-teaser";
-import LabTeaser from "@/components/home/lab-teaser";
-import EngineeringDepth from "@/components/home/engineering-depth";
-import IntelligenceTeaser from "@/components/home/intelligence-teaser";
-import CareerTeaser from "@/components/home/career-teaser";
-import ContactFinale from "@/components/home/contact-finale";
+import HowIBuild from "@/components/home/how-i-build";
+import {
+  ContactFinale,
+  CredentialsTeaser,
+  LabTeaser,
+  ResearchTeaser,
+  SelectedBuilds,
+  SignalAct,
+  WhatIDo,
+  WorkTeaser,
+} from "@/components/home/home-sections";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: `${site.name} — ${site.identity}`,
   description: site.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: `${site.name} — ${site.identity}`,
+    description: site.description,
+    type: "website",
+  },
 };
 
+/**
+ * The homepage is the narrative entrance, not the archive.
+ *
+ * Each act introduces one thing and hands off to the destination that owns it:
+ * builds, research, lab, certifications, capabilities. Nothing is duplicated in
+ * full here — that separation is the point.
+ */
 export default function HomePage() {
   return (
     <>
+      {/* ACT I — IDENTITY */}
       <IdentityHero />
-      <CapabilityField />
-      <QuantSystems />
+      {/* ACT II — SIGNAL */}
+      <SignalAct />
+      {/* ACT III — SELECTED WORK */}
+      <SelectedBuilds />
+      {/* SCOPE — WHAT I DO */}
+      <WhatIDo />
+      {/* METHOD — HOW I BUILD */}
+      <HowIBuild />
+      {/* ACT IV — RESEARCH */}
       <ResearchTeaser />
+      {/* ACT V — LAB */}
       <LabTeaser />
-      <EngineeringDepth />
-      <IntelligenceTeaser />
-      <CareerTeaser />
+      {/* PROOF — CREDENTIALS */}
+      <CredentialsTeaser />
+      {/* OPPORTUNITY — WORK WITH ME */}
+      <WorkTeaser />
+      {/* ACT IX — CONTACT */}
       <ContactFinale />
     </>
   );

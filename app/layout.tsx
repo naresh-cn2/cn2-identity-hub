@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   },
   description:
     "Quantitative intelligence through research, markets, data and engineering. Building deterministic systems for understanding markets.",
+  alternates: { canonical: "/" },
   keywords: [
     "quantitative research",
     "systematic trading",
@@ -37,12 +38,21 @@ export const metadata: Metadata = {
     "Quant.Dev",
     "CN2",
   ],
+  authors: [{ name: "Bukya Naresh" }],
+  creator: "Bukya Naresh",
   openGraph: {
     title: "Bukya Naresh — Quant.Dev",
     description:
       "Quantitative intelligence through research, markets, data and engineering.",
     type: "website",
     siteName: "Bukya Naresh — Quant.Dev",
+    locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bukya Naresh — Quant.Dev",
+    description:
+      "Quantitative intelligence through research, markets, data and engineering.",
   },
   robots: { index: true, follow: true },
 };

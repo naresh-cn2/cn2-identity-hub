@@ -18,6 +18,9 @@
   --line-strong: #c9c6bc;
   --signal: #c82418;
   --signal-soft: rgba(200, 36, 24, 0.08);
+  --research: #1b4dc9;
+  --research-soft: rgba(27, 77, 201, 0.08);
+  --research-line: rgba(27, 77, 201, 0.3);
   --grid-line: rgba(20, 20, 23, 0.05);
   --chart-grid: rgba(20, 20, 23, 0.08);
   --chart-axis: rgba(20, 20, 23, 0.35);
@@ -36,6 +39,9 @@
   --line-strong: #303038;
   --signal: #e6392a;
   --signal-soft: rgba(230, 57, 42, 0.1);
+  --research: #6f96f2;
+  --research-soft: rgba(111, 150, 242, 0.12);
+  --research-line: rgba(111, 150, 242, 0.34);
   --grid-line: rgba(241, 241, 238, 0.045);
   --chart-grid: rgba(241, 241, 238, 0.07);
   --chart-axis: rgba(241, 241, 238, 0.32);
@@ -54,6 +60,9 @@
   --color-line-strong: var(--line-strong);
   --color-signal: var(--signal);
   --color-signal-soft: var(--signal-soft);
+  --color-research: var(--research);
+  --color-research-soft: var(--research-soft);
+  --color-research-line: var(--research-line);
   --font-sans: var(--font-archivo), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
   --tracking-display: -0.03em;
@@ -155,6 +164,24 @@ body {
   height: 2px;
   background: var(--signal);
   transform-origin: left;
+}
+
+/* blue research rule */
+.research-rule {
+  height: 1px;
+  background: var(--research);
+  transform-origin: left;
+}
+
+/* grain / film texture for editorial photography moments */
+.film-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
 /* crosshair corner ticks */
@@ -305,8 +332,30 @@ body {
   background: var(--signal);
 }
 
-/* ---------------- reduced motion ---------------- */
+/* ---------------- print ---------------- */
 
+@media print {
+  /* reveal blocks start hidden — never print an unscrolled page blank */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .reveal-clip {
+    clip-path: none !important;
+  }
+  /* fixed chrome must not overlay printed pages — components use `print:hidden` */
+  body {
+    background: #fff;
+    color: #000;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9px;
+    color: #555;
+  }
+}
+
+/* ---------------- reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

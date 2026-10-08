@@ -2,7 +2,7 @@ import type { FlagshipProject } from "./types";
 
 export const marketDataReplay: FlagshipProject = {
   id: "market-data-replay",
-  route: "/research/market-data-replay",
+  route: "/builds/market-data-replay",
   index: "03",
   title: "QUANT MARKET DATA REPLAY",
   shortTitle: "DATA REPLAY",

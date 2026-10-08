@@ -2,7 +2,7 @@ import type { FlagshipProject } from "./types";
 
 export const apexQuantEngine: FlagshipProject = {
   id: "apex-quant-engine",
-  route: "/quant/apex-quant-engine",
+  route: "/builds/apex-quant-engine",
   index: "01",
   title: "APEX QUANT ENGINE",
   shortTitle: "APEX",
@@ -144,7 +144,7 @@ export const apexQuantEngine: FlagshipProject = {
     {
       title: "EQUITY CURVE EXPLORER",
       description: "Draw the master-fund equity curve progressively and inspect drawdown structure.",
-      href: "/quant/apex-quant-engine#interactive",
+      href: "/builds/apex-quant-engine#interactive",
     },
     {
       title: "RISK CALCULATOR",

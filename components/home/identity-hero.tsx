@@ -1,118 +1,176 @@
+import Image from "next/image";
+import Link from "next/link";
 import HeroField from "@/components/viz/hero-field";
 import Magnetic from "@/components/ui/magnetic";
 import Reveal from "@/components/ui/reveal";
-import Image from "next/image";
-import { site } from "@/data/site";
+import { site, utilityLinks } from "@/data/site";
 
+/**
+ * ACT I — IDENTITY.
+ *
+ * The portrait is the primary editorial moment, not an avatar: a tall framed
+ * plate with technical metadata, set against the computational field. All
+ * identity text is real HTML, so the hero still reads completely if the canvas
+ * never paints.
+ */
 export default function IdentityHero() {
   return (
-    <section className="relative flex min-h-svh flex-col overflow-hidden" aria-label="Identity">
-      <div className="absolute inset-0">
+    <section
+      className="relative flex min-h-svh flex-col overflow-hidden border-b border-line"
+      aria-label="Identity"
+    >
+      <div className="absolute inset-0" aria-hidden="true">
         <HeroField />
       </div>
-      <div className="grid-field pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
+      <div className="grid-field pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent"
+        aria-hidden="true"
+      />
 
-      <div className="relative mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-end px-5 pb-16 pt-32 sm:px-8">
-        <Reveal>
-          <div className="mb-10 flex flex-wrap items-center gap-x-8 gap-y-2">
-            <p className="label-mono text-muted">
-              <span className="text-signal">STATUS /</span> RESEARCH
-            </p>
-            <p className="label-mono text-muted">
-              <span className="text-signal">DOMAIN /</span> QUANT
-            </p>
-            <p className="label-mono text-muted">
-              <span className="text-signal">MODE /</span> BUILDING
-            </p>
-            <p className="label-mono text-muted">
-              <span className="text-signal">SYSTEM /</span> CN2
-            </p>
-          </div>
-        </Reveal>
+      <div className="relative mx-auto grid w-full max-w-[1440px] flex-1 items-end gap-12 px-5 pb-14 pt-32 sm:px-8 lg:grid-cols-[1.35fr_1fr] lg:items-center lg:gap-20 lg:pb-20 lg:pt-28">
+        {/* ---- identity ---- */}
+        <div className="min-w-0">
+          <Reveal>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              <p className="label-mono text-muted">
+                <span className="text-signal">CN2 /</span> QUANT.DEV
+              </p>
+              <p className="label-mono text-research">{site.descriptor}</p>
+            </div>
+          </Reveal>
 
-        <h1>
-          <Reveal clip delay={100}>
-            <span className="display block text-[clamp(4.5rem,17vw,15rem)] leading-[0.85]">
-              {site.name}
-            </span>
+          <Reveal clip delay={120}>
+            <h1 className="mt-8">
+              <span className="display block text-[clamp(2.6rem,8.4vw,7rem)]">{site.name}</span>
+              <span className="display block text-[clamp(2.2rem,7.2vw,6rem)] text-signal">
+                {site.identity}
+              </span>
+              <span className="display-condensed mt-3 block text-[clamp(1rem,2.6vw,1.9rem)] text-muted">
+                {site.subtitle}
+              </span>
+            </h1>
           </Reveal>
-          <Reveal clip delay={250}>
-            <span className="display-condensed mt-2 block text-[clamp(1.9rem,6.2vw,5.2rem)] text-signal">
-              {site.identity}
-            </span>
-          </Reveal>
-          <Reveal clip delay={350}>
-            <span className="display-condensed mt-1 block text-[clamp(1.5rem,4.5vw,3.5rem)] text-muted">
-              {site.system} / {site.descriptor}
-            </span>
-          </Reveal>
-        </h1>
 
-        <div className="mt-12 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-          <Reveal delay={400} className="max-w-md">
-            <p className="label-mono text-signal">{site.subtitle}</p>
-            <p className="mt-4 text-base leading-relaxed text-muted">
-              Building deterministic quantitative systems for understanding markets.
+          <Reveal delay={280}>
+            <p className="mt-8 max-w-md text-base leading-relaxed text-muted">
+              Building deterministic systems for understanding markets — backtestable research,
+              point-in-time-safe data, and the engineering that makes both trustworthy.
             </p>
           </Reveal>
 
-          <Reveal delay={500}>
-            <div className="flex flex-wrap items-center gap-4">
-              <Magnetic href="/quant" ariaLabel="Explore quant">
-                <span className="label-mono inline-block bg-signal px-6 py-3 text-background transition-colors hover:bg-foreground hover:text-background">
-                  EXPLORE QUANT
-                </span>
+          <Reveal delay={360}>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Magnetic
+                href="/builds"
+                strength={5}
+                className="label-mono bg-signal px-7 py-4 text-background transition-colors hover:bg-foreground hover:text-background"
+                ariaLabel="Explore builds"
+              >
+                EXPLORE BUILDS →
               </Magnetic>
-              <Magnetic href="/lab" ariaLabel="Enter research lab">
-                <span className="label-mono inline-block border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal">
-                  ENTER RESEARCH LAB
-                </span>
+              <Magnetic
+                href="/research"
+                strength={5}
+                className="label-mono border border-line-strong px-7 py-4 text-foreground transition-colors hover:border-research hover:text-research"
+                ariaLabel="Enter research"
+              >
+                ENTER RESEARCH →
               </Magnetic>
             </div>
-            <div className="mt-4 flex flex-wrap gap-6">
-              <a href="/builds" className="link-line label-mono text-xs text-muted transition-colors hover:text-foreground">
-                VIEW BUILDS
-              </a>
-              <a href="/work-with-me" className="link-line label-mono text-xs text-muted transition-colors hover:text-foreground">
-                WORK WITH ME
-              </a>
+          </Reveal>
+
+          <Reveal delay={440}>
+            <ul className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3">
+              {utilityLinks.map((link) => (
+                <li key={link.label}>
+                  {link.href.startsWith("http") || link.href.startsWith("mailto:") ? (
+                    <a
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="link-line label-mono text-[10px] text-muted transition-colors hover:text-signal"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="link-line label-mono text-[10px] text-muted transition-colors hover:text-signal"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={520}>
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-5">
+              <p className="label-mono flex items-center gap-2 text-foreground">
+                <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
+                {site.status}
+              </p>
+              <p className="num-mono text-[10px] text-faint">
+                01 — IDENTITY · {site.name} / {site.identity} / {site.system}
+              </p>
             </div>
           </Reveal>
         </div>
 
-        <Reveal delay={650}>
-          <div className="mt-16 flex items-center justify-between border-t border-line pt-4">
-            <p className="num-mono text-[10px] text-faint">
-              01 — IDENTITY · {site.name} / {site.identity} / {site.system}
-            </p>
-            <p className="num-mono flex items-center gap-2 text-[10px] text-faint">
-              SCROLL
-              <span className="inline-block h-3 w-px animate-pulse bg-signal" aria-hidden="true" />
-            </p>
-          </div>
+        {/* ---- portrait plate ---- */}
+        <Reveal delay={220}>
+          <figure className="relative mx-auto w-full max-w-[22rem] lg:mx-0 lg:ml-auto lg:max-w-[24rem]">
+            <div className="corner-ticks film-grain relative aspect-[3/4] w-full overflow-hidden border border-line-strong bg-surface">
+              <Image
+                src="/images/identity/portrait.webp"
+                alt="Editorial monochrome portrait of Bukya Naresh"
+                fill
+                priority
+                sizes="(max-width: 1024px) 88vw, 384px"
+                className="object-cover object-[50%_22%] grayscale contrast-125 brightness-90"
+              />
+              {/* technical overlay */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25" />
+              <div className="pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between px-4 py-3">
+                <span className="label-mono text-[9px] text-white/70">PORTRAIT / 001</span>
+                <span className="label-mono text-[9px] text-signal">{site.system}</span>
+              </div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-4">
+                <p className="label-mono text-[10px] text-white/90">{site.name}</p>
+                <p className="label-mono text-[10px] text-white/60">{site.identity}</p>
+              </div>
+              {/* coordinate ruler */}
+              <div className="pointer-events-none absolute left-0 top-0 h-full w-3" aria-hidden="true">
+                <div className="grid-field-fine h-full w-full opacity-40" />
+              </div>
+            </div>
+
+            <figcaption className="mt-4 flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
+              <div>
+                <p className="label-mono text-[10px] text-foreground">BUKYA NARESH</p>
+                <p className="label-mono text-[10px] text-signal">{site.identity}</p>
+              </div>
+              <div className="text-right">
+                <p className="label-mono text-[10px] text-faint">INDIA / RESEARCH · MARKETS · DATA</p>
+                <p className="label-mono text-[10px] text-faint">
+                  {site.system} / QUANTITATIVE INTELLIGENCE
+                </p>
+              </div>
+            </figcaption>
+          </figure>
         </Reveal>
       </div>
 
-      {/* Portrait / identity mark */}
-      <Reveal delay={750}>
-        <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 lg:bottom-16 lg:right-16 opacity-0 transition-opacity duration-1000 is-visible:opacity-100 pointer-events-none">
-          <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full border border-line-strong bg-background/50 backdrop-blur-sm overflow-hidden">
-            <Image
-              src="/portrait.png"
-              alt="Bukya Naresh — Quant.Dev"
-              fill
-              priority
-              sizes="(max-width: 768px) 96px, 160px"
-              className="object-cover grayscale contrast-125 brightness-90"
-            />
-          </div>
-          <div className="mt-3 text-right">
-            <p className="label-mono text-signal tracking-widest">{site.name}</p>
-            <p className="label-mono text-faint text-xs">{site.identity}</p>
-            <p className="label-mono text-signal text-xs">{site.system}</p>
-          </div>
+      <div className="relative mx-auto w-full max-w-[1440px] px-5 pb-6 sm:px-8">
+        <div className="flex items-center justify-between border-t border-line pt-4">
+          <Link href="/builds" className="num-mono text-[10px] text-faint transition-colors hover:text-signal">
+            SCROLL — ACT II / SIGNAL
+          </Link>
+          <p className="num-mono text-[10px] text-faint">RESEARCH · MARKETS · DATA · ENGINEERING</p>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
