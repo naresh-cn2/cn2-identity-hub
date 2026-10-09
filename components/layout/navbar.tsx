@@ -83,20 +83,26 @@ export default function Navbar() {
           className={`mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 transition-all duration-500 sm:px-8 ${scrolled ? "py-3" : "py-5"
             }`}
         >
-          {/* ---- brand lockup: BUKYA NARESH stacked above CN2.DEV (spec §1) ---- */}
+          {/* ---- brand lockup: CN2.DEV stacked above BUKYA NARESH (spec §1) ---- */}
           <Link
             href="/"
             className="group flex shrink-0 flex-col items-start leading-none"
-            aria-label={`${site.name} — ${site.identity} — home`}
+            aria-label={`${site.identity} — ${site.name} — home`}
           >
-            <span className="display text-[0.95rem] tracking-tight md:text-lg">{site.name}</span>
-            <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">
-              {site.identity}
-            </span>
+            <span className="display text-[0.95rem] font-bold tracking-tight md:text-base">{site.identity}</span>
+            <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">{site.name}</span>
           </Link>
 
           {/* ---- desktop nav ---- */}
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+            <Link
+              href="/"
+              aria-current={pathname === "/" ? "page" : undefined}
+              className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${pathname === "/" ? "text-signal" : "text-muted hover:text-foreground"
+                }`}
+            >
+              HOME
+            </Link>
             {primaryNav.map((item) => {
               const active = isActiveNavItem(pathname, item);
               const hasChildren = Boolean(item.children?.length);
@@ -216,8 +222,14 @@ export default function Navbar() {
           className="flex flex-1 flex-col justify-center overflow-y-auto px-6 py-6"
           aria-label="Mobile"
         >
+          <MobileNavEntry
+            item={{ label: "HOME", href: "/", code: "00" }}
+            index={0}
+            open={menuOpen}
+            pathname={pathname}
+          />
           {primaryNav.map((item, i) => (
-            <MobileNavEntry key={item.label} item={item} index={i} open={menuOpen} pathname={pathname} />
+            <MobileNavEntry key={item.label} item={item} index={i + 1} open={menuOpen} pathname={pathname} />
           ))}
         </nav>
         <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-line px-6 py-5">
