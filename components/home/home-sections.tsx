@@ -33,11 +33,11 @@ const REGIMES = [
 
 export function SignalAct() {
   return (
-    <section aria-label="Signal" className="relative border-b border-line">
+    <section id="act-2" data-act="THE FIELD" aria-label="Signal" className="relative border-b border-line">
       <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <p className="label-mono text-muted">
-            ACT II <span className="text-research">/</span> SIGNAL
+            ACT II <span className="text-research">/</span> THE FIELD
           </p>
           <p className="label-mono text-faint">REGIME-FIELD COMPOSITION — SCHEMATIC</p>
         </div>
@@ -75,7 +75,7 @@ export function SignalAct() {
           </div>
 
           <Reveal>
-            <figure className="border border-line bg-surface p-4 md:p-6">
+            <figure data-parallax="true" data-parallax-speed="8" className="border border-line bg-surface p-4 md:p-6">
               <svg
                 viewBox="0 0 1000 360"
                 className="h-auto w-full"
@@ -134,6 +134,130 @@ export function SignalAct() {
             </figure>
           </Reveal>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * CURRENTLY — live focus board (spec §14). Truthful data only: every row
+ * is derived from the archive (flagship builds, ONGOING research, active
+ * self-directed study, engagement areas). Nothing here is fabricated.
+ * ------------------------------------------------------------------ */
+
+export function CurrentFocus() {
+  const building = flagshipProjects.slice(0, 3);
+  const researching = researchEntries.filter((r) => r.status === "ONGOING");
+  const learning = studyTracks.filter((t) => t.state === "ONGOING").slice(0, 4);
+  const openTo = engagementAreas.slice(0, 4);
+
+  return (
+    <section aria-label="Current focus" className="relative overflow-hidden border-b border-line">
+      <div className="grid-field absolute inset-0 opacity-40" aria-hidden="true" />
+      <div className="relative mx-auto max-w-[1440px] px-5 py-14 sm:px-8 md:py-16">
+        <Reveal>
+          <div className="flex flex-wrap items-baseline justify-between gap-4">
+            <p className="label-mono flex items-center gap-2 text-foreground">
+              <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
+              CURRENTLY
+            </p>
+            <p className="label-mono text-faint">LIVE STATUS — {site.status}</p>
+          </div>
+        </Reveal>
+
+        <div className="mt-8 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal delay={0}>
+            <div className="flex h-full flex-col bg-background p-6">
+              <p className="label-mono text-signal">BUILDING</p>
+              <ul className="mt-5 space-y-4">
+                {building.map((p) => (
+                  <li key={p.id}>
+                    <Link href={p.route} className="group block">
+                      <span className="label-mono block text-sm text-foreground transition-colors group-hover:text-signal">
+                        {p.title}
+                      </span>
+                      <span className="label-mono mt-1 block text-[10px] text-faint">{p.status}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/builds"
+                className="link-line label-mono mt-auto inline-block pt-6 text-[10px] text-muted hover:text-signal"
+              >
+                ALL BUILDS →
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={70}>
+            <div className="flex h-full flex-col bg-background p-6">
+              <p className="label-mono text-research">RESEARCHING</p>
+              <ul className="mt-5 space-y-4">
+                {researching.map((r) => (
+                  <li key={r.id}>
+                    <Link href={`/research/${r.id}`} className="group block">
+                      <span className="label-mono block text-sm leading-snug text-foreground transition-colors group-hover:text-research">
+                        {r.title}
+                      </span>
+                      <span className="label-mono mt-1 block text-[10px] text-faint">{r.category}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/research"
+                className="link-line label-mono mt-auto inline-block pt-6 text-[10px] text-muted hover:text-research"
+              >
+                THE RESEARCH →
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={140}>
+            <div className="flex h-full flex-col bg-background p-6">
+              <p className="label-mono text-foreground">LEARNING</p>
+              <ul className="mt-5 space-y-4">
+                {learning.map((t) => (
+                  <li key={t.id} className="flex gap-3">
+                    <span className="num-mono text-xs text-research">{t.index}</span>
+                    <span className="label-mono text-sm leading-snug text-muted">{t.title}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/certifications#study"
+                className="link-line label-mono mt-auto inline-block pt-6 text-[10px] text-muted hover:text-foreground"
+              >
+                STUDY RECORD →
+              </Link>
+            </div>
+          </Reveal>
+
+          <Reveal delay={210}>
+            <div className="flex h-full flex-col bg-background p-6">
+              <p className="label-mono text-signal">OPEN TO</p>
+              <ul className="mt-5 space-y-4">
+                {openTo.map((a) => (
+                  <li key={a.title} className="label-mono text-sm leading-snug text-muted">
+                    {a.title}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/work-with-me"
+                className="link-line label-mono mt-auto inline-block pt-6 text-[10px] text-muted hover:text-signal"
+              >
+                WORK WITH ME →
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+
+        <p className="label-mono mt-6 text-[10px] leading-relaxed text-faint">
+          SELF-DIRECTED STUDY IS NOT ACCREDITED · SIMULATED RESULTS ARE LABELLED SIMULATED · UNFINISHED
+          WORK STAYS VISIBLE.
+        </p>
       </div>
     </section>
   );
@@ -208,11 +332,11 @@ export function WhatIDo() {
 
 export function SelectedBuilds() {
   return (
-    <section aria-label="Selected builds" className="border-b border-line">
+    <section id="act-3" data-act="THE WORK" aria-label="Selected builds" className="border-b border-line">
       <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <p className="label-mono text-muted">
-            ACT III <span className="text-signal">/</span> SELECTED WORK
+            ACT III <span className="text-signal">/</span> THE WORK
           </p>
           <Link href="/builds" className="link-line label-mono text-[10px] text-muted hover:text-signal">
             VIEW ALL BUILDS →
@@ -293,11 +417,11 @@ export function ResearchTeaser() {
   ].filter(Boolean) as typeof researchEntries;
 
   return (
-    <section aria-label="Research" className="border-b border-line">
+    <section id="act-4" data-act="THE RESEARCH" aria-label="Research" className="border-b border-line">
       <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <p className="label-mono text-muted">
-            ACT IV <span className="text-research">/</span> RESEARCH
+            ACT IV <span className="text-research">/</span> THE RESEARCH
           </p>
           <Link href="/research" className="link-line label-mono text-[10px] text-muted hover:text-research">
             ENTER RESEARCH →
@@ -320,10 +444,10 @@ export function ResearchTeaser() {
                   <span className="label-mono text-research">{e.category}</span>
                   <span
                     className={`label-mono border px-2 py-0.5 text-[10px] ${e.status === "VERIFIED"
-                        ? "border-line-strong text-foreground"
-                        : e.status === "DOCUMENTED"
-                          ? "border-line text-muted"
-                          : "border-signal text-signal"
+                      ? "border-line-strong text-foreground"
+                      : e.status === "DOCUMENTED"
+                        ? "border-line text-muted"
+                        : "border-signal text-signal"
                       }`}
                   >
                     {e.status}
@@ -363,7 +487,7 @@ export function LabTeaser() {
       <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
         <div className="flex flex-wrap items-baseline justify-between gap-4">
           <p className="label-mono text-muted">
-            ACT V <span className="text-signal">/</span> LAB
+            INSTRUMENTS <span className="text-signal">/</span> LAB
           </p>
           <Link href="/lab" className="link-line label-mono text-[10px] text-muted hover:text-signal">
             ENTER LAB →
@@ -406,12 +530,12 @@ export function LabTeaser() {
 
 export function CredentialsTeaser() {
   return (
-    <section aria-label="Credentials" className="border-b border-line">
+    <section id="act-5" data-act="THE PROOF" aria-label="Credentials" className="border-b border-line">
       <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <p className="label-mono text-muted">
-              CREDENTIALS <span className="text-signal">/</span> PROOF
+              ACT V <span className="text-signal">/</span> THE PROOF
             </p>
             <h2 className="display mt-6 text-[clamp(1.8rem,4.6vw,3.2rem)]">
               NOTHING CLAIMED, EVERYTHING SHOWN
@@ -518,19 +642,19 @@ export function WorkTeaser() {
 
 export function ContactFinale() {
   return (
-    <section aria-label="Contact" className="relative overflow-hidden">
+    <section id="act-6" data-act="THE FUTURE" aria-label="Contact" className="relative overflow-hidden">
       <div className="grid-field absolute inset-0 opacity-40" aria-hidden="true" />
       <div className="relative mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
         <Reveal>
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <p className="label-mono text-muted">
-              ACT IX <span className="text-signal">/</span> CONTACT
+              ACT VI <span className="text-signal">/</span> THE FUTURE
             </p>
             <p className="label-mono text-faint">NO FORM. NO GATEKEEPER.</p>
           </div>
         </Reveal>
         <Reveal delay={100}>
-          <h2 className="display mt-8 text-[clamp(2.2rem,7vw,5.5rem)]">
+          <h2 data-parallax="true" data-parallax-speed="5" className="display mt-8 text-[clamp(2.2rem,7vw,5.5rem)]">
             {site.name}
             <br />
             <span className="text-signal">{site.identity}</span>

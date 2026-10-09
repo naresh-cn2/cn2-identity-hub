@@ -22,8 +22,8 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://cn2-identity-hub.vercel.app"),
   title: {
-    default: "Bukya Naresh — CN2.dev",
-    template: "%s — Bukya Naresh / CN2.dev",
+    default: "BUKYA NARESH — CN2.DEV",
+    template: "%s — BUKYA NARESH / CN2.DEV",
   },
   description:
     "CN2.dev — the digital headquarters of Bukya Naresh. Quantitative intelligence through research, markets, data and engineering: deterministic systems for understanding markets.",
@@ -41,16 +41,16 @@ export const metadata: Metadata = {
   authors: [{ name: "Bukya Naresh" }],
   creator: "Bukya Naresh",
   openGraph: {
-    title: "Bukya Naresh — CN2.dev",
+    title: "BUKYA NARESH — CN2.DEV",
     description:
       "Quantitative intelligence through research, markets, data and engineering.",
     type: "website",
-    siteName: "Bukya Naresh — CN2.dev",
+    siteName: "BUKYA NARESH — CN2.DEV",
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bukya Naresh — CN2.dev",
+    title: "BUKYA NARESH — CN2.DEV",
     description:
       "Quantitative intelligence through research, markets, data and engineering.",
   },
@@ -62,7 +62,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#0a0a0c" },
-    { media: "(prefers-color-scheme: light)", color: "#faf9f6" },
+    { media: "(prefers-color-scheme: light)", color: "#eef2f9" },
   ],
 };
 

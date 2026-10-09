@@ -8,7 +8,6 @@ import {
   isActiveRoute,
   primaryNav,
   site,
-  workRoute,
   type NavItem,
 } from "@/data/site";
 import { useTheme } from "@/components/providers/theme-provider";
@@ -17,9 +16,10 @@ import { useTheme } from "@/components/providers/theme-provider";
  * Global navigation (spec §20).
  *
  * A grouped bar rather than a flat route list: WORK, RESEARCH and CREDENTIALS
- * open mega-menus on hover/focus (and on tap for touch), ABOUT / LAB / CONTACT
- * are direct, and WORK WITH ME + ⌘K stay visually apart as actions. The menu is
- * keyboard-reachable and closes on navigation or Escape.
+ * open mega-menus on hover/focus (and on tap for touch), and ABOUT / CONTACT are
+ * direct. LAB lives under WORK; WORK WITH ME stays reachable through the footer,
+ * the palette and /contact rather than the bar. The menu is keyboard-reachable
+ * and closes on navigation or Escape.
  */
 export default function Navbar() {
   const pathname = usePathname();
@@ -75,21 +75,22 @@ export default function Navbar() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 print:hidden ${scrolled
-            ? "border-line bg-background/85 backdrop-blur-md"
-            : "border-transparent bg-transparent"
+          ? "border-line bg-background/85 backdrop-blur-md"
+          : "border-transparent bg-transparent"
           }`}
       >
         <div
           className={`mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 transition-all duration-500 sm:px-8 ${scrolled ? "py-3" : "py-5"
             }`}
         >
-          {/* ---- brand ---- */}
-          <Link href="/" className="group flex shrink-0 items-baseline gap-3" aria-label={`${site.name} — home`}>
-            <span className="display text-lg tracking-tight md:text-xl">{site.name}</span>
-            <span
-              className={`label-mono hidden text-signal transition-opacity duration-500 md:inline ${scrolled ? "opacity-0" : "opacity-100"
-                }`}
-            >
+          {/* ---- brand lockup: BUKYA NARESH stacked above CN2.DEV (spec §1) ---- */}
+          <Link
+            href="/"
+            className="group flex shrink-0 flex-col items-start leading-none"
+            aria-label={`${site.name} — ${site.identity} — home`}
+          >
+            <span className="display text-[0.95rem] tracking-tight md:text-lg">{site.name}</span>
+            <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">
               {site.identity}
             </span>
           </Link>
@@ -142,8 +143,8 @@ export default function Navbar() {
                   {/* mega-menu panel */}
                   <div
                     className={`absolute left-0 top-full pt-2 transition-all duration-200 ${isOpen
-                        ? "pointer-events-auto translate-y-0 opacity-100"
-                        : "pointer-events-none -translate-y-1 opacity-0"
+                      ? "pointer-events-auto translate-y-0 opacity-100"
+                      : "pointer-events-none -translate-y-1 opacity-0"
                       }`}
                   >
                     <div className="min-w-[15rem] border border-line bg-background/95 p-2 shadow-2xl backdrop-blur-md">
@@ -171,15 +172,6 @@ export default function Navbar() {
 
           {/* ---- actions ---- */}
           <div className="flex shrink-0 items-center gap-2">
-            <Link
-              href={workRoute.href}
-              className={`label-mono hidden border px-3 py-1.5 text-[10px] transition-colors duration-200 xl:inline-flex ${isActiveRoute(pathname, workRoute.href)
-                  ? "border-signal bg-signal text-background"
-                  : "border-line-strong text-foreground hover:border-signal hover:text-signal"
-                }`}
-            >
-              {workRoute.label}
-            </Link>
             <button
               onClick={toggle}
               className="label-mono border border-line px-3 py-1.5 text-muted transition-colors duration-200 hover:border-line-strong hover:text-foreground"
@@ -227,7 +219,6 @@ export default function Navbar() {
           {primaryNav.map((item, i) => (
             <MobileNavEntry key={item.label} item={item} index={i} open={menuOpen} pathname={pathname} />
           ))}
-          <MobileNavEntry item={workRoute} index={primaryNav.length} open={menuOpen} pathname={pathname} accent />
         </nav>
         <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-line px-6 py-5">
           <div className="flex flex-wrap items-center gap-4">

@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AnonymousFigure from "@/components/viz/anonymous-figure";
+import CapabilityMap from "@/components/capabilities/capability-map";
 import { site, utilityLinks } from "@/data/site";
 import { studyTracks } from "@/data/certifications";
 import { capabilities } from "@/data/capabilities";
+import { career } from "@/data/career";
+import { researchEntries } from "@/data/research";
 import Reveal from "@/components/ui/reveal";
 
 export const metadata: Metadata = {
@@ -19,6 +22,10 @@ export const metadata: Metadata = {
 };
 
 const COMPOUND = ["MARKETS", "MATHEMATICS", "DATA", "COMPUTATION", "RESEARCH"];
+
+const researchTitles: Record<string, string> = Object.fromEntries(
+  researchEntries.map((entry) => [entry.id, entry.title])
+);
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -164,6 +171,69 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ---- selected record — timeline ---- */}
+      <section aria-label="Selected record" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 className="display text-3xl md:text-5xl">THE RECORD</h2>
+              <p className="label-mono text-faint">SELECTED SYSTEMS · SOLE ARCHITECT &amp; ENGINEER</p>
+            </div>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
+              Not a list of employers — a sequence of systems built end to end, each carrying its own
+              metrics and provenance. Every figure below is labelled, and every entry opens to the
+              build or repository behind it.
+            </p>
+          </Reveal>
+
+          <ol className="mt-12">
+            {career.experience.map((item, i) => {
+              const isLast = i === career.experience.length - 1;
+              return (
+                <li key={item.project}>
+                  <Reveal delay={Math.min(i, 4) * 80}>
+                    <div className="grid grid-cols-[auto_1fr] gap-x-5 md:gap-x-8">
+                      <div className="flex flex-col items-center" aria-hidden="true">
+                        <span className="mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-signal bg-background" />
+                        {!isLast && <span className="mt-1 w-px flex-1 bg-line" />}
+                      </div>
+                      <div className={isLast ? "min-w-0" : "min-w-0 pb-10"}>
+                        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                          <span className="num-mono text-xs text-signal">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <h3 className="display text-xl md:text-2xl">{item.project}</h3>
+                          <span className="label-mono text-[10px] text-faint">{item.role}</span>
+                        </div>
+                        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{item.scope}</p>
+                        <p className="label-mono mt-3 text-[10px] text-research">{item.metrics}</p>
+                        {item.href.startsWith("http") ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
+                          >
+                            REPOSITORY ↗
+                          </a>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
+                          >
+                            OPEN BUILD →
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </Reveal>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
       {/* ---- direction / study / philosophy ---- */}
       <section aria-label="Direction, study and philosophy" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
@@ -224,6 +294,57 @@ export default function AboutPage() {
                 >
                   THE RESEARCH →
                 </Link>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- capability constellation ---- */}
+      <section aria-label="Capability constellation" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 className="display text-3xl md:text-5xl">CAPABILITY TOPOLOGY</h2>
+              <Link
+                href="/capabilities"
+                className="link-line label-mono text-[10px] text-muted hover:text-signal"
+              >
+                FULL CAPABILITY MAP →
+              </Link>
+            </div>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
+              The same capabilities drawn as a connected field — research at the centre, every edge a
+              real shared project or written entry. Select any node to see what it is, how it is done
+              and the evidence that carries it.
+            </p>
+          </Reveal>
+          <div className="mt-10">
+            <CapabilityMap capabilities={capabilities} researchTitles={researchTitles} />
+          </div>
+        </div>
+      </section>
+
+      {/* ---- long-term direction ---- */}
+      <section aria-label="Long-term direction" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+            <Reveal>
+              <p className="label-mono text-faint">LONG-TERM DIRECTION</p>
+              <h2 className="display mt-5 text-3xl md:text-5xl">INFRASTRUCTURE YOU CAN ARGUE WITH</h2>
+            </Reveal>
+            <Reveal delay={120}>
+              <div className="space-y-5 text-base leading-relaxed text-muted md:text-lg">
+                <p>
+                  The aim is not one strategy or one headline number. It is a body of research
+                  infrastructure where every claim carries its evidence, its limitation and the means
+                  to reproduce it — so a result can be challenged without anyone taking it on faith.
+                </p>
+                <p>
+                  Markets, mathematics, data, computation and research compound into exactly that:
+                  systems that decide what is allowed to count as a finding. This headquarters is
+                  built around that direction, and it is deliberately unfinished in public.
+                </p>
               </div>
             </Reveal>
           </div>

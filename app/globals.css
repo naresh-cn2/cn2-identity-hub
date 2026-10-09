@@ -3,29 +3,31 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------
-   NARESH / QUANTITATIVE INTELLIGENCE — design tokens
-   light = editorial paper field · dark = research terminal field
+   BUKYA NARESH / CN2.DEV — QUANTITATIVE INTELLIGENCE design tokens
+   light = daylight editorial studio · dark = night research laboratory
 ---------------------------------------------------------------- */
 
 :root {
-  --background: #faf9f6;
-  --surface: #ffffff;
-  --surface-2: #f2f1ec;
-  --foreground: #141417;
-  --muted: #6c6c74;
-  --faint: #9a9aa1;
-  --line: #e4e2da;
-  --line-strong: #c9c6bc;
+  /* daylight editorial studio — ice-blue atmosphere, premium white surfaces,
+     blue-gray technical geometry. Deliberately never plain white (spec §7). */
+  --background: #eef2f9;
+  --surface: #fbfcfe;
+  --surface-2: #e4eaf5;
+  --foreground: #151922;
+  --muted: #525d74;
+  --faint: #7c88a3;
+  --line: #d5ddec;
+  --line-strong: #b6c2d9;
   --signal: #c82418;
   --signal-soft: rgba(200, 36, 24, 0.08);
   --research: #1b4dc9;
-  --research-soft: rgba(27, 77, 201, 0.08);
-  --research-line: rgba(27, 77, 201, 0.3);
-  --grid-line: rgba(20, 20, 23, 0.05);
-  --chart-grid: rgba(20, 20, 23, 0.08);
-  --chart-axis: rgba(20, 20, 23, 0.35);
-  --scanline: rgba(20, 20, 23, 0.022);
-  --code-bg: #eeede7;
+  --research-soft: rgba(27, 77, 201, 0.09);
+  --research-line: rgba(27, 77, 201, 0.28);
+  --grid-line: rgba(24, 44, 92, 0.06);
+  --chart-grid: rgba(21, 25, 34, 0.09);
+  --chart-axis: rgba(21, 25, 34, 0.34);
+  --scanline: rgba(21, 25, 34, 0.02);
+  --code-bg: #e7edf8;
 }
 
 .dark {
@@ -150,13 +152,11 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    var(--scanline) 0px,
-    var(--scanline) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+  background: repeating-linear-gradient(to bottom,
+      var(--scanline) 0px,
+      var(--scanline) 1px,
+      transparent 1px,
+      transparent 3px);
 }
 
 /* red signal rule */
@@ -188,6 +188,7 @@ body {
 .corner-ticks {
   position: relative;
 }
+
 .corner-ticks::before,
 .corner-ticks::after {
   content: "";
@@ -198,11 +199,13 @@ body {
   border-style: solid;
   pointer-events: none;
 }
+
 .corner-ticks::before {
   top: 0;
   left: 0;
   border-width: 1px 0 0 1px;
 }
+
 .corner-ticks::after {
   bottom: 0;
   right: 0;
@@ -254,11 +257,12 @@ body {
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
+
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
@@ -270,9 +274,78 @@ body {
   from {
     transform: scaleX(0);
   }
+
   to {
     transform: scaleX(1);
   }
+}
+
+/* cinematic route change — a red signal bar travels the viewport (short, fast,
+   never blocks interaction; reduced-motion neutralises it globally) */
+@keyframes curtain-travel {
+  0% {
+    transform: translateX(-102%);
+  }
+
+  100% {
+    transform: translateX(102%);
+  }
+}
+
+.curtain-signal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 34vw;
+  max-width: 460px;
+  z-index: 70;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(230, 57, 42, 0.16) 42%,
+      rgba(230, 57, 42, 0.8) 50%,
+      rgba(230, 57, 42, 0.16) 58%,
+      transparent 100%);
+  animation: curtain-travel 0.62s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+/* ---------------- figure life ---------------- */
+
+@keyframes figure-breathe {
+
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.figure-breathe {
+  transform-box: fill-box;
+  transform-origin: 50% 40%;
+  animation: figure-breathe 6.5s ease-in-out infinite;
+}
+
+@keyframes figure-rim {
+
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.figure-rim {
+  animation: figure-rim 5.2s ease-in-out infinite;
 }
 
 /* ---------------- link underline ---------------- */
@@ -280,6 +353,7 @@ body {
 .link-line {
   position: relative;
 }
+
 .link-line::after {
   content: "";
   position: absolute;
@@ -292,6 +366,7 @@ body {
   transform-origin: right;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .link-line:hover::after,
 .link-line:focus-visible::after {
   transform: scaleX(1);
@@ -301,10 +376,12 @@ body {
 /* ---------------- pulse ---------------- */
 
 @keyframes pulse-dot {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.25;
   }
@@ -320,14 +397,17 @@ body {
   width: 10px;
   height: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--line-strong);
   border: 2px solid var(--background);
   border-radius: 0;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--signal);
 }
@@ -335,19 +415,23 @@ body {
 /* ---------------- print ---------------- */
 
 @media print {
+
   /* reveal blocks start hidden — never print an unscrolled page blank */
   .reveal {
     opacity: 1 !important;
     transform: none !important;
   }
+
   .reveal-clip {
     clip-path: none !important;
   }
+
   /* fixed chrome must not overlay printed pages — components use `print:hidden` */
   body {
     background: #fff;
     color: #000;
   }
+
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 9px;
@@ -360,6 +444,7 @@ body {
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
@@ -368,13 +453,16 @@ body {
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
   }
+
   .reveal {
     opacity: 1;
     transform: none;
   }
+
   .reveal-clip {
     clip-path: none;
   }
+
   .chart-draw {
     stroke-dashoffset: 0 !important;
   }

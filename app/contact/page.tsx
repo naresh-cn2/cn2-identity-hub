@@ -39,6 +39,14 @@ export default function ContactPage() {
             {/* ---- minimal hero ---- */}
             <header className="scanlines relative overflow-hidden border-b border-line">
                 <div className="grid-field absolute inset-0" aria-hidden="true" />
+                <div
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
+                    aria-hidden="true"
+                    style={{
+                        background:
+                            "radial-gradient(65% 100% at 50% 100%, var(--signal-soft), transparent 72%)",
+                    }}
+                />
                 <div className="relative mx-auto max-w-[1440px] px-5 pb-20 pt-32 text-center sm:px-8 md:pb-28 md:pt-44">
                     <Reveal>
                         <p className="label-mono text-muted">

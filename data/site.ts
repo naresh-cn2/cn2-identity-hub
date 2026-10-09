@@ -42,8 +42,8 @@ export interface NavItem extends NavLeaf {
  * Primary navigation (spec §20).
  *
  * The bar carries grouped destinations rather than every route. WORK, RESEARCH
- * and CREDENTIALS expand into mega-menus; ABOUT, LAB and CONTACT are direct.
- * Each group's own `href` is its landing destination.
+ * and CREDENTIALS expand into mega-menus (WORK also exposes LAB); ABOUT and
+ * CONTACT are direct. Each group's own `href` is its landing destination.
  */
 export const primaryNav: NavItem[] = [
   {
@@ -54,6 +54,7 @@ export const primaryNav: NavItem[] = [
       { label: "BUILDS", href: "/builds", code: "01" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
       { label: "CAPABILITIES", href: "/capabilities", code: "03" },
+      { label: "LAB", href: "/lab", code: "11" },
     ],
   },
   {
@@ -77,7 +78,6 @@ export const primaryNav: NavItem[] = [
     ],
   },
   { label: "ABOUT", href: "/about", code: "10" },
-  { label: "LAB", href: "/lab", code: "11" },
   { label: "CONTACT", href: "/contact", code: "12" },
 ];
 

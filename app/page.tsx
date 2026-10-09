@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import IdentityHero from "@/components/home/identity-hero";
 import HowIBuild from "@/components/home/how-i-build";
+import ScrollChoreography from "@/components/home/scroll-choreography";
 import {
   ContactFinale,
   CredentialsTeaser,
+  CurrentFocus,
   LabTeaser,
   ResearchTeaser,
   SelectedBuilds,
@@ -33,11 +35,13 @@ export const metadata: Metadata = {
  */
 export default function HomePage() {
   return (
-    <>
+    <ScrollChoreography>
       {/* ACT I — IDENTITY */}
       <IdentityHero />
       {/* ACT II — SIGNAL */}
       <SignalAct />
+      {/* CURRENTLY — LIVE FOCUS BOARD */}
+      <CurrentFocus />
       {/* ACT III — SELECTED WORK */}
       <SelectedBuilds />
       {/* SCOPE — WHAT I DO */}
@@ -46,14 +50,14 @@ export default function HomePage() {
       <HowIBuild />
       {/* ACT IV — RESEARCH */}
       <ResearchTeaser />
-      {/* ACT V — LAB */}
+      {/* INSTRUMENTS — LAB */}
       <LabTeaser />
-      {/* PROOF — CREDENTIALS */}
+      {/* ACT V — THE PROOF */}
       <CredentialsTeaser />
       {/* OPPORTUNITY — WORK WITH ME */}
       <WorkTeaser />
-      {/* ACT IX — CONTACT */}
+      {/* ACT VI — THE FUTURE */}
       <ContactFinale />
-    </>
+    </ScrollChoreography>
   );
 }
