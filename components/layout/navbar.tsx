@@ -83,14 +83,14 @@ export default function Navbar() {
           className={`mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 transition-all duration-500 sm:px-8 ${scrolled ? "py-3" : "py-5"
             }`}
         >
-          {/* ---- brand lockup: CN2.DEV stacked above BUKYA NARESH (spec §1) ---- */}
+          {/* ---- brand lockup: CN2.DEV above BUKYA NARESH (spec §1) ---- */}
           <Link
             href="/"
             className="group flex shrink-0 flex-col items-start leading-none"
             aria-label={`${site.identity} — ${site.name} — home`}
           >
-            <span className="display text-[0.95rem] font-bold tracking-tight md:text-base">{site.identity}</span>
-            <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">{site.name}</span>
+            <span className="display text-[0.95rem] font-bold tracking-tight md:text-base text-foreground">{site.name}</span>
+            <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">{site.identity}</span>
           </Link>
 
           {/* ---- desktop nav ---- */}

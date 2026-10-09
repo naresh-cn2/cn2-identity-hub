@@ -1,14 +1,14 @@
 export const site = {
   /** Primary brand — the professional entity is the person. */
-  name: "BUKYA NARESH",
+  name: "CN2.DEV",
   /** Secondary brand — the digital platform. */
-  identity: "CN2.DEV",
+  identity: "BUKYA NARESH",
   /** System tag used in technical chrome. */
   system: "CN2",
   descriptor: "QUANTITATIVE INTELLIGENCE",
   subtitle: "Research · Markets · Data · Engineering",
   description:
-    "CN2.dev — the digital headquarters of Bukya Naresh. Quantitative intelligence through research, markets, data and engineering: deterministic systems for understanding markets.",
+    "CN2.dev — the digital headquarters of CN2.DEV. Quantitative intelligence through research, markets, data and engineering: deterministic systems for understanding markets.",
   status: "OPEN TO SELECTED WORK · RESEARCH · COLLABORATION",
   url: "https://cn2-identity-hub.vercel.app",
   email: "bukyanaresh2003@gmail.com",
