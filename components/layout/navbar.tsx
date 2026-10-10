@@ -13,6 +13,13 @@ import {
 import { useTheme } from "@/components/providers/theme-provider";
 
 /**
+ * Helper for conditional class names
+ */
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
+/**
  * Global navigation (spec §20).
  *
  * A grouped bar rather than a flat route list: WORK, RESEARCH and CREDENTIALS
@@ -79,59 +86,69 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 print:hidden ${scrolled
-          ? "border-line bg-background/85 backdrop-blur-md"
-          : "border-transparent bg-transparent"
-          }`}
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 print:hidden",
+          scrolled ? "border-line bg-background/85 backdrop-blur-md" : "border-transparent bg-transparent"
+        )}
       >
         <div
-          className={`mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 transition-all duration-500 sm:px-8 ${scrolled ? "py-3" : "py-5"
-            }`}
+          className={cn(
+            "mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 transition-all duration-500 sm:px-8",
+            scrolled ? "py-3" : "py-5"
+          )}
         >
           {/* ---- brand lockup: CN2.DEV above BUKYA NARESH (spec §1) ---- */}
-          {isEntryPage ? (
-            // Entry page: brand is rendered by EntryHero, hide here
-            <>
-          ) : (
+          {!isEntryPage && (
             <Link
               href="/"
-              className={`group flex shrink-0 flex-col items-start leading-none ${isEntryPage ? "text-foreground" : "text-foreground
-              }`}
+              className="group flex shrink-0 flex-col items-start leading-none text-foreground"
               aria-label={`${site.identity} — ${site.name} — home`}
             >
-              <span className={`display text-[0.95rem] font-bold tracking-tight md:text-base ${isEntryPage ? "text-white" : "text-foreground
-                } md:text-base`}>
+              <span className="display text-[0.95rem] font-bold tracking-tight md:text-base">
                 {site.name}
               </span>
-              <span className={`label-mono mt-1 text-[9px] ${isEntryPage ? "text-signal" : "text-signal transition-colors group-hover:text-foreground md:text-[10px]"} `}>
+              <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">
                 {site.identity}
               </span>
             </Link>
           )}
 
           {/* ---- desktop navigation: entry page vs portfolio ---- */}
-          <nav className={`hidden items-center gap-1 lg:flex ${isEntryPage ? "flex-1" : "w-auto"} aria-label${isEntryPage ? " Entry" : " Primary"}`}>
+          <nav
+            className={cn(
+              "hidden items-center gap-1 lg:flex",
+              isEntryPage ? "flex-1" : "w-auto"
+            )}
+            aria-label={isEntryPage ? "Entry" : "Primary"}
+          >
             {isEntryPage && (
               <div className="flex gap-2">
                 <Link
                   href="/"
                   aria-current={true}
-                  className={`link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 ${isEntryPage ? "text-signal" : "text-muted hover:text-foreground
-                    }`}
+                  className={cn(
+                    "link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200",
+                    isEntryPage ? "text-signal" : "text-muted hover:text-foreground"
+                  )}
                 >
                   HOME
                 </Link>
                 <Link
                   href="/about"
-                  className={`link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 ${!isEntryPage ? "text-signal" : "text-muted hover:text-foreground
-                    }`}
+                  className={cn(
+                    "link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200",
+                    !isEntryPage ? "text-signal" : "text-muted hover:text-foreground"
+                  )}
                 >
                   ABOUT
                 </Link>
                 <Link
                   href="/contact"
-                  className={`link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 ${pathname === "/contact" ? "text-signal" : "text-muted hover:text-foreground
-                    }`}
+                  className={cn(
+                    "link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200",
+                    // On entry page, CONTACT is never active (pathname is "/")
+                    false ? "text-signal" : "text-muted hover:text-foreground"
+                  )}
                 >
                   CONTACT
                 </Link>
@@ -141,87 +158,95 @@ export default function Navbar() {
             {!isEntryPage && (
               <Link
                 href="/"
-                aria-current={pathname === "/" || isEntryPage ? "page" : undefined}
-                className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${isEntryPage ? "text-signal" : "text-muted hover:text-foreground
-                  }`}
+                aria-current={pathname === "/" ? "page" : undefined}
+                className={cn(
+                  "link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200",
+                  isEntryPage ? "text-signal" : "text-muted hover:text-foreground"
+                )}
               >
                 HOME
               </Link>
             )}
 
-            {!isEntryPage && (
-              {primaryNav.map((item) => {
-                const active = isActiveNavItem(pathname, item);
-                const hasChildren = Boolean(item.children?.length);
-                const isOpen = openGroup === item.label;
+            {!isEntryPage && primaryNav.map((item) => {
+              const active = isActiveNavItem(pathname, item);
+              const hasChildren = Boolean(item.children?.length);
+              const isOpen = openGroup === item.label;
 
-                if (!hasChildren) {
-                  return (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${active ? "text-signal" : "text-muted hover:text-foreground
-                        }`}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                }
-
+              if (!hasChildren) {
                 return (
-                  <div
+                  <Link
                     key={item.label}
-                    className="relative"
-                    onMouseEnter={() => enterGroup(item.label)}
-                    onMouseLeave={scheduleClose}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200",
+                      active ? "text-signal" : "text-muted hover:text-foreground"
+                    )}
                   >
-                    <button
-                      type="button"
-                      onClick={() => (isOpen ? setOpenGroup(null) : enterGroup(item.label))}
-                      aria-expanded={isOpen}
-                      aria-haspopup="true"
-                      className={`label-mono flex items-center gap-1.5 px-3 py-2 text-[10px] transition-colors duration-200 ${active ? "text-signal" : "text-muted hover:text-foreground
-                        }`}
-                    >
-                      {item.label}
-                      <span
-                        aria-hidden="true"
-                        className={`text-[8px] transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                      >
-                        ▾
-                      </span>
-                    </button>
+                    {item.label}
+                  </Link>
+                );
+              }
 
-                    {/* mega-menu panel */}
-                    <div
-                      className={`absolute left-0 top-full pt-2 transition-all duration-200 ${isOpen
-                        ? "pointer-events-auto translate-y-0 opacity-100`
-                        : "pointer-events-none -translate-y-1 opacity-0`
-                        }`}
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => enterGroup(item.label)}
+                  onMouseLeave={scheduleClose}
+                >
+                  <button
+                    type="button"
+                    onClick={() => (isOpen ? setOpenGroup(null) : enterGroup(item.label))}
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    className={cn(
+                      "label-mono flex items-center gap-1.5 px-3 py-2 text-[10px] transition-colors duration-200",
+                      active ? "text-signal" : "text-muted hover:text-foreground"
+                    )}
+                  >
+                    {item.label}
+                    <span
+                      aria-hidden="true"
+                      className={cn("text-[8px] transition-transform duration-200", isOpen ? "rotate-180" : "")}
                     >
-                      <div className="min-w-[15rem] border border-line bg-background/95 p-2 shadow-2xl backdrop-blur-md">
-                        {item.children!.map((child) => {
-                          const childActive = isActiveRoute(pathname, child.href);
-                          return (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              onMouseEnter={() => enterGroup(item.label)}
-                              className={`flex items-baseline justify-between gap-4 px-3 py-2.5 transition-colors duration-150 ${childActive ? "bg-signal-soft text-signal" : "text-muted hover:bg-surface-2 hover:text-foreground
-                                }`}
-                            >
-                              <span className="label-mono text-[11px]">{child.label}</span>
-                              <span className="num-mono text-[9px] text-faint">{child.code}</span>
-                            </Link>
-                          );
-                        })}
-                      </div>
+                      ▾
+                    </span>
+                  </button>
+
+                  {/* mega-menu panel */}
+                  <div
+                    className={cn(
+                      "absolute left-0 top-full pt-2 transition-all duration-200",
+                      isOpen
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none -translate-y-1 opacity-0"
+                    )}
+                  >
+                    <div className="min-w-[15rem] border border-line bg-background/95 p-2 shadow-2xl backdrop-blur-md">
+                      {item.children!.map((child) => {
+                        const childActive = isActiveRoute(pathname, child.href);
+                        return (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onMouseEnter={() => enterGroup(item.label)}
+                            className={cn(
+                              "flex items-baseline justify-between gap-4 px-3 py-2.5 transition-colors duration-150",
+                              childActive ? "bg-signal-soft text-signal" : "text-muted hover:bg-surface-2 hover:text-foreground"
+                            )}
+                          >
+                            <span className="label-mono text-[11px]">{child.label}</span>
+                            <span className="num-mono text-[9px] text-faint">{child.code}</span>
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
-                );
-              })}
-            )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* ---- actions ---- */}
@@ -251,8 +276,10 @@ export default function Navbar() {
           </div>
         </div>
         <div
-          className={`signal-rule transition-transform duration-700 ${scrolled ? "scale-x-100" : "scale-x-0"
-            }`}
+          className={cn(
+            "signal-rule transition-transform duration-700",
+            scrolled ? "scale-x-100" : "scale-x-0"
+          )}
           aria-hidden="true"
         />
       </header>
@@ -260,8 +287,10 @@ export default function Navbar() {
       {/* ---- mobile cinematic menu ---- */}
       <div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 flex flex-col bg-background transition-all duration-500 lg:hidden print:hidden ${menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-          }`}
+        className={cn(
+          "fixed inset-0 z-40 flex flex-col bg-background transition-all duration-500 lg:hidden print:hidden",
+          menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        )}
         aria-hidden={!menuOpen}
       >
         <div className="grid-field h-24 shrink-0" />
@@ -343,10 +372,14 @@ function MobileNavEntry({
         aria-current={active ? "page" : undefined}
         className="group flex items-baseline gap-4 py-3.5 transition-all duration-500"
       >
-        <span className={`num-mono text-xs ${accent ? "text-signal" : "text-research"}`}>{item.code}</span>
+        <span className={cn("num-mono text-xs", accent ? "text-signal" : "text-research")}>
+          {item.code}
+        </span>
         <span
-          className={`display text-2xl transition-colors md:text-3xl ${accent ? "text-signal" : active ? "text-signal" : "text-foreground group-hover:text-signal"
-            }`}
+          className={cn(
+            "display text-2xl transition-colors md:text-3xl",
+            accent ? "text-signal" : active ? "text-signal" : "text-foreground group-hover:text-signal"
+          )}
         >
           {item.label}
         </span>
@@ -357,8 +390,10 @@ function MobileNavEntry({
             <Link
               key={child.href}
               href={child.href}
-              className={`label-mono text-[10px] transition-colors ${isActiveRoute(pathname, child.href) ? "text-signal" : "text-muted hover:text-foreground"
-                }`}
+              className={cn(
+                "label-mono text-[10px] transition-colors",
+                isActiveRoute(pathname, child.href) ? "text-signal" : "text-muted hover:text-foreground"
+              )}
             >
               {child.label}
             </Link>

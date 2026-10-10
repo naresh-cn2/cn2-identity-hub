@@ -1,224 +1,205 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/providers/theme-provider";
-import { useSpring, useMotionValue, useTransform } from "framer-motion";
-import * as THREE from "three";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import CinematicHumanFigure from "@/components/viz/cinematic-human-figure";
 
 /**
- * EntryHero — the cinematic gateway experience.
+ * EntryHero — the cinematic gateway experience using the reference image.
  * 
- * A single-screen 3D environment with a glowing portal and anonymous human figure.
- * Fits the viewport with no required scrolling. The "ENTER CN2.DEV" CTA navigates
- * to the professional portfolio experience.
+ * Full-screen dark environment with the provided image as background.
+ * HTML overlays for brand, slogan, and CTA.
+ * Navigation is handled by the global Navbar component.
  * 
- * Dark theme: black/navy portal, white typography, electric blue lighting, restrained red accent.
- * Light theme: ice-blue surfaces, adapted portal visuals, proper contrast.
+ * Dark theme: uses the image as-is (dark cinematic environment)
+ * Light theme: applies a treatment to maintain legibility while preserving composition
  */
 export default function EntryHero() {
-  const pathname = usePathname();
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
   const dark = theme === "dark";
+  const [mounted, setMounted] = useState(false);
+  const [pointer, setPointer] = useState({ x: 0.5, y: 0.5 });
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Scene state
-  const ref = useRef<THREE.Group>(null);
-  const rotate = useRef(0);
-  const portalPulse = useRef(0);
-
-  // Color palettes
-  const portalColorDark = "#0a0e17";
-  const portalColorLight = "#e2e8f0";
-  const accentColorDark = "#e6392a"; // red accent
-  const accentColorLight = "#e6392a";
-  const blueLightDark = "#1d4ed8";
-  const blueLightLight = "#3b82f6";
-
-  // Pulse animation for portal
+  // Check for reduced motion preference
   useEffect(() => {
-    portalPulse.current = 0;
-    const animate = () => {
-      portalPulse.current += 0.016;
-      animate();
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    // Initialize state
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setReducedMotion(mediaQuery.matches);
+    setMounted(true);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  // Track pointer for subtle parallax
+  useEffect(() => {
+    if (reducedMotion) return;
+    const handleMove = (e: MouseEvent) => {
+      setPointer({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      });
     };
-    animate();
-  }, []);
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, [reducedMotion]);
 
-  // Rotate the portal group
-  useEffect(() => {
-    const raf = requestAnimationFrame(function loop() {
-      rotate.current += 0.008;
-      if (ref.current) {
-        ref.current.rotation.y = Math.sin(rotate.current) * 0.3;
-      }
-      requestAnimationFrame(loop);
-    });
-    return () => cancelAnimationFrame(raf);
-  }, []);
-
-  // CTA click handler
+  // CTA click handler — navigate to /about (professional portfolio)
   const handleEnter = () => {
-    // Brief cinematic transition before navigating
-    setTimeout(() => {
-      router.push("/about");
-    }, 300);
+    router.push("/about");
   };
 
-  return (
-    <div
-      className="min-h-screen relative overflow-x-hidden bg-black dark:bg-gray-900"
-      style={{ minHeight: window.innerHeight + 'px' }}
-    >
-      {/* Portal scene */}
+  // Keyboard accessibility for CTA
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleEnter();
+    }
+  };
+
+  if (!mounted) {
+    // SSR fallback — prevent hydration mismatch
+    return (
       <div
-        ref={ref}
-        className="relative w-full h-full"
-        style={{
-          background: dark ? portalColorDark : portalColorLight,
-        }}
+        className="min-h-screen relative overflow-hidden bg-black"
+        style={{ minHeight: "100dvh" }}
+        role="img"
+        aria-label="CN2.DEV cinematic entry gateway"
       >
-        {/* Portal ring */}
         <div
           className="absolute inset-0"
           style={{
-            borderRadius: "50% 50% 30% 30%",
-            background: radialGradient(dark ? "rgba(29,78,216,0.4)" : "rgba(59,130,246,0.3)"),
-            animation: "portalPulse 3s ease-in-out infinite",
+            backgroundImage: "url('/images/cn2-entry-hero.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
-        
-        {/* Grid network lines in background */}
-        <div
-          className="absolute top-0 left-0 bottom-0 right-0 overflow-hidden"
-          style={{
-            pointerEvents: "none",
-          }}
-        >
-          {renderGridLines(dark)}
-        </div>
-
-        {/* Human figure integrated into the field */}
-        <CinematicHumanFigure theme={theme} className="absolute bottom-0 left-1/2 -translate-x-1/2" />
-
-        {/* Glowing portal core */}
-        <div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{
-            opacity: 0.6 + Math.sin(portalPulse.current) * 0.2,
-            background: radialGradient(
-              dark 
-                ? "rgba(230,57,42,0.15) 0%, transparent 70%" 
-                : "rgba(59,130,246,0.1) 0%, transparent 70%"
-            ),
-          }}
-        >
-          <div
-            className="w-20 h-20 rounded-full border-2 border-signal/50 blur-[20px]"
-            style={{
-              width: "20vw",
-              height: "20vw",
-              borderColor: dark ? "#e6392a" : "#e6392a",
-            }}
-          />
-        </div>
+        <div className="absolute inset-0 bg-black/50" />
       </div>
+    );
+  }
 
-      {/* Legibility scrim */}
+  return (
+    <div
+      ref={containerRef}
+      className="relative min-h-screen w-full overflow-hidden"
+      style={{ minHeight: "100dvh" }}
+      role="main"
+    >
+      {/* ---- Background image layer ---- */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 -z-10"
+        aria-hidden="true"
         style={{
-          background: linearGradient(
-            "to top",
-            "rgba(0,0,0,0.8) 0%",
-            "rgba(0,0,0,0.4) 38%",
-            "transparent 64%"
-          ),
-          linearGradient(
-            "to right",
-            "rgba(0,0,0,0.5) 0%",
-            "transparent 46%"
-          ),
+          backgroundImage: "url('/images/cn2-entry-hero.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          // Subtle parallax on desktop
+          transform: reducedMotion
+            ? "none"
+            : `translate(${(pointer.x - 0.5) * 30}px, ${(pointer.y - 0.5) * 20}px) scale(1.02)`,
+          transition: reducedMotion ? "none" : "transform 0.3s ease-out",
         }}
       />
 
-      {/* Content overlay */}
-      <div
-        className="relative z-10 min-h-full w-full flex flex-col items-center justify-center px-4 py-12 text-center"
+      {/* ---- Light mode treatment: subtle overlay to maintain contrast ---- */}
+      {!dark && (
+        <div
+          className="absolute inset-0 -z-10"
+          aria-hidden="true"
+          style={{
+            background: "linear-gradient(180deg, rgba(238,242,249,0.85) 0%, rgba(228,234,245,0.7) 50%, rgba(238,242,249,0.85) 100%)",
+            mixBlendMode: "overlay",
+          }}
+        />
+      )}
+
+      {/* ---- Dark mode: subtle vignette for depth ---- */}
+      {dark && (
+        <div
+          className="absolute inset-0 -z-10"
+          aria-hidden="true"
+          style={{
+            background: "radial-gradient(ellipse at 30% 20%, rgba(29,78,216,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(230,57,42,0.08) 0%, transparent 50%), linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.5) 100%)",
+          }}
+        />
+      )}
+
+      {/* ---- Main content: brand, slogan, CTA ---- */}
+      <main
+        className="relative min-h-screen w-full flex flex-col items-center justify-center px-4 py-12 text-center"
+        style={{ minHeight: "100dvh" }}
       >
         {/* Brand lockup */}
-        <div className="mb-12 pointer-events-auto">
-          <h1 className="display text-[clamp(2.8rem,10vw,5rem)] font-bold tracking-tight md:text-4xl lg:text-5xl text-white dark:text-gray-50">
+        <div className="mb-10 lg:mb-16 pointer-events-auto">
+          <h1 className="display text-[clamp(3rem,12vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
             CN2.DEV
           </h1>
-          <p className="mt-2 text-[clamp(0.8rem,3vw,1.2rem)] text-gray-300 dark:text-gray-400">
+          <p className="mt-3 label-mono text-[clamp(0.9rem,3vw,1.3rem)] text-signal tracking-wider drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
             BUKYA NARESH
           </p>
         </div>
 
-        {/* Primary CTA */}
-        <div className="mb-8 pointer-events-auto">
+        {/* Slogan */}
+        <div className="mb-12 lg:mb-16 pointer-events-auto max-w-[900px] px-4">
+          <p className="label-mono text-[clamp(0.9rem,3.5vw,1.4rem)] text-white/90 tracking-wider leading-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
+            WHERE IMAGINATION BECOMES REALITY
+          </p>
+        </div>
+
+        {/* Primary CTA: ENTER CN2.DEV */}
+        <div className="mb-8 lg:mb-12 pointer-events-auto">
           <button
             onClick={handleEnter}
-            className="enter-cta bg-signal text-black px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 hover:shadow-2xl hover:shadow-signal/30"
-            aria-label="Enter CN2.DEV portfolio"
+            onKeyDown={handleKeyDown}
+            className="enter-cta inline-flex items-center justify-center gap-3 bg-signal text-black px-10 py-4 rounded-full font-bold text-[clamp(1rem,3vw,1.25rem)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(230,57,42,0.4)] hover:shadow-signal/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            aria-label="Enter CN2.DEV professional portfolio"
+            style={{
+              boxShadow: "0 0 30px rgba(230,57,42,0.25), 0 4px 24px rgba(0,0,0,0.4)",
+            }}
           >
-            ENTER CN2.DEV →
+            ENTER CN2.DEV
+            <span aria-hidden="true" className="transition-transform duration-300">→</span>
           </button>
         </div>
-      </div>
 
-      {/* Mobile menu overlay */}
-      <div
-        className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm pointer-events-none lg:hidden transition-opacity duration-300"
-        aria-hidden="true"
-      >
-        <div className="hidden lg:block" />
-      </div>
+        {/* Subtle scroll indicator */}
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none animate-bounce"
+          style={{ animationDuration: reducedMotion ? "0.01ms" : "2.5s" }}
+          aria-hidden="true"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-white/40"
+          >
+            <path d="M12 5v14M19 12l-7 7-7-7" />
+          </svg>
+        </div>
+      </main>
+
+      <style jsx>{`
+        .enter-cta:hover span {
+          transform: translateX(4px);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-bounce {
+            animation: none;
+          }
+        }
+      `}</style>
     </div>
   );
 }
-
-/* ---- Animated radial gradient utility ---- */
-function radialGradient(colors: string) {
-  return `radial-gradient(ellipse at 30% 20%, ${colors})`;
-}
-
-/* ---- Grid network lines ---- */
-function renderGridLines(dark: boolean) {
-  const color = dark ? "rgba(24,44,92,0.1)" : "rgba(100,115,135,0.08)";
-  const lines = [];
-  const size = 100;
-  
-  // Horizontal lines
-  for (let i = 0; i < window.innerHeight; i += size) {
-    lines.push(
-      <div
-        key={i}
-        className="absolute bottom-0 left-0 right-0 h-px bg-[var(--grid-line)]"
-        style={{ bottom: i + 'px' }}
-      />
-    );
-  }
-  
-  // Vertical lines
-  for (let i = 0; i < window.innerWidth; i += size) {
-    lines.push(
-      <div
-        key={i}
-        className="absolute top-0 bottom-0 left-0 w-px bg-[var(--grid-line)]"
-        style={{ left: i + 'px' }}
-      />
-    );
-  }
-  
-  return lines;
-}
-
-/* ---- Keyframes ---- */
-const linearGradient = (direction: string, colors: string[]) => {
-  return `linear-gradient(${direction}, ${colors.join(", ")})`;
-};
