@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEnvironment } from "@/lib/use-environment";
 import { useTheme } from "@/components/providers/theme-provider";
-import FigureSilhouette from "@/components/viz/figure-silhouette";
+import CinematicHumanFigure from "@/components/viz/cinematic-human-figure";
 
 /**
  * HeroScene — the cinematic hero environment (spec §3, §5, §6, §18).
@@ -116,7 +116,7 @@ export default function HeroScene({ children }: { children: ReactNode }) {
                         : "radial-gradient(120% 92% at 50% 90%, rgba(200,36,24,0.10), transparent 55%), radial-gradient(95% 72% at 50% 14%, rgba(27,77,201,0.13), transparent 62%), linear-gradient(180deg,#f3f7fd 0%,#e9eff9 58%,#dfe7f4 100%)",
                 }}
             >
-                <div className="grid-field absolute inset-0 opacity-45" />
+                <div className="grid-field absolute inset-0 opacity-45"  />
             </div>
 
             {/* ---- WebGL quant field ---- */}
@@ -159,10 +159,7 @@ export default function HeroScene({ children }: { children: ReactNode }) {
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 flex items-end justify-center will-change-transform md:justify-[60%]"
             >
-                <FigureSilhouette
-                    theme={theme}
-                    className="h-[64svh] w-auto max-w-none translate-y-[7%] opacity-95 drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)] md:h-[82svh]"
-                />
+                <CinematicHumanFigure />
             </div>
 
             {/* ---- legibility scrim so text holds contrast over the figure (spec §24) ---- */}

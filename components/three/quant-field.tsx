@@ -37,6 +37,7 @@ interface QuantFieldProps {
     theme?: Theme;
     onReady?: () => void;
     className?: string;
+    children?: import("react").ReactNode;
 }
 
 interface Palette {
@@ -51,7 +52,7 @@ interface Palette {
 
 const PALETTES: Record<Theme, Palette> = {
     dark: {
-        signal: new THREE.Color("#ff4a34"),
+        signal: new THREE.Color("#cc3322"),
         structure: new THREE.Color("#6f96f2"),
         deep: new THREE.Color("#141d38"),
         faint: new THREE.Color("#3c4c78"),
@@ -60,7 +61,7 @@ const PALETTES: Record<Theme, Palette> = {
         pointOpacity: 1,
     },
     light: {
-        signal: new THREE.Color("#c82418"),
+        signal: new THREE.Color("#aa2218"),
         structure: new THREE.Color("#1b4dc9"),
         deep: new THREE.Color("#93a9d6"),
         faint: new THREE.Color("#6b83bb"),
@@ -78,8 +79,12 @@ const VERT = /* glsl */ `
   uniform float uDrift;
   uniform float uRangeMin;
   uniform float uRangeMax;
+  uniform float uFogNear;
+  uniform float uFogFar;
+  uniform vec3 uFogColor;
   varying vec3 vColor;
   varying float vFade;
+  varying float vFogFactor;
   void main() {
     vColor = aColor;
     vec3 p = position;
@@ -90,8 +95,10 @@ const VERT = /* glsl */ `
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     float dist = max(-mv.z, 0.001);
     vFade = smoothstep(26.0, 4.5, dist);
+    float fogFactor = smoothstep(uFogNear, uFogFar, -mv.z);
+    vFade *= (1.0 - fogFactor);
     float tw = 0.72 + 0.28 * sin(uTime * 1.4 + p.x * 2.5 + p.z * 1.7);
-    gl_PointSize = aSize * uPixelRatio * (16.0 / dist) * tw;
+    gl_PointSize = aSize * uPixelRatio * (16.0 / dist) * tw * (1.0 - fogFactor * 0.3);
     gl_Position = projectionMatrix * mv;
   }
 `;
@@ -101,32 +108,18 @@ const FRAG = /* glsl */ `
   uniform float uOpacity;
   varying vec3 vColor;
   varying float vFade;
+  varying float vFogFactor;
+  uniform vec3 uFogColor;
+  varying float vFogFactor;
   void main() {
     vec2 uv = gl_PointCoord - vec2(0.5);
     float d = length(uv);
     float a = smoothstep(0.5, 0.05, d);
     if (a <= 0.002) discard;
     gl_FragColor = vec4(vColor, a * vFade * uOpacity);
+    gl_FragColor.rgb += uFogColor.rgb * vFogFactor;
   }
 `;
-
-function makePointsMaterial(theme: Theme, drift: number, rangeMin = 0, rangeMax = 1) {
-    return new THREE.ShaderMaterial({
-        uniforms: {
-            uTime: { value: 0 },
-            uPixelRatio: { value: 1 },
-            uDrift: { value: drift },
-            uRangeMin: { value: rangeMin },
-            uRangeMax: { value: rangeMax },
-            uOpacity: { value: PALETTES[theme].pointOpacity },
-        },
-        vertexShader: VERT,
-        fragmentShader: FRAG,
-        transparent: true,
-        depthWrite: false,
-        blending: theme === "light" ? THREE.NormalBlending : THREE.AdditiveBlending,
-    });
-}
 
 export default function QuantField({
     scrollRef,
@@ -136,6 +129,7 @@ export default function QuantField({
     theme = "dark",
     onReady,
     className = "",
+    children,
 }: QuantFieldProps) {
     return (
         <Canvas
@@ -160,6 +154,7 @@ export default function QuantField({
                 tier={tier}
                 theme={theme}
             />
+            {children}
         </Canvas>
     );
 }
@@ -198,7 +193,7 @@ function Field({ scrollRef, pointerRef, tier, theme }: FieldProps) {
                 lPos[k * 3] = x;
                 lPos[k * 3 + 1] = heightAt(nx, nz);
                 lPos[k * 3 + 2] = z;
-                if (h > 0.74) c.copy(pal.signal);
+                if (h > 0.82) c.copy(pal.signal);
                 else c.copy(pal.deep).lerp(pal.structure, THREE.MathUtils.clamp((h - 0.15) / 0.55, 0, 1));
                 lCol[k * 3] = c.r;
                 lCol[k * 3 + 1] = c.g;
@@ -250,7 +245,7 @@ function Field({ scrollRef, pointerRef, tier, theme }: FieldProps) {
             nPos[i * 3] = p.x;
             nPos[i * 3 + 1] = p.y;
             nPos[i * 3 + 2] = p.z;
-            const isSignal = i % 5 === 0;
+            const isSignal = i % 8 === 0;
             c.copy(isSignal ? pal.signal : pal.structure);
             nCol[i * 3] = c.r;
             nCol[i * 3 + 1] = c.g;
@@ -286,7 +281,7 @@ function Field({ scrollRef, pointerRef, tier, theme }: FieldProps) {
             mPos[i * 3] = (mrand() * 2 - 1) * 12;
             mPos[i * 3 + 1] = mrand() * 7 - 1.5;
             mPos[i * 3 + 2] = (mrand() * 2 - 1) * 12;
-            c.copy(mrand() > 0.87 ? pal.signal : pal.faint);
+            c.copy(mrand() > 0.95 ? pal.signal : pal.faint);
             mCol[i * 3] = c.r;
             mCol[i * 3 + 1] = c.g;
             mCol[i * 3 + 2] = c.b;
@@ -297,8 +292,42 @@ function Field({ scrollRef, pointerRef, tier, theme }: FieldProps) {
         moteGeo.setAttribute("aColor", new THREE.BufferAttribute(mCol, 3));
         moteGeo.setAttribute("aSize", new THREE.BufferAttribute(mSize, 1));
 
-        const fieldMat = makePointsMaterial(theme, 0);
-        const moteMat = makePointsMaterial(theme, 0.28, -1.5, 5.5);
+        const fieldMat = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uPixelRatio: { value: 1 },
+          uDrift: { value: 0 },
+          uRangeMin: { value: 0 },
+          uRangeMax: { value: 1 },
+          uOpacity: { value: PALETTES[theme].pointOpacity },
+          uFogNear: { value: 4.0 },
+          uFogFar: { value: 12.0 },
+          uFogColor: { value: new THREE.Color(0x0a0a0c) },
+        },
+        vertexShader: VERT,
+        fragmentShader: FRAG,
+        transparent: true,
+        depthWrite: false,
+        blending: theme === "light" ? THREE.NormalBlending : THREE.AdditiveBlending,
+      }); // Add subtle drift for depth
+        const moteMat = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uPixelRatio: { value: 1 },
+          uDrift: { value: 0.15 },
+          uRangeMin: { value: -2.0 },
+          uRangeMax: { value: 6.0 },
+          uOpacity: { value: PALETTES[theme].pointOpacity * 0.6 },
+          uFogNear: { value: 4.0 },
+          uFogFar: { value: 12.0 },
+          uFogColor: { value: new THREE.Color(0x0a0a0c) },
+        },
+        vertexShader: VERT,
+        fragmentShader: FRAG,
+        transparent: true,
+        depthWrite: false,
+        blending: theme === "light" ? THREE.NormalBlending : THREE.AdditiveBlending,
+      }); // Enhanced depth range
 
         return { landGeo, surfGeo, surfMat, nodeGeo, edgeGeo, edgeMat, moteGeo, fieldMat, moteMat };
     }, [field, tier, theme, pal]);
@@ -327,6 +356,10 @@ function Field({ scrollRef, pointerRef, tier, theme }: FieldProps) {
         assetsRef.current.moteMat.uniforms.uTime.value = t;
         assetsRef.current.fieldMat.uniforms.uPixelRatio.value = pr;
         assetsRef.current.moteMat.uniforms.uPixelRatio.value = pr;
+        assetsRef.current.fieldMat.uniforms.uFogNear.value = 4.0 + Math.sin(t * 0.1) * 0.5;
+        assetsRef.current.fieldMat.uniforms.uFogFar.value = 12.0 + Math.cos(t * 0.08) * 1.0;
+        assetsRef.current.moteMat.uniforms.uFogNear.value = 4.0 + Math.sin(t * 0.1) * 0.5;
+        assetsRef.current.moteMat.uniforms.uFogFar.value = 12.0 + Math.cos(t * 0.08) * 1.0;
 
         // ACT I (the human) → ACT II (the field): pull back and rise as scroll advances
         const s = THREE.MathUtils.clamp(scrollRef.current, 0, 1);

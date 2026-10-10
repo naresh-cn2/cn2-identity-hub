@@ -21,9 +21,7 @@ export default function IdentityHero() {
           <div data-hero-title className="max-w-2xl will-change-transform">
             <Reveal>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                <p className="label-mono text-muted">
-                  <span className="text-signal">{site.identity}</span> — DIGITAL HEADQUARTERS
-                </p>
+                
                 <p className="label-mono text-research">{site.descriptor}</p>
               </div>
             </Reveal>
