@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/providers/theme-provider";
-import Link from "next/link";
-import { Sun, Moon } from "lucide-react";
+import { TextReactive } from "@/components/ui/text-reactive";
 
 /**
  * EntryHero — the cinematic gateway experience matching the reference image.
@@ -390,64 +389,6 @@ export default function EntryHero() {
         />
       )}
 
-      {/* ---- Premium Navigation Bar ---- */}
-      <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 lg:px-12 py-4 pointer-events-auto">
-        {/* Left: Brand */}
-        <div className="flex flex-col items-start leading-none z-20">
-          <span className="display text-[clamp(1rem,3vw,1.3rem)] font-bold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
-            CN2.DEV
-          </span>
-          <span className="label-mono mt-1 text-[clamp(0.6rem,2vw,0.8rem)] text-signal tracking-wider drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
-            BUKYA NARESH
-          </span>
-        </div>
-
-        {/* Center: Navigation */}
-        <nav className="hidden lg:flex items-center gap-8 z-20" aria-label="Entry page navigation">
-          <Link
-            href="/"
-            aria-current="page"
-            className="label-mono text-[clamp(0.65rem,2vw,0.8rem)] text-white/80 transition-colors duration-200 hover:text-white hover:text-signal relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-current after:transition-width after:duration-300 hover:after:w-full"
-          >
-            HOME
-          </Link>
-          <Link
-            href="/about"
-            className="label-mono text-[clamp(0.65rem,2vw,0.8rem)] text-white/80 transition-colors duration-200 hover:text-white hover:text-signal relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-current after:transition-width after:duration-300 hover:after:w-full"
-          >
-            ABOUT
-          </Link>
-          <Link
-            href="/contact"
-            className="label-mono text-[clamp(0.65rem,2vw,0.8rem)] text-white/80 transition-colors duration-200 hover:text-white hover:text-signal relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-current after:transition-width after:duration-300 hover:after:w-full flex items-center gap-2"
-          >
-            CONTACT
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-signal transition-transform duration-300 group-hover:rotate-45">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          </Link>
-        </nav>
-
-        {/* Right: Theme Toggle */}
-        <button
-          onClick={toggle}
-          className="z-20 relative w-10 h-10 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-          aria-pressed={dark ? "false" : "true"}
-        >
-          {dark ? (
-            <Moon className="w-5 h-5 text-white transition-transform duration-500 rotate-[-90deg] scale-100" />
-          ) : (
-            <Sun className="w-5 h-5 text-gray-900 transition-transform duration-500 rotate-0 scale-100" />
-          )}
-          <style jsx>{`
-            button[data-theme="dark"] .sun { transform: rotate(90deg) scale(0); }
-            button[data-theme="light"] .moon { transform: rotate(-90deg) scale(0); }
-          `}</style>
-        </button>
-      </header>
-
       {/* ---- Main content: LEFT-ALIGNED to match reference composition ---- */}
       <main
         className="relative h-screen w-full flex items-center justify-start px-6 lg:px-12 pt-20"
@@ -456,20 +397,31 @@ export default function EntryHero() {
         <div className="w-full max-w-[600px] pointer-events-auto">
           {/* Brand lockup - LEFT aligned */}
           <div className="mb-10 lg:mb-14">
-            <h1 className="display text-[clamp(3.5rem,10vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.6)] leading-[0.85]">
-              CN2.DEV
-            </h1>
-            <p className="mt-4 label-mono text-[clamp(1rem,3vw,1.4rem)] text-signal tracking-[0.3em] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
+            {/* CN2.DEV with split/glitch-cut effect */}
+            <div className="relative">
+              <TextReactive id="cn2dev-heading" color="white" as="h1" className="display text-[clamp(3.5rem,10vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.6)] leading-[0.85]">
+                CN2.DEV
+              </TextReactive>
+              {/* Split/glitch-cut line through the text */}
+              <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-white/90 origin-center -translate-y-1/2 rotate-[-1.5deg] transform" aria-hidden="true" />
+              {/* Subtle glitch offset */}
+              <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-signal/60 origin-center -translate-y-1/2 translate-x-[2px] rotate-[1.5deg] transform" aria-hidden="true" />
+            </div>
+            <TextReactive id="bukya-name" color="red" as="p" className="mt-4 label-mono text-[clamp(1rem,3vw,1.4rem)] text-signal tracking-[0.3em] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
               BUKYA NARESH
-            </p>
+            </TextReactive>
           </div>
 
-          {/* Slogan - LEFT aligned with divider */}
+          {/* Slogan - LEFT aligned with WHITE divider */}
           <div className="mb-12 lg:mb-16 max-w-[520px] relative">
-            <div className="w-12 h-px bg-signal mb-6" />
-            <p className="label-mono text-[clamp(1rem,3.5vw,1.5rem)] text-white/95 tracking-[0.25em] leading-normal drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
+            <div className="w-12 h-px bg-white/90 mb-6" />
+            <TextReactive id="main-slogan" color="white" as="p" className="label-mono text-[clamp(1rem,3.5vw,1.5rem)] text-white/95 tracking-[0.25em] leading-normal drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
               WHERE IMAGINATION BECOMES REALITY
-            </p>
+            </TextReactive>
+            {/* Supporting quotation */}
+            <TextReactive id="supporting-quote" color="white" as="p" className="mt-8 text-[clamp(0.85rem,2.5vw,1.15rem)] text-white/60 italic leading-relaxed tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
+              &ldquo;Where imagination begins, reality takes shape.&rdquo;
+            </TextReactive>
           </div>
 
           {/* Primary CTA: ENTER CN2.DEV - Premium outlined pill button */}

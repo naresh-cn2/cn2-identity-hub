@@ -11,7 +11,7 @@ import {
   type NavItem,
 } from "@/data/site";
 import { useTheme } from "@/components/providers/theme-provider";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Search } from "lucide-react";
 
 /**
  * Helper for conditional class names
@@ -255,7 +255,14 @@ export default function Navbar() {
           </nav>
 
           {/* ---- actions ---- */}
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-3">
+            <button
+              onClick={openPalette}
+              className="relative w-10 h-10 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:scale-105 hover:border-signal/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              aria-label="Open search"
+            >
+              <Search className="w-5 h-5 text-white/80 transition-colors duration-200 group-hover:text-signal" />
+            </button>
             <button
               onClick={toggle}
               className="relative w-10 h-10 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
@@ -267,13 +274,6 @@ export default function Navbar() {
               ) : (
                 <Sun className="w-5 h-5 text-gray-900 transition-transform duration-500" />
               )}
-            </button>
-            <button
-              onClick={openPalette}
-              className="label-mono hidden border border-line px-3 py-1.5 text-muted transition-colors duration-200 hover:border-line-strong hover:text-foreground lg:block"
-              aria-label="Open command palette"
-            >
-              ⌘K
             </button>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -343,11 +343,15 @@ export default function Navbar() {
               LINKS
             </Link>
           </div>
-          <div className="flex items-center gap-4">
-            <p className="label-mono text-[10px] text-signal">{site.identity}</p>
-            <button onClick={openPalette} className="label-mono text-muted" aria-label="Open command palette">
-              ⌘K
+          <div className="flex items-center gap-3">
+            <button
+              onClick={openPalette}
+              className="relative w-10 h-10 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:scale-105 hover:border-signal/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              aria-label="Open search"
+            >
+              <Search className="w-5 h-5 text-white/80 transition-colors duration-200 group-hover:text-signal" />
             </button>
+            <p className="label-mono text-[10px] text-signal">{site.identity}</p>
           </div>
         </div>
       </div>
