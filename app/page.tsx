@@ -38,5 +38,6 @@ export default function HomePage() {
   // Entry page: / — cinematic gateway only
   // Other routes are rendered by their respective page components
   // (/about, /builds, /research, etc.) via Next.js file-based routing
+  // @entry-hero-v2 — cinematic gateway rendering
   return <EntryHero />;
 }
