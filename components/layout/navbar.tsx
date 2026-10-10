@@ -20,10 +20,15 @@ import { useTheme } from "@/components/providers/theme-provider";
  * direct. LAB lives under WORK; WORK WITH ME stays reachable through the footer,
  * the palette and /contact rather than the bar. The menu is keyboard-reachable
  * and closes on navigation or Escape.
+ *
+ * The entry page (/) shows a simplified navigation: HOME | ABOUT | CONTACT.
+ * Portfolio routes (/about, /builds, /research, etc.) show the full primary
+ * navigation with grouped mega-menus.
  */
 export default function Navbar() {
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
+  const isEntryPage = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -84,96 +89,139 @@ export default function Navbar() {
             }`}
         >
           {/* ---- brand lockup: CN2.DEV above BUKYA NARESH (spec §1) ---- */}
-          <Link
-            href="/"
-            className="group flex shrink-0 flex-col items-start leading-none"
-            aria-label={`${site.identity} — ${site.name} — home`}
-          >
-            <span className="display text-[0.95rem] font-bold tracking-tight md:text-base text-foreground">{site.name}</span>
-            <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">{site.identity}</span>
-          </Link>
-
-          {/* ---- desktop nav ---- */}
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          {isEntryPage ? (
+            // Entry page: brand is rendered by EntryHero, hide here
+            <>
+          ) : (
             <Link
               href="/"
-              aria-current={pathname === "/" ? "page" : undefined}
-              className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${pathname === "/" ? "text-signal" : "text-muted hover:text-foreground"
-                }`}
+              className={`group flex shrink-0 flex-col items-start leading-none ${isEntryPage ? "text-foreground" : "text-foreground
+              }`}
+              aria-label={`${site.identity} — ${site.name} — home`}
             >
-              HOME
+              <span className={`display text-[0.95rem] font-bold tracking-tight md:text-base ${isEntryPage ? "text-white" : "text-foreground
+                } md:text-base`}>
+                {site.name}
+              </span>
+              <span className={`label-mono mt-1 text-[9px] ${isEntryPage ? "text-signal" : "text-signal transition-colors group-hover:text-foreground md:text-[10px]"} `}>
+                {site.identity}
+              </span>
             </Link>
-            {primaryNav.map((item) => {
-              const active = isActiveNavItem(pathname, item);
-              const hasChildren = Boolean(item.children?.length);
-              const isOpen = openGroup === item.label;
+          )}
 
-              if (!hasChildren) {
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${active ? "text-signal" : "text-muted hover:text-foreground"
-                      }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              }
-
-              return (
-                <div
-                  key={item.label}
-                  className="relative"
-                  onMouseEnter={() => enterGroup(item.label)}
-                  onMouseLeave={scheduleClose}
+          {/* ---- desktop navigation: entry page vs portfolio ---- */}
+          <nav className={`hidden items-center gap-1 lg:flex ${isEntryPage ? "flex-1" : "w-auto"} aria-label${isEntryPage ? " Entry" : " Primary"}`}>
+            {isEntryPage && (
+              <div className="flex gap-2">
+                <Link
+                  href="/"
+                  aria-current={true}
+                  className={`link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 ${isEntryPage ? "text-signal" : "text-muted hover:text-foreground
+                    }`}
                 >
-                  <button
-                    type="button"
-                    onClick={() => (isOpen ? setOpenGroup(null) : enterGroup(item.label))}
-                    aria-expanded={isOpen}
-                    aria-haspopup="true"
-                    className={`label-mono flex items-center gap-1.5 px-3 py-2 text-[10px] transition-colors duration-200 ${active ? "text-signal" : "text-muted hover:text-foreground"
-                      }`}
-                  >
-                    {item.label}
-                    <span
-                      aria-hidden="true"
-                      className={`text-[8px] transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                    >
-                      ▾
-                    </span>
-                  </button>
+                  HOME
+                </Link>
+                <Link
+                  href="/about"
+                  className={`link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 ${!isEntryPage ? "text-signal" : "text-muted hover:text-foreground
+                    }`}
+                >
+                  ABOUT
+                </Link>
+                <Link
+                  href="/contact"
+                  className={`link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 ${pathname === "/contact" ? "text-signal" : "text-muted hover:text-foreground
+                    }`}
+                >
+                  CONTACT
+                </Link>
+              </div>
+            )}
 
-                  {/* mega-menu panel */}
+            {!isEntryPage && (
+              <Link
+                href="/"
+                aria-current={pathname === "/" || isEntryPage ? "page" : undefined}
+                className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${isEntryPage ? "text-signal" : "text-muted hover:text-foreground
+                  }`}
+              >
+                HOME
+              </Link>
+            )}
+
+            {!isEntryPage && (
+              {primaryNav.map((item) => {
+                const active = isActiveNavItem(pathname, item);
+                const hasChildren = Boolean(item.children?.length);
+                const isOpen = openGroup === item.label;
+
+                if (!hasChildren) {
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={`link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200 ${active ? "text-signal" : "text-muted hover:text-foreground
+                        }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+
+                return (
                   <div
-                    className={`absolute left-0 top-full pt-2 transition-all duration-200 ${isOpen
-                      ? "pointer-events-auto translate-y-0 opacity-100"
-                      : "pointer-events-none -translate-y-1 opacity-0"
-                      }`}
+                    key={item.label}
+                    className="relative"
+                    onMouseEnter={() => enterGroup(item.label)}
+                    onMouseLeave={scheduleClose}
                   >
-                    <div className="min-w-[15rem] border border-line bg-background/95 p-2 shadow-2xl backdrop-blur-md">
-                      {item.children!.map((child) => {
-                        const childActive = isActiveRoute(pathname, child.href);
-                        return (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            onMouseEnter={() => enterGroup(item.label)}
-                            className={`flex items-baseline justify-between gap-4 px-3 py-2.5 transition-colors duration-150 ${childActive ? "bg-signal-soft text-signal" : "text-muted hover:bg-surface-2 hover:text-foreground"
-                              }`}
-                          >
-                            <span className="label-mono text-[11px]">{child.label}</span>
-                            <span className="num-mono text-[9px] text-faint">{child.code}</span>
-                          </Link>
-                        );
-                      })}
+                    <button
+                      type="button"
+                      onClick={() => (isOpen ? setOpenGroup(null) : enterGroup(item.label))}
+                      aria-expanded={isOpen}
+                      aria-haspopup="true"
+                      className={`label-mono flex items-center gap-1.5 px-3 py-2 text-[10px] transition-colors duration-200 ${active ? "text-signal" : "text-muted hover:text-foreground
+                        }`}
+                    >
+                      {item.label}
+                      <span
+                        aria-hidden="true"
+                        className={`text-[8px] transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      >
+                        ▾
+                      </span>
+                    </button>
+
+                    {/* mega-menu panel */}
+                    <div
+                      className={`absolute left-0 top-full pt-2 transition-all duration-200 ${isOpen
+                        ? "pointer-events-auto translate-y-0 opacity-100`
+                        : "pointer-events-none -translate-y-1 opacity-0`
+                        }`}
+                    >
+                      <div className="min-w-[15rem] border border-line bg-background/95 p-2 shadow-2xl backdrop-blur-md">
+                        {item.children!.map((child) => {
+                          const childActive = isActiveRoute(pathname, child.href);
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onMouseEnter={() => enterGroup(item.label)}
+                              className={`flex items-baseline justify-between gap-4 px-3 py-2.5 transition-colors duration-150 ${childActive ? "bg-signal-soft text-signal" : "text-muted hover:bg-surface-2 hover:text-foreground
+                                }`}
+                            >
+                              <span className="label-mono text-[11px]">{child.label}</span>
+                              <span className="num-mono text-[9px] text-faint">{child.code}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            )}
           </nav>
 
           {/* ---- actions ---- */}
@@ -197,7 +245,6 @@ export default function Navbar() {
               className="label-mono border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground lg:hidden"
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
               {menuOpen ? "CLOSE" : "MENU"}
             </button>

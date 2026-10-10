@@ -1,63 +1,40 @@
-import type { Metadata } from "next";
-import IdentityHero from "@/components/home/identity-hero";
-import HowIBuild from "@/components/home/how-i-build";
-import ScrollChoreography from "@/components/home/scroll-choreography";
-import {
-  ContactFinale,
-  CredentialsTeaser,
-  CurrentFocus,
-  LabTeaser,
-  ResearchTeaser,
-  SelectedBuilds,
-  SignalAct,
-  WhatIDo,
-  WorkTeaser,
-} from "@/components/home/home-sections";
-import { site } from "@/data/site";
+import type { Metadata } from 'next';
+import { site } from '@/data/site';
+
 
 export const metadata: Metadata = {
   title: `${site.name} — ${site.identity}`,
   description: site.description,
-  alternates: { canonical: "/" },
+  alternates: { canonical: '/' },
   openGraph: {
     title: `${site.name} — ${site.identity}`,
     description: site.description,
-    type: "website",
+    type: 'website',
   },
 };
 
+
 /**
- * The homepage is the narrative entrance, not the archive.
- *
- * Each act introduces one thing and hands off to the destination that owns it:
- * builds, research, lab, certifications, capabilities. Nothing is duplicated in
- * full here — that separation is the point.
+ * Cinematic entry gateway — single-screen experience for route /.
+ * 
+ * Transforms the website into two connected experiences:
+ * 
+ * EXPERIENCE A — THE CINEMATIC ENTRY PAGE (route /)
+ *   A premium dark computational entrance with 3D portal and human figure.
+ *   Fits the viewport with no required scrolling.
+ *   Primary CTA: ENTER CN2.DEV → navigates to the portfolio.
+ * 
+ * EXPERIENCE B — THE PROFESSIONAL PORTFOLIO (route /about and other routes)
+ *   Contains the full professional website: personal background, education,
+ *   skills, projects, research, capabilities, certifications, contact.
+ * 
+ * The entry page introduces the identity. The portfolio contains the substance.
+ * Do not place every project, research article, capability, and professional
+ * detail on the entry page.
  */
 export default function HomePage() {
-  return (
-    <ScrollChoreography>
-      {/* ACT I — IDENTITY */}
-      <IdentityHero />
-      {/* ACT II — SIGNAL */}
-      <SignalAct />
-      {/* CURRENTLY — LIVE FOCUS BOARD */}
-      <CurrentFocus />
-      {/* ACT III — SELECTED WORK */}
-      <SelectedBuilds />
-      {/* SCOPE — WHAT I DO */}
-      <WhatIDo />
-      {/* METHOD — HOW I BUILD */}
-      <HowIBuild />
-      {/* ACT IV — RESEARCH */}
-      <ResearchTeaser />
-      {/* INSTRUMENTS — LAB */}
-      <LabTeaser />
-      {/* ACT V — THE PROOF */}
-      <CredentialsTeaser />
-      {/* OPPORTUNITY — WORK WITH ME */}
-      <WorkTeaser />
-      {/* ACT VI — THE FUTURE */}
-      <ContactFinale />
-    </ScrollChoreography>
-  );
+  // Entry page: / — cinematic gateway only
+  // Other routes are rendered by their respective page components
+  // (/about, /builds, /research, etc.) via Next.js file-based routing
+  return <EntryHero />;
 }
