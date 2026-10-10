@@ -434,6 +434,93 @@ body {
   }
 }
 
+/* ---------------- CN2.DEV split-letter glitch-cut treatment ---------------- */
+
+.cn2-split-letter {
+  position: relative;
+  display: inline-block;
+}
+
+.cn2-split-letter::before,
+.cn2-split-letter::after {
+  content: "CN2.DEV";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cn2-split-letter::before {
+  clip-path: polygon(0 0, 100% 0, 100% 46%, 0 46%);
+  transform: translate(-2px, -1px);
+  opacity: 0.9;
+}
+
+.cn2-split-letter::after {
+  clip-path: polygon(0 54%, 100% 54%, 100% 100%, 0 100%);
+  transform: translate(2px, 1px);
+  opacity: 0.9;
+}
+
+@keyframes cn2-cut-shift {
+  0% { transform: translate(-2px, -1px); }
+  50% { transform: translate(-5px, -3px); }
+  100% { transform: translate(-2px, -1px); }
+}
+
+@keyframes cn2-cut-shift-reverse {
+  0% { transform: translate(2px, 1px); }
+  50% { transform: translate(5px, 3px); }
+  100% { transform: translate(2px, 1px); }
+}
+
+.cn2-split-letter:hover::before {
+  animation: cn2-cut-shift 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cn2-split-letter:hover::after {
+  animation: cn2-cut-shift-reverse 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ---------------- text-reactive water effect ---------------- */
+
+.water-ripple {
+  position: relative;
+  display: inline-block;
+  transition: text-shadow 0.3s ease;
+}
+
+/* White text → red ripple glow */
+.water-ripple-text-white.water-ripple-active {
+  text-shadow: 
+    0 0 8px rgba(230, 57, 42, 0.4),
+    0 0 20px rgba(230, 57, 42, 0.2),
+    0 0 40px rgba(230, 57, 42, 0.1);
+}
+
+/* Red text → white ripple glow */
+.water-ripple-text-red.water-ripple-active {
+  text-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.15);
+}
+
+/* Dark text → light ripple glow */
+.water-ripple-text-dark.water-ripple-active {
+  text-shadow: 
+    0 0 8px rgba(200, 220, 255, 0.4),
+    0 0 20px rgba(200, 220, 255, 0.2),
+    0 0 40px rgba(200, 220, 255, 0.1);
+}
+
+/* Subtle scale effect on active */
+.water-ripple.water-ripple-active {
+  transform: scale(1.02);
+}
+
 /* ---------------- entry hero cinematic styles ---------------- */
 
 .enter-cta:hover {

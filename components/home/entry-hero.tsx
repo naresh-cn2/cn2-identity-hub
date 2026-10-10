@@ -3,21 +3,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/components/providers/theme-provider";
-import { TextReactive } from "@/components/ui/text-reactive";
 
 /**
  * EntryHero — the cinematic gateway experience matching the reference image.
  * 
  * Full-screen dark environment with the provided image as background.
- * HTML overlays for brand, slogan, CTA, and premium navigation.
+ * HTML overlays for brand, slogan, and CTA aligned to the LEFT,
+ * preserving the character and portal on the RIGHT side of the image.
+ * Navigation is handled by the global Navbar component (single source).
  * Cinematic effects: portal glow, red ring, animated smoke, reflective floor, network lines.
- * 
- * Dark theme: uses the image as-is (dark cinematic environment)
- * Light theme: applies a treatment to maintain legibility while preserving composition
  */
 export default function EntryHero() {
   const router = useRouter();
-  const { theme, toggle } = useTheme();
+  const { theme } = useTheme();
   const dark = theme === "dark";
   const [mounted, setMounted] = useState(false);
   const [pointer, setPointer] = useState({ x: 0.5, y: 0.5 });
@@ -37,7 +35,6 @@ export default function EntryHero() {
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    // Initialize state
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setReducedMotion(mediaQuery.matches);
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -53,7 +50,6 @@ export default function EntryHero() {
       const x = e.clientX / window.innerWidth;
       const y = e.clientY / window.innerHeight;
       setPointer({ x, y });
-      // Calculate distortion intensity based on proximity to text elements
       setPointerDistortion({ x, y, intensity: 1 });
     };
     window.addEventListener("mousemove", handleMove, { passive: true });
@@ -65,7 +61,7 @@ export default function EntryHero() {
     if (reducedMotion) return;
     
     // Initialize smoke particles
-    const smokeParticles = Array.from({ length: 40 }, (_, i) => ({
+    const smokeParticles = Array.from({ length: 40 }, () => ({
       x: Math.random() * window.innerWidth,
       y: window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.5,
       size: 60 + Math.random() * 120,
@@ -98,16 +94,7 @@ export default function EntryHero() {
     floorReflectionsRef.current = floorReflections;
   }, [reducedMotion]);
 
-  // Handle resize
-  useEffect(() => {
-    const handleResize = () => {
-      // Reinitialize on resize if needed
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Canvas drawing function - defined before animation loop
+  // Canvas drawing function
   const drawCanvasEffects = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -133,7 +120,6 @@ export default function EntryHero() {
       ctx.lineWidth = 0.5;
       ctx.stroke();
       
-      // Draw signal nodes
       if (pulse > 0.7) {
         ctx.beginPath();
         ctx.arc(line.x2, line.y2, 2, 0, Math.PI * 2);
@@ -165,7 +151,6 @@ export default function EntryHero() {
     const portalY = h * 0.42;
     const portalR = Math.min(w, h) * 0.18;
     
-    // Portal cyan-white glow
     const portalGlow = ctx.createRadialGradient(
       portalX, portalY, portalR * 0.3,
       portalX, portalY, portalR * 1.5
@@ -197,7 +182,6 @@ export default function EntryHero() {
     ctx.arc(0, 0, portalR, -Math.PI / 2, Math.PI * 1.5);
     ctx.stroke();
     
-    // Moving highlight on ring
     const highlightAngle = redRingRotationRef.current + Math.PI / 4;
     const hx = Math.cos(highlightAngle) * portalR;
     const hy = Math.sin(highlightAngle) * portalR;
@@ -223,7 +207,7 @@ export default function EntryHero() {
     });
     ctx.restore();
 
-    // Draw pointer distortion field (subtle ripple)
+    // Draw pointer distortion field
     if (pointerDistortion.intensity > 0.1) {
       ctx.save();
       const distortR = 120;
@@ -251,7 +235,6 @@ export default function EntryHero() {
       portalPulseRef.current = (timeRef.current * 0.5) % (Math.PI * 2);
       redRingRotationRef.current = (timeRef.current * 0.15) % (Math.PI * 2);
       
-      // Update smoke particles
       smokeParticlesRef.current.forEach((particle) => {
         particle.y -= particle.speed;
         particle.phase += 0.003;
@@ -261,18 +244,15 @@ export default function EntryHero() {
         }
       });
 
-      // Update network line pulses
       networkLinesRef.current.forEach((line) => {
         line.pulse = (Math.sin(timeRef.current * 2 + line.phase) + 1) / 2;
       });
 
-      // Update floor reflections
       floorReflectionsRef.current.forEach((reflection) => {
         reflection.phase += 0.005;
         reflection.opacity = 0.01 + Math.sin(reflection.phase) * 0.02;
       });
 
-      // Trigger re-render for canvas effects
       if (canvasRef.current) {
         drawCanvasEffects();
       }
@@ -285,6 +265,13 @@ export default function EntryHero() {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
   }, [drawCanvasEffects, reducedMotion]);
+
+  // Handle resize
+  useEffect(() => {
+    const handleResize = () => {};
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // CTA click handler — navigate to /about (professional portfolio)
   const handleEnter = () => {
@@ -300,7 +287,6 @@ export default function EntryHero() {
   };
 
   if (!mounted) {
-    // SSR fallback — prevent hydration mismatch
     return (
       <div
         className="relative min-h-screen w-full overflow-hidden bg-black"
@@ -357,16 +343,14 @@ export default function EntryHero() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          // Subtle parallax on desktop
           transform: reducedMotion
             ? "none"
             : `translate(${(pointer.x - 0.5) * 40}px, ${(pointer.y - 0.5) * 30}px) scale(1.03)`,
           transition: reducedMotion ? "none" : "transform 0.5s ease-out",
-          filter: reducedMotion ? "none" : "brightness(1.02) contrast(1.02)",
         }}
       />
 
-      {/* ---- Light mode treatment: subtle overlay to maintain contrast ---- */}
+      {/* ---- Light mode treatment ---- */}
       {!dark && (
         <div
           className="absolute inset-0 -z-10"
@@ -378,7 +362,7 @@ export default function EntryHero() {
         />
       )}
 
-      {/* ---- Dark mode: minimal vignette only at edges, keep portal visible ---- */}
+      {/* ---- Dark mode: minimal vignette ---- */}
       {dark && (
         <div
           className="absolute inset-0 -z-10"
@@ -389,51 +373,46 @@ export default function EntryHero() {
         />
       )}
 
-      {/* ---- Main content: LEFT-ALIGNED to match reference composition ---- */}
+      {/* ---- Main content: LEFT-ALIGNED ---- */}
       <main
         className="relative h-screen w-full flex items-center justify-start px-6 lg:px-12 pt-20"
         style={{ maxHeight: "100dvh" }}
       >
         <div className="w-full max-w-[600px] pointer-events-auto">
-          {/* Brand lockup - LEFT aligned */}
+          {/* Brand lockup - LEFT aligned with split-letter effect */}
           <div className="mb-10 lg:mb-14">
-            {/* CN2.DEV with split/glitch-cut effect */}
-            <div className="relative">
-              <TextReactive id="cn2dev-heading" color="white" as="h1" className="display text-[clamp(3.5rem,10vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.6)] leading-[0.85]">
-                CN2.DEV
-              </TextReactive>
-              {/* Split/glitch-cut line through the text */}
-              <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-white/90 origin-center -translate-y-1/2 rotate-[-1.5deg] transform" aria-hidden="true" />
-              {/* Subtle glitch offset */}
-              <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-signal/60 origin-center -translate-y-1/2 translate-x-[2px] rotate-[1.5deg] transform" aria-hidden="true" />
-            </div>
-            <TextReactive id="bukya-name" color="red" as="p" className="mt-4 label-mono text-[clamp(1rem,3vw,1.4rem)] text-signal tracking-[0.3em] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
+            <h1 className="display text-[clamp(3.5rem,10vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.6)] leading-[0.85] cn2-split-letter">
+              CN2.DEV
+            </h1>
+            <p className="mt-4 label-mono text-[clamp(1rem,3vw,1.4rem)] text-signal tracking-[0.3em] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
               BUKYA NARESH
-            </TextReactive>
+            </p>
           </div>
 
-          {/* Slogan - LEFT aligned with WHITE divider */}
-          <div className="mb-12 lg:mb-16 max-w-[520px] relative">
-            <div className="w-12 h-px bg-white/90 mb-6" />
-            <TextReactive id="main-slogan" color="white" as="p" className="label-mono text-[clamp(1rem,3.5vw,1.5rem)] text-white/95 tracking-[0.25em] leading-normal drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
+          {/* White divider */}
+          <div className="w-16 h-px bg-white mb-8 opacity-80" />
+
+          {/* Slogan - LEFT aligned */}
+          <div className="mb-12 lg:mb-16 max-w-[520px]">
+            <p className="label-mono text-[clamp(1rem,3.5vw,1.5rem)] text-white/95 tracking-[0.25em] leading-normal drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
               WHERE IMAGINATION BECOMES REALITY
-            </TextReactive>
-            {/* Supporting quotation */}
-            <TextReactive id="supporting-quote" color="white" as="p" className="mt-8 text-[clamp(0.85rem,2.5vw,1.15rem)] text-white/60 italic leading-relaxed tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
-              &ldquo;Where imagination begins, reality takes shape.&rdquo;
-            </TextReactive>
+            </p>
           </div>
 
-          {/* Primary CTA: ENTER CN2.DEV - Premium outlined pill button */}
+          {/* Supporting quotation */}
+          <div className="mb-12 max-w-[480px]">
+            <p className="text-sm text-white/60 italic leading-relaxed">
+              &ldquo;Where imagination begins, reality takes shape.&rdquo;
+            </p>
+          </div>
+
+          {/* Primary CTA: ENTER CN2.DEV */}
           <div className="pointer-events-auto">
             <button
               onClick={handleEnter}
               onKeyDown={handleKeyDown}
               className="enter-cta relative inline-flex items-center gap-0 bg-transparent text-white px-8 py-4 rounded-full font-bold text-[clamp(1rem,2.5vw,1.2rem)] transition-all duration-300 border-2 border-signal overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black group"
               aria-label="Enter CN2.DEV professional portfolio"
-              style={{
-                boxShadow: "0 0 40px rgba(230,57,42,0.15), 0 4px 24px rgba(0,0,0,0.4)",
-              }}
             >
               <span className="relative z-10 flex items-center gap-3">
                 ENTER CN2.DEV
@@ -443,10 +422,7 @@ export default function EntryHero() {
                   </svg>
                 </span>
               </span>
-              {/* Glow effect */}
               <span className="absolute inset-0 bg-signal/20 blur-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-              {/* Border glow */}
-              <span className="absolute inset-[-2px] bg-gradient-to-r from-signal/50 via-signal/30 to-signal/50 rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur" aria-hidden="true" />
             </button>
           </div>
         </div>
