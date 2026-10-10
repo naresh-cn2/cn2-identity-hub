@@ -8,7 +8,8 @@ import { useTheme } from "@/components/providers/theme-provider";
  * EntryHero — the cinematic gateway experience using the reference image.
  * 
  * Full-screen dark environment with the provided image as background.
- * HTML overlays for brand, slogan, and CTA.
+ * HTML overlays for brand, slogan, and CTA aligned to the LEFT,
+ * preserving the character and portal on the RIGHT side of the image.
  * Navigation is handled by the global Navbar component.
  * 
  * Dark theme: uses the image as-is (dark cinematic environment)
@@ -65,7 +66,7 @@ export default function EntryHero() {
     // SSR fallback — prevent hydration mismatch
     return (
       <div
-        className="min-h-screen relative overflow-hidden bg-black"
+        className="relative min-h-screen w-full overflow-hidden bg-black"
         style={{ minHeight: "100dvh" }}
         role="img"
         aria-label="CN2.DEV cinematic entry gateway"
@@ -87,7 +88,7 @@ export default function EntryHero() {
     <div
       ref={containerRef}
       className="relative min-h-screen w-full overflow-hidden"
-      style={{ minHeight: "100dvh" }}
+      style={{ minHeight: "100dvh", maxHeight: "100dvh" }}
       role="main"
     >
       {/* ---- Background image layer ---- */}
@@ -119,74 +120,55 @@ export default function EntryHero() {
         />
       )}
 
-      {/* ---- Dark mode: subtle vignette for depth ---- */}
+      {/* ---- Dark mode: minimal vignette only at edges, keep portal visible ---- */}
       {dark && (
         <div
           className="absolute inset-0 -z-10"
           aria-hidden="true"
           style={{
-            background: "radial-gradient(ellipse at 30% 20%, rgba(29,78,216,0.15) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(230,57,42,0.08) 0%, transparent 50%), linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.5) 100%)",
+            background: "radial-gradient(ellipse at 20% 20%, rgba(29,78,216,0.12) 0%, transparent 50%), linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.3) 100%)",
           }}
         />
       )}
 
-      {/* ---- Main content: brand, slogan, CTA ---- */}
+      {/* ---- Main content: LEFT-ALIGNED to match reference composition ---- */}
       <main
-        className="relative min-h-screen w-full flex flex-col items-center justify-center px-4 py-12 text-center"
-        style={{ minHeight: "100dvh" }}
+        className="relative h-screen w-full flex items-center justify-start px-6 lg:px-12 pt-16"
+        style={{ maxHeight: "100dvh" }}
       >
-        {/* Brand lockup */}
-        <div className="mb-10 lg:mb-16 pointer-events-auto">
-          <h1 className="display text-[clamp(3rem,12vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
-            CN2.DEV
-          </h1>
-          <p className="mt-3 label-mono text-[clamp(0.9rem,3vw,1.3rem)] text-signal tracking-wider drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
-            BUKYA NARESH
-          </p>
-        </div>
+        <div className="w-full max-w-[600px] pointer-events-auto">
+          {/* Brand lockup - LEFT aligned */}
+          <div className="mb-8 lg:mb-12">
+            <h1 className="display text-[clamp(2.5rem,8vw,5rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)] leading-[0.9]">
+              CN2.DEV
+            </h1>
+            <p className="mt-3 label-mono text-[clamp(0.85rem,2.5vw,1.15rem)] text-signal tracking-wider drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
+              BUKYA NARESH
+            </p>
+          </div>
 
-        {/* Slogan */}
-        <div className="mb-12 lg:mb-16 pointer-events-auto max-w-[900px] px-4">
-          <p className="label-mono text-[clamp(0.9rem,3.5vw,1.4rem)] text-white/90 tracking-wider leading-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
-            WHERE IMAGINATION BECOMES REALITY
-          </p>
-        </div>
+          {/* Slogan - LEFT aligned */}
+          <div className="mb-10 lg:mb-14 max-w-[480px]">
+            <p className="label-mono text-[clamp(0.85rem,3vw,1.25rem)] text-white/95 tracking-wider leading-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
+              WHERE IMAGINATION BECOMES REALITY
+            </p>
+          </div>
 
-        {/* Primary CTA: ENTER CN2.DEV */}
-        <div className="mb-8 lg:mb-12 pointer-events-auto">
-          <button
-            onClick={handleEnter}
-            onKeyDown={handleKeyDown}
-            className="enter-cta inline-flex items-center justify-center gap-3 bg-signal text-black px-10 py-4 rounded-full font-bold text-[clamp(1rem,3vw,1.25rem)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(230,57,42,0.4)] hover:shadow-signal/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            aria-label="Enter CN2.DEV professional portfolio"
-            style={{
-              boxShadow: "0 0 30px rgba(230,57,42,0.25), 0 4px 24px rgba(0,0,0,0.4)",
-            }}
-          >
-            ENTER CN2.DEV
-            <span aria-hidden="true" className="transition-transform duration-300">→</span>
-          </button>
-        </div>
-
-        {/* Subtle scroll indicator */}
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none animate-bounce"
-          style={{ animationDuration: reducedMotion ? "0.01ms" : "2.5s" }}
-          aria-hidden="true"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-white/40"
-          >
-            <path d="M12 5v14M19 12l-7 7-7-7" />
-          </svg>
+          {/* Primary CTA: ENTER CN2.DEV - LEFT aligned */}
+          <div className="pointer-events-auto">
+            <button
+              onClick={handleEnter}
+              onKeyDown={handleKeyDown}
+              className="enter-cta inline-flex items-center justify-center gap-3 bg-signal text-black px-8 py-3.5 rounded-full font-bold text-[clamp(0.95rem,2.5vw,1.15rem)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(230,57,42,0.4)] hover:shadow-signal/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              aria-label="Enter CN2.DEV professional portfolio"
+              style={{
+                boxShadow: "0 0 30px rgba(230,57,42,0.25), 0 4px 24px rgba(0,0,0,0.4)",
+              }}
+            >
+              ENTER CN2.DEV
+              <span aria-hidden="true" className="transition-transform duration-300">→</span>
+            </button>
+          </div>
         </div>
       </main>
 
