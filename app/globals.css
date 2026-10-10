@@ -434,54 +434,89 @@ body {
   }
 }
 
-/* ---------------- CN2.DEV split-letter glitch-cut treatment ---------------- */
+/* ---------------- CN2.DEV split-cut wordmark ----------------
+   Two real text layers share one grid cell; each is clipped to half the
+   glyph height and offset horizontally, producing the horizontal cut seen
+   in the reference. No pseudo-elements re-render the lettering, so the
+   visible wordmark is never duplicated. */
 
-.cn2-split-letter {
-  position: relative;
-  display: inline-block;
+.cn2-split {
+  display: inline-grid;
+  vertical-align: top;
 }
 
-.cn2-split-letter::before,
-.cn2-split-letter::after {
-  content: "CN2.DEV";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  overflow: hidden;
-  pointer-events: none;
+.cn2-split > span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  will-change: transform;
 }
 
-.cn2-split-letter::before {
-  clip-path: polygon(0 0, 100% 0, 100% 46%, 0 46%);
-  transform: translate(-2px, -1px);
-  opacity: 0.9;
+.cn2-split__top {
+  clip-path: inset(0 0 54% 0);
+  transform: translate3d(-0.055em, -0.012em, 0);
 }
 
-.cn2-split-letter::after {
-  clip-path: polygon(0 54%, 100% 54%, 100% 100%, 0 100%);
-  transform: translate(2px, 1px);
-  opacity: 0.9;
+.cn2-split__bottom {
+  clip-path: inset(54% 0 0 0);
+  transform: translate3d(0.055em, 0.012em, 0);
 }
 
-@keyframes cn2-cut-shift {
-  0% { transform: translate(-2px, -1px); }
-  50% { transform: translate(-5px, -3px); }
-  100% { transform: translate(-2px, -1px); }
+@media (prefers-reduced-motion: no-preference) {
+  .cn2-split__top,
+  .cn2-split__bottom {
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .cn2-split:hover .cn2-split__top {
+    transform: translate3d(-0.13em, -0.03em, 0);
+  }
+
+  .cn2-split:hover .cn2-split__bottom {
+    transform: translate3d(0.13em, 0.03em, 0);
+  }
 }
 
-@keyframes cn2-cut-shift-reverse {
-  0% { transform: translate(2px, 1px); }
-  50% { transform: translate(5px, 3px); }
-  100% { transform: translate(2px, 1px); }
+/* ---------------- hero / panel mono type ----------------
+   `.label-mono` hard-sets font-size: 0.6875rem and, being declared after
+   Tailwind's utilities layer, overrides any responsive clamp applied to the
+   same element. This variant supplies the mono characteristics WITHOUT a
+   font-size so the clamp utilities stay in control and the scale is real. */
+
+.cn2-mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
-.cn2-split-letter:hover::before {
-  animation: cn2-cut-shift 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.cn2-mono-tight {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.cn2-split-letter:hover::after {
-  animation: cn2-cut-shift-reverse 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+/* ---------------- homepage brand lock (OVERRIDE 2) ----------------
+   Scoped to the entry route only: CN2.DEV stays white and BUKYA NARESH
+   stays the reference red in BOTH themes, so neither can inherit a
+   low-contrast theme colour or disappear on the light background. */
+
+.cn2-brand-word {
+  color: #ffffff;
+}
+
+.cn2-brand-name {
+  color: #ff2a1f;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cn2-brand-name {
+    transition: text-shadow 0.55s ease;
+  }
+
+  .cn2-split:hover + .cn2-brand-name {
+    text-shadow: 0 0 22px rgba(255, 42, 31, 0.4);
+  }
 }
 
 /* ---------------- text-reactive water effect ---------------- */

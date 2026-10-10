@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import { Phone, Mail, MessageSquare } from "lucide-react";
 
 // Custom SVG icons for GitHub and LinkedIn since lucide-react version may not have them

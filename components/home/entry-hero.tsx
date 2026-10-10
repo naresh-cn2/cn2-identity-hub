@@ -37,7 +37,6 @@ export default function EntryHero() {
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setReducedMotion(mediaQuery.matches);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
@@ -224,7 +223,7 @@ export default function EntryHero() {
       ctx.fill();
       ctx.restore();
     }
-  }, [pointerDistortion, reducedMotion]);
+  }, [pointerDistortion]);
 
   // Animation loop for cinematic effects
   useEffect(() => {
@@ -373,56 +372,82 @@ export default function EntryHero() {
         />
       )}
 
+      {/* ---- Left readability scrim: preserves the reference's dark negative
+           space behind the typography in BOTH themes, so the pinned white/red
+           brand lockup (OVERRIDE 2) always holds contrast. ---- */}
+      <div
+        className="absolute inset-0 -z-10"
+        aria-hidden="true"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(4,6,12,0.92) 0%, rgba(4,6,12,0.72) 28%, rgba(4,6,12,0.34) 48%, rgba(4,6,12,0) 66%)",
+        }}
+      />
+
       {/* ---- Main content: LEFT-ALIGNED ---- */}
       <main
         className="relative h-screen w-full flex items-center justify-start px-6 lg:px-12 pt-20"
         style={{ maxHeight: "100dvh" }}
       >
-        <div className="w-full max-w-[600px] pointer-events-auto">
-          {/* Brand lockup - LEFT aligned with split-letter effect */}
-          <div className="mb-10 lg:mb-14">
-            <h1 className="display text-[clamp(3.5rem,10vw,7rem)] font-bold tracking-tight text-white drop-shadow-[0_4px_32px_rgba(0,0,0,0.6)] leading-[0.85] cn2-split-letter">
-              CN2.DEV
+        <div className="w-full max-w-[620px] pointer-events-auto">
+          {/* Brand lockup - LEFT aligned, split-cut wordmark */}
+          <div className="mb-7 lg:mb-9">
+            <h1
+              className="cn2-split display text-[clamp(3.2rem,9.2vw,6.5rem)] font-bold leading-[0.86] drop-shadow-[0_6px_40px_rgba(0,0,0,0.65)]"
+              aria-label="CN2.DEV"
+            >
+              <span className="cn2-split__top cn2-brand-word" aria-hidden="true">
+                CN2.DEV
+              </span>
+              <span className="cn2-split__bottom cn2-brand-word" aria-hidden="true">
+                CN2.DEV
+              </span>
             </h1>
-            <p className="mt-4 label-mono text-[clamp(1rem,3vw,1.4rem)] text-signal tracking-[0.3em] drop-shadow-[0_2px_16px_rgba(0,0,0,0.4)]">
+            <p className="cn2-brand-name cn2-mono mt-4 text-[clamp(1.05rem,2.7vw,1.9rem)] tracking-[0.34em] leading-none drop-shadow-[0_2px_18px_rgba(0,0,0,0.5)]">
               BUKYA NARESH
             </p>
           </div>
 
           {/* White divider */}
-          <div className="w-16 h-px bg-white mb-8 opacity-80" />
+          <div className="w-14 h-[2px] bg-white mb-7 opacity-90" />
 
-          {/* Slogan - LEFT aligned */}
-          <div className="mb-12 lg:mb-16 max-w-[520px]">
-            <p className="label-mono text-[clamp(1rem,3.5vw,1.5rem)] text-white/95 tracking-[0.25em] leading-normal drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
+          {/* Tagline - LEFT aligned */}
+          <div className="mb-10 lg:mb-12 max-w-[560px]">
+            <p className="cn2-mono text-[clamp(0.95rem,2.9vw,1.4rem)] text-white/95 tracking-[0.22em] leading-relaxed drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
               WHERE IMAGINATION BECOMES REALITY
             </p>
           </div>
 
-          {/* Supporting quotation */}
-          <div className="mb-12 max-w-[480px]">
-            <p className="text-sm text-white/60 italic leading-relaxed">
-              &ldquo;Where imagination begins, reality takes shape.&rdquo;
-            </p>
-          </div>
-
-          {/* Primary CTA: ENTER CN2.DEV */}
+          {/* Primary CTA: ENTER CN2.DEV — outlined pill, dark interior */}
           <div className="pointer-events-auto">
             <button
               onClick={handleEnter}
               onKeyDown={handleKeyDown}
-              className="enter-cta relative inline-flex items-center gap-0 bg-transparent text-white px-8 py-4 rounded-full font-bold text-[clamp(1rem,2.5vw,1.2rem)] transition-all duration-300 border-2 border-signal overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black group"
+              className="enter-cta group inline-flex items-center gap-5 rounded-full border border-[#ff2a1f] bg-transparent pl-7 pr-2 py-2 text-white transition-all duration-300 hover:shadow-[0_0_38px_rgba(255,42,31,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2a1f] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               aria-label="Enter CN2.DEV professional portfolio"
             >
-              <span className="relative z-10 flex items-center gap-3">
+              <span className="cn2-mono text-[clamp(0.8rem,2.1vw,1rem)] tracking-[0.2em] whitespace-nowrap">
                 ENTER CN2.DEV
-                <span className="w-10 h-10 rounded-full bg-signal flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 group-hover:scale-105" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </span>
               </span>
-              <span className="absolute inset-0 bg-signal/20 blur-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+              <span
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#ff2a1f] transition-all duration-300 group-hover:bg-[#ff2a1f] group-hover:border-[#ff2a1f]"
+                aria-hidden="true"
+              >
+                <svg
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ff2a1f"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-colors duration-300 group-hover:stroke-black"
+                >
+                  <path d="M5 12h13" />
+                  <path d="M13 6l6 6-6 6" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>
