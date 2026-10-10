@@ -11,6 +11,7 @@ import {
   type NavItem,
 } from "@/data/site";
 import { useTheme } from "@/components/providers/theme-provider";
+import { Sun, Moon } from "lucide-react";
 
 /**
  * Helper for conditional class names
@@ -145,12 +146,16 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   className={cn(
-                    "link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200",
+                    "link-line label-mono px-2 py-1 text-[9px] transition-colors duration-200 flex items-center gap-1.5",
                     // On entry page, CONTACT is never active (pathname is "/")
                     false ? "text-signal" : "text-muted hover:text-foreground"
                   )}
                 >
                   CONTACT
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-signal transition-transform duration-300 group-hover:rotate-45">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                  </svg>
                 </Link>
               </div>
             )}
@@ -253,10 +258,15 @@ export default function Navbar() {
           <div className="flex shrink-0 items-center gap-2">
             <button
               onClick={toggle}
-              className="label-mono border border-line px-3 py-1.5 text-muted transition-colors duration-200 hover:border-line-strong hover:text-foreground"
+              className="relative w-10 h-10 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              aria-pressed={theme === "dark" ? "false" : "true"}
             >
-              {theme === "dark" ? "LIGHT" : "DARK"}
+              {theme === "dark" ? (
+                <Moon className="w-5 h-5 text-white transition-transform duration-500" />
+              ) : (
+                <Sun className="w-5 h-5 text-gray-900 transition-transform duration-500" />
+              )}
             </button>
             <button
               onClick={openPalette}

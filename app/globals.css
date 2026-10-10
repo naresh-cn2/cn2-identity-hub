@@ -434,6 +434,27 @@ body {
   }
 }
 
+/* ---------------- entry hero cinematic styles ---------------- */
+
+.enter-cta:hover {
+  box-shadow: 0 0 60px rgba(230,57,42,0.3), 0 8px 32px rgba(0,0,0,0.5);
+  transform: scale(1.02);
+}
+
+.enter-cta:active {
+  transform: scale(0.98);
+}
+
+/* Contact card reveal animations */
+.contact-card-reveal {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Theme toggle animation */
+.theme-toggle-icon {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* ---------------- reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
   html {

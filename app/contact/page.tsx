@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
-import CopyEmail from "@/components/contact/copy-email";
+import ContactContent from "./contact-content";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -64,42 +64,27 @@ export default function ContactPage() {
                     </Reveal>
                     <Reveal delay={240}>
                         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted">
-                            No forms. No funnels. One direct line — describe the problem, the data and what evidence
-                            would count as success. Replies are substantive, or an honest statement about fit.
+                            Direct contact — no forms, no funnels. Each method reveals on interaction.
+                            Choose the channel that fits the conversation.
                         </p>
                     </Reveal>
                 </div>
             </header>
 
-            {/* ---- primary action ---- */}
-            <section aria-label="Email" className="border-b border-line">
-                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+            {/* ---- contact methods with reveal interactions ---- */}
+            <section aria-label="Contact methods" className="border-b border-line">
+                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
                     <Reveal>
-                        <div className="corner-ticks mx-auto max-w-3xl border border-line bg-surface p-8 text-center md:p-12">
-                            <p className="label-mono text-faint">DIRECT LINE</p>
-                            <a
-                                href={site.links.email}
-                                className="display mt-6 block break-all text-[clamp(1.1rem,4vw,2.2rem)] text-foreground transition-colors hover:text-signal"
-                            >
-                                {site.email}
-                            </a>
-                            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                                <a
-                                    href={site.links.email}
-                                    className="label-mono border border-signal bg-signal px-8 py-4 text-background transition-colors hover:bg-transparent hover:text-signal"
-                                >
-                                    SEND AN EMAIL →
-                                </a>
-                                <CopyEmail email={site.email} />
-                            </div>
-                        </div>
+                        <p className="label-mono text-signal">DIRECT CHANNELS</p>
+                        <h2 className="display mt-4 text-2xl md:text-4xl">FIVE WAYS TO REACH ME</h2>
                     </Reveal>
+                    <ContactContent />
                 </div>
             </section>
 
             {/* ---- what to include ---- */}
             <section aria-label="What to include" className="border-b border-line">
-                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
                     <Reveal>
                         <p className="label-mono text-signal">WHAT TO INCLUDE</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">THREE THINGS, AND WE CAN START</h2>
@@ -120,7 +105,7 @@ export default function ContactPage() {
 
             {/* ---- other channels ---- */}
             <section aria-label="Other channels" className="border-b border-line">
-                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
                     <Reveal>
                         <p className="label-mono text-faint">OTHER CHANNELS</p>
                     </Reveal>
