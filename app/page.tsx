@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { site } from '@/data/site';
+import EntryHero from '@/components/home/entry-hero';
+import EntryHero from '@/components/home/entry-hero';
 
 
 export const metadata: Metadata = {
