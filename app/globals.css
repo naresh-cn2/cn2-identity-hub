@@ -280,34 +280,37 @@ body {
   }
 }
 
-/* cinematic route change — a red signal bar travels the viewport (short, fast,
-   never blocks interaction; reduced-motion neutralises it globally) */
+/* cinematic route change — a thin red signal bar sweeps the top edge of the
+   viewport (short, fast, never blocks interaction; reduced-motion neutralises
+   it globally). Horizontal sweep only — never a full-height vertical stripe,
+   and travel distances use viewport units so it always exits the screen. */
 @keyframes curtain-travel {
   0% {
-    transform: translateX(-102%);
+    transform: translateX(-105%);
   }
 
   100% {
-    transform: translateX(102%);
+    transform: translateX(105vw);
   }
 }
 
 .curtain-signal {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
   width: 34vw;
   max-width: 460px;
+  height: 3px;
   z-index: 70;
   pointer-events: none;
   background: linear-gradient(90deg,
       transparent 0%,
-      rgba(230, 57, 42, 0.16) 42%,
-      rgba(230, 57, 42, 0.8) 50%,
-      rgba(230, 57, 42, 0.16) 58%,
+      rgba(230, 57, 42, 0.25) 38%,
+      rgba(230, 57, 42, 0.9) 50%,
+      rgba(230, 57, 42, 0.25) 62%,
       transparent 100%);
-  animation: curtain-travel 0.62s cubic-bezier(0.76, 0, 0.24, 1) both;
+  box-shadow: 0 0 12px rgba(230, 57, 42, 0.35);
+  animation: curtain-travel 0.6s cubic-bezier(0.76, 0, 0.24, 1) both;
 }
 
 /* ---------------- figure life ---------------- */
@@ -466,4 +469,5 @@ body {
   .chart-draw {
     stroke-dashoffset: 0 !important;
   }
-}
+}   
+ 
