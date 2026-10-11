@@ -1,7 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { indexRoutes, site, utilityLinks } from "@/data/site";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  /* The cinematic entry gateway (/ ) is a single-viewport experience: the
+     reference shows no footer beneath the hero. Hiding it here keeps that
+     page non-scrolling; every other route keeps the full index. */
+  if (pathname === "/") return null;
+
   return (
     <footer className="border-t border-line bg-surface print:hidden">
       <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8">
@@ -39,37 +49,39 @@ export default function Footer() {
           <div>
             <p className="label-mono mb-4 text-[10px] tracking-[0.2em] text-faint">SIGNALS</p>
             <ul className="space-y-2">
-              {utilityLinks.map((link) => (
-                <li key={link.label}>
-                  {link.external ? (
+              {utilityLinks.map((l) =>
+                l.external ? (
+                  <li key={l.label}>
                     <a
-                      href={link.href}
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
-                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      href={l.href}
+                      target={l.href.startsWith("http") ? "_blank" : undefined}
+                      rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="label-mono text-xs text-muted transition-colors hover:text-signal"
                     >
-                      {link.label}
+                      {l.label}
                     </a>
-                  ) : (
+                  </li>
+                ) : (
+                  <li key={l.label}>
                     <Link
-                      href={link.href}
+                      href={l.href}
                       className="label-mono text-xs text-muted transition-colors hover:text-signal"
                     >
-                      {link.label}
+                      {l.label}
                     </Link>
-                  )}
-                </li>
-              ))}
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="num-mono text-[10px] text-faint">
-            © {new Date().getFullYear()} {site.name} — ALL SYSTEMS SELF-ENGINEERED
+            c 2026 {site.name} — all systems self-engineered
           </p>
           <p className="num-mono text-[10px] text-faint">
-            STATUS / RESEARCH · DOMAIN / CN2.DEV · MODE / BUILDING
+            status / research · domain / CN2.dev · mode / building
           </p>
         </div>
       </div>
