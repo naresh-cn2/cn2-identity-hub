@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@/components/providers/theme-provider";
 
 /**
  * EntryHero — the cinematic gateway experience.
@@ -10,11 +11,18 @@ import { useRouter } from "next/navigation";
  * already contains the CN2.DEV wordmark, BUKYA NARESH, divider, and
  * tagline, so no coded hero typography is rendered.
  *
+ * Light mode adds a subtle, localized portal illumination effect:
+ * a soft cyan-blue halo around the portal ring, a gentle backlight
+ * behind the character, and enhanced floor reflections. The effect
+ * transitions smoothly and is fully removed in dark mode.
+ *
  * The ENTER CN2.DEV button is preserved and navigates to /about.
  * Navigation is handled by the global Navbar component.
  */
 export default function EntryHero() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const dark = theme === "dark";
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +67,7 @@ export default function EntryHero() {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen w-full overflow-hidden"
+      className={`relative min-h-screen w-full overflow-hidden ${dark ? "" : "cn2-hero-light"}`}
       style={{ minHeight: "100dvh", maxHeight: "100dvh" }}
       role="main"
     >
@@ -74,6 +82,13 @@ export default function EntryHero() {
           backgroundRepeat: "no-repeat",
         }}
       />
+
+      {/* ---- Light-mode portal illumination (scoped to homepage) ----
+           Always rendered; visibility controlled by .cn2-hero-light class
+           on the parent so CSS transitions handle both fade-in and fade-out. */}
+      <div className="cn2-portal-glow" aria-hidden="true" />
+      <div className="cn2-character-glow" aria-hidden="true" />
+      <div className="cn2-floor-glow" aria-hidden="true" />
 
       {/* ---- ENTER CN2.DEV button — preserved, positioned bottom-left ---- */}
       <main
