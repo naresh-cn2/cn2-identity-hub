@@ -436,9 +436,10 @@ body {
 
 /* ---------------- CN2.DEV split-cut wordmark ----------------
    Two real text layers share one grid cell and carry identical font
-   metrics, so the halves register exactly. Each is clipped with a narrow
-   seam and offset by a hair horizontally to produce the engineered cut in
-   the reference. No pseudo-elements re-render the lettering. */
+   metrics, so the halves register exactly. Each is clipped at the
+   vertical centre and offset by a hair horizontally to produce the thin
+   engineered cut in the reference. No pseudo-elements re-render the
+   lettering. */
 
 .cn2-split {
   display: inline-grid;
@@ -450,39 +451,36 @@ body {
   white-space: nowrap;
 }
 
-/* Wide, engineered display proportions. Archivo is loaded with its `wdth`
-   axis, so font-stretch widens the wordmark without a new font request.
-   125% is the axis maximum, giving the extended sci-fi footprint. */
+/* Orbitron: geometric sci-fi logotype with wide, engineered letterforms.
+   Already extended by design, so no font-stretch is needed. */
 .cn2-wordmark {
-  font-stretch: 125%;
+  font-family: var(--font-orbitron);
   font-weight: 800;
-  letter-spacing: 0.012em;
-  line-height: 0.9;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
   text-shadow: 0 4px 22px rgba(0, 0, 0, 0.5);
 }
 
-/* The seam is intentionally narrow: top holds 0-48.6%, bottom holds
-   50.2-100%, leaving a ~1.6% interruption rather than a severed gap.
-   The offset is STATIC — no transition, no hover shift — so the cut is a
-   stable engineered feature rather than a glitch. */
+/* The cut is a hairline seam: both layers clip at exactly 50% (no gap),
+   and a tiny horizontal offset creates the visible interruption. */
 .cn2-split__top {
-  clip-path: inset(0 0 51.4% 0);
-  transform: translate3d(-0.02em, 0, 0);
+  clip-path: inset(0 0 50% 0);
+  transform: translate3d(-0.012em, 0, 0);
 }
 
 .cn2-split__bottom {
-  clip-path: inset(49.8% 0 0 0);
-  transform: translate3d(0.02em, 0, 0);
+  clip-path: inset(50% 0 0 0);
+  transform: translate3d(0.012em, 0, 0);
 }
 
 /* Red square separator sitting at the CN2 / DEV join, as in the reference.
    Hidden in the upper clipped layer so exactly one square is ever visible. */
 .cn2-wordmark__dot {
   display: inline-block;
-  width: 0.105em;
-  height: 0.105em;
-  margin: 0 0.06em;
-  vertical-align: 0.02em;
+  width: 0.14em;
+  height: 0.14em;
+  margin: 0 0.08em;
+  vertical-align: 0.04em;
   background: #ff2a1f;
 }
 

@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { CursorProvider } from "@/components/providers/cursor-provider";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import CommandPalette from "@/components/layout/command-palette";
@@ -18,6 +17,12 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-plex-mono",
+});
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  weight: ["700", "800", "900"],
+  variable: "--font-orbitron",
 });
 
 export const metadata: Metadata = {
@@ -73,7 +78,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`dark ${archivo.variable} ${plexMono.variable}`}
+      className={`dark ${archivo.variable} ${plexMono.variable} ${orbitron.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -81,20 +86,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-screen antialiased">
         <ThemeProvider>
-          <CursorProvider>
-            <a
-              href="#main"
-              className="label-mono fixed left-4 top-4 z-[100] -translate-y-24 bg-signal px-4 py-2 text-white transition-transform focus:translate-y-0"
-            >
-              Skip to content
-            </a>
-            <Navbar />
-            <CommandPalette />
-            <PageTransition>
-              <main id="main">{children}</main>
-            </PageTransition>
-            <Footer />
-          </CursorProvider>
+          <a
+            href="#main"
+            className="label-mono fixed left-4 top-4 z-[100] -translate-y-24 bg-signal px-4 py-2 text-white transition-transform focus:translate-y-0"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <CommandPalette />
+          <PageTransition>
+            <main id="main">{children}</main>
+          </PageTransition>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
