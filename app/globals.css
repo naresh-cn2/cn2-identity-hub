@@ -435,10 +435,10 @@ body {
 }
 
 /* ---------------- CN2.DEV split-cut wordmark ----------------
-   Two real text layers share one grid cell; each is clipped to half the
-   glyph height and offset horizontally, producing the horizontal cut seen
-   in the reference. No pseudo-elements re-render the lettering, so the
-   visible wordmark is never duplicated. */
+   Two real text layers share one grid cell and carry identical font
+   metrics, so the halves register exactly. Each is clipped with a narrow
+   seam and offset by a hair horizontally to produce the engineered cut in
+   the reference. No pseudo-elements re-render the lettering. */
 
 .cn2-split {
   display: inline-grid;
@@ -448,31 +448,52 @@ body {
 .cn2-split > span {
   grid-area: 1 / 1;
   white-space: nowrap;
-  will-change: transform;
 }
 
+/* Wide, engineered display proportions. Archivo is loaded with its `wdth`
+   axis, so font-stretch widens the wordmark without a new font request. */
+.cn2-wordmark {
+  font-stretch: 118%;
+  font-weight: 800;
+  letter-spacing: 0.005em;
+  line-height: 0.9;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.5);
+}
+
+/* The seam is intentionally narrow: top holds 0-48.6%, bottom holds
+   50.2-100%, leaving a ~1.6% interruption rather than a severed gap. */
 .cn2-split__top {
-  clip-path: inset(0 0 54% 0);
-  transform: translate3d(-0.055em, -0.012em, 0);
+  clip-path: inset(0 0 51.4% 0);
+  transform: translate3d(-0.016em, 0, 0);
 }
 
 .cn2-split__bottom {
-  clip-path: inset(54% 0 0 0);
-  transform: translate3d(0.055em, 0.012em, 0);
+  clip-path: inset(49.8% 0 0 0);
+  transform: translate3d(0.016em, 0, 0);
+}
+
+/* Red square separator sitting at the CN2 / DEV join, as in the reference. */
+.cn2-wordmark__dot {
+  display: inline-block;
+  width: 0.105em;
+  height: 0.105em;
+  margin: 0 0.06em;
+  vertical-align: 0.02em;
+  background: #ff2a1f;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .cn2-split__top,
   .cn2-split__bottom {
-    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .cn2-split:hover .cn2-split__top {
-    transform: translate3d(-0.13em, -0.03em, 0);
+    transform: translate3d(-0.045em, 0, 0);
   }
 
   .cn2-split:hover .cn2-split__bottom {
-    transform: translate3d(0.13em, 0.03em, 0);
+    transform: translate3d(0.045em, 0, 0);
   }
 }
 

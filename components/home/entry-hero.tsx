@@ -393,14 +393,14 @@ export default function EntryHero() {
           {/* Brand lockup - LEFT aligned, split-cut wordmark */}
           <div className="mb-7 lg:mb-9">
             <h1
-              className="cn2-split display text-[clamp(3.2rem,9.2vw,6.5rem)] font-bold leading-[0.86] drop-shadow-[0_6px_40px_rgba(0,0,0,0.65)]"
+              className="cn2-split cn2-wordmark cn2-brand-word text-[clamp(3.2rem,9.2vw,6.5rem)]"
               aria-label="CN2.DEV"
             >
-              <span className="cn2-split__top cn2-brand-word" aria-hidden="true">
-                CN2.DEV
+              <span className="cn2-split__top" aria-hidden="true">
+                CN2<i className="cn2-wordmark__dot" />DEV
               </span>
-              <span className="cn2-split__bottom cn2-brand-word" aria-hidden="true">
-                CN2.DEV
+              <span className="cn2-split__bottom" aria-hidden="true">
+                CN2<i className="cn2-wordmark__dot" />DEV
               </span>
             </h1>
             <p className="cn2-brand-name cn2-mono mt-4 text-[clamp(1.05rem,2.7vw,1.9rem)] tracking-[0.34em] leading-none drop-shadow-[0_2px_18px_rgba(0,0,0,0.5)]">
