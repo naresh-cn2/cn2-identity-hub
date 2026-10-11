@@ -434,79 +434,24 @@ body {
   }
 }
 
-/* ---------------- Light-mode portal illumination ----------------
-   Scoped to the homepage (.cn2-hero-light). Adds localized
-   environmental glow around the portal, behind the character,
-   and on the floor. Smooth 700ms transition. No animation.
-   Elements are always in the DOM; opacity is controlled by the
-   parent's .cn2-hero-light class so CSS transitions handle both
-   fade-in (dark→light) and fade-out (light→dark). */
+/* ---------------- CN2.DEV custom SVG wordmark ----------------
+   Hand-built vector letterforms with a static horizontal cut.
+   The SVG scales responsively via width: 100% and height: auto. */
 
-.cn2-portal-glow {
-  position: absolute;
-  top: 15%;
-  right: 5%;
-  width: 55%;
-  height: 60%;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 50% 50% at 60% 45%,
-    rgba(120, 200, 255, 0.25) 0%,
-    rgba(80, 160, 240, 0.12) 40%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 700ms ease-out;
+.cn2-brand-word h1,
+h1.cn2-brand-word {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
 }
 
-.cn2-character-glow {
-  position: absolute;
-  top: 25%;
-  right: 15%;
-  width: 35%;
-  height: 50%;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 45% 55% at 55% 50%,
-    rgba(140, 210, 255, 0.18) 0%,
-    rgba(100, 180, 250, 0.08) 45%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 700ms ease-out 100ms;
-}
-
-.cn2-floor-glow {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 60%;
-  height: 35%;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 60% 80% at 65% 80%,
-    rgba(100, 180, 255, 0.15) 0%,
-    rgba(60, 140, 230, 0.06) 50%,
-    transparent 75%
-  );
-  opacity: 0;
-  transition: opacity 700ms ease-out 200ms;
-}
-
-/* Activate glow when light mode is active */
-.cn2-hero-light .cn2-portal-glow,
-.cn2-hero-light .cn2-character-glow,
-.cn2-hero-light .cn2-floor-glow {
-  opacity: 1;
-}
-
-/* Reduced motion: disable transitions */
-@media (prefers-reduced-motion: reduce) {
-  .cn2-hero-light .cn2-portal-glow,
-  .cn2-hero-light .cn2-character-glow,
-  .cn2-hero-light .cn2-floor-glow {
-    transition: none;
-  }
+.cn2-brand-word svg {
+  width: clamp(3.2rem, 9.2vw, 6.5rem);
+  height: auto;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 4px 22px rgba(0, 0, 0, 0.5));
 }
 
 /* ---------------- hero / panel mono type ----------------
@@ -600,6 +545,126 @@ body {
   transform: scale(0.98);
 }
 
+/* ---------------- cinematic homepage effect layers ----------------
+   Theme-aware ambient lighting + restrained motion layered OVER the
+   baked-in hero image (never a filter on the image itself, so the
+   wordmark / character / portal stay intact). Cross-fades on toggle. */
+
+.cn2-hero-img {
+  transform: translate3d(calc(var(--cn2-px, 0) * -9px), calc(var(--cn2-py, 0) * -7px), 0) scale(1.05);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.cn2-cinematic {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cn2-fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Light-mode icy ambient wash — biased to the right + floor so the white
+   wordmark on the left keeps its contrast. Dark mode = opacity 0. */
+.cn2-ambient-wash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 800ms ease;
+  background:
+    linear-gradient(to right,
+      rgba(198, 220, 247, 0.02) 0%,
+      rgba(202, 222, 248, 0.06) 34%,
+      rgba(206, 226, 250, 0.12) 60%,
+      rgba(210, 230, 252, 0.19) 82%,
+      rgba(214, 232, 252, 0.23) 100%),
+    linear-gradient(to top,
+      rgba(214, 230, 250, 0.15) 0%,
+      rgba(214, 230, 250, 0.05) 22%,
+      transparent 40%),
+    radial-gradient(120% 90% at 78% 30%,
+      rgba(224, 238, 252, 0.15) 0%,
+      transparent 60%);
+}
+
+/* Dark-mode cinematic depth at the edges (subtle graphite vignette). */
+.cn2-vignette {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 800ms ease;
+  background: radial-gradient(130% 100% at 50% 42%,
+      transparent 55%,
+      rgba(4, 6, 12, 0.34) 100%);
+}
+
+.is-light .cn2-ambient-wash { opacity: 1; }
+.is-dark .cn2-vignette { opacity: 1; }
+
+/* Portal halo — breathing, theme-aware. Never draws a second ring. */
+.cn2-portal-glow {
+  position: absolute;
+  left: 60%;
+  top: 44%;
+  width: 36%;
+  height: 64%;
+  transform: translate(calc(-50% + var(--cn2-px, 0) * 16px), calc(-50% + var(--cn2-py, 0) * 12px));
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cn2-portal-glow-core {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(closest-side at 50% 50%,
+      rgba(120, 190, 255, 0.28) 0%,
+      rgba(90, 165, 245, 0.14) 38%,
+      rgba(60, 130, 220, 0.05) 62%,
+      transparent 78%);
+  animation: cn2-portal-breathe 7s ease-in-out infinite;
+}
+
+.is-light .cn2-portal-glow-core {
+  background: radial-gradient(closest-side at 50% 50%,
+      rgba(180, 222, 255, 0.42) 0%,
+      rgba(150, 200, 250, 0.22) 40%,
+      rgba(120, 180, 240, 0.08) 64%,
+      transparent 80%);
+}
+
+@keyframes cn2-portal-breathe {
+  0%, 100% { opacity: 0.78; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Floor light — brighter icy reflection in light mode, faint blue in dark. */
+.cn2-floor-light {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32%;
+  opacity: 0;
+  transition: opacity 800ms ease;
+  background:
+    radial-gradient(120% 100% at 60% 120%,
+      rgba(150, 205, 255, 0.22) 0%,
+      transparent 55%),
+    linear-gradient(to top,
+      rgba(200, 222, 250, 0.1) 0%,
+      transparent 70%);
+}
+
+.is-dark .cn2-floor-light { opacity: 0.35; }
+.is-light .cn2-floor-light { opacity: 1; }
+
 /* Contact card reveal animations */
 .contact-card-reveal {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -636,5 +701,26 @@ body {
 
   .chart-draw {
     stroke-dashoffset: 0 !important;
+  }
+
+  /* cinematic hero effects — freeze motion, drop parallax */
+  .cn2-portal-glow-core {
+    animation: none !important;
+  }
+
+  .cn2-hero-img,
+  .cn2-portal-glow {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .cn2-hero-img {
+    transform: scale(1.02) !important;
+  }
+
+  .cn2-ambient-wash,
+  .cn2-vignette,
+  .cn2-floor-light {
+    transition: none !important;
   }
 }

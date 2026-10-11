@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/components/providers/theme-provider";
+import CinematicLayers from "@/components/home/cinematic-layers";
 
 /**
  * EntryHero — the cinematic gateway experience.
@@ -11,18 +11,17 @@ import { useTheme } from "@/components/providers/theme-provider";
  * already contains the CN2.DEV wordmark, BUKYA NARESH, divider, and
  * tagline, so no coded hero typography is rendered.
  *
- * Light mode adds a subtle, localized portal illumination effect:
- * a soft cyan-blue halo around the portal ring, a gentle backlight
- * behind the character, and enhanced floor reflections. The effect
- * transitions smoothly and is fully removed in dark mode.
+ * CinematicLayers adds theme-aware ambient lighting and restrained motion
+ * (portal glow, drifting particles, network pulses, floor sweep, cursor
+ * parallax + ripple) on top of the image without redrawing its content.
+ * All effect layers are pointer-events:none, so the ENTER CN2.DEV button
+ * and the global navbar stay fully interactive.
  *
  * The ENTER CN2.DEV button is preserved and navigates to /about.
  * Navigation is handled by the global Navbar component.
  */
 export default function EntryHero() {
   const router = useRouter();
-  const { theme } = useTheme();
-  const dark = theme === "dark";
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -67,13 +66,13 @@ export default function EntryHero() {
   return (
     <div
       ref={containerRef}
-      className={`relative min-h-screen w-full overflow-hidden ${dark ? "" : "cn2-hero-light"}`}
+      className="relative min-h-screen w-full overflow-hidden"
       style={{ minHeight: "100dvh", maxHeight: "100dvh" }}
       role="main"
     >
       {/* ---- Background image: the provided hero with baked-in typography ---- */}
       <div
-        className="absolute inset-0"
+        className="cn2-hero-img absolute inset-0"
         aria-hidden="true"
         style={{
           backgroundImage: "url('/images/cn2-hero-final.png')",
@@ -83,16 +82,12 @@ export default function EntryHero() {
         }}
       />
 
-      {/* ---- Light-mode portal illumination (scoped to homepage) ----
-           Always rendered; visibility controlled by .cn2-hero-light class
-           on the parent so CSS transitions handle both fade-in and fade-out. */}
-      <div className="cn2-portal-glow" aria-hidden="true" />
-      <div className="cn2-character-glow" aria-hidden="true" />
-      <div className="cn2-floor-glow" aria-hidden="true" />
+      {/* ---- Theme-aware ambient lighting + restrained cinematic motion ---- */}
+      <CinematicLayers />
 
       {/* ---- ENTER CN2.DEV button — preserved, positioned bottom-left ---- */}
       <main
-        className="relative h-screen w-full flex items-end justify-start px-6 lg:px-12 pb-16"
+        className="relative z-10 h-screen w-full flex items-end justify-start px-6 lg:px-12 pb-16"
         style={{ maxHeight: "100dvh" }}
       >
         <div className="pointer-events-auto">
