@@ -434,58 +434,24 @@ body {
   }
 }
 
-/* ---------------- CN2.DEV split-cut wordmark ----------------
-   Two real text layers share one grid cell and carry identical font
-   metrics, so the halves register exactly. Each is clipped at the
-   vertical centre and offset by a hair horizontally to produce the thin
-   engineered cut in the reference. No pseudo-elements re-render the
-   lettering. */
+/* ---------------- CN2.DEV custom SVG wordmark ----------------
+   Hand-built vector letterforms with a static horizontal cut.
+   The SVG scales responsively via width: 100% and height: auto. */
 
-.cn2-split {
-  display: inline-grid;
-  vertical-align: top;
+.cn2-brand-word h1,
+h1.cn2-brand-word {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
 }
 
-.cn2-split > span {
-  grid-area: 1 / 1;
-  white-space: nowrap;
-}
-
-/* Orbitron: geometric sci-fi logotype with wide, engineered letterforms.
-   Already extended by design, so no font-stretch is needed. */
-.cn2-wordmark {
-  font-family: var(--font-orbitron);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 0.95;
-  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.5);
-}
-
-/* The cut is a hairline seam: both layers clip at exactly 50% (no gap),
-   and a tiny horizontal offset creates the visible interruption. */
-.cn2-split__top {
-  clip-path: inset(0 0 50% 0);
-  transform: translate3d(-0.012em, 0, 0);
-}
-
-.cn2-split__bottom {
-  clip-path: inset(50% 0 0 0);
-  transform: translate3d(0.012em, 0, 0);
-}
-
-/* Red square separator sitting at the CN2 / DEV join, as in the reference.
-   Hidden in the upper clipped layer so exactly one square is ever visible. */
-.cn2-wordmark__dot {
-  display: inline-block;
-  width: 0.14em;
-  height: 0.14em;
-  margin: 0 0.08em;
-  vertical-align: 0.04em;
-  background: #ff2a1f;
-}
-
-.cn2-split__top .cn2-wordmark__dot {
-  display: none;
+.cn2-brand-word svg {
+  width: clamp(3.2rem, 9.2vw, 6.5rem);
+  height: auto;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 4px 22px rgba(0, 0, 0, 0.5));
 }
 
 /* ---------------- hero / panel mono type ----------------
