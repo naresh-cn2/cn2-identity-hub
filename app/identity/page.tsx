@@ -53,51 +53,7 @@ export default function IdentityPage() {
             </Reveal>
 
             <Reveal delay={160}>
-              <p className="label-mono mt-6 text-muted">{site.subtitle}</p>
-            </Reveal>
-
-            <Reveal delay={220}>
-              <div className="mt-8 h-px w-16 bg-line-strong" aria-hidden="true" />
-            </Reveal>
-
-            <Reveal delay={270}>
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground md:text-xl">
-                Quantitative intelligence through research, markets, data, and engineering.
-              </p>
-            </Reveal>
-
-            <Reveal delay={330}>
-              <p className="mt-4 max-w-xl leading-relaxed text-muted">
-                Building deterministic systems for understanding markets — backtestable research,
-                point-in-time-safe data, and the engineering that makes both trustworthy.
-              </p>
-            </Reveal>
-
-            <Reveal delay={390}>
-              <div className="mt-8 flex flex-wrap items-center gap-6">
-                <a
-                  href={site.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="label-mono text-[10px] text-foreground transition-colors hover:text-signal"
-                >
-                  GITHUB
-                </a>
-                <a
-                  href={site.links.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="label-mono text-[10px] text-foreground transition-colors hover:text-signal"
-                >
-                  LINKEDIN
-                </a>
-                <Link
-                  href="/contact"
-                  className="label-mono text-[10px] text-foreground transition-colors hover:text-signal"
-                >
-                  CONTACT
-                </Link>
-              </div>
+              <p className="label-mono mt-6 text-foreground">QUANTITATIVE SYSTEMS DEVELOPER</p>
             </Reveal>
           </div>
 

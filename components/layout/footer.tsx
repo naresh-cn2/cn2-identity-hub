@@ -9,8 +9,11 @@ export default function Footer() {
 
   /* The cinematic entry gateway (/ ) is a single-viewport experience: the
      reference shows no footer beneath the hero. Hiding it here keeps that
-     page non-scrolling; every other route keeps the full index. */
-  if (pathname === "/") return null;
+     page non-scrolling; every other route keeps the full index.
+
+     The identity portrait page (/identity) is a single photo page — it ends
+     at BACK TO HOME with nothing beneath it. */
+  if (pathname === "/" || pathname === "/identity") return null;
 
   return (
     <footer className="border-t border-line bg-surface print:hidden">

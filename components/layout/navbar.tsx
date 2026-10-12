@@ -31,6 +31,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
   const isEntryPage = pathname === "/";
+  const isIdentityPage = pathname === "/identity";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -184,21 +185,25 @@ export default function Navbar() {
               scrolled ? "py-3" : "py-5"
             )}
           >
-            {/* ---- brand lockup: CN2.DEV above BUKYA NARESH — opens /identity ---- */}
-            <Link
-              href="/identity"
-              className="group flex shrink-0 flex-col items-start leading-none text-foreground cursor-pointer"
-            >
-              <span className="display text-[0.95rem] font-bold tracking-tight md:text-base group-hover:text-signal transition-colors">
-                {site.name}
-              </span>
-              <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">
-                {site.identity}
-              </span>
-            </Link>
+            {/* ---- brand lockup: CN2.DEV above BUKYA NARESH — opens /identity ----
+                 The identity portrait page drops brand + nav for a photo-only bar */}
+            {!isIdentityPage && (
+              <Link
+                href="/identity"
+                className="group flex shrink-0 flex-col items-start leading-none text-foreground cursor-pointer"
+              >
+                <span className="display text-[0.95rem] font-bold tracking-tight md:text-base group-hover:text-signal transition-colors">
+                  {site.name}
+                </span>
+                <span className="label-mono mt-1 text-[9px] text-signal transition-colors group-hover:text-foreground md:text-[10px]">
+                  {site.identity}
+                </span>
+              </Link>
+            )}
 
-            {/* ---- desktop navigation ---- */}
-            <nav className="hidden w-auto items-center gap-1 lg:flex" aria-label="Primary">
+            {/* ---- desktop navigation (not on the identity portrait page) ---- */}
+            {!isIdentityPage && (
+              <nav className="hidden w-auto items-center gap-1 lg:flex" aria-label="Primary">
               <Link
                 href="/"
                 aria-current={pathname === "/" ? "page" : undefined}
@@ -289,10 +294,20 @@ export default function Navbar() {
                   </div>
                 );
               })}
-            </nav>
+              </nav>
+            )}
 
-            {/* ---- actions ---- */}
-            <div className="flex shrink-0 items-center gap-2">
+            {/* ---- actions: identity page = search then moon only, right-aligned ---- */}
+            <div className={cn("flex shrink-0 items-center gap-2", isIdentityPage && "ml-auto")}>
+              {isIdentityPage && (
+                <button
+                  onClick={openPalette}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
+                  aria-label="Open search"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
+              )}
               <button
                 onClick={toggle}
                 className="relative grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
@@ -301,21 +316,25 @@ export default function Navbar() {
               >
                 {theme === "dark" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />}
               </button>
-              <button
-                onClick={openPalette}
-                className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
-                aria-label="Open search"
-              >
-                <Search className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="label-mono border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground lg:hidden"
-                aria-expanded={menuOpen}
-                aria-controls="mobile-menu"
-              >
-                {menuOpen ? "CLOSE" : "MENU"}
-              </button>
+              {!isIdentityPage && (
+                <button
+                  onClick={openPalette}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
+                  aria-label="Open search"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
+              )}
+              {!isIdentityPage && (
+                <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="label-mono border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground lg:hidden"
+                  aria-expanded={menuOpen}
+                  aria-controls="mobile-menu"
+                >
+                  {menuOpen ? "CLOSE" : "MENU"}
+                </button>
+              )}
             </div>
           </div>
           <div
