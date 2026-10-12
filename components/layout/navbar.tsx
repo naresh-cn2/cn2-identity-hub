@@ -347,7 +347,8 @@ export default function Navbar() {
         </header>
       )}
 
-      {/* ---- mobile cinematic menu ---- */}
+      {/* ---- mobile cinematic menu (not on the identity portrait page) ---- */}
+      {!isIdentityPage && (
       <div
         id="mobile-menu"
         className={cn(
@@ -404,6 +405,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }
