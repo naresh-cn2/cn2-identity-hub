@@ -1,226 +1,213 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
-import ProjectMark from "@/components/builds/project-mark";
-import { caseStudyCards } from "@/data/case-studies";
-import { researchEntries } from "@/data/research";
+import { caseStudies } from "@/data/case-studies";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-    title: "Case Studies",
+  title: "Case Studies",
+  description:
+    "Deep-dive case studies for every flagship system — problem, architecture, data flow, experiments, results, limitations, and evidence. Each study is specific to its project and traces the full question-to-evidence chain.",
+  alternates: { canonical: "/case-studies" },
+  openGraph: {
+    title: "Case Studies — Bukya Naresh / CN2.dev",
     description:
-        "The deep technical proof layer — full evidence chains for the flagship systems: context, problem, research question, hypothesis, architecture, methodology, experiments, results, failures, limitations and current state.",
-    alternates: { canonical: "/case-studies" },
-    openGraph: {
-        title: "Case Studies — Bukya Naresh / CN2.dev",
-        description:
-            "Context, hypothesis, architecture, experiments, results, failures and limitations for every flagship system.",
-    },
+      "Falsifiable questions, deterministic methods, published limitations. Every case study carries its question, hypothesis, method, evidence, result, limitation and conclusion.",
+  },
 };
 
-/** The evidence-chain spine — the visual language of this page. */
-const SPINE = [
-    "CONTEXT",
-    "PROBLEM",
-    "HYPOTHESIS",
-    "ARCHITECTURE",
-    "METHOD",
-    "EXPERIMENTS",
-    "RESULTS",
-    "FAILURES",
-    "LIMITS",
-] as const;
-
-function Spine() {
-    return (
-        <svg viewBox="0 0 900 72" className="h-auto w-full" role="img" aria-label={`Case study chain: ${SPINE.join(" then ")}`}>
-            <line x1="20" y1="24" x2="880" y2="24" stroke="var(--signal)" strokeWidth="1" opacity="0.35" />
-            {SPINE.map((step, i) => {
-                const x = 20 + (i * 860) / (SPINE.length - 1);
-                return (
-                    <g key={step}>
-                        <circle cx={x} cy="24" r={i === SPINE.length - 1 ? 6 : 3.5} fill={i === SPINE.length - 1 ? "var(--signal)" : "var(--line-strong)"} />
-                        <line x1={x} y1="28" x2={x} y2="38" stroke="var(--line-strong)" strokeWidth="1" />
-                        <text
-                            x={x}
-                            y="54"
-                            textAnchor="middle"
-                            fontSize="9"
-                            letterSpacing="0.12em"
-                            fill="var(--muted)"
-                            style={{ fontFamily: "var(--font-mono)" }}
-                        >
-                            {step}
-                        </text>
-                    </g>
-                );
-            })}
-        </svg>
-    );
-}
-
 export default function CaseStudiesPage() {
-    return (
-        <>
-            <header className="relative overflow-hidden border-b border-line">
-                <div className="grid-field absolute inset-0" aria-hidden="true" />
-                <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
-                    <Reveal>
-                        <div className="flex flex-wrap items-baseline justify-between gap-4">
-                            <p className="label-mono text-muted">
-                                SECTION <span className="text-signal">/</span> 02 — CASE STUDIES
-                            </p>
-                            <p className="label-mono text-faint">{caseStudyCards.length} DEEP DIVES</p>
-                        </div>
-                    </Reveal>
-                    <Reveal delay={100}>
-                        <h1 className="display mt-8 text-[clamp(2.6rem,9vw,7rem)]">CASE STUDIES</h1>
-                    </Reveal>
-                    <Reveal delay={200}>
-                        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-                            The deep technical proof layer. Where a build page says what a system is, a case study
-                            shows how it was reasoned, built, tested, where it failed and what it still cannot
-                            claim. Not text walls — the argument is visualised.
-                        </p>
-                    </Reveal>
-                    <Reveal delay={280}>
-                        <div className="mt-12">
-                            <Spine />
-                        </div>
-                    </Reveal>
-                </div>
-            </header>
+  return (
+    <>
+      <header className="relative overflow-hidden border-b border-line">
+        <div className="grid-field absolute inset-0" aria-hidden="true" />
+        <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <p className="label-mono text-muted">
+                SECTION <span className="text-signal">/</span> 02 — CASE STUDIES
+              </p>
+              <p className="label-mono text-faint">
+                {caseStudies.length} DEEP-DIVE STUDIES
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">CASE STUDIES</h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+              Every substantial project gets a case study. Not a summary — a deep dive into the
+              problem, architecture, data flow, methods, experiments, results, limitations and
+              evidence. The case study and the build overview are the same evidence, described at
+              different resolutions.
+            </p>
+          </Reveal>
+          <Reveal delay={280}>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href="/builds"
+                className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-research hover:text-research"
+              >
+                THE BUILDS →
+              </Link>
+              <Link
+                href="/research"
+                className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+              >
+                THE RESEARCH →
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </header>
 
-            {/* ---- honesty policy ---- */}
-            <section aria-label="Case study policy" className="border-b border-line">
-                <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 md:py-16">
-                    <div className="grid gap-8 md:grid-cols-[16rem_1fr] md:gap-16">
-                        <Reveal>
-                            <p className="label-mono text-signal">WHAT A CASE STUDY OWES</p>
-                        </Reveal>
-                        <Reveal delay={80}>
-                            <div className="grid gap-6 sm:grid-cols-2">
-                                <p className="text-base leading-relaxed text-muted">
-                                    Every study carries its <span className="text-foreground">failures</span> and{" "}
-                                    <span className="text-foreground">limitations</span> beside the results, not after
-                                    them. A simulated number is labelled simulated; a backtest is never shown as live
-                                    performance.
-                                </p>
-                                <p className="text-base leading-relaxed text-muted">
-                                    An unfinished study stays visible with its open question intact. The repository
-                                    link is the final authority — the case study summarises, the code proves.
-                                </p>
-                            </div>
-                        </Reveal>
-                    </div>
-                </div>
-            </section>
+      <section aria-label="Evidence policy" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 md:py-16">
+          <div className="grid gap-8 md:grid-cols-[16rem_1fr] md:gap-16">
+            <Reveal>
+              <p className="label-mono text-signal">EVIDENCE POLICY</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <p className="text-base leading-relaxed text-muted">
+                  Every number in these studies carries a provenance tag —{" "}
+                  <span className="text-foreground">BACKTEST</span>,{" "}
+                  <span className="text-foreground">SIMULATION</span>,{" "}
+                  <span className="text-foreground">SELF-BENCHMARK</span>,{" "}
+                  <span className="text-foreground">TEST SUITE</span> or{" "}
+                  <span className="text-foreground">ILLUSTRATIVE</span>. A backtest is never presented
+                  as live trading.
+                </p>
+                <p className="text-base leading-relaxed text-muted">
+                  Projects with no published benchmark say so explicitly rather than borrowing
+                  credibility from the rest of the archive. Where a visual is a diagram rather than a
+                  measurement, it is labelled as a diagram.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
 
-            {/* ---- the studies ---- */}
-            <section aria-label="Case study archive" className="py-16 md:py-24">
-                <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
-                    <div className="grid gap-px bg-line lg:grid-cols-2">
-                        {caseStudyCards.map((c, i) => {
-                            const related = researchEntries.filter((r) => r.relatedProject === c.id);
-                            return (
-                                <Reveal key={c.id} delay={Math.min(i, 3) * 90}>
-                                    <article className="flex h-full flex-col bg-background p-6 md:p-8">
-                                        <div className="flex items-baseline justify-between gap-4">
-                                            <span className="num-mono text-4xl font-semibold text-line-strong md:text-5xl">
-                                                {c.index}
-                                            </span>
-                                            <span className="label-mono text-faint">{c.category}</span>
-                                        </div>
+      <section aria-label="Case study index" className="py-16 md:py-24">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 className="display text-3xl md:text-5xl">THE STUDIES</h2>
+              <p className="label-mono text-faint">SELECT ANY STUDY TO READ THE FULL CHAIN</p>
+            </div>
+          </Reveal>
+          <div className="mt-12 grid gap-px bg-line md:grid-cols-2">
+            {caseStudies.map((study, i) => (
+              <Reveal key={study.id} delay={Math.min(i, 3) * 80}>
+                <Link
+                  href={`/case-studies/${study.id}`}
+                  className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
+                >
+                  <div className="flex items-baseline justify-between">
+                    <span className="label-mono text-faint">STUDY / {study.index}</span>
+                    <span className="label-mono flex items-center gap-2 text-foreground">
+                      <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
+                      {study.status}
+                    </span>
+                  </div>
+                  <span className="display mt-6 block text-xl md:text-2xl">{study.title}</span>
+                  <span className="mt-4 block flex-1 text-base leading-relaxed text-muted">
+                    {study.thesis}
+                  </span>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    <span className="label-mono border border-line px-2.5 py-1 text-[10px] text-muted">
+                      {study.category}
+                    </span>
+                  </div>
+                  <span className="label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1">
+                    OPEN CASE STUDY →
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                                        <div className="mt-6 h-32 w-full border border-line bg-surface md:h-36">
-                                            <ProjectMark id={c.id} />
-                                        </div>
+      <section aria-label="Method" className="border-t border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+          <Reveal>
+            <p className="label-mono text-faint">EVERY STUDY FOLLOWS THIS CHAIN</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <h2 className="display mt-4 text-2xl md:text-4xl">QUESTION → HYPOTHESIS → METHOD → EVIDENCE → RESULT → LIMITATION → CONCLUSION</h2>
+          </Reveal>
+          <Reveal delay={160}>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
+              The case study is not a marketing asset — it is the structured record of how a question
+              was turned into evidence. If a link in the chain is missing, the study says so rather
+              than papering over the gap.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
-                                        <h2 className="display mt-6 text-2xl md:text-3xl">{c.title}</h2>
-                                        <p className="mt-4 text-sm leading-relaxed text-muted">{c.thesis}</p>
+      <section aria-label="Source of evidence" className="border-t border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+          <Reveal>
+            <div className="corner-ticks flex flex-wrap items-center justify-between gap-8 border border-line bg-background p-8 md:p-12">
+              <div className="max-w-xl">
+                <p className="label-mono text-faint">SOURCE OF EVIDENCE</p>
+                <h2 className="display mt-3 text-2xl md:text-4xl">REPOSITORY IS THE RECORD</h2>
+                <p className="mt-4 text-base leading-relaxed text-muted">
+                  Case studies summarise. The repositories are the actual artifact — commit history,
+                  test suites and build configuration included.
+                </p>
+              </div>
+              <a
+                href={site.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="label-mono border border-line-strong px-6 py-4 text-foreground transition-colors hover:border-signal hover:text-signal"
+              >
+                GITHUB — ALL REPOSITORIES →
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
-                                        <div className="mt-6 border-t border-line pt-5">
-                                            <p className="label-mono text-[10px] text-faint">RESEARCH QUESTION</p>
-                                            <p className="mt-2 text-sm leading-relaxed text-foreground">
-                                                {c.researchQuestion}
-                                            </p>
-                                        </div>
-
-                                        {c.headlineMetric && (
-                                            <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                                                <span className="num-mono text-2xl font-semibold text-foreground">
-                                                    {c.headlineMetric.value}
-                                                </span>
-                                                <span className="label-mono text-[10px] text-faint">
-                                                    {c.headlineMetric.label} · {c.headlineMetric.context}
-                                                </span>
-                                            </div>
-                                        )}
-
-                                        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                                            <span className="label-mono flex items-center gap-2 text-foreground">
-                                                <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
-                                                {c.status}
-                                            </span>
-                                            <span className="label-mono text-faint">
-                                                {related.length} RELATED RESEARCH
-                                            </span>
-                                        </div>
-
-                                        <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-8">
-                                            <Link
-                                                href={`/case-studies/${c.id}`}
-                                                className="label-mono border border-line-strong px-5 py-2.5 text-foreground transition-colors hover:border-signal hover:text-signal"
-                                            >
-                                                READ CASE STUDY →
-                                            </Link>
-                                            <Link
-                                                href={`/builds/${c.id}`}
-                                                className="link-line label-mono text-xs text-muted hover:text-foreground"
-                                            >
-                                                BUILD OVERVIEW →
-                                            </Link>
-                                        </div>
-                                    </article>
-                                </Reveal>
-                            );
-                        })}
-                    </div>
-                </div>
-            </section>
-
-            {/* ---- continue ---- */}
-            <section aria-label="Continue" className="border-t border-line">
-                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8">
-                    <Reveal>
-                        <div className="flex flex-wrap items-center justify-between gap-6">
-                            <div>
-                                <p className="label-mono text-faint">NEXT</p>
-                                <p className="display mt-2 text-2xl md:text-3xl">FROM PROOF TO THE ARCHIVE ITSELF</p>
-                            </div>
-                            <div className="flex flex-wrap gap-4">
-                                <Link
-                                    href="/proof"
-                                    className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
-                                >
-                                    EVIDENCE HUB →
-                                </Link>
-                                <Link
-                                    href="/builds"
-                                    className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
-                                >
-                                    ALL BUILDS →
-                                </Link>
-                                <Link
-                                    href="/research"
-                                    className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
-                                >
-                                    RESEARCH →
-                                </Link>
-                            </div>
-                        </div>
-                    </Reveal>
-                </div>
-            </section>
-        </>
-    );
+      <section aria-label="Continue" className="border-t border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8">
+          <Reveal>
+            <div className="flex flex-wrap items-center justify-between gap-6">
+              <div>
+                <p className="label-mono text-faint">NEXT</p>
+                <p className="display mt-2 text-2xl md:text-3xl">FROM THE STUDY TO THE BUILD</p>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/builds"
+                  className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+                >
+                  BUILDS →
+                </Link>
+                <Link
+                  href="/research"
+                  className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-research hover:text-research"
+                >
+                  RESEARCH →
+                </Link>
+                <a
+                  href={site.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
+                >
+                  GITHUB →
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
+  );
 }

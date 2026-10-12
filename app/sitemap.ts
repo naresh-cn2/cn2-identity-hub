@@ -5,6 +5,7 @@ import { caseStudies } from "@/data/case-studies";
 import { researchEntries } from "@/data/research";
 import { publishedArticles } from "@/data/articles";
 import { labModules } from "@/data/lab";
+import { serviceSlugs } from "@/data/services";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const main = [
@@ -19,7 +20,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/capabilities",
     "/lab",
     "/about",
+    "/services",
     "/work-with-me",
+    "/opportunities",
+    "/opportunities/career",
+    "/opportunities/freelance",
+    "/opportunities/collaborate",
+    "/opportunities/partnerships",
     "/contact",
     "/links",
     "/cv",
@@ -29,8 +36,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const research = researchEntries.map((e) => `/research/${e.id}`);
   const articles = publishedArticles.map((a) => `/articles/${a.id}`);
   const lab = labModules.map((m) => m.href).filter((h) => h.startsWith("/lab/"));
+  const services = serviceSlugs.map((s) => `/services/${s}`);
 
-  const urls = new Set([...main, ...builds, ...studies, ...research, ...articles, ...lab]);
+  const urls = new Set([...main, ...builds, ...studies, ...research, ...articles, ...lab, ...services]);
 
   return [...urls].map((path) => ({
     url: `${site.url}${path}`,

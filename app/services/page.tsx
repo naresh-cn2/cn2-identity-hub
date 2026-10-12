@@ -1,0 +1,212 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import Reveal from '@/components/ui/reveal';
+import { serviceOfferings, getCapability } from '@/data/services';
+
+
+export const metadata: Metadata = {
+  title: 'Services — Bukya Naresh / CN2.dev',
+  description:
+    'Client-facing services offered: research prototypes, market-data tooling, quantitative analysis tools, and technical automation—all evidenced by actual work in the archive.',
+  alternates: { canonical: '/services' },
+  openGraph: {
+    title: 'Services — Bukya Naresh / CN2.dev',
+    description:
+      'Client-facing services offered: research prototypes, market-data tooling, quantitative analysis tools, and technical automation—all evidenced by actual work in the archive.',
+  },
+};
+
+/*
+ * Services page — client-facing offerings grounded in actual evidence.
+ */
+export default function ServicesPage() {
+  // Each service is a real engagement shape anchored to a capability (spec §12)
+  const services = serviceOfferings.map((s) => ({ service: s, cap: getCapability(s.slug)! })).filter((x) => x.cap);
+
+  return (
+    <>
+      {/* ---- header ---- */}
+      <section className='relative overflow-hidden border-b border-line'>
+        <div className='grid-field absolute inset-0' aria-hidden='true' />
+        <div className='relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40'>
+          <Reveal>
+            <div className='flex flex-wrap items-baseline justify-between gap-4'>
+              <p className='label-mono text-muted'>
+                SECTION <span className='text-signal'>/</span> 16 — SERVICES
+              </p>
+              <p className='label-mono text-faint'>CLIENT-FACING OFFERINGS
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <h1 className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>SERVICES</h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>
+              Client-facing services offered: research prototypes, market-data tooling,
+              quantitative analysis tools, financial data pipelines, technical automation,
+              and AI-assisted workflow tools—all evidenced by actual work in the archive.
+              Nothing is offered without a clear basis in demonstrated capability.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---- service offerings ---- */}
+      <section aria-label='Service offerings' className='py-16 md:py-24'>
+        <div className='mx-auto max-w-[1440px] px-5 sm:px-8'>
+          <Reveal>
+            <h2 className='display text-3xl md:text-5xl'>SERVICE OFFERINGS</h2>
+            <p className='label-mono text-faint'>EVIDENCE-BASED · SCOPE-DEFINED · NO GUARANTEED OUTCOMES
+            </p>
+          </Reveal>
+          <div className='mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3'>
+            {services.map(({ service, cap }, i) => (
+              <Reveal key={service.slug} delay={i * 80}>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className='group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface'
+                >
+                  <div className='flex items-baseline justify-between'>
+                    <span className='label-mono text-faint'>SERVICE / {cap.id.toUpperCase()}</span>
+                    <span className='label-mono flex items-center gap-2 text-foreground'>
+                      <span className='pulse-dot h-1.5 w-1.5 rounded-full bg-signal' aria-hidden='true' />
+                      {cap.projects.length > 0 ? 'EVIDENCED' : 'CONCEPTUAL'}
+                    </span>
+                  </div>
+                  <span className='display mt-6 block text-2xl md:text-4xl'>{cap.name}</span>
+                  <span className='mt-4 block flex-1 text-base leading-relaxed text-muted'>
+                    {service.promise}
+                  </span>
+                  {cap.technologies.length > 0 && (
+                    <span className='label-mono mt-2 block text-faint'>
+                      METHODS — {cap.technologies.slice(0, 3).join(' · ')}
+                    </span>
+                  )}
+                  {cap.research.length > 0 && (
+                    <span className='label-mono mt-1 block text-research'>
+                      RESEARCH — {cap.research.join(' · ')}
+                    </span>
+                  )}
+                  <span className='label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1'>
+                    LEARN MORE →
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---- service delivery process ---- */}
+      <section aria-label='Service delivery process' className='border-t border-line'>
+        <div className='mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20'>
+          <Reveal>
+            <h2 className='display text-2xl md:text-4xl'>SERVICE DELIVERY PROCESS</h2>
+          </Reveal>
+          <ol className='mt-10 max-w-3xl space-y-5'>
+            {['DISCOVER', 'DEFINE', 'RESEARCH', 'SPECIFY', 'DESIGN', 'BUILD', 'TEST', 'VALIDATE', 'DELIVER', 'ITERATE'].map((step, i) => (
+              <Reveal key={step} delay={i * 90}>
+                <li className='flex items-baseline gap-6 border-b border-line pb-5'>
+                  <span className='num-mono text-sm text-faint'>{String(i + 1).padStart(2, '0')}</span>
+                  <span className='display text-2xl md:text-4xl'>{step}</span>
+                  {i < 9 && (<span>+</span>)}
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+          <div className='mt-8 flex flex-wrap items-baseline justify-between gap-4'>
+            <p className='label-mono text-faint'>
+              This process emphasizes evidence, clear requirements, testing, communication,
+              and honest delivery.  No unsupported production readiness is promised.
+            </p>
+            <Link
+              href='/how-i-work'
+              className='label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal'
+            >
+              LEARN HOW I WORK →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- engagement models ---- */}
+      <section aria-label='Engagement models' className='border-t border-line'>
+        <div className='mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20'>
+          <Reveal>
+            <h2 className='display text-2xl md:text-4xl'>ENGAGEMENT MODELS</h2>
+          </Reveal>
+          <div className='mt-12 grid gap-px bg-line md:grid-cols-2'>
+            <div>
+              <Reveal>
+                <h3 className='display mt-4 text-xl'>FREELANCE & CONTRACT</h3>
+              </Reveal>
+              <p className='mt-4 text-base leading-relaxed text-muted'>
+                Available for defined-scope technical projects: research prototypes,
+                market-data tools, quantitative analysis systems, and automation
+                workflows. All work is evidenced by actual projects in the archive.
+              </p>
+              <Link
+                href='/opportunities/freelance'
+                className='label-mono mt-6 inline-block border border-line-strong px-5 py-3 text-foreground transition-colors hover:border-signal hover:text-signal'
+              >
+                EXPLORE OPPORTUNITIES →
+              </Link>
+            </div>
+            <div>
+              <Reveal>
+                <h3 className='display mt-4 text-xl'>RESEARCH COLLABORATION</h3>
+              </Reveal>
+              <p className='mt-4 text-base leading-relaxed text-muted'>
+                Open to research collaboration on market structure, backtesting,
+                data integrity, risk engineering, and quantitative methods.
+                Collaboration requires shared interest in evidence-based outcomes
+                and transparent methodology.
+              </p>
+              <Link
+                href='/research'
+                className='label-mono mt-6 inline-block border border-line-strong px-5 py-3 text-foreground transition-colors hover:border-research hover:text-research'
+              >
+                EXPLORE RESEARCH →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- continue ---- */}
+      <section aria-label='Continue' className='border-t border-line'>
+        <div className='mx-auto max-w-[1440px] px-5 py-16 sm:px-8'>
+          <Reveal>
+            <div className='flex flex-wrap items-center justify-between gap-6'>
+              <div>
+                <p className='label-mono text-faint'>NEXT</p>
+                <p className='display mt-2 text-2xl md:text-3xl'>BUILD CONFIDENCE THROUGH EVIDENCE</p>
+              </div>
+              <div className='flex flex-wrap gap-4'>
+                <Link
+                  href='/proof'
+                  className='label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal'
+                >
+                  PROOF →
+                </Link>
+                <Link
+                  href='/about'
+                  className='label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal'
+                >
+                  ABOUT →
+                </Link>
+                <Link
+                  href='/contact'
+                  className='label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal'
+                >
+                  CONTACT →
+                </Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
+  );
+}

@@ -82,17 +82,6 @@ function ContactCard({ method }: { method: ContactMethod }) {
   const [wasTouched, setWasTouched] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setIsRevealed(true);
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
   const handleClick = (e: React.MouseEvent) => {
     // On touch devices, first click reveals, second click activates
     if (!isRevealed && (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches)) {
@@ -192,10 +181,71 @@ function ContactCard({ method }: { method: ContactMethod }) {
 }
 
 export default function ContactContent() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Single pointermove listener for the whole grid — cards tilt/translate
+   * toward the cursor with distance-weighted falloff, so the panels read as
+   * floating glass at different depths. One listener, CSS transforms only,
+   * disabled for coarse pointers and prefers-reduced-motion.
+   */
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    if (window.matchMedia("(hover: none)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>("[data-float]"));
+    if (cards.length === 0) return;
+
+    let frame = 0;
+    const onMove = (e: PointerEvent) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const rect = grid.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+        const ny = (e.clientY - rect.top) / rect.height - 0.5;
+        cards.forEach((card, i) => {
+          const depth = 4 + (i % 3) * 4; // 4 / 8 / 12 px — staggered layers
+          const dx = -nx * depth;
+          const dy = -ny * (depth * 0.6);
+          card.style.transform = `translate3d(${dx.toFixed(2)}px, ${dy.toFixed(2)}px, 0)`;
+        });
+      });
+    };
+
+    const onLeave = () => {
+      cards.forEach((card) => {
+        card.style.transform = "translate3d(0, 0, 0)";
+      });
+    };
+
+    grid.addEventListener("pointermove", onMove);
+    grid.addEventListener("pointerleave", onLeave);
+    return () => {
+      grid.removeEventListener("pointermove", onMove);
+      grid.removeEventListener("pointerleave", onLeave);
+      if (frame) cancelAnimationFrame(frame);
+      cards.forEach((card) => {
+        card.style.transform = "";
+      });
+    };
+  }, []);
+
   return (
-    <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div ref={gridRef} className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {CONTACT_METHODS.map((method, i) => (
-        <div key={method.id} style={{ animationDelay: `${i * 80}ms` }} className="animate-in fade-in slide-in-from-y-4 duration-500">
+        <div
+          key={method.id}
+          data-float
+          style={{
+            animationDelay: `${i * 80}ms`,
+            transition: "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)",
+            willChange: "transform",
+          }}
+          className="animate-in fade-in slide-in-from-y-4 duration-500"
+        >
           <ContactCard method={method} />
         </div>
       ))}

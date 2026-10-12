@@ -53,6 +53,7 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: "BUILDS", href: "/builds", code: "01" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
+      { label: "SERVICES", href: "/services", code: "20" },
       { label: "CAPABILITIES", href: "/capabilities", code: "03" },
       { label: "LAB", href: "/lab", code: "11" },
     ],
@@ -77,12 +78,23 @@ export const primaryNav: NavItem[] = [
       { label: "PROOF", href: "/proof", code: "09" },
     ],
   },
+  {
+    label: "OPPORTUNITIES",
+    href: "/opportunities",
+    code: "12",
+    children: [
+      { label: "CAREER", href: "/opportunities/career", code: "12" },
+      { label: "FREELANCE", href: "/opportunities/freelance", code: "13" },
+      { label: "COLLABORATE", href: "/opportunities/collaborate", code: "14" },
+      { label: "PARTNERSHIPS", href: "/opportunities/partnerships", code: "15" },
+    ],
+  },
   { label: "ABOUT", href: "/about", code: "10" },
-  { label: "CONTACT", href: "/contact", code: "12" },
+  { label: "CONTACT", href: "/contact", code: "16" },
 ];
 
 /** The professional action, kept visually distinct from navigation. */
-export const workRoute = { label: "WORK WITH ME", href: "/work-with-me", code: "13" } as const;
+export const workRoute = { label: "WORK WITH ME", href: "/work-with-me", code: "17" } as const;
 
 /**
  * Flat index of every destination — the single source of truth for the footer
@@ -95,8 +107,8 @@ export const allRoutes: NavLeaf[] = [
     item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
   ),
   { label: workRoute.label, href: workRoute.href, code: workRoute.code },
-  { label: "CV", href: "/cv", code: "14" },
-  { label: "LINKS", href: "/links", code: "15" },
+  { label: "CV", href: "/cv", code: "18" },
+  { label: "LINKS", href: "/links", code: "19" },
 ];
 
 /** Deduplicated route index (a group landing href can repeat as a child). */

@@ -88,7 +88,7 @@ export default function Navbar() {
               <Link
                 href="/identity"
                 className="group flex min-w-0 shrink-0 cursor-pointer flex-col items-start leading-none"
-                aria-label={`${site.identity} — ${site.name} — identity page`}
+                aria-label={`${site.name} ${site.identity} — identity page`}
               >
                 <span className="display text-[0.95rem] font-bold tracking-tight text-white transition-opacity duration-200 group-hover:opacity-80 md:text-base">
                   {site.name}
@@ -203,7 +203,7 @@ export default function Navbar() {
             <Link
               href="/identity"
               className="group flex shrink-0 flex-col items-start leading-none text-foreground cursor-pointer"
-              aria-label={`${site.identity} — ${site.name} — identity page`}
+              aria-label={`${site.name} ${site.identity} — identity page`}
             >
               <span className="display text-[0.95rem] font-bold tracking-tight md:text-base group-hover:text-signal transition-colors">
                 {site.name}
@@ -395,7 +395,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-4">
             <p className="label-mono text-[10px] text-signal">{site.identity}</p>
-            <button onClick={openPalette} className="label-mono text-muted" aria-label="Open command palette">
+            <button onClick={openPalette} className="label-mono text-muted" aria-label="⌘K — open command palette">
               ⌘K
             </button>
           </div>
