@@ -32,13 +32,16 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <section className="relative min-h-dvh w-full overflow-hidden bg-[#030408]">
+      {/* shown whole, never cropped: the picture sets the page height, so
+          scrolling reveals the full figure across ~2-3 viewport lengths */}
       <Image
         src="/images/about-cosmos.png"
         alt="A figure formed of starlight, holding a burning red ember against a field of stars"
-        fill
+        width={1085}
+        height={1450}
         sizes="100vw"
         priority
-        className="object-cover object-center"
+        className="block h-auto w-full"
       />
       {/* keeps the fixed navbar legible over the starfield in every theme */}
       <div

@@ -352,12 +352,13 @@ export default function PageAtmosphere({
                     warm: rand() < 0.06,
                 });
             }
-            // red embers lifting off the cupped hand
+            // red embers lifting off the cupped hand (hand sits at ~0.60-0.72
+            // of the picture's height — the canvas matches the image exactly)
             const ecount = small ? 8 : 14;
             for (let i = 0; i < ecount; i++) {
                 embers.push({
-                    x: 0.42 + rand() * 0.18,
-                    y: 0.54 + rand() * 0.38,
+                    x: 0.4 + rand() * 0.16,
+                    y: 0.62 + rand() * 0.1,
                     r: 0.7 + rand() * 1.3,
                     ph: rand() * Math.PI * 2,
                     sp: 0.5 + rand() * 0.9,
@@ -768,12 +769,12 @@ export default function PageAtmosphere({
             // red embers lifting off the cupped hand, wobbling as they rise
             for (const e of embers) {
                 if (!reduced) e.y -= e.rise / 60;
-                if (e.y < 0.52) {
-                    e.y = 0.88 + Math.random() * 0.06;
-                    e.x = 0.42 + Math.random() * 0.18;
+                if (e.y < 0.56) {
+                    e.y = 0.7 + Math.random() * 0.04;
+                    e.x = 0.4 + Math.random() * 0.16;
                 }
                 const wob = Math.sin(t * e.sp * 2 + e.ph) * 0.01;
-                const lift = Math.max(0, Math.min(1, (0.9 - e.y) / 0.32));
+                const lift = Math.max(0, Math.min(1, (0.74 - e.y) / 0.14));
                 const a = 0.3 * lift * (0.5 + 0.5 * Math.sin(t * e.sp + e.ph));
                 ctx.fillStyle = rgba(COS_RED, a);
                 ctx.beginPath();
