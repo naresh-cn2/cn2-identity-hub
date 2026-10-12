@@ -158,7 +158,7 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Search + theme toggle — same order as inner pages for consistency */}
+            {/* Search — home page is dark-only, so no theme toggle here */}
             <div className="flex shrink-0 items-center gap-2.5">
               <button
                 onClick={openPalette}
@@ -166,19 +166,6 @@ export default function Navbar() {
                 aria-label="Open search"
               >
                 <Search className="h-4 w-4 text-white/75 transition-colors hover:text-white" />
-              </button>
-
-              <button
-                onClick={toggle}
-                className="relative grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-black/45 backdrop-blur-xl transition-all duration-300 hover:border-white/35 hover:bg-black/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2a1f] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                aria-pressed={theme === "dark" ? "false" : "true"}
-              >
-                {theme === "dark" ? (
-                  <Moon className="h-[18px] w-[18px] text-white/85" />
-                ) : (
-                  <Sun className="h-[18px] w-[18px] text-white/85" />
-                )}
               </button>
             </div>
           </div>

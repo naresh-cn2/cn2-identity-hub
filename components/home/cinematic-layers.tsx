@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTheme } from "@/components/providers/theme-provider";
 
 /**
  * CinematicLayers — realistic, connected lighting + atmosphere over the hero.
@@ -32,15 +31,13 @@ import { useTheme } from "@/components/providers/theme-provider";
  * blue-grey rather than washed-out white.
  */
 export default function CinematicLayers() {
-  const { theme } = useTheme();
-  const light = theme === "light";
+  // The home page is dark-only by design — the light-mode treatment caused
+  // artifacts over the baked-in hero image, so the cinematic layers always
+  // render in dark mode here. Other routes keep both themes.
+  const light = false;
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const darkRef = useRef(true);
-
-  useEffect(() => {
-    darkRef.current = theme === "dark";
-  }, [theme]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
