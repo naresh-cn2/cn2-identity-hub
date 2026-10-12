@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------
-   BUKYA NARESH / CN2.DEV - QUANTITATIVE INTELLIGENCE design tokens
+   BUKYA NARESH / CN2.DEV - QUANTITATIVE DEVELOPER design tokens
    light = daylight editorial studio - ice-blue atmosphere, premium white surfaces,
      blue-gray technical geometry. Deliberately never plain white (spec A7).
    dark = night research laboratory

@@ -1,6 +1,6 @@
 # CN2.DEV
 
-**Quantitative Intelligence Digital Headquarters**
+**Quantitative Developer Digital Headquarters**
 
 CN2.DEV is a premium, cinematic, multi‑page web application that serves as a professional platform for a quantitative developer, researcher, and builder. It showcases quantitative development, algorithmic‑trading research, financial analytics, data engineering, software products, technical projects, research and experimentation, professional credentials, client services, employment and freelance opportunities, and research collaborations.
 

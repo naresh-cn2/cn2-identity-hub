@@ -33,7 +33,7 @@ export default function CollaborationPaths() {
           <div>
             <h2 className="display text-4xl md:text-6xl">BUKYA NARESH</h2>
             <p className="label-mono mt-4 text-[10px] text-faint">
-              CN2.DEV — QUANTITATIVE INTELLIGENCE
+              CN2.DEV — QUANTITATIVE DEVELOPER
             </p>
           </div>
           <Link

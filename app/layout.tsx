@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s — BUKYA NARESH / CN2.DEV",
   },
   description:
-    "CN2.dev — the digital headquarters of Bukya Naresh. Quantitative intelligence through research, markets, data and engineering: deterministic systems for understanding markets.",
+    "CN2.dev — the digital headquarters of Bukya Naresh. Quantitative development through research, markets, data and engineering: deterministic systems for understanding markets.",
   alternates: { canonical: "/" },
   keywords: [
     "quantitative research",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BUKYA NARESH — CN2.DEV",
     description:
-      "Quantitative intelligence through research, markets, data and engineering.",
+      "Quantitative development through research, markets, data and engineering.",
     type: "website",
     siteName: "BUKYA NARESH — CN2.DEV",
     locale: "en_IN",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BUKYA NARESH — CN2.DEV",
     description:
-      "Quantitative intelligence through research, markets, data and engineering.",
+      "Quantitative development through research, markets, data and engineering.",
   },
   robots: { index: true, follow: true },
 };

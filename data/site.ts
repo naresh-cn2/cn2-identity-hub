@@ -5,10 +5,10 @@ export const site = {
   identity: "BUKYA NARESH",
   /** System tag used in technical chrome. */
   system: "CN2",
-  descriptor: "QUANTITATIVE INTELLIGENCE",
+  descriptor: "QUANTITATIVE DEVELOPER",
   subtitle: "Research · Markets · Data · Engineering",
   description:
-    "CN2.dev — the digital headquarters of CN2.DEV. Quantitative intelligence through research, markets, data and engineering: deterministic systems for understanding markets.",
+    "CN2.dev — the digital headquarters of CN2.DEV. Quantitative development through research, markets, data and engineering: deterministic systems for understanding markets.",
   status: "OPEN TO SELECTED WORK · RESEARCH · COLLABORATION",
   url: "https://cn2-identity-hub.vercel.app",
   email: "bukyanaresh2003@gmail.com",

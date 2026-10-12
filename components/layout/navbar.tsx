@@ -11,7 +11,7 @@ import {
   type NavItem,
 } from "@/data/site";
 import { useTheme } from "@/components/providers/theme-provider";
-import { Sun, Moon, Search } from "lucide-react";
+import { Sun, Moon, Search, ArrowLeft } from "lucide-react";
 
 /**
  * Helper for conditional class names
@@ -297,17 +297,24 @@ export default function Navbar() {
               </nav>
             )}
 
-            {/* ---- actions: identity page = search then moon only, right-aligned ---- */}
+            {/* ---- actions: back · search · theme — every inner page can
+                 return to the entrance, and the search sits directly left
+                 of the moon on all pages ---- */}
             <div className={cn("flex shrink-0 items-center gap-2", isIdentityPage && "ml-auto")}>
-              {isIdentityPage && (
-                <button
-                  onClick={openPalette}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
-                  aria-label="Open search"
-                >
-                  <Search className="h-4 w-4" />
-                </button>
-              )}
+              <Link
+                href="/"
+                aria-label="Back to home"
+                className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Link>
+              <button
+                onClick={openPalette}
+                className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
+                aria-label="Open search"
+              >
+                <Search className="h-4 w-4" />
+              </button>
               <button
                 onClick={toggle}
                 className="relative grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
@@ -316,15 +323,6 @@ export default function Navbar() {
               >
                 {theme === "dark" ? <Moon className="h-[18px] w-[18px]" /> : <Sun className="h-[18px] w-[18px]" />}
               </button>
-              {!isIdentityPage && (
-                <button
-                  onClick={openPalette}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
-                  aria-label="Open search"
-                >
-                  <Search className="h-4 w-4" />
-                </button>
-              )}
               {!isIdentityPage && (
                 <button
                   onClick={() => setMenuOpen(!menuOpen)}

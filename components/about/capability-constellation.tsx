@@ -6,7 +6,7 @@ import { useState } from "react";
 import { capabilities } from "@/data/about";
 import type { CapStatus } from "@/data/about";
 
-/* Capability map: QUANTITATIVE INTELLIGENCE at the center, seven
+/* Capability map: QUANTITATIVE DEVELOPER at the center, seven
    disciplines in a staggered constellation. Selecting a node reveals
    what the capability means, the problems it addresses, its honest
    status, and links to real supporting work. */
@@ -65,7 +65,7 @@ export default function CapabilityConstellation() {
             <span className="label-mono text-[10px] leading-relaxed text-foreground">
               QUANTITATIVE
               <br />
-              INTELLIGENCE
+              DEVELOPER
             </span>
           </div>
 
