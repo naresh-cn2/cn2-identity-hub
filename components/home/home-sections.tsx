@@ -538,11 +538,12 @@ export function CredentialsTeaser() {
               ACT V <span className="text-signal">/</span> THE PROOF
             </p>
             <h2 className="display mt-6 text-[clamp(1.8rem,4.6vw,3.2rem)]">
-              NOTHING CLAIMED, EVERYTHING SHOWN
+              NOTHING INFLATED, EVERYTHING SHOWN
             </h2>
             <p className="mt-6 text-base leading-relaxed text-muted">
-              There is currently no accredited certificate to list. Rather than pad the page, it says
-              so — and lists what is actually being studied, with the system each track produced.
+              {credentials.length} certificates, transcribed exactly as their issuers printed them —
+              provider, date, and verification where the provider offers it — beside what is actually
+              being studied, with the system each track produced.
             </p>
             <Link
               href="/certifications"
@@ -557,7 +558,8 @@ export function CredentialsTeaser() {
               <p className="num-mono text-4xl font-semibold text-foreground">{credentials.length}</p>
               <p className="label-mono mt-2 text-[10px] text-faint">FORMAL CREDENTIALS CLAIMED</p>
               <p className="mt-4 text-sm leading-relaxed text-muted">
-                A credential appears only after it is issued and independently verifiable.
+                A credential appears only after it is issued — with a verification link where the
+                provider offers one.
               </p>
             </div>
             <div className="bg-background p-6">

@@ -2,11 +2,13 @@
  * Credential records.
  *
  * Hard rule for this file: nothing is listed here that was not actually earned.
- * There is currently no formal, accredited credential to claim, so
- * `credentials` is empty — deliberately, and visibly, rather than filled with
- * plausible-looking entries.
+ * Every entry in `credentials` is an issued certificate recorded exactly as its
+ * issuer printed it — named provider, printed date, printed identifier, and a
+ * verification link only where the provider actually issues one. Where the
+ * certificate itself omits a detail (a date, a score, a verification page),
+ * the record omits it and says so rather than filling the gap.
  *
- * What IS listed is self-directed study, which is evidenced by the systems and
+ * Also listed is self-directed study, which is evidenced by the systems and
  * research in this repository. Those tracks are labelled as self-directed and
  * are never presented as accredited credentials or as mastery.
  */
@@ -27,24 +29,83 @@ export interface CredentialRecord {
   assessment: string;
   certificateUrl?: string;
   verificationUrl?: string;
+  /** The provider's own identifier printed on the certificate, if any. */
+  credentialId?: string;
+  /** Honest caveats about what the certificate does or does not print. */
+  notes?: string[];
   relatedProject?: string;
   relatedResearch?: string;
 }
 
 /**
- * Formal, accredited credentials.
+ * Formal, issued credentials.
  *
- * Empty by design. A credential appears here only after it has been issued and
- * can be verified by a third party at the provider.
+ * Three real certificates, each transcribed from the document itself. A new
+ * entry appears here only after it has been issued — and only carrying what
+ * the certificate actually says.
  */
-export const credentials: CredentialRecord[] = [];
+export const credentials: CredentialRecord[] = [
+  {
+    id: "quantconnect-us-equities-101",
+    provider: "QuantConnect",
+    program: "US Equities 101 Boot Camp for Algorithmic Trading",
+    state: "COMPLETED",
+    date: "2026-09-21",
+    topics: ["US equities fundamentals (US Equities 101)", "Algorithmic trading boot camp track"],
+    skills: ["Algorithmic trading concepts applied to US equities"],
+    learned:
+      "The boot camp connected the market-data and backtesting work I already do to how US equity sessions and orders actually fit together.",
+    assessment:
+      "Certificate of completion issued for the boot camp; no exam result or score is printed on the certificate.",
+    notes: [
+      "The QR printed on the certificate resolves to quantconnect.com/learning — QuantConnect issues no per-certificate verification page.",
+    ],
+  },
+  {
+    id: "nsdc-data-engineering-analyst",
+    provider: "National Skill Development Corporation (NSDC) — Skill India Digital Hub",
+    program: "Data Engineering Analyst",
+    state: "VERIFIED",
+    date: "2025-08-07",
+    credentialId: "NSDC/DE/2025/100190",
+    topics: [
+      "National Occupational Standards — Data Engineering and Analysis (SSC/Q1005), version 4.0",
+    ],
+    skills: ["Data engineering and analysis as defined by the Skill India occupational standard"],
+    learned:
+      "Studying against a published occupational standard gave me a fixed reference point: data work measured against what the standard defines, not against what happens to run.",
+    assessment:
+      "Issued as a Certificate of Achievement for completing the standard; no exam result or score is printed on the certificate.",
+    verificationUrl:
+      "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-30abc684-c033-40a9-836b-caa3d4b7be33",
+    notes: [
+      "Developed by the Microsoft Industry Skill Accelerator in collaboration with NASSCOM under NSDC's Innovation, Research and Development initiative.",
+    ],
+  },
+  {
+    id: "unstop-python-dsa",
+    provider: "Unstop",
+    program: "Python DSA",
+    state: "COMPLETED",
+    topics: ["Python", "Data structures and algorithms"],
+    skills: ["Data structures and algorithms implemented in Python"],
+    learned:
+      "Revisiting data structures and algorithms in Python made the everyday implementation choices — when a dict, when a list, when a heap — deliberate instead of habitual.",
+    assessment:
+      "Course completion certificate; no exam result or score is printed on the certificate.",
+    notes: [
+      "No date is printed on this certificate, so none is claimed here.",
+      "The certificate carries an Unstop verification QR; no public verification URL is printed on it.",
+    ],
+  },
+];
 
 /** Fields every credential record is required to carry, shown as the page template. */
 export const credentialSchema: { field: string; why: string }[] = [
   { field: "PROVIDER", why: "Who issued it — a credential without a named issuer is not a credential." },
   { field: "PROGRAM", why: "The exact programme or course title, not a paraphrase." },
   { field: "STATE", why: "IN PROGRESS, COMPLETED, VERIFIED or PLANNED. Planned work is never shown as done." },
-  { field: "DATE", why: "When it was issued. Omitted only while the state is PLANNED." },
+  { field: "DATE", why: "When it was issued — printed exactly as the certificate prints it, and omitted when the certificate itself prints no date." },
   { field: "TOPICS", why: "What the syllabus actually covered." },
   { field: "SKILLS", why: "What the assessment tested, not what the marketing page promised." },
   { field: "LEARNED", why: "A first-person account of the specific thing that changed in how I work." },

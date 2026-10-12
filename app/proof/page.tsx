@@ -245,7 +245,7 @@ export default function ProofPage() {
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
                         <p className="label-mono text-signal">05 — CREDENTIALS</p>
-                        <h2 className="display mt-4 text-2xl md:text-4xl">ACCREDITED CERTIFICATION</h2>
+                        <h2 className="display mt-4 text-2xl md:text-4xl">CREDENTIALS ON FILE</h2>
                     </Reveal>
                     <Reveal delay={80}>
                         <div className="mt-8">

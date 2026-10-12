@@ -15,37 +15,56 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Certifications",
   description:
-    "Credential record for Bukya Naresh. Nothing is claimed that was not earned — currently no formal credential is listed, and self-directed study is labelled as self-directed.",
+    "Credential record for Bukya Naresh — issued certificates from NSDC, QuantConnect and Unstop, transcribed exactly as printed, with verification where the issuer offers it. Self-directed study is labelled as self-directed.",
   alternates: { canonical: "/certifications" },
   openGraph: {
     title: "Certifications — Bukya Naresh / CN2.dev",
     description:
-      "An evidence-first credential record: no unearned certificate, no self-directed study presented as accreditation.",
+      "An evidence-first credential record: every certificate exactly as issued — no unearned claim, no self-directed study presented as accreditation.",
   },
 };
 
-/** Credential constellation — hollow nodes are unclaimed, filled nodes are active study. */
-function CredentialConstellation({ studyCount }: { studyCount: number }) {
-  const nodes = [
-    { label: "PLANNED", filled: false },
-    { label: "IN PROGRESS", filled: false },
-    { label: "COMPLETED", filled: false },
-    { label: "VERIFIED", filled: false },
-  ];
+/** Print a date exactly as the certificate does — string parsing, no timezone math. */
+const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+function formatDate(iso?: string) {
+  if (!iso) return undefined;
+  const [y, m, d] = iso.split("-");
+  return `${d} ${MONTHS[Number(m) - 1]} ${y}`;
+}
+
+/** Credential constellation — filled nodes are states actually claimed. */
+function CredentialConstellation({
+  credentials,
+  studyCount,
+}: {
+  credentials: { state: string }[];
+  studyCount: number;
+}) {
+  const nodes = ["PLANNED", "IN PROGRESS", "COMPLETED", "VERIFIED"] as const;
+  const count = (s: string) => credentials.filter((c) => c.state === s).length;
   return (
     <svg
       viewBox="0 0 840 132"
       className="h-auto w-full"
       role="img"
-      aria-label={`Credential constellation: no formal credential is currently claimed. ${studyCount} self-directed study tracks are active.`}
+      aria-label={`Credential constellation: ${credentials.length} credentials claimed — ${nodes
+        .map((n) => `${count(n)} ${n.toLowerCase()}`)
+        .join(", ")}. ${studyCount} self-directed study tracks are active.`}
     >
       <line x1="60" y1="56" x2="780" y2="56" stroke="var(--line-strong)" strokeWidth="1" strokeDasharray="3 5" />
-      {nodes.map((n, i) => {
+      {nodes.map((label, i) => {
         const x = 60 + (i * 720) / (nodes.length - 1);
+        const n = count(label);
+        const filled = n > 0;
         return (
-          <g key={n.label}>
+          <g key={label}>
             <circle cx={x} cy="56" r="11" fill="none" stroke="var(--line-strong)" strokeWidth="1.25" />
-            <circle cx={x} cy="56" r="3" fill="var(--faint)" />
+            <circle
+              cx={x}
+              cy="56"
+              r="3"
+              fill={filled ? (label === "VERIFIED" ? "var(--research)" : "var(--signal)") : "var(--faint)"}
+            />
             <text
               x={x}
               y="90"
@@ -55,7 +74,7 @@ function CredentialConstellation({ studyCount }: { studyCount: number }) {
               fill="var(--faint)"
               style={{ fontFamily: "var(--font-mono)" }}
             >
-              {n.label}
+              {label}
             </text>
             <text
               x={x}
@@ -63,10 +82,10 @@ function CredentialConstellation({ studyCount }: { studyCount: number }) {
               textAnchor="middle"
               fontSize="9"
               letterSpacing="0.1em"
-              fill="var(--muted)"
+              fill={filled ? "var(--muted)" : "var(--faint)"}
               style={{ fontFamily: "var(--font-mono)" }}
             >
-              NOT CLAIMED
+              {filled ? `${n} CLAIMED` : "NOT CLAIMED"}
             </text>
           </g>
         );
@@ -117,46 +136,154 @@ export default function CertificationsPage() {
           </Reveal>
           <Reveal delay={280}>
             <div className="mt-12 max-w-4xl">
-              <CredentialConstellation studyCount={studyTracks.length} />
+              <CredentialConstellation
+                credentials={credentials}
+                studyCount={studyTracks.length}
+              />
             </div>
           </Reveal>
         </div>
       </header>
 
-      {/* ---- formal credentials: honest empty state ---- */}
+      {/* ---- formal credentials: issued certificates, transcribed as printed ---- */}
       <section aria-label="Formal credentials" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-            <Reveal>
-              <p className="label-mono text-signal">FORMAL CREDENTIALS</p>
-              <h2 className="display mt-4 text-3xl md:text-4xl">NOTHING CLAIMED</h2>
-            </Reveal>
-            <Reveal delay={100}>
-              <div className="corner-ticks border border-line bg-surface p-6 md:p-10">
-                <p className="text-base leading-relaxed text-muted md:text-lg">
-                  There is currently no accredited certificate or completed formal programme to list.
-                  Rather than pad this page with plausibly-titled entries, it stays empty and says so.
-                </p>
-                <p className="mt-5 text-base leading-relaxed text-muted md:text-lg">
-                  The moment a credential is issued, it appears here against the schema below — with
-                  the issuer named and a verification link a third party can actually open.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <Link
-                    href="/builds"
-                    className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
-                  >
-                    SEE THE ACTUAL EVIDENCE →
-                  </Link>
-                  <Link
-                    href="/capabilities"
-                    className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
-                  >
-                    CAPABILITY MAP →
-                  </Link>
-                </div>
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <div>
+                <p className="label-mono text-signal">FORMAL CREDENTIALS</p>
+                <h2 className="display mt-4 text-3xl md:text-4xl">EVERY CERTIFICATE, AS ISSUED</h2>
               </div>
-            </Reveal>
+              <p className="label-mono max-w-xs text-[10px] leading-relaxed text-faint">
+                TRANSCRIBED FROM THE DOCUMENT ITSELF — WHERE THE CERTIFICATE OMITS A DETAIL, THE
+                RECORD OMITS IT TOO.
+              </p>
+            </div>
+          </Reveal>
+
+          <ol className="mt-12 space-y-px bg-line">
+            {credentials.map((c, i) => (
+              <Reveal key={c.id} delay={Math.min(i, 3) * 70}>
+                <li className="bg-background p-6 md:p-8">
+                  <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+                    <div>
+                      <div className="flex flex-wrap items-baseline gap-4">
+                        <span className="num-mono text-xs text-signal">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span
+                          className={`label-mono border px-2 py-1 text-[10px] ${
+                            c.state === "VERIFIED"
+                              ? "border-research text-research"
+                              : "border-line-strong text-foreground"
+                          }`}
+                        >
+                          {c.state}
+                        </span>
+                        <span className="label-mono text-[10px] text-faint">
+                          {formatDate(c.date) ?? "NO DATE PRINTED"}
+                        </span>
+                      </div>
+                      <h3 className="display mt-4 text-xl md:text-2xl">{c.program}</h3>
+                      <p className="label-mono mt-3 text-[10px] leading-relaxed text-muted">
+                        {c.provider}
+                      </p>
+                      {c.credentialId && (
+                        <p className="num-mono mt-3 text-xs text-faint">{c.credentialId}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <p className="label-mono text-faint">TOPICS</p>
+                      <ul className="mt-4 space-y-3">
+                        {c.topics.map((t) => (
+                          <li key={t} className="flex gap-3 text-sm leading-relaxed text-muted">
+                            <span
+                              className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-signal"
+                              aria-hidden="true"
+                            />
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="mt-6">
+                        <p className="label-mono text-faint">SKILLS</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {c.skills.map((s) => (
+                            <span
+                              key={s}
+                              className="label-mono border border-line px-2.5 py-1 text-[10px] text-muted"
+                            >
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-6">
+                        <p className="label-mono text-faint">LEARNED</p>
+                        <p className="mt-3 text-sm leading-relaxed text-muted">{c.learned}</p>
+                      </div>
+
+                      <div className="mt-6">
+                        <p className="label-mono text-faint">ASSESSMENT</p>
+                        <p className="mt-3 text-sm leading-relaxed text-muted">{c.assessment}</p>
+                      </div>
+
+                      {(c.verificationUrl || c.certificateUrl || (c.notes?.length ?? 0) > 0) && (
+                        <div className="mt-6 space-y-3 border-t border-line pt-5">
+                          {c.verificationUrl && (
+                            <a
+                              href={c.verificationUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group inline-block"
+                            >
+                              <span className="label-mono text-research transition-transform duration-300 group-hover:translate-x-1">
+                                VERIFY AT THE ISSUER →
+                              </span>
+                            </a>
+                          )}
+                          {c.certificateUrl && (
+                            <a
+                              href={c.certificateUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group inline-block"
+                            >
+                              <span className="label-mono text-foreground transition-transform duration-300 group-hover:translate-x-1">
+                                VIEW CERTIFICATE →
+                              </span>
+                            </a>
+                          )}
+                          {c.notes?.map((n) => (
+                            <p key={n} className="text-xs leading-relaxed text-faint">
+                              {n}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              href="/builds"
+              className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+            >
+              SEE THE ACTUAL EVIDENCE →
+            </Link>
+            <Link
+              href="/capabilities"
+              className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
+            >
+              CAPABILITY MAP →
+            </Link>
           </div>
         </div>
       </section>
@@ -284,8 +411,9 @@ export default function CertificationsPage() {
             <Reveal delay={80}>
               <h2 className="display text-2xl md:text-4xl">EVERY CREDENTIAL MUST CARRY ALL OF THIS</h2>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-                The requirements below are fixed in advance so that the first credential listed here
-                cannot be a vague line of text.
+                The requirements below are fixed in advance so that no credential listed here can be
+                a vague line of text — and where an issuer prints nothing (a date, a score, a
+                verification page), the record states the gap instead of filling it.
               </p>
               <dl className="mt-10 grid gap-px bg-line sm:grid-cols-2">
                 {credentialSchema.map((f) => (
