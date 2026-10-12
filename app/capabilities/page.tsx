@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
+import PageAtmosphere from '@/components/ui/page-atmosphere';
 import CapabilityMap from "@/components/capabilities/capability-map";
 import KnowledgeGraph from "@/components/viz/knowledge-graph";
 import { capabilities } from "@/data/capabilities";
@@ -30,6 +31,7 @@ export default function CapabilitiesPage() {
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
+        <PageAtmosphere variant="network" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">

@@ -550,10 +550,41 @@ h1.cn2-brand-word {
    baked-in hero image (never a filter on the image itself, so the
    wordmark / character / portal stay intact). Cross-fades on toggle. */
 
+.cn2-hero-stage {
+  perspective: 1500px;
+}
+
+/* Slow breathing zoom — a separate wrapper so it never fights the
+   pointer-driven parallax transform on .cn2-hero-img itself. */
+.cn2-hero-zoom {
+  animation: cn2-hero-breathe 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes cn2-hero-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.028); }
+}
+
+/* Pointer parallax + subtle 3D perspective tilt. Angles stay tiny (≤1.6deg)
+   so the baked-in composition, wordmark and character never distort. */
 .cn2-hero-img {
-  transform: translate3d(calc(var(--cn2-px, 0) * -9px), calc(var(--cn2-py, 0) * -7px), 0) scale(1.05);
+  transform:
+    translate3d(calc(var(--cn2-px, 0) * -9px), calc(var(--cn2-py, 0) * -7px), 0)
+    rotateY(calc(var(--cn2-px, 0) * 1.6deg))
+    rotateX(calc(var(--cn2-py, 0) * -1.1deg))
+    scale(1.06);
+  transform-origin: 60% 45%;
   transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+}
+
+/* Per-route ambient VFX layer — fades out before the header edge so light
+   never pools at the screen border, and stays strictly behind content. */
+.cn2-atmosphere {
+  opacity: 0.9;
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }
 
 /* No z-index here on purpose: it would create a stacking context and stop the
@@ -803,7 +834,8 @@ h1.cn2-brand-word {
 
   /* cinematic hero effects — freeze motion, drop parallax */
   .cn2-portal-glow-core,
-  .cn2-text-shimmer::before {
+  .cn2-text-shimmer::before,
+  .cn2-hero-zoom {
     animation: none !important;
   }
 

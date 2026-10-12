@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import PageAtmosphere from "@/components/ui/page-atmosphere";
 import { capabilities } from "@/data/capabilities";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
@@ -66,6 +67,7 @@ export default function CvPage() {
     <div className={`${PRINT_TOKENS} print:bg-white print:text-black`}>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0 print:hidden" aria-hidden="true" />
+        <PageAtmosphere variant="motes" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-12 pt-32 sm:px-8 md:pb-16 md:pt-40 print:pb-6 print:pt-8">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <p className="label-mono text-muted">

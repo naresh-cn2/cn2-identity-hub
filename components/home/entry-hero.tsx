@@ -72,17 +72,23 @@ export default function EntryHero() {
       style={{ minHeight: "100dvh", maxHeight: "100dvh" }}
       role="main"
     >
-      {/* ---- Background image: the provided hero with baked-in typography ---- */}
-      <div
-        className="cn2-hero-img absolute inset-0"
-        aria-hidden="true"
-        style={{
-          backgroundImage: "url('/images/cn2-hero-final.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
+      {/* ---- Background image: the provided hero with baked-in typography ----
+           The zoom wrapper carries the slow breathing scale, the stage carries
+           perspective, and .cn2-hero-img carries the pointer parallax + micro
+           3D tilt. Layers are separated so no transform ever fights another. */}
+      <div className="cn2-hero-stage absolute inset-0" aria-hidden="true">
+        <div className="cn2-hero-zoom absolute inset-0">
+          <div
+            className="cn2-hero-img absolute inset-0"
+            style={{
+              backgroundImage: "url('/images/cn2-hero-final.png')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          />
+        </div>
+      </div>
 
       {/* ---- Theme-aware ambient lighting + restrained cinematic motion ---- */}
       <CinematicLayers />

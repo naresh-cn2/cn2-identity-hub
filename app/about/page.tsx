@@ -8,6 +8,7 @@ import { capabilities } from "@/data/capabilities";
 import { career } from "@/data/career";
 import { researchEntries } from "@/data/research";
 import Reveal from "@/components/ui/reveal";
+import PageAtmosphere from '@/components/ui/page-atmosphere';
 
 export const metadata: Metadata = {
   title: "About",
@@ -59,6 +60,7 @@ export default function AboutPage() {
       {/* ---- header: the person is the brand, so the name leads ---- */}
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
+        <PageAtmosphere variant="motes" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">

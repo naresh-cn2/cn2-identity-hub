@@ -3,6 +3,7 @@ import Link from "next/link";
 import { engagementAreas } from "@/data/lab";
 import { site, utilityLinks } from "@/data/site";
 import Reveal from "@/components/ui/reveal";
+import PageAtmosphere from '@/components/ui/page-atmosphere';
 
 export const metadata: Metadata = {
   title: "Work With Me",
@@ -72,6 +73,7 @@ export default function WorkWithMePage() {
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
+        <PageAtmosphere variant="signal" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">

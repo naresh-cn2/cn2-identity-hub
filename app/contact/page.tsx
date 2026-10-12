@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
+import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ContactContent from "./contact-content";
 import { site } from "@/data/site";
 
@@ -39,6 +40,7 @@ export default function ContactPage() {
             {/* ---- minimal hero ---- */}
             <header className="scanlines relative overflow-hidden border-b border-line">
                 <div className="grid-field absolute inset-0" aria-hidden="true" />
+                <PageAtmosphere variant="orbit" />
                 <div
                     className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
                     aria-hidden="true"
