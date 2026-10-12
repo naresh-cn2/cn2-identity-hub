@@ -609,6 +609,34 @@ h1.cn2-brand-word {
   opacity: 1;
 }
 
+/* Connective motion for the /about diagrams: drifting dash along the
+   active connections, slow breathing float on the vision web.
+   The global reduced-motion kill switch collapses both. */
+@keyframes cn2-dash-drift {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+.cn2-dash {
+  stroke-dasharray: 3 5;
+  animation: cn2-dash-drift 9s linear infinite;
+}
+
+@keyframes cn2-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 7px));
+  }
+}
+
+.cn2-float {
+  animation: cn2-float 7s ease-in-out infinite;
+}
+
 /* No z-index here on purpose: it would create a stacking context and stop the
    mix-blend-mode typography layers from reaching the hero image behind. Paint
    order (after .cn2-hero-img) already layers this above the image. */
