@@ -7,6 +7,10 @@ import type { NextConfig } from "next";
  * /intelligence is now a real route, so its legacy redirect is removed. The
  * previous /quant and /career destinations stay redirected so no inbound link
  * or indexed URL breaks.
+ *
+ * The headquarters lives at /hub; the directive's alternative names for
+ * existing destinations (/credentials, /about/capabilities) resolve to the
+ * canonical pages rather than duplicating them.
  */
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -18,6 +22,8 @@ const nextConfig: NextConfig = {
       { source: "/research/market-data-replay", destination: "/builds/market-data-replay", permanent: true },
       { source: "/research/qrsip", destination: "/builds/qrsip", permanent: true },
       { source: "/career", destination: "/capabilities", permanent: true },
+      { source: "/credentials", destination: "/certifications", permanent: true },
+      { source: "/about/capabilities", destination: "/capabilities", permanent: true },
     ];
   },
 };

@@ -103,6 +103,7 @@ export const workRoute = { label: "WORK WITH ME", href: "/work-with-me", code: "
  */
 export const allRoutes: NavLeaf[] = [
   { label: "HOME", href: "/", code: "00" },
+  { label: "HEADQUARTERS", href: "/hub", code: "HQ" },
   ...primaryNav.flatMap((item) =>
     item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
   ),

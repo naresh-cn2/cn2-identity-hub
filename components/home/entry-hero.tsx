@@ -17,8 +17,9 @@ import CinematicLayers from "@/components/home/cinematic-layers";
  * All effect layers are pointer-events:none, so the ENTER CN2.DEV button
  * and the global navbar stay fully interactive.
  *
- * The ENTER CN2.DEV button is preserved and navigates to /builds, the
- * primary project catalogue (spec §8).
+ * The ENTER CN2.DEV button is preserved and navigates to /hub — the digital
+ * headquarters. The entrance is the gateway, not the website: /hub is the
+ * indexed wayfinding layer that routes visitors to every destination.
  * Navigation is handled by the global Navbar component.
  */
 export default function EntryHero() {
@@ -31,9 +32,9 @@ export default function EntryHero() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // CTA click handler — enter the platform at the project catalogue (spec §8)
+  // CTA click handler — enter the platform at the headquarters (/hub)
   const handleEnter = () => {
-    router.push("/builds");
+    router.push("/hub");
   };
 
   // Keyboard accessibility for CTA

@@ -22,15 +22,15 @@ export const metadata: Metadata = {
  * EXPERIENCE A — THE CINEMATIC ENTRY PAGE (route /)
  *   A premium dark computational entrance with 3D portal and human figure.
  *   Fits the viewport with no required scrolling.
- *   Primary CTA: ENTER CN2.DEV → navigates to the portfolio.
- * 
- * EXPERIENCE B — THE PROFESSIONAL PORTFOLIO (route /about and other routes)
+ *   Primary CTA: ENTER CN2.DEV → navigates to /hub, the digital headquarters.
+ *
+ * EXPERIENCE B — THE PROFESSIONAL PLATFORM (/hub and its destinations)
  *   Contains the full professional website: personal background, education,
  *   skills, projects, research, capabilities, certifications, contact.
  * 
- * The entry page introduces the identity. The portfolio contains the substance.
- * Do not place every project, research article, capability, and professional
- * detail on the entry page.
+ * The entry page introduces the identity. The headquarters routes to the
+ * substance. Do not place every project, research article, capability, and
+ * professional detail on the entry page.
  */
 export default function HomePage() {
   // Entry page: / — cinematic gateway only

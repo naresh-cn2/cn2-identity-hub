@@ -10,6 +10,7 @@ import { serviceSlugs } from "@/data/services";
 export default function sitemap(): MetadataRoute.Sitemap {
   const main = [
     "",
+    "/hub",
     "/builds",
     "/case-studies",
     "/research",

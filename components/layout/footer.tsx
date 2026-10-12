@@ -25,13 +25,13 @@ export default function Footer() {
             <p className="label-mono mt-4 max-w-xs text-xs leading-relaxed text-muted">
               {site.subtitle}
             </p>
-            <p className="label-mono mt-6 max-w-xs text-[10px] leading-relaxed text-faint">
+            <p className="label-mono mt-6 max-w-xs text-[10px] leading-relaxed text-muted">
               {site.status}
             </p>
           </div>
 
           <nav aria-label="Footer index">
-            <p className="label-mono mb-4 text-[10px] tracking-[0.2em] text-faint">INDEX</p>
+            <p className="label-mono mb-4 text-[10px] tracking-[0.2em] text-muted">INDEX</p>
             <ul className="space-y-2">
               {indexRoutes.map((route) => (
                 <li key={route.href}>
@@ -47,7 +47,7 @@ export default function Footer() {
           </nav>
 
           <div>
-            <p className="label-mono mb-4 text-[10px] tracking-[0.2em] text-faint">SIGNALS</p>
+            <p className="label-mono mb-4 text-[10px] tracking-[0.2em] text-muted">SIGNALS</p>
             <ul className="space-y-2">
               {utilityLinks.map((l) =>
                 l.external ? (
@@ -77,10 +77,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="num-mono text-[10px] text-faint">
+          <p className="num-mono text-[10px] text-muted">
             c 2026 {site.name} — all systems self-engineered
           </p>
-          <p className="num-mono text-[10px] text-faint">
+          <p className="num-mono text-[10px] text-muted">
             status / research · domain / CN2.dev · mode / building
           </p>
         </div>
