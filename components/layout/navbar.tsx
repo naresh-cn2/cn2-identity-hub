@@ -23,9 +23,9 @@ function cn(...classes: (string | boolean | undefined)[]) {
 /**
  * Global navigation — single source of truth for all navigation.
  *
- * Entry page (/): Brand (clickable → /hub) | HOME ABOUT | CONTACT + search
+ * Entry page (/): Brand (clickable → /identity) | HOME ABOUT | CONTACT + search
  * Portfolio routes: Full primary navigation with grouped mega-menus.
- * The brand lockup always returns to the headquarters on every route.
+ * The brand lockup opens the signed identity portrait on every route.
  */
 export default function Navbar() {
   const pathname = usePathname();
@@ -85,9 +85,9 @@ export default function Navbar() {
           <div className="mx-auto flex max-w-[1420px] items-center gap-3">
             {/* long rounded panel: thin border, translucent dark, wide padding */}
             <div className="flex min-w-0 flex-1 items-center justify-between gap-3 rounded-[26px] border border-white/15 bg-black/45 px-4 py-2.5 backdrop-blur-xl sm:gap-6 sm:px-7 sm:py-3">
-              {/* LEFT: brand lockup */}
+              {/* LEFT: brand lockup → signed identity portrait */}
               <Link
-                href="/hub"
+                href="/identity"
                 className="group flex min-w-0 shrink-0 cursor-pointer flex-col items-start leading-none"
               >
                 <span className="display text-[0.95rem] font-bold tracking-tight text-white transition-opacity duration-200 group-hover:opacity-80 md:text-base">
@@ -184,9 +184,9 @@ export default function Navbar() {
               scrolled ? "py-3" : "py-5"
             )}
           >
-            {/* ---- brand lockup: CN2.DEV above BUKYA NARESH — clickable to /hub ---- */}
+            {/* ---- brand lockup: CN2.DEV above BUKYA NARESH — opens /identity ---- */}
             <Link
-              href="/hub"
+              href="/identity"
               className="group flex shrink-0 flex-col items-start leading-none text-foreground cursor-pointer"
             >
               <span className="display text-[0.95rem] font-bold tracking-tight md:text-base group-hover:text-signal transition-colors">

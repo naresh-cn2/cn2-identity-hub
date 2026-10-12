@@ -2,122 +2,145 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
+import PageAtmosphere from "@/components/ui/page-atmosphere";
+import { site } from "@/data/site";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Identity — CN2.DEV",
-  description: "The person behind CN2.DEV — Bukya Naresh. Identity, portrait, and professional introduction.",
+  title: "Identity — Bukya Naresh / CN2.DEV",
+  description:
+    "The person behind CN2.DEV — Bukya Naresh. Signed portrait, identity, and professional introduction.",
   alternates: { canonical: "/identity" },
   openGraph: {
-    title: "Identity — CN2.DEV",
-    description: "The person behind CN2.DEV",
+    title: "Identity — Bukya Naresh / CN2.DEV",
+    description: "The person behind CN2.DEV — Bukya Naresh.",
+    images: [
+      {
+        url: "/images/portrait-identity.png",
+        width: 540,
+        height: 887,
+        alt: "Signed portrait of Bukya Naresh",
+      },
+    ],
   },
 };
 
 export default function IdentityPage() {
   return (
-    <>
-      <header className="relative overflow-hidden border-b border-line bg-white">
-        {/* Red vertical accent */}
-        <div className="absolute right-0 top-0 h-full w-1 bg-signal" aria-hidden="true" />
-        
-        <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 md:px-12 py-16 md:py-24">
-          <Reveal>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors mb-12 group"
-            >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              <span className="label-mono text-[10px] tracking-wider">BACK</span>
-            </Link>
-          </Reveal>
-          
-          <div className="grid gap-16 lg:grid-cols-[1fr_400px] lg:items-center">
-            {/* Left: Identity content */}
-            <div>
-              <Reveal>
-                <p className="label-mono text-sm text-muted mb-6 tracking-wider">PERSONAL IDENTITY</p>
-              </Reveal>
-              
-              <Reveal delay={100}>
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 leading-[0.9] mb-2">
-                  CN2.DEV
-                </h1>
-              </Reveal>
-              
-              <Reveal delay={150}>
-                <p className="text-xl md:text-2xl font-medium tracking-[0.2em] text-signal mb-8">
-                  BUKYA NARESH
-                </p>
-              </Reveal>
-              
-              <Reveal delay={200}>
-                <div className="w-16 h-px bg-gray-300 mb-8" />
-              </Reveal>
-              
-              <Reveal delay={250}>
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-lg mb-6">
-                  Quantitative intelligence through research, markets, data, and engineering.
-                </p>
-              </Reveal>
-              
-              <Reveal delay={300}>
-                <p className="text-base text-gray-600 leading-relaxed max-w-lg mb-8">
-                  Building deterministic systems for understanding markets — backtestable research, 
-                  point-in-time-safe data, and the engineering that makes both trustworthy.
-                </p>
-              </Reveal>
-              
-              <Reveal delay={350}>
-                <div className="flex items-center gap-8">
-                  <a
-                    href="https://github.com/naresh-cn2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="label-mono text-[10px] tracking-wider text-gray-900 hover:text-signal transition-colors"
-                  >
-                    GITHUB
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/bukya-naresh-cn2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="label-mono text-[10px] tracking-wider text-gray-900 hover:text-signal transition-colors"
-                  >
-                    LINKEDIN
-                  </a>
-                  <Link
-                    href="/contact"
-                    className="label-mono text-[10px] tracking-wider text-gray-900 hover:text-signal transition-colors"
-                  >
-                    CONTACT
-                  </Link>
-                </div>
-              </Reveal>
-            </div>
-            
-            {/* Right: Portrait */}
-            <Reveal delay={200}>
-              <figure className="relative mx-auto w-full max-w-[400px]">
-                <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
-                  <Image
-                    src="/images/portrait-identity.png"
-                    alt="Portrait of Bukya Naresh"
-                    fill
-                    className="object-cover object-top"
-                    priority
-                    quality={90}
-                  />
-                </div>
-                <figcaption className="mt-4 flex items-baseline justify-between">
-                  <span className="label-mono text-[10px] text-gray-500 tracking-wider">CN2 / PORTRAIT</span>
-                  <span className="label-mono text-[10px] text-gray-400 tracking-wider">2026</span>
-                </figcaption>
-              </figure>
+    <header className="relative overflow-hidden border-b border-line">
+      <div className="grid-field absolute inset-0" aria-hidden="true" />
+      <PageAtmosphere variant="motes" />
+
+      <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
+        <Reveal>
+          <div className="flex flex-wrap items-baseline justify-between gap-4">
+            <p className="label-mono text-muted">
+              SECTION <span className="text-signal">/</span> 10 — IDENTITY
+            </p>
+            <p className="label-mono text-research">{site.descriptor}</p>
+          </div>
+        </Reveal>
+
+        <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-20">
+          {/* LEFT — the name leads */}
+          <div className="order-2 lg:order-1">
+            <Reveal delay={80}>
+              <h1 className="display text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.95]">
+                {site.name}
+                <br />
+                <span className="text-signal">{site.identity}</span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <p className="label-mono mt-6 text-muted">{site.subtitle}</p>
+            </Reveal>
+
+            <Reveal delay={220}>
+              <div className="mt-8 h-px w-16 bg-line-strong" aria-hidden="true" />
+            </Reveal>
+
+            <Reveal delay={270}>
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-foreground md:text-xl">
+                Quantitative intelligence through research, markets, data, and engineering.
+              </p>
+            </Reveal>
+
+            <Reveal delay={330}>
+              <p className="mt-4 max-w-xl leading-relaxed text-muted">
+                Building deterministic systems for understanding markets — backtestable research,
+                point-in-time-safe data, and the engineering that makes both trustworthy.
+              </p>
+            </Reveal>
+
+            <Reveal delay={390}>
+              <div className="mt-8 flex flex-wrap items-center gap-6">
+                <a
+                  href={site.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="label-mono text-[10px] text-foreground transition-colors hover:text-signal"
+                >
+                  GITHUB
+                </a>
+                <a
+                  href={site.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="label-mono text-[10px] text-foreground transition-colors hover:text-signal"
+                >
+                  LINKEDIN
+                </a>
+                <Link
+                  href="/contact"
+                  className="label-mono text-[10px] text-foreground transition-colors hover:text-signal"
+                >
+                  CONTACT
+                </Link>
+              </div>
             </Reveal>
           </div>
+
+          {/* RIGHT — the signed portrait, shown whole: signature and stars never crop */}
+          <Reveal delay={200} className="order-1 lg:order-2">
+            <figure className="relative mx-auto w-full max-w-[440px] lg:mx-0">
+              <div className="relative">
+                {/* offset red frame — echo of the stripe inside the picture */}
+                <div
+                  className="absolute -left-2.5 -top-2.5 h-full w-full border border-signal/50"
+                  aria-hidden="true"
+                />
+                <div className="relative overflow-hidden border border-line-strong bg-surface">
+                  <Image
+                    src="/images/portrait-identity.png"
+                    alt="Signed portrait of Bukya Naresh — black and white, red stripe, Naresh signature"
+                    width={540}
+                    height={887}
+                    priority
+                    quality={92}
+                    sizes="(max-width: 1024px) min(90vw, 440px), 440px"
+                    className="h-auto w-full"
+                  />
+                </div>
+              </div>
+              <figcaption className="mt-4 flex items-baseline justify-between">
+                <span className="label-mono text-[10px] text-muted">CN2 / PORTRAIT — SIGNED</span>
+                <span className="label-mono text-[10px] text-faint">2026</span>
+              </figcaption>
+            </figure>
+          </Reveal>
         </div>
-      </header>
-    </>
+
+        <Reveal delay={450}>
+          <Link
+            href="/"
+            className="group mt-14 inline-flex items-center gap-2 text-muted transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            <span className="label-mono text-[10px]">BACK TO HOME</span>
+          </Link>
+        </Reveal>
+      </div>
+    </header>
   );
 }
