@@ -29,7 +29,7 @@ export default function IdentityPage() {
   return (
     <header className="relative overflow-hidden border-b border-line">
       <div className="grid-field absolute inset-0" aria-hidden="true" />
-      <PageAtmosphere variant="motes" />
+      <PageAtmosphere variant="solids" />
 
       <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
         <Reveal>

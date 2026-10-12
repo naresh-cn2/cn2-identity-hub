@@ -20,6 +20,8 @@ import { useTheme } from "@/components/providers/theme-provider";
  *              (lab, services, work-with-me)
  *   orbit    — tilted concentric orbits, armillary-style rotation
  *              (research, opportunities, contact, links)
+ *   solids   — floating wireframe polyhedra over a receding 3D floor grid,
+ *              pointer-parallax camera (identity portrait)
  *
  * Rules honoured here:
  *  - Light originates from drawn sources only; alpha budget stays low so the
@@ -30,9 +32,42 @@ import { useTheme } from "@/components/providers/theme-provider";
  *  - aria-hidden + pointer-events:none — navigation and controls are untouched.
  */
 
-type Variant = "network" | "field" | "motes" | "signal" | "orbit";
+type Variant = "network" | "field" | "motes" | "signal" | "orbit" | "solids";
 type Mode = "dark" | "light";
 type RGB = [number, number, number];
+
+/* ---------------- 3D meshes for the "solids" variant ----------------
+   Unit-size wireframes (half-extent 1) shared by every instance so the
+   composition stays deterministic across mounts. */
+interface Mesh {
+    verts: [number, number, number][];
+    edges: [number, number][];
+}
+
+const MESHES: Record<string, Mesh> = {
+    cube: {
+        verts: [
+            [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
+            [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
+        ],
+        edges: [
+            [0, 1], [1, 2], [2, 3], [3, 0],
+            [4, 5], [5, 6], [6, 7], [7, 4],
+            [0, 4], [1, 5], [2, 6], [3, 7],
+        ],
+    },
+    octa: {
+        verts: [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]],
+        edges: [[0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [1, 3], [1, 4], [1, 5], [2, 4], [4, 3], [3, 5], [5, 2]],
+    },
+    tetra: {
+        verts: [[1, 1, 1], [-1, -1, 1], [-1, 1, -1], [1, -1, -1]],
+        edges: [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]],
+    },
+};
+
+const FLOOR_Y = 2.2; // world height of the receding ground plane
+const mod = (v: number, m: number) => ((v % m) + m) % m;
 
 interface Palette {
     structure: RGB; // blue-grey network / grid lines
@@ -76,6 +111,7 @@ const SEEDS: Record<Variant, number> = {
     motes: 424242,
     signal: 9091,
     orbit: 31415,
+    solids: 515020,
 };
 
 export default function PageAtmosphere({
@@ -132,12 +168,23 @@ export default function PageAtmosphere({
 
         interface OrbitRing { r: number; tilt: number; speed: number; ph: number; dots: number }
 
+        interface Solid {
+            mesh: Mesh;
+            nx: number; ny: number; // screen-space anchor, -1..1 from centre
+            z: number;              // depth — drives scale, parallax, fade
+            s: number;              // world size
+            ry: number; ph: number; // spin speed / phase
+            tilt: number; bob: number;
+            red: boolean;
+        }
+
         const nodes: NetNode[] = [];
         const edges: NetEdge[] = [];
         const pulses: Pulse[] = [];
         const motes: Mote[] = [];
         const traces: Trace[] = [];
         let rings: OrbitRing[] = [];
+        const solids: Solid[] = [];
 
         if (variant === "network") {
             const cols = small ? 5 : 8;
@@ -208,6 +255,48 @@ export default function PageAtmosphere({
                 { r: 0.26, tilt: -0.2, speed: -0.07, ph: 1.2, dots: 2 },
                 { r: 0.38, tilt: 0.12, speed: 0.045, ph: 2.6, dots: 1 },
             ];
+        }
+
+        /* eased pointer parallax — the camera drifts around the scene */
+        let tYaw = 0;
+        let tPitch = 0;
+        let pYaw = 0;
+        let pPitch = 0;
+        const onPointer = (e: PointerEvent) => {
+            tYaw = (e.clientX / Math.max(1, w) - 0.5) * -0.16;
+            tPitch = (e.clientY / Math.max(1, h) - 0.5) * -0.1;
+        };
+
+        if (variant === "solids") {
+            // Anchors are screen-space fractions so the composition holds on
+            // any viewport; depth then re-seats scale, parallax and fade.
+            const layout: Array<[string, number, number, number, number, boolean]> = small
+                ? [
+                      ["octa", -0.5, -0.5, 4.6, 0.44, true],
+                      ["cube", 0.55, -0.32, 5.4, 0.5, false],
+                      ["tetra", -0.42, 0.55, 6.4, 0.52, false],
+                  ]
+                : [
+                      ["cube", -0.8, -0.48, 4.2, 0.58, false],
+                      ["octa", 0.26, -0.62, 4.9, 0.42, true],
+                      ["tetra", 0.84, 0.4, 5.6, 0.62, false],
+                      ["octa", -0.85, 0.48, 6.5, 0.5, false],
+                      ["cube", 0.04, -0.86, 7.6, 0.8, false],
+                  ];
+            for (const [m, nx, ny, z, s, red] of layout) {
+                solids.push({
+                    mesh: MESHES[m],
+                    nx,
+                    ny,
+                    z,
+                    s,
+                    ry: (0.12 + rand() * 0.2) * (rand() < 0.5 ? -1 : 1),
+                    ph: rand() * Math.PI * 2,
+                    tilt: 0.3 + rand() * 0.5,
+                    bob: 0.03 + rand() * 0.05,
+                    red,
+                });
+            }
         }
 
         /* ---------------- drawing ---------------- */
@@ -415,6 +504,96 @@ export default function PageAtmosphere({
             ctx.fill();
         };
 
+        const drawSolids = (t: number) => {
+            const FOCAL = Math.max(w, h) * 0.9;
+            const cx = w * 0.5;
+            const cy = h * 0.5;
+
+            // ease the camera toward the pointer (no-op under reduced motion)
+            pYaw += (tYaw - pYaw) * 0.05;
+            pPitch += (tPitch - pPitch) * 0.05;
+
+            const project = (x: number, y: number, z: number): [number, number, number] => {
+                const cY = Math.cos(pYaw), sY = Math.sin(pYaw);
+                const X = x * cY + z * sY;
+                let Z = -x * sY + z * cY;
+                const cP = Math.cos(pPitch), sP = Math.sin(pPitch);
+                const Y = y * cP - Z * sP;
+                Z = y * sP + Z * cP;
+                const k = FOCAL / Math.max(1.2, Z + 1.8);
+                return [cx + X * k, cy + Y * k, Z];
+            };
+
+            /* ---- floor plane receding in true perspective, wrapped in depth ---- */
+            const drift = reduced ? 0 : (t * 0.55) % 1.54;
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 11; i++) {
+                const z = 1.6 + mod(i * 1.54 - drift, 15.4);
+                const a = (0.07 * (1 - (z - 1.6) / 15.4) + 0.01) * dim;
+                ctx.strokeStyle = rgba(pal.deep, a);
+                const [x1, y1] = project(-7, FLOOR_Y, z);
+                const [x2, y2] = project(7, FLOOR_Y, z);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+            for (let c = 0; c <= 10; c++) {
+                const x = -7 + c * 1.4;
+                ctx.strokeStyle = rgba(pal.deep, 0.05 * dim);
+                const [x1, y1] = project(x, FLOOR_Y, 1.7);
+                const [x2, y2] = project(x, FLOOR_Y, 16.9);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+
+            /* ---- floating wireframe solids, depth-sorted near to far ---- */
+            for (const s of [...solids].sort((a, b) => b.z - a.z)) {
+                // world anchor from the screen-space fraction at this depth
+                const halfW = ((s.z + 1.8) * (w / 2)) / FOCAL;
+                const halfH = ((s.z + 1.8) * (h / 2)) / FOCAL;
+                const wx = s.nx * halfW;
+                const wy = s.ny * halfH + (reduced ? 0 : Math.sin(t * 0.42 + s.ph) * s.bob * halfH);
+
+                const spin = reduced ? 1.4 : t * s.ry + s.ph;
+                const tilt = s.tilt + (reduced ? 0 : Math.sin(t * 0.17 + s.ph) * 0.2);
+                const cS = Math.cos(spin), snS = Math.sin(spin);
+                const cT = Math.cos(tilt), snT = Math.sin(tilt);
+
+                const pts: [number, number, number][] = [];
+                for (const v of s.mesh.verts) {
+                    const x = v[0] * s.s, y = v[1] * s.s, z = v[2] * s.s;
+                    const y1 = y * cT - z * snT;
+                    const z1 = y * snT + z * cT;
+                    const x2 = x * cS + z1 * snS;
+                    const z2 = -x * snS + z1 * cS;
+                    pts.push(project(wx + x2, wy + y1, s.z + z2));
+                }
+
+                let zmin = Infinity;
+                for (const p of pts) if (p[2] < zmin) zmin = p[2];
+                const fade = Math.max(0.3, Math.min(1, 1 - (zmin - 2.6) / 10));
+
+                ctx.lineWidth = s.red ? 1.3 : 1;
+                ctx.strokeStyle = rgba(s.red ? pal.signal : pal.structure, (s.red ? 0.36 : 0.15) * fade * dim);
+                for (const [a, b] of s.mesh.edges) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[a][0], pts[a][1]);
+                    ctx.lineTo(pts[b][0], pts[b][1]);
+                    ctx.stroke();
+                }
+                // vertices as faint nodes — the wireframe's light points
+                ctx.fillStyle = rgba(s.red ? pal.signal : pal.bright, (s.red ? 0.45 : 0.3) * fade * dim);
+                for (const p of pts) {
+                    ctx.beginPath();
+                    ctx.arc(p[0], p[1], s.red ? 1.7 : 1.2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        };
+
         const draw = (t: number) => {
             ctx.clearRect(0, 0, w, h);
             switch (variant) {
@@ -433,6 +612,9 @@ export default function PageAtmosphere({
                 case "orbit":
                     drawOrbit(t);
                     break;
+                case "solids":
+                    drawSolids(t);
+                    break;
             }
         };
 
@@ -441,6 +623,9 @@ export default function PageAtmosphere({
         if (reduced) {
             draw(1.2); // one calm static frame
         } else {
+            // The camera only drifts when there is a pointer to follow.
+            if (variant === "solids") window.addEventListener("pointermove", onPointer, { passive: true });
+
             // Paint one frame immediately so the layer never starts empty —
             // rAF is throttled while the tab is hidden, and a visible tab
             // should show atmosphere from the very first paint.
@@ -478,11 +663,13 @@ export default function PageAtmosphere({
                 ro.disconnect();
                 io.disconnect();
                 document.removeEventListener("visibilitychange", onVis);
+                window.removeEventListener("pointermove", onPointer);
             };
         }
 
         return () => {
             ro.disconnect();
+            window.removeEventListener("pointermove", onPointer);
         };
     }, [variant, theme]);
 
