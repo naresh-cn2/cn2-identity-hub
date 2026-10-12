@@ -4,6 +4,7 @@ import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import BuildsArchive from "@/components/builds/builds-archive";
 import { archiveProjects } from "@/data/archive";
+import { career } from "@/data/career";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -98,6 +99,69 @@ export default function BuildsPage() {
       {/* ---- the archive ---- */}
       <section aria-label="Build archive" className="py-16 md:py-24">
         <BuildsArchive projects={archiveProjects} />
+      </section>
+
+      {/* ---- the record — preserved from the about page ---- */}
+      <section aria-label="The record" className="border-t border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 className="display text-3xl md:text-5xl">THE RECORD</h2>
+              <p className="label-mono text-faint">SELECTED SYSTEMS · SOLE ARCHITECT &amp; ENGINEER</p>
+            </div>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
+              Not a list of employers — a sequence of systems built end to end, each carrying its own
+              metrics and provenance. Every figure below is labelled, and every entry opens to the
+              build or repository behind it.
+            </p>
+          </Reveal>
+
+          <ol className="mt-12">
+            {career.experience.map((item, i) => {
+              const isLast = i === career.experience.length - 1;
+              return (
+                <li key={item.project}>
+                  <Reveal delay={Math.min(i, 4) * 80}>
+                    <div className="grid grid-cols-[auto_1fr] gap-x-5 md:gap-x-8">
+                      <div className="flex flex-col items-center" aria-hidden="true">
+                        <span className="mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-signal bg-background" />
+                        {!isLast && <span className="mt-1 w-px flex-1 bg-line" />}
+                      </div>
+                      <div className={isLast ? "min-w-0" : "min-w-0 pb-10"}>
+                        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                          <span className="num-mono text-xs text-signal">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <h3 className="display text-xl md:text-2xl">{item.project}</h3>
+                          <span className="label-mono text-[10px] text-faint">{item.role}</span>
+                        </div>
+                        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{item.scope}</p>
+                        <p className="label-mono mt-3 text-[10px] text-research">{item.metrics}</p>
+                        {item.href.startsWith("http") ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
+                          >
+                            REPOSITORY ↗
+                          </a>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
+                          >
+                            OPEN BUILD →
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </Reveal>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </section>
 
       {/* ---- source of truth ---- */}

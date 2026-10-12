@@ -601,6 +601,14 @@ h1.cn2-brand-word {
   mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }
 
+/* Full-bleed scenes (about/cosmos) need the whole sky, edge to edge —
+   defined after .cn2-atmosphere so the no-mask rule wins. */
+.cn2-atmosphere-plain {
+  -webkit-mask-image: none;
+  mask-image: none;
+  opacity: 1;
+}
+
 /* No z-index here on purpose: it would create a stacking context and stop the
    mix-blend-mode typography layers from reaching the hero image behind. Paint
    order (after .cn2-hero-img) already layers this above the image. */

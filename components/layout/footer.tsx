@@ -12,8 +12,9 @@ export default function Footer() {
      page non-scrolling; every other route keeps the full index.
 
      The identity portrait page (/identity) is a single photo page — it ends
-     at BACK TO HOME with nothing beneath it. */
-  if (pathname === "/" || pathname === "/identity") return null;
+     at BACK TO HOME with nothing beneath it. The about page (/about) is the
+     same idea at full viewport height: the cosmic photograph IS the page. */
+  if (pathname === "/" || pathname === "/identity" || pathname === "/about") return null;
 
   return (
     <footer className="border-t border-line bg-surface print:hidden">

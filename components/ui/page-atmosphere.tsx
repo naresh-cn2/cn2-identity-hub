@@ -22,8 +22,10 @@ import { useTheme } from "@/components/providers/theme-provider";
  *              (research, opportunities, contact, links)
  *   solids   — floating wireframe polyhedra over a receding 3D floor grid,
  *              pointer-parallax camera (identity portrait)
- *   city     — night-skyline companion: window twinkles, spire beacon and a
- *              slow glass-glint sweep (about)
+ *   city     — reserved: window twinkles, spire beacon and a glass-glint sweep
+ *   cosmos   — full-bleed cosmic sky: three parallax star layers that lean
+ *              with the pointer, shooting stars and red embers rising from the
+ *              hand (about — the picture itself never moves)
  *
  * Rules honoured here:
  *  - Light originates from drawn sources only; alpha budget stays low so the
@@ -34,7 +36,7 @@ import { useTheme } from "@/components/providers/theme-provider";
  *  - aria-hidden + pointer-events:none — navigation and controls are untouched.
  */
 
-type Variant = "network" | "field" | "motes" | "signal" | "orbit" | "solids" | "city";
+type Variant = "network" | "field" | "motes" | "signal" | "orbit" | "solids" | "city" | "cosmos";
 type Mode = "dark" | "light";
 type RGB = [number, number, number];
 
@@ -115,6 +117,7 @@ const SEEDS: Record<Variant, number> = {
     orbit: 31415,
     solids: 515020,
     city: 7712026,
+    cosmos: 99182733,
 };
 
 export default function PageAtmosphere({
@@ -183,6 +186,10 @@ export default function PageAtmosphere({
 
         interface Twinkle { x: number; y: number; r: number; ph: number; sp: number; base: number; warm: boolean }
 
+        interface CosStar { x: number; y: number; r: number; layer: number; ph: number; sp: number; warm: boolean }
+        interface Ember { x: number; y: number; r: number; ph: number; sp: number; rise: number }
+        interface Streak { t: number; gap: number; x: number; y: number; vx: number; vy: number }
+
         const nodes: NetNode[] = [];
         const edges: NetEdge[] = [];
         const pulses: Pulse[] = [];
@@ -191,6 +198,9 @@ export default function PageAtmosphere({
         let rings: OrbitRing[] = [];
         const solids: Solid[] = [];
         const twinkles: Twinkle[] = [];
+        const cosStars: CosStar[] = [];
+        const embers: Ember[] = [];
+        const streak: Streak = { t: 8.5, gap: 2, x: 0, y: 0, vx: 0, vy: 0 };
 
         if (variant === "network") {
             const cols = small ? 5 : 8;
@@ -273,6 +283,10 @@ export default function PageAtmosphere({
             tPitch = (e.clientY / Math.max(1, h) - 0.5) * -0.1;
         };
 
+        /* cosmos: eased sky-lean with the pointer — the picture itself never moves */
+        let pParX = 0;
+        let pParY = 0;
+
         if (variant === "solids") {
             // Anchors are screen-space fractions so the composition holds on
             // any viewport; depth then re-seats scale, parallax and fade.
@@ -318,6 +332,36 @@ export default function PageAtmosphere({
                     sp: 0.5 + rand() * 1.5,
                     base: 0.1 + rand() * 0.26,
                     warm: rand() < 0.3,
+                });
+            }
+        }
+
+        if (variant === "cosmos") {
+            // Three depth layers of stars across an oversized field (1.2x) so
+            // pointer parallax and drift never expose an empty edge.
+            const count = small ? 95 : 180;
+            for (let i = 0; i < count; i++) {
+                const layer = rand();
+                cosStars.push({
+                    x: rand() * 1.2 - 0.1,
+                    y: rand() * 1.2 - 0.1,
+                    r: 0.4 + layer * 1.1 + rand() * 0.5,
+                    layer,
+                    ph: rand() * Math.PI * 2,
+                    sp: 0.4 + rand() * 1.4,
+                    warm: rand() < 0.06,
+                });
+            }
+            // red embers lifting off the cupped hand
+            const ecount = small ? 8 : 14;
+            for (let i = 0; i < ecount; i++) {
+                embers.push({
+                    x: 0.42 + rand() * 0.18,
+                    y: 0.54 + rand() * 0.38,
+                    r: 0.7 + rand() * 1.3,
+                    ph: rand() * Math.PI * 2,
+                    sp: 0.5 + rand() * 0.9,
+                    rise: 0.03 + rand() * 0.05,
                 });
             }
         }
@@ -661,6 +705,83 @@ export default function PageAtmosphere({
             ctx.restore();
         };
 
+        /* The cosmic sky is self-lit: its own palette, full opacity in both
+           themes — the photograph below carries the scene, the canvas only
+           adds what moves. The picture itself never transforms. */
+        const COS_STAR: RGB = [205, 222, 255];
+        const COS_WARM: RGB = [255, 234, 205];
+        const COS_RED: RGB = [232, 66, 48];
+
+        const drawCosmos = (t: number) => {
+            // eased sky-lean with the pointer (static frame under reduced motion)
+            pParX += (tYaw - pParX) * 0.035;
+            pParY += (tPitch - pParY) * 0.035;
+
+            // drifting, twinkling star layers — deeper layers lean less
+            for (const s of cosStars) {
+                const drift = reduced ? 0 : Math.sin(t * 0.05 + s.ph) * 0.008 + t * 0.0012;
+                const px = mod(s.x + drift, 1.2) - 0.1;
+                const depth = 0.25 + s.layer * 0.75;
+                const x = px * w + pParX * w * depth * 0.2;
+                const y = s.y * h + pParY * h * depth * 0.14;
+                const tw = 0.55 + 0.45 * Math.sin(t * s.sp + s.ph);
+                ctx.fillStyle = rgba(s.warm ? COS_WARM : COS_STAR, (0.12 + s.layer * 0.4) * tw);
+                ctx.beginPath();
+                ctx.arc(x, y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // a shooting star crosses the sky every ~7-11s
+            if (!reduced) {
+                streak.t += 1 / 60;
+                if (streak.t > 7 + streak.gap) {
+                    streak.t = 0;
+                    streak.gap = Math.random() * 4;
+                    streak.x = 0.1 + Math.random() * 0.8;
+                    streak.y = -0.04 + Math.random() * 0.3;
+                    streak.vx = (Math.random() < 0.5 ? -1 : 1) * (0.4 + Math.random() * 0.25);
+                    streak.vy = 0.24 + Math.random() * 0.16;
+                }
+                const p = streak.t / 1.5;
+                if (p >= 0 && p <= 1) {
+                    const hx = (streak.x + streak.vx * p) * w;
+                    const hy = (streak.y + streak.vy * p) * h;
+                    const tx = (streak.x + streak.vx * Math.max(0, p - 0.1)) * w;
+                    const ty = (streak.y + streak.vy * Math.max(0, p - 0.1)) * h;
+                    const a = Math.sin(p * Math.PI) * 0.7;
+                    const g = ctx.createLinearGradient(tx, ty, hx, hy);
+                    g.addColorStop(0, rgba(COS_STAR, 0));
+                    g.addColorStop(1, rgba(COS_STAR, a));
+                    ctx.strokeStyle = g;
+                    ctx.lineWidth = 1.3;
+                    ctx.beginPath();
+                    ctx.moveTo(tx, ty);
+                    ctx.lineTo(hx, hy);
+                    ctx.stroke();
+                    ctx.fillStyle = rgba(COS_STAR, a);
+                    ctx.beginPath();
+                    ctx.arc(hx, hy, 1.4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // red embers lifting off the cupped hand, wobbling as they rise
+            for (const e of embers) {
+                if (!reduced) e.y -= e.rise / 60;
+                if (e.y < 0.52) {
+                    e.y = 0.88 + Math.random() * 0.06;
+                    e.x = 0.42 + Math.random() * 0.18;
+                }
+                const wob = Math.sin(t * e.sp * 2 + e.ph) * 0.01;
+                const lift = Math.max(0, Math.min(1, (0.9 - e.y) / 0.32));
+                const a = 0.3 * lift * (0.5 + 0.5 * Math.sin(t * e.sp + e.ph));
+                ctx.fillStyle = rgba(COS_RED, a);
+                ctx.beginPath();
+                ctx.arc((e.x + wob) * w, e.y * h, e.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        };
+
         const draw = (t: number) => {
             ctx.clearRect(0, 0, w, h);
             switch (variant) {
@@ -685,6 +806,9 @@ export default function PageAtmosphere({
                 case "city":
                     drawCity(t);
                     break;
+                case "cosmos":
+                    drawCosmos(t);
+                    break;
             }
         };
 
@@ -694,7 +818,8 @@ export default function PageAtmosphere({
             draw(1.2); // one calm static frame
         } else {
             // The camera only drifts when there is a pointer to follow.
-            if (variant === "solids") window.addEventListener("pointermove", onPointer, { passive: true });
+            if (variant === "solids" || variant === "cosmos")
+                window.addEventListener("pointermove", onPointer, { passive: true });
 
             // Paint one frame immediately so the layer never starts empty —
             // rAF is throttled while the tab is hidden, and a visible tab
