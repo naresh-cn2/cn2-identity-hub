@@ -33,12 +33,9 @@ export default function IdentityPage() {
 
       <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
         <Reveal>
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="label-mono text-muted">
-              SECTION <span className="text-signal">/</span> 10 — IDENTITY
-            </p>
-            <p className="label-mono text-research">{site.descriptor}</p>
-          </div>
+          <p className="label-mono text-muted">
+            SECTION <span className="text-signal">/</span> 10 — IDENTITY
+          </p>
         </Reveal>
 
         <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-20">
@@ -54,6 +51,14 @@ export default function IdentityPage() {
 
             <Reveal delay={160}>
               <p className="label-mono mt-6 text-foreground">QUANTITATIVE SYSTEMS DEVELOPER</p>
+            </Reveal>
+
+            <Reveal delay={220}>
+              <p className="label-mono mt-4 text-muted">
+                AUTOMATION <span className="text-signal">·</span> DATA
+                <span className="text-signal"> ·</span> FINANCE
+                <span className="text-signal"> ·</span> ARTIFICIAL INTELLIGENCE
+              </p>
             </Reveal>
           </div>
 
