@@ -15,13 +15,15 @@ import { useTheme } from "@/components/providers/theme-provider";
  *   field    — perspective market-topology floor that breathes and scrolls
  *              (builds, case studies, proof, how-i-work)
  *   motes    — drifting luminous dust with occasional red signal motes
- *              (about, certifications, articles, cv, testimonials)
+ *              (certifications, articles, cv, testimonials)
  *   signal   — oscilloscope traces with a slow sweeping scan
  *              (lab, services, work-with-me)
  *   orbit    — tilted concentric orbits, armillary-style rotation
  *              (research, opportunities, contact, links)
  *   solids   — floating wireframe polyhedra over a receding 3D floor grid,
  *              pointer-parallax camera (identity portrait)
+ *   city     — night-skyline companion: window twinkles, spire beacon and a
+ *              slow glass-glint sweep (about)
  *
  * Rules honoured here:
  *  - Light originates from drawn sources only; alpha budget stays low so the
@@ -32,7 +34,7 @@ import { useTheme } from "@/components/providers/theme-provider";
  *  - aria-hidden + pointer-events:none — navigation and controls are untouched.
  */
 
-type Variant = "network" | "field" | "motes" | "signal" | "orbit" | "solids";
+type Variant = "network" | "field" | "motes" | "signal" | "orbit" | "solids" | "city";
 type Mode = "dark" | "light";
 type RGB = [number, number, number];
 
@@ -112,6 +114,7 @@ const SEEDS: Record<Variant, number> = {
     signal: 9091,
     orbit: 31415,
     solids: 515020,
+    city: 7712026,
 };
 
 export default function PageAtmosphere({
@@ -178,6 +181,8 @@ export default function PageAtmosphere({
             red: boolean;
         }
 
+        interface Twinkle { x: number; y: number; r: number; ph: number; sp: number; base: number; warm: boolean }
+
         const nodes: NetNode[] = [];
         const edges: NetEdge[] = [];
         const pulses: Pulse[] = [];
@@ -185,6 +190,7 @@ export default function PageAtmosphere({
         const traces: Trace[] = [];
         let rings: OrbitRing[] = [];
         const solids: Solid[] = [];
+        const twinkles: Twinkle[] = [];
 
         if (variant === "network") {
             const cols = small ? 5 : 8;
@@ -295,6 +301,23 @@ export default function PageAtmosphere({
                     tilt: 0.3 + rand() * 0.5,
                     bob: 0.03 + rand() * 0.05,
                     red,
+                });
+            }
+        }
+
+        if (variant === "city") {
+            // Lit-window glints over the skyline band: below the crest,
+            // denser toward the reflective floor of the photograph.
+            const count = small ? 26 : 54;
+            for (let i = 0; i < count; i++) {
+                twinkles.push({
+                    x: rand(),
+                    y: 0.2 + Math.pow(rand(), 0.8) * 0.72,
+                    r: 0.6 + rand() * 1.1,
+                    ph: rand() * Math.PI * 2,
+                    sp: 0.5 + rand() * 1.5,
+                    base: 0.1 + rand() * 0.26,
+                    warm: rand() < 0.3,
                 });
             }
         }
@@ -594,6 +617,50 @@ export default function PageAtmosphere({
             }
         };
 
+        const drawCity = (t: number) => {
+            // lit windows breathing across the skyline band
+            for (const tw of twinkles) {
+                const pulse = 0.35 + 0.65 * Math.sin(t * tw.sp + tw.ph) ** 2;
+                ctx.fillStyle = rgba(tw.warm ? pal.bright : pal.structure, tw.base * pulse * dim);
+                ctx.beginPath();
+                ctx.arc(tw.x * w, tw.y * h, tw.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // spire beacon — a quick red blink on a slow cycle, aircraft-light style
+            const bph = (t % 2.6) / 2.6;
+            const blink = bph < 0.12 ? Math.sin((bph / 0.12) * Math.PI) ** 2 : 0;
+            if (blink > 0.001) {
+                const bx = w * 0.515;
+                const by = h * 0.13;
+                const g = ctx.createRadialGradient(bx, by, 0, bx, by, 14);
+                g.addColorStop(0, rgba(pal.signal, 0.5 * blink * dim));
+                g.addColorStop(1, rgba(pal.signal, 0));
+                ctx.fillStyle = g;
+                ctx.beginPath();
+                ctx.arc(bx, by, 14, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = rgba(pal.signal, 0.85 * blink * dim);
+                ctx.beginPath();
+                ctx.arc(bx, by, 1.9, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // slow glint raking across the glass panes every ~25s
+            const sweep = ((t * 0.06) % 1.5) - 0.25;
+            const sx = sweep * w * 1.2;
+            ctx.save();
+            ctx.translate(sx, 0);
+            ctx.rotate(0.1); // light rakes slightly diagonal
+            const sg = ctx.createLinearGradient(-46, 0, 46, 0);
+            sg.addColorStop(0, rgba(pal.bright, 0));
+            sg.addColorStop(0.5, rgba(pal.bright, 0.055 * dim));
+            sg.addColorStop(1, rgba(pal.bright, 0));
+            ctx.fillStyle = sg;
+            ctx.fillRect(-46, -h, 92, h * 3);
+            ctx.restore();
+        };
+
         const draw = (t: number) => {
             ctx.clearRect(0, 0, w, h);
             switch (variant) {
@@ -614,6 +681,9 @@ export default function PageAtmosphere({
                     break;
                 case "solids":
                     drawSolids(t);
+                    break;
+                case "city":
+                    drawCity(t);
                     break;
             }
         };

@@ -580,6 +580,19 @@ h1.cn2-brand-word {
   will-change: transform;
 }
 
+/* About-page night-city backdrop — an extremely slow Ken Burns drift so the
+   held shot breathes like film. The global reduced-motion switch below
+   collapses it to a single still frame. */
+@keyframes cn2-city-drift {
+  0% { transform: scale(1.03) translate3d(0, 0, 0); }
+  100% { transform: scale(1.12) translate3d(-1.6%, -1.2%, 0); }
+}
+
+.cn2-city-backdrop {
+  animation: cn2-city-drift 52s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
 /* Per-route ambient VFX layer — fades out before the header edge so light
    never pools at the screen border, and stays strictly behind content. */
 .cn2-atmosphere {

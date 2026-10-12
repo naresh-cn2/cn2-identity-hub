@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import AnonymousFigure from "@/components/viz/anonymous-figure";
 import CapabilityMap from "@/components/capabilities/capability-map";
@@ -59,9 +60,24 @@ export default function AboutPage() {
 
       {/* ---- header: the person is the brand, so the name leads ---- */}
       <header className="relative overflow-hidden border-b border-line">
+        {/* night-city backdrop — the view from the office floor. Ken Burns
+            drift rides the image in CSS; window twinkles, the spire beacon
+            and a slow glass-glint sweep run in the canvas below. Surface
+            scrims keep the typography dominant in both themes. */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <Image
+            src="/images/about-skyline.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="cn2-city-backdrop object-cover object-[50%_42%] opacity-[0.12] dark:opacity-[0.6]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-surface/80 via-surface/30 to-surface dark:from-surface/45 dark:via-surface/10 dark:to-surface" />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface/90 via-surface/15 to-transparent dark:from-surface/70 dark:via-transparent" />
+        </div>
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="motes" />
-        <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
+        <PageAtmosphere variant="city" />
+        <div className="relative mx-auto flex min-h-[26rem] max-w-[1440px] flex-col justify-end px-5 pb-16 pt-32 sm:px-8 md:min-h-[36rem] md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
