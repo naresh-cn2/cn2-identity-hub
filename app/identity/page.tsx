@@ -7,7 +7,7 @@ import { site } from "@/data/site";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Identity — Bukya Naresh / CN2.DEV",
+  title: "Identity",
   description:
     "The person behind CN2.DEV — Bukya Naresh. Signed portrait, identity, and professional introduction.",
   alternates: { canonical: "/identity" },
