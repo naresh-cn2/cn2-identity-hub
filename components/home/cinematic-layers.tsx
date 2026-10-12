@@ -491,10 +491,6 @@ export default function CinematicLayers() {
       <div className="cn2-portal-glow">
         <div className="cn2-portal-glow-core" />
       </div>
-      {/* Character silhouette — darkens character so light reads as coming from portal ring */}
-      <div className="cn2-character-silhouette" />
-      {/* Bright ring light source for light mode */}
-      <div className="cn2-portal-ring-light" />
       <canvas ref={canvasRef} className="cn2-fx-canvas" />
     </div>
   );
