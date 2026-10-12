@@ -563,18 +563,19 @@ h1.cn2-brand-word {
 
 @keyframes cn2-hero-breathe {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.028); }
+  50% { transform: scale(1.018); }
 }
 
 /* Pointer parallax + subtle 3D perspective tilt. Angles stay tiny (≤1.6deg)
-   so the baked-in composition, wordmark and character never distort. */
+   and the origin stays centred so the baked-in wordmark keeps a safe margin
+   from the crop edge at every viewport aspect — tilt must never eat text. */
 .cn2-hero-img {
   transform:
     translate3d(calc(var(--cn2-px, 0) * -9px), calc(var(--cn2-py, 0) * -7px), 0)
     rotateY(calc(var(--cn2-px, 0) * 1.6deg))
     rotateX(calc(var(--cn2-py, 0) * -1.1deg))
-    scale(1.06);
-  transform-origin: 60% 45%;
+    scale(1.05);
+  transform-origin: 50% 50%;
   transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
