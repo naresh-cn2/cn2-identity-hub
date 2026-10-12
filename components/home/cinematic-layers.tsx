@@ -351,23 +351,23 @@ export default function CinematicLayers() {
       }
     };
 
-    // ---------- volumetric light beams from portal (dramatic god-rays) ----------
+    // ---------- volumetric light beams from portal (subtle, short — don't cross character) ----------
     const drawLightBeams = (isDark: boolean, t: number) => {
       if (portalLightLevel < 0.05) return;
       ctx.globalCompositeOperation = "lighter";
-      const beamCount = 12;
+      const beamCount = 8;
       for (let i = 0; i < beamCount; i++) {
         const angle = (i / beamCount) * Math.PI * 2 + t * 0.0004;
-        const beamLen = (0.3 + 0.2 * Math.sin(t * 0.0006 + i)) * w;
-        const beamWidth = (20 + 12 * Math.sin(t * 0.0008 + i * 2)) * sc;
+        // Short beams — stay within portal area, don't reach character
+        const beamLen = (0.08 + 0.04 * Math.sin(t * 0.0006 + i)) * w;
+        const beamWidth = (10 + 5 * Math.sin(t * 0.0008 + i * 2)) * sc;
         const x0 = PORTAL_X * w;
         const y0 = 0.45 * h;
         const x1 = x0 + Math.cos(angle) * beamLen;
         const y1 = y0 + Math.sin(angle) * beamLen;
         const grad = ctx.createLinearGradient(x0, y0, x1, y1);
-        const intensity = 0.25 * portalLightLevel * (0.5 + 0.5 * Math.sin(t * 0.001 + i));
+        const intensity = 0.08 * portalLightLevel * (0.5 + 0.5 * Math.sin(t * 0.001 + i));
         grad.addColorStop(0, `rgba(180,220,255,${intensity.toFixed(3)})`);
-        grad.addColorStop(0.4, `rgba(130,190,255,${(intensity * 0.5).toFixed(3)})`);
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.strokeStyle = grad;
         ctx.lineWidth = beamWidth;
@@ -375,19 +375,11 @@ export default function CinematicLayers() {
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
         ctx.stroke();
-        // Beam endpoint glow
-        const endGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, beamWidth * 3);
-        endGrad.addColorStop(0, `rgba(160,210,255,${(intensity * 0.6).toFixed(3)})`);
-        endGrad.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = endGrad;
-        ctx.beginPath();
-        ctx.arc(x1, y1, beamWidth * 3, 0, Math.PI * 2);
-        ctx.fill();
       }
       ctx.globalCompositeOperation = "source-over";
     };
 
-    // ---------- portal glow halo (dramatic breathing + on/off cycle) ----------
+    // ---------- portal glow halo (subtle — stays within portal ring, doesn't cross character) ----------
     const drawPortalHalo = (isDark: boolean, t: number) => {
       const breathe = 0.6 + 0.4 * Math.sin(t * 0.001);
       const intensity = portalLightLevel * breathe;
@@ -395,24 +387,22 @@ export default function CinematicLayers() {
       ctx.globalCompositeOperation = "lighter";
       const cx = PORTAL_X * w;
       const cy = 0.45 * h;
-      const baseR = 280 * sc;
-      // Outer halo — large and visible
-      const haloR = baseR * (1.4 + 0.5 * intensity);
+      const baseR = 120 * sc;
+      // Outer halo — small, stays inside portal ring
+      const haloR = baseR * (1.1 + 0.2 * intensity);
       const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, haloR);
-      const a = 0.3 * intensity * (isDark ? 1 : 0.8);
+      const a = 0.08 * intensity * (isDark ? 1 : 0.6);
       grad.addColorStop(0, `rgba(80,150,255,${a.toFixed(3)})`);
-      grad.addColorStop(0.3, `rgba(60,120,255,${(a * 0.6).toFixed(3)})`);
       grad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(cx, cy, haloR, 0, Math.PI * 2);
       ctx.fill();
-      // Core glow — bright center
-      const coreR = baseR * 0.7 * intensity;
+      // Core glow — minimal
+      const coreR = baseR * 0.3 * intensity;
       const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
-      const ca = 0.5 * intensity;
-      coreGrad.addColorStop(0, `rgba(230,245,255,${ca.toFixed(3)})`);
-      coreGrad.addColorStop(0.4, `rgba(160,210,255,${(ca * 0.5).toFixed(3)})`);
+      const ca = 0.15 * intensity;
+      coreGrad.addColorStop(0, `rgba(200,230,255,${ca.toFixed(3)})`);
       coreGrad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = coreGrad;
       ctx.beginPath();

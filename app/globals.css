@@ -578,7 +578,7 @@ h1.cn2-brand-word {
    well before the screen edges, so there is never a bright border. Light mode
    raises the cool blue-white pool around the portal / smoke; dark mode adds a
    whisper of cool fill. The left typography zone stays comparatively dark.
-   Enhanced: subtle flicker + surge for live light-source feel. */
+   Reduced intensity to avoid washing over the character. */
 .cn2-ambient-glow {
   position: absolute;
   inset: 0;
@@ -586,10 +586,9 @@ h1.cn2-brand-word {
   transition: opacity 800ms ease;
   /* Dark mode: tight portal-centred glow, rapid falloff */
   background: radial-gradient(48% 55% at 60% 42%,
-      rgba(120, 180, 255, 0.18) 0%,
-      rgba(80, 140, 230, 0.06) 25%,
-      rgba(40, 90, 180, 0.02) 45%,
-      transparent 60%);
+      rgba(120, 180, 255, 0.1) 0%,
+      rgba(80, 140, 230, 0.03) 25%,
+      transparent 55%);
   animation: cn2-ambient-flicker 9s ease-in-out infinite;
 }
 
@@ -697,9 +696,8 @@ h1.cn2-brand-word {
       transparent 65%);
 }
 
-/* Portal halo — breathing, theme-aware, concentrated at the portal. Never
-   draws a second visible ring; it is a soft halo around the existing one.
-   Enhanced: multi-layer breathing + occasional surge for live-motion feel. */
+/* Portal halo — subtle, stays within portal ring. Never
+   draws a second visible ring; it is a soft halo around the existing one. */
 .cn2-portal-glow {
   position: absolute;
   left: 60%;
@@ -714,39 +712,17 @@ h1.cn2-brand-word {
   position: absolute;
   inset: 0;
   background: radial-gradient(closest-side at 50% 50%,
-      rgba(130, 196, 255, 0.3) 0%,
-      rgba(95, 170, 248, 0.15) 38%,
-      rgba(60, 130, 220, 0.05) 62%,
+      rgba(130, 196, 255, 0.12) 0%,
+      rgba(95, 170, 248, 0.06) 38%,
       transparent 78%);
   animation: cn2-portal-breathe 7s ease-in-out infinite;
 }
 
-/* Secondary pulse layer for depth — creates a living, breathing portal */
-.cn2-portal-glow-core::after {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  background: radial-gradient(closest-side at 50% 50%,
-      rgba(100, 170, 255, 0.0) 0%,
-      rgba(120, 190, 255, 0.12) 45%,
-      rgba(80, 150, 240, 0.04) 65%,
-      transparent 80%);
-  animation: cn2-portal-surge 11s ease-in-out infinite;
-}
-
 .is-light .cn2-portal-glow-core {
   background: radial-gradient(closest-side at 50% 50%,
-      rgba(196, 228, 255, 0.45) 0%,
-      rgba(160, 205, 252, 0.22) 38%,
-      rgba(125, 182, 242, 0.08) 60%,
+      rgba(196, 228, 255, 0.18) 0%,
+      rgba(160, 205, 252, 0.08) 38%,
       transparent 78%);
-}
-
-@keyframes cn2-portal-surge {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  30% { opacity: 1; transform: scale(1.15); }
-  55% { opacity: 0.6; transform: scale(0.95); }
-  75% { opacity: 0.9; transform: scale(1.08); }
 }
 
 /* Full-screen light flash — pulses with portal on/off cycle for dramatic effect */
