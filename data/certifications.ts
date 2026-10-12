@@ -6,7 +6,8 @@
  * issuer printed it — named provider, printed date, printed identifier, and a
  * verification link only where the provider actually issues one. Where the
  * certificate itself omits a detail (a date, a score, a verification page),
- * the record omits it and says so rather than filling the gap.
+ * the record omits it and says so rather than filling the gap. Certificates of
+ * participation say participation; durations are printed as printed.
  *
  * Also listed is self-directed study, which is evidenced by the systems and
  * research in this repository. Those tracks are labelled as self-directed and
@@ -40,11 +41,26 @@ export interface CredentialRecord {
 /**
  * Formal, issued credentials.
  *
- * Three real certificates, each transcribed from the document itself. A new
- * entry appears here only after it has been issued — and only carrying what
- * the certificate actually says.
+ * Real certificates, each transcribed from the document itself. A new entry
+ * appears here only after it has been issued — and only carrying what the
+ * certificate actually says.
  */
 export const credentials: CredentialRecord[] = [
+  {
+    id: "datateach-gen-ai-internship",
+    provider: "DataTeach.ai",
+    program: "Gen-AI Internship",
+    state: "COMPLETED",
+    date: "2026-10-11",
+    credentialId: "DT1174",
+    topics: ["Generative AI — internship programme"],
+    skills: ["Generative AI applied in an internship setting"],
+    learned:
+      "Building with generative AI in an internship format — the difference between prompting a model and shipping something around one.",
+    assessment:
+      "Certificate of completion issued for the internship; no exam result or score is printed on the certificate.",
+    notes: ["No verification URL or QR is printed on this certificate."],
+  },
   {
     id: "quantconnect-us-equities-101",
     provider: "QuantConnect",
@@ -60,6 +76,58 @@ export const credentials: CredentialRecord[] = [
     notes: [
       "The QR printed on the certificate resolves to quantconnect.com/learning — QuantConnect issues no per-certificate verification page.",
     ],
+  },
+  {
+    id: "reliance-ai-data-engineer",
+    provider: "Reliance Foundation Skilling Academy — via Skill India Digital (NSDC)",
+    program: "AI Data Engineer Certificate Programme",
+    state: "VERIFIED",
+    date: "2026-07-03",
+    topics: ["AI data engineering — 210-hour certificate programme"],
+    skills: ["AI data engineering"],
+    learned:
+      "The 210-hour programme put structure around data engineering for AI systems: pipelines designed for models, not just reports.",
+    assessment:
+      "Certificate of Completion for a 210-hour online skilling course; no exam result or score is printed on the certificate.",
+    verificationUrl:
+      "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-f09bf277-3615-45db-8ebb-65ea222ac556",
+    notes: ["Course completed Jul 03, 2026 — 210 hours as printed."],
+  },
+  {
+    id: "sfj-generative-ai-ml",
+    provider: "SFJ Business Solutions — via Skill India Digital Hub (NSDC)",
+    program: "Introduction on Generative AI – Artificial Intelligence and Machine Learning",
+    state: "VERIFIED",
+    date: "2026-07-03",
+    topics: [
+      "Generative AI",
+      "Artificial intelligence and machine learning",
+      "Aligned to QP SSC/Q8108 · NSQF level 7",
+    ],
+    skills: ["Generative AI, AI and machine learning (NSQF 7 alignment)"],
+    learned:
+      "Fifteen hours structured around what generative AI is actually doing under the hood — the machine-learning foundations that keep the hype honest.",
+    assessment:
+      "Certificate of Participation for a 15-hour online skilling course; no exam result or score is printed on the certificate.",
+    verificationUrl:
+      "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-755cb06d-8412-4fc1-b5ef-0ae95a32f059",
+    notes: ["Course completed Jul 03, 2026 — 15 hours as printed."],
+  },
+  {
+    id: "nasscom-ai-devops-analyst",
+    provider: "NASSCOM — via Skill India Digital Hub (NSDC)",
+    program: "AI DevOps Analyst",
+    state: "VERIFIED",
+    date: "2026-07-03",
+    topics: ["AI DevOps — online skilling course"],
+    skills: ["AI DevOps (course exposure)"],
+    learned:
+      "It gave me the vocabulary of AI delivery pipelines — the names for things I was already assembling by hand.",
+    assessment:
+      "Certificate of Participation — the certificate prints participation and a course duration of 1 hour; no exam result or score is printed.",
+    verificationUrl:
+      "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-6d136b29-9b3a-4b26-9d76-b05369cb648c",
+    notes: ["Course completed Jul 03, 2026 — 1 hour duration as printed."],
   },
   {
     id: "nsdc-data-engineering-analyst",

@@ -15,7 +15,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Certifications",
   description:
-    "Credential record for Bukya Naresh — issued certificates from NSDC, QuantConnect and Unstop, transcribed exactly as printed, with verification where the issuer offers it. Self-directed study is labelled as self-directed.",
+    "Credential record for Bukya Naresh — issued certificates transcribed exactly as printed, each with its named issuer, printed date and verification where the issuer offers it. Self-directed study is labelled as self-directed.",
   alternates: { canonical: "/certifications" },
   openGraph: {
     title: "Certifications — Bukya Naresh / CN2.dev",
