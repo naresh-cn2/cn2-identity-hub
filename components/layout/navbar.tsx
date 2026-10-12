@@ -158,9 +158,7 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* OVERRIDE 1: positions swapped — search now occupies the theme
-                toggle's old slot, theme toggle occupies search's old slot.
-                Both keep their existing circular shape, icon and behaviour. */}
+            {/* Search + theme toggle — same order as inner pages for consistency */}
             <div className="flex shrink-0 items-center gap-2.5">
               <button
                 onClick={openPalette}
