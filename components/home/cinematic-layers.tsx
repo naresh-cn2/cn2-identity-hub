@@ -332,18 +332,7 @@ export default function CinematicLayers() {
       ctx.globalCompositeOperation = "source-over";
     };
 
-    // subtle rim shimmer over the character (image-based, no deformation)
-    const drawCharacterRim = (isDark: boolean, t: number) => {
-      ctx.globalCompositeOperation = "soft-light";
-      const cy = (0.42 + 0.16 * Math.sin(t * 0.00035)) * h;
-      const cxr = 0.6 * w;
-      const rr = 130 * sc;
-      ctx.globalAlpha = isDark ? 0.5 : 0.35;
-      ctx.drawImage(spriteBlue, cxr - rr, cy - rr * 1.3, rr * 2, rr * 2.6);
-      ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = "source-over";
-    };
-
+    // ---------- cursor ripples ----------
     const drawRipples = (isDark: boolean, dt: number) => {
       for (let i = ripples.length - 1; i >= 0; i--) {
         const rp = ripples[i];
@@ -475,7 +464,6 @@ export default function CinematicLayers() {
       drawNodes(isDark, dt);
       drawPulses(isDark, dt);
       drawFloor(isDark, dt, now);
-      drawCharacterRim(isDark, now);
       drawRipples(isDark, dt);
     };
 
