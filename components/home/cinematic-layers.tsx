@@ -61,7 +61,8 @@ export default function CinematicLayers() {
       w = Math.max(1, rect.width);
       h = Math.max(1, rect.height);
       sc = Math.min(w, h) / 900;
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      // Higher DPR cap for 8K-resolution feel — sharper smoke, crisper particles
+      const dpr = Math.min(3, window.devicePixelRatio || 1);
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       canvas.style.width = `${w}px`;
@@ -93,27 +94,31 @@ export default function CinematicLayers() {
     const spriteRed = makeSprite(255, 80, 60, 0.5);
 
     // ---------- drifting smoke puffs (concentrated around the portal) ----------
-    interface Puff { x: number; y: number; r: number; vx: number; vy: number; a: number; phase: number; curl: number; white: boolean }
-    const PUFFS = reduced ? 0 : small ? 7 : 15;
+    // Enhanced: more puffs, light-reactive alpha, volumetric depth layers
+    interface Puff { x: number; y: number; r: number; vx: number; vy: number; a: number; phase: number; curl: number; white: boolean; depth: number; lightResp: number }
+    const PUFFS = reduced ? 0 : small ? 12 : 28;
     const puffs: Puff[] = [];
     for (let i = 0; i < PUFFS; i++) {
       const floorBias = Math.random() < 0.4;
+      const depth = 0.3 + Math.random() * 0.7; // 0=far, 1=near
       puffs.push({
         x: 0.42 + Math.random() * 0.4,
         y: floorBias ? 0.68 + Math.random() * 0.22 : 0.3 + Math.random() * 0.5,
-        r: (60 + Math.random() * 120),
+        r: (60 + Math.random() * 140) * (0.6 + depth * 0.6),
         vx: (Math.random() - 0.5) * 0.012,
         vy: floorBias ? (Math.random() - 0.5) * 0.006 : -(0.006 + Math.random() * 0.016),
         a: 0.04 + Math.random() * 0.06,
         phase: Math.random() * Math.PI * 2,
         curl: 0.008 + Math.random() * 0.02,
         white: Math.random() < 0.45,
+        depth,
+        lightResp: 0.5 + Math.random() * 0.5, // how strongly this puff responds to portal light
       });
     }
 
     // ---------- dust particles ----------
     interface Particle { x: number; y: number; z: number; r: number; vx: number; vy: number; red: boolean; base: number; tw: number }
-    const PCOUNT = reduced ? 0 : small ? 18 : 48;
+    const PCOUNT = reduced ? 0 : small ? 32 : 80;
     const particles: Particle[] = [];
     for (let i = 0; i < PCOUNT; i++) {
       const z = 0.35 + Math.random() * 0.65;
@@ -127,6 +132,12 @@ export default function CinematicLayers() {
         tw: Math.random() * Math.PI * 2,
       });
     }
+
+    // ---------- portal light cycling (on/off with smooth transitions) ----------
+    let portalLightLevel = 1; // 0=off, 1=full on
+    let portalTarget = 1;
+    const PORTAL_CYCLE_PERIOD = 6000; // ms between state changes
+    let lastPortalCycle = 0;
 
     // ---------- network nodes (approx. over the baked grid) ----------
     interface NetNode { x: number; y: number; red: boolean; phase: number; period: number }
@@ -193,9 +204,18 @@ export default function CinematicLayers() {
         if (p.x < 0.36) p.x = 0.86;
         else if (p.x > 0.88) p.x = 0.38;
         const r = p.r * sc;
-        const alpha = p.a * (isDark ? 1 : 0.8) * (0.7 + 0.5 * nearPortal);
-        ctx.globalAlpha = Math.min(0.18, alpha);
+        // Light-reactive: smoke brightens when portal light is on, dims when off
+        const lightBoost = 0.3 + 0.7 * portalLightLevel * p.lightResp;
+        const alpha = p.a * (isDark ? 1 : 0.8) * (0.7 + 0.5 * nearPortal) * lightBoost;
+        ctx.globalAlpha = Math.min(0.22, alpha);
         const sprite = p.white ? spriteWhite : spriteBlue;
+        // Near-portal smoke gets extra brightness from portal light
+        if (nearPortal > 0.5 && portalLightLevel > 0.3) {
+          ctx.globalCompositeOperation = "lighter";
+          ctx.globalAlpha = Math.min(0.15, alpha * nearPortal * portalLightLevel);
+          ctx.drawImage(sprite, p.x * w - r, p.y * h - r, r * 2, r * 2);
+          ctx.globalCompositeOperation = isDark ? "screen" : "source-over";
+        }
         ctx.drawImage(sprite, p.x * w - r, p.y * h - r, r * 2, r * 2);
       }
       ctx.globalAlpha = 1;
@@ -341,9 +361,71 @@ export default function CinematicLayers() {
       }
     };
 
+    // ---------- volumetric light beams from portal ----------
+    const drawLightBeams = (isDark: boolean, t: number) => {
+      if (portalLightLevel < 0.1) return;
+      ctx.globalCompositeOperation = "lighter";
+      const beamCount = 5;
+      for (let i = 0; i < beamCount; i++) {
+        const angle = (i / beamCount) * Math.PI * 2 + t * 0.0002;
+        const beamLen = (0.15 + 0.1 * Math.sin(t * 0.0005 + i)) * w;
+        const beamWidth = (8 + 4 * Math.sin(t * 0.0007 + i * 2)) * sc;
+        const x0 = PORTAL_X * w;
+        const y0 = 0.45 * h;
+        const x1 = x0 + Math.cos(angle) * beamLen;
+        const y1 = y0 + Math.sin(angle) * beamLen;
+        const grad = ctx.createLinearGradient(x0, y0, x1, y1);
+        const intensity = 0.06 * portalLightLevel * (0.7 + 0.3 * Math.sin(t * 0.0008 + i));
+        grad.addColorStop(0, `rgba(150,200,255,${intensity.toFixed(3)})`);
+        grad.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = beamWidth;
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.lineTo(x1, y1);
+        ctx.stroke();
+      }
+      ctx.globalCompositeOperation = "source-over";
+    };
+
+    // ---------- portal glow halo (breathing + on/off cycle) ----------
+    const drawPortalHalo = (isDark: boolean, t: number) => {
+      const breathe = 0.85 + 0.15 * Math.sin(t * 0.0006);
+      const intensity = portalLightLevel * breathe;
+      if (intensity < 0.05) return;
+      ctx.globalCompositeOperation = "lighter";
+      const cx = PORTAL_X * w;
+      const cy = 0.45 * h;
+      const baseR = 180 * sc;
+      // Outer halo
+      const haloR = baseR * (1.2 + 0.3 * intensity);
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, haloR);
+      const a = 0.12 * intensity * (isDark ? 1 : 0.6);
+      grad.addColorStop(0, `rgba(120,180,255,${a.toFixed(3)})`);
+      grad.addColorStop(0.5, `rgba(80,140,255,${(a * 0.4).toFixed(3)})`);
+      grad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, haloR, 0, Math.PI * 2);
+      ctx.fill();
+      // Core glow
+      const coreR = baseR * 0.5 * intensity;
+      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
+      const ca = 0.25 * intensity;
+      coreGrad.addColorStop(0, `rgba(200,230,255,${ca.toFixed(3)})`);
+      coreGrad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = coreGrad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = "source-over";
+    };
+
     const drawStatic = () => {
       const isDark = darkRef.current;
       ctx.clearRect(0, 0, w, h);
+      drawPortalHalo(isDark, 0);
+      drawLightBeams(isDark, 0);
       drawSmoke(isDark, 0, 0);
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       drawParticles(isDark, 0);
@@ -360,7 +442,23 @@ export default function CinematicLayers() {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const isDark = darkRef.current;
+
+      // Portal light cycling — smooth on/off transitions
+      if (!reduced) {
+        if (now - lastPortalCycle > PORTAL_CYCLE_PERIOD) {
+          lastPortalCycle = now;
+          portalTarget = portalTarget > 0.5 ? 0 : 1;
+          // Occasionally hold at intermediate level for dramatic effect
+          if (Math.random() < 0.3) portalTarget = 0.3 + Math.random() * 0.4;
+        }
+        // Smooth interpolation toward target
+        const lerpSpeed = dt * 0.8;
+        portalLightLevel += (portalTarget - portalLightLevel) * lerpSpeed;
+      }
+
       ctx.clearRect(0, 0, w, h);
+      drawPortalHalo(isDark, now);
+      drawLightBeams(isDark, now);
       drawSmoke(isDark, dt, now);
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       drawParticles(isDark, dt);
