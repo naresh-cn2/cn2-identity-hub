@@ -94,9 +94,9 @@ export default function CinematicLayers() {
     const spriteRed = makeSprite(255, 80, 60, 0.5);
 
     // ---------- drifting smoke puffs (concentrated around the portal) ----------
-    // Enhanced: more puffs, light-reactive alpha, volumetric depth layers
+    // Enhanced: more puffs, strong light-reactive alpha, volumetric depth layers
     interface Puff { x: number; y: number; r: number; vx: number; vy: number; a: number; phase: number; curl: number; white: boolean; depth: number; lightResp: number }
-    const PUFFS = reduced ? 0 : small ? 12 : 28;
+    const PUFFS = reduced ? 0 : small ? 16 : 40;
     const puffs: Puff[] = [];
     for (let i = 0; i < PUFFS; i++) {
       const floorBias = Math.random() < 0.4;
@@ -104,15 +104,15 @@ export default function CinematicLayers() {
       puffs.push({
         x: 0.42 + Math.random() * 0.4,
         y: floorBias ? 0.68 + Math.random() * 0.22 : 0.3 + Math.random() * 0.5,
-        r: (60 + Math.random() * 140) * (0.6 + depth * 0.6),
+        r: (80 + Math.random() * 160) * (0.6 + depth * 0.6),
         vx: (Math.random() - 0.5) * 0.012,
         vy: floorBias ? (Math.random() - 0.5) * 0.006 : -(0.006 + Math.random() * 0.016),
-        a: 0.04 + Math.random() * 0.06,
+        a: 0.06 + Math.random() * 0.08,
         phase: Math.random() * Math.PI * 2,
         curl: 0.008 + Math.random() * 0.02,
         white: Math.random() < 0.45,
         depth,
-        lightResp: 0.5 + Math.random() * 0.5, // how strongly this puff responds to portal light
+        lightResp: 0.6 + Math.random() * 0.4, // strong response to portal light
       });
     }
 
@@ -133,10 +133,10 @@ export default function CinematicLayers() {
       });
     }
 
-    // ---------- portal light cycling (on/off with smooth transitions) ----------
+    // ---------- portal light cycling (dramatic on/off with visible transitions) ----------
     let portalLightLevel = 1; // 0=off, 1=full on
     let portalTarget = 1;
-    const PORTAL_CYCLE_PERIOD = 6000; // ms between state changes
+    const PORTAL_CYCLE_PERIOD = 2500; // ms between state changes — fast for visibility
     let lastPortalCycle = 0;
 
     // ---------- network nodes (approx. over the baked grid) ----------
@@ -204,15 +204,15 @@ export default function CinematicLayers() {
         if (p.x < 0.36) p.x = 0.86;
         else if (p.x > 0.88) p.x = 0.38;
         const r = p.r * sc;
-        // Light-reactive: smoke brightens when portal light is on, dims when off
-        const lightBoost = 0.3 + 0.7 * portalLightLevel * p.lightResp;
+        // Dramatic light-reactive: smoke blazes when portal light is on, nearly vanishes when off
+        const lightBoost = 0.02 + 0.98 * portalLightLevel * p.lightResp;
         const alpha = p.a * (isDark ? 1 : 0.8) * (0.7 + 0.5 * nearPortal) * lightBoost;
-        ctx.globalAlpha = Math.min(0.22, alpha);
+        ctx.globalAlpha = Math.min(0.5, alpha);
         const sprite = p.white ? spriteWhite : spriteBlue;
-        // Near-portal smoke gets extra brightness from portal light
-        if (nearPortal > 0.5 && portalLightLevel > 0.3) {
+        // Near-portal smoke gets strong additive illumination from portal light
+        if (nearPortal > 0.2 && portalLightLevel > 0.05) {
           ctx.globalCompositeOperation = "lighter";
-          ctx.globalAlpha = Math.min(0.15, alpha * nearPortal * portalLightLevel);
+          ctx.globalAlpha = Math.min(0.4, alpha * nearPortal * portalLightLevel * 2);
           ctx.drawImage(sprite, p.x * w - r, p.y * h - r, r * 2, r * 2);
           ctx.globalCompositeOperation = isDark ? "screen" : "source-over";
         }
@@ -296,10 +296,11 @@ export default function CinematicLayers() {
     const drawFloor = (isDark: boolean, dt: number, t: number) => {
       const fy0 = h * 0.7;
       // blue portal reflection pooled on the floor beneath the portal
+      // Dramatically responsive to portal light level
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
-      ctx.globalAlpha = isDark ? 0.16 : 0.12;
-      const pr = 150 * sc;
-      const pulse = 0.85 + 0.15 * Math.sin(t * 0.0009);
+      ctx.globalAlpha = (isDark ? 0.3 : 0.2) * portalLightLevel;
+      const pr = 180 * sc;
+      const pulse = 0.7 + 0.3 * Math.sin(t * 0.0009);
       ctx.drawImage(spriteBlue, PORTAL_X * w - pr, 0.87 * h - pr * 0.5, pr * 2, pr * pulse);
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = "source-over";
@@ -311,7 +312,7 @@ export default function CinematicLayers() {
       const cx = sweepX * w;
       const g = ctx.createLinearGradient(cx - bandW / 2, 0, cx + bandW / 2, 0);
       g.addColorStop(0, "rgba(0,0,0,0)");
-      g.addColorStop(0.5, isDark ? "rgba(150,205,255,0.13)" : "rgba(120,160,215,0.1)");
+      g.addColorStop(0.5, isDark ? "rgba(150,205,255,0.18)" : "rgba(120,160,215,0.12)");
       g.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = g;
       ctx.fillRect(cx - bandW / 2, fy0, bandW, h - fy0);
@@ -321,7 +322,7 @@ export default function CinematicLayers() {
       for (const n of nodes) {
         if (!n.red || n.y < 0.4 || n.y > 0.72) continue;
         const pulseR = 0.5 + 0.5 * Math.sin((n.phase / n.period) * Math.PI * 2);
-        const ra = (0.04 + 0.05 * pulseR) * (isDark ? 1 : 0.7);
+        const ra = (0.06 + 0.08 * pulseR) * (isDark ? 1 : 0.7);
         ctx.globalAlpha = ra;
         const rxp = n.x * w;
         const streakH = (1 - n.y) * h * 0.5;
@@ -361,22 +362,23 @@ export default function CinematicLayers() {
       }
     };
 
-    // ---------- volumetric light beams from portal ----------
+    // ---------- volumetric light beams from portal (dramatic god-rays) ----------
     const drawLightBeams = (isDark: boolean, t: number) => {
-      if (portalLightLevel < 0.1) return;
+      if (portalLightLevel < 0.05) return;
       ctx.globalCompositeOperation = "lighter";
-      const beamCount = 5;
+      const beamCount = 12;
       for (let i = 0; i < beamCount; i++) {
-        const angle = (i / beamCount) * Math.PI * 2 + t * 0.0002;
-        const beamLen = (0.15 + 0.1 * Math.sin(t * 0.0005 + i)) * w;
-        const beamWidth = (8 + 4 * Math.sin(t * 0.0007 + i * 2)) * sc;
+        const angle = (i / beamCount) * Math.PI * 2 + t * 0.0004;
+        const beamLen = (0.3 + 0.2 * Math.sin(t * 0.0006 + i)) * w;
+        const beamWidth = (20 + 12 * Math.sin(t * 0.0008 + i * 2)) * sc;
         const x0 = PORTAL_X * w;
         const y0 = 0.45 * h;
         const x1 = x0 + Math.cos(angle) * beamLen;
         const y1 = y0 + Math.sin(angle) * beamLen;
         const grad = ctx.createLinearGradient(x0, y0, x1, y1);
-        const intensity = 0.06 * portalLightLevel * (0.7 + 0.3 * Math.sin(t * 0.0008 + i));
-        grad.addColorStop(0, `rgba(150,200,255,${intensity.toFixed(3)})`);
+        const intensity = 0.25 * portalLightLevel * (0.5 + 0.5 * Math.sin(t * 0.001 + i));
+        grad.addColorStop(0, `rgba(180,220,255,${intensity.toFixed(3)})`);
+        grad.addColorStop(0.4, `rgba(130,190,255,${(intensity * 0.5).toFixed(3)})`);
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.strokeStyle = grad;
         ctx.lineWidth = beamWidth;
@@ -384,35 +386,44 @@ export default function CinematicLayers() {
         ctx.moveTo(x0, y0);
         ctx.lineTo(x1, y1);
         ctx.stroke();
+        // Beam endpoint glow
+        const endGrad = ctx.createRadialGradient(x1, y1, 0, x1, y1, beamWidth * 3);
+        endGrad.addColorStop(0, `rgba(160,210,255,${(intensity * 0.6).toFixed(3)})`);
+        endGrad.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = endGrad;
+        ctx.beginPath();
+        ctx.arc(x1, y1, beamWidth * 3, 0, Math.PI * 2);
+        ctx.fill();
       }
       ctx.globalCompositeOperation = "source-over";
     };
 
-    // ---------- portal glow halo (breathing + on/off cycle) ----------
+    // ---------- portal glow halo (dramatic breathing + on/off cycle) ----------
     const drawPortalHalo = (isDark: boolean, t: number) => {
-      const breathe = 0.85 + 0.15 * Math.sin(t * 0.0006);
+      const breathe = 0.6 + 0.4 * Math.sin(t * 0.001);
       const intensity = portalLightLevel * breathe;
-      if (intensity < 0.05) return;
+      if (intensity < 0.02) return;
       ctx.globalCompositeOperation = "lighter";
       const cx = PORTAL_X * w;
       const cy = 0.45 * h;
-      const baseR = 180 * sc;
-      // Outer halo
-      const haloR = baseR * (1.2 + 0.3 * intensity);
+      const baseR = 280 * sc;
+      // Outer halo — large and visible
+      const haloR = baseR * (1.4 + 0.5 * intensity);
       const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, haloR);
-      const a = 0.12 * intensity * (isDark ? 1 : 0.6);
-      grad.addColorStop(0, `rgba(120,180,255,${a.toFixed(3)})`);
-      grad.addColorStop(0.5, `rgba(80,140,255,${(a * 0.4).toFixed(3)})`);
+      const a = 0.3 * intensity * (isDark ? 1 : 0.8);
+      grad.addColorStop(0, `rgba(80,150,255,${a.toFixed(3)})`);
+      grad.addColorStop(0.3, `rgba(60,120,255,${(a * 0.6).toFixed(3)})`);
       grad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(cx, cy, haloR, 0, Math.PI * 2);
       ctx.fill();
-      // Core glow
-      const coreR = baseR * 0.5 * intensity;
+      // Core glow — bright center
+      const coreR = baseR * 0.7 * intensity;
       const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
-      const ca = 0.25 * intensity;
-      coreGrad.addColorStop(0, `rgba(200,230,255,${ca.toFixed(3)})`);
+      const ca = 0.5 * intensity;
+      coreGrad.addColorStop(0, `rgba(230,245,255,${ca.toFixed(3)})`);
+      coreGrad.addColorStop(0.4, `rgba(160,210,255,${(ca * 0.5).toFixed(3)})`);
       coreGrad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = coreGrad;
       ctx.beginPath();
@@ -443,16 +454,14 @@ export default function CinematicLayers() {
       last = now;
       const isDark = darkRef.current;
 
-      // Portal light cycling — smooth on/off transitions
+      // Portal light cycling — fast, dramatic on/off transitions
       if (!reduced) {
         if (now - lastPortalCycle > PORTAL_CYCLE_PERIOD) {
           lastPortalCycle = now;
           portalTarget = portalTarget > 0.5 ? 0 : 1;
-          // Occasionally hold at intermediate level for dramatic effect
-          if (Math.random() < 0.3) portalTarget = 0.3 + Math.random() * 0.4;
         }
-        // Smooth interpolation toward target
-        const lerpSpeed = dt * 0.8;
+        // Very fast interpolation for strobe-like on/off effect
+        const lerpSpeed = dt * 4;
         portalLightLevel += (portalTarget - portalLightLevel) * lerpSpeed;
       }
 
@@ -504,6 +513,8 @@ export default function CinematicLayers() {
       <div className="cn2-portal-glow">
         <div className="cn2-portal-glow-core" />
       </div>
+      {/* Full-screen light flash — pulses with portal on/off cycle */}
+      <div className="cn2-light-flash" />
       <canvas ref={canvasRef} className="cn2-fx-canvas" />
     </div>
   );

@@ -749,6 +749,28 @@ h1.cn2-brand-word {
   75% { opacity: 0.9; transform: scale(1.08); }
 }
 
+/* Full-screen light flash — pulses with portal on/off cycle for dramatic effect */
+.cn2-light-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 60% 42%,
+      rgba(120, 180, 255, 0.0) 0%,
+      rgba(80, 140, 255, 0.0) 100%);
+  animation: cn2-flash-pulse 4s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes cn2-flash-pulse {
+  0%, 100% { opacity: 0; }
+  15% { opacity: 0.6; }
+  25% { opacity: 0; }
+  40% { opacity: 0.3; }
+  50% { opacity: 0; }
+  75% { opacity: 0.5; }
+  85% { opacity: 0; }
+}
+
 /* Floor pool — concentrated beneath the portal (its reflection).
    Light mode: brighter but still localised to the portal reflection zone.
    Enhanced: subtle animated shimmer for live reflective surface feel. */
