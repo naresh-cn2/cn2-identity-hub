@@ -92,6 +92,24 @@ Serverless filesystems are ephemeral and this project has no database, so the re
 - **Performance-conscious** — static generation for all content routes; canvases are DPR-capped, pause when the tab is hidden, and degrade deliberately on small screens.
 - **SEO** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs.
 
+### Automated QA
+
+The rendered-output suites live in `scripts/qa/` and run against any build served on `:3000`:
+
+| Suite | What it asserts |
+| --- | --- |
+| `api-check.ps1` | 7 reviews-API end-to-end checks (run first — deliberately ends on the per-IP 429 limiter) |
+| `live-check.ps1` | 80 site-wide assertions — motion, accessibility, navigation, cinematic layers |
+| `hub-check.ps1` | 56 hub-universe assertions |
+| `world-check.ps1` | 69 project-world assertions |
+
+```powershell
+npm run build; npm start          # serve the production build on :3000
+.\scripts\qa\api-check.ps1        # each suite accepts -Base http://host:port
+```
+
+GitHub Actions (`.github/workflows/ci.yml`) runs lint → type-check → production build → all four suites on every push to `main` and every pull request.
+
 ---
 
 ## Repository structure

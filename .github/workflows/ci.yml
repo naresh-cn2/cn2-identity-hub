@@ -1,0 +1,68 @@
+# Continuous verification — lint, types, production build, then the four
+# PowerShell QA suites against the built site served on :3000.
+# Runs on Windows so the suites execute under Windows PowerShell 5.1, the
+# same runtime they were authored and validated against locally.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Serve production build
+        shell: powershell
+        run: |
+          $proc = Start-Process -FilePath npm -ArgumentList "run","start" -PassThru -NoNewWindow
+          "SERVER_PID=$($proc.Id)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $ok = $false
+          for ($i = 0; $i -lt 60; $i++) {
+            try {
+              $r = Invoke-WebRequest -Uri "http://localhost:3000/" -UseBasicParsing -TimeoutSec 2
+              if ($r.StatusCode -eq 200) { $ok = $true; break }
+            } catch { Start-Sleep -Seconds 1 }
+          }
+          if (-not $ok) { Write-Error "server did not come up"; exit 1 }
+
+      - name: QA suites
+        shell: powershell
+        run: |
+          # api-check must run first: it ends on the per-IP 429 limiter by design.
+          .\scripts\qa\api-check.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          .\scripts\qa\live-check.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          .\scripts\qa\hub-check.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          .\scripts\qa\world-check.ps1
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+      - name: Stop server
+        if: always()
+        shell: powershell
+        run: |
+          if ($env:SERVER_PID) {
+            Stop-Process -Id $env:SERVER_PID -Force -ErrorAction SilentlyContinue
+          }
