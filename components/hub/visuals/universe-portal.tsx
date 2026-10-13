@@ -76,12 +76,19 @@ const drawPortal: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
   }
   ctx.stroke();
 
-  /* ---- the gate's reflection smeared across the floor ---- */
-  const refl = ctx.createLinearGradient(0, hz, 0, h);
-  refl.addColorStop(0, rgba(pal.bright, (0.09 + 0.03 * breathe(t, 0.9, 0)) * dim));
+  /* ---- the gate's reflection pooled across the floor (soft ellipse) ---- */
+  ctx.save();
+  ctx.translate(cx, hz + (h - hz) * 0.25);
+  ctx.scale(1, 0.5);
+  const refl = ctx.createRadialGradient(0, 0, 0, 0, 0, R * 1.25);
+  refl.addColorStop(0, rgba(pal.bright, (0.1 + 0.03 * breathe(t, 0.9, 0)) * dim));
+  refl.addColorStop(0.55, rgba(pal.bright, 0.03 * dim));
   refl.addColorStop(1, rgba(pal.bright, 0));
   ctx.fillStyle = refl;
-  ctx.fillRect(cx - R * 0.8, hz, R * 1.6, h - hz);
+  ctx.beginPath();
+  ctx.arc(0, 0, R * 1.25, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
 
   /* ---- volumetric light cone dropping from the gate ---- */
   const cone = ctx.createLinearGradient(0, cy, 0, hz);
