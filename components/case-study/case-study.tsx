@@ -4,6 +4,7 @@ import Reveal from "@/components/ui/reveal";
 import Metric from "@/components/ui/metric";
 import ChapterNav from "./chapter-nav";
 import ArchFlow from "@/components/viz/arch-flow";
+import ArchSchematic from "@/components/builds/arch-schematic";
 import InteractiveLab from "./interactive-lab";
 
 const CHAPTERS = [
@@ -165,22 +166,34 @@ export default function CaseStudy({
 
             <Chapter id="architecture" index={4} title="ARCHITECTURE">
               <p className="label-mono mb-8 text-faint">VISUAL METAPHOR — {project.visualMetaphor.toUpperCase()}</p>
-              <ArchFlow steps={project.architecture} />
+              <div className="space-y-10">
+                <ArchSchematic steps={project.architecture} />
+                <ArchFlow steps={project.architecture} />
+              </div>
             </Chapter>
 
             <Chapter id="data-flow" index={5} title="DATA FLOW">
-              <ol className="max-w-3xl">
-                {project.dataFlow.map((step, i) => (
-                  <Reveal key={i} delay={i * 70}>
-                    <li className="flex items-start gap-4 border-b border-line py-4">
-                      <span className="num-mono mt-0.5 shrink-0 text-xs text-signal">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-base leading-relaxed text-muted">{step}</span>
-                    </li>
-                  </Reveal>
-                ))}
-              </ol>
+              <div className="viz-frame p-5 md:p-7">
+                <p className="label-mono mb-6 text-faint">
+                  PIPELINE — {project.dataFlow.length} STAGES, IN ORDER
+                </p>
+                <ol className="relative">
+                  <span
+                    className="dash-rule-v absolute bottom-4 left-[13px] top-4"
+                    aria-hidden="true"
+                  />
+                  {project.dataFlow.map((step, i) => (
+                    <Reveal key={i} delay={i * 70}>
+                      <li className="relative grid grid-cols-[2.75rem_1fr] items-start gap-4 pb-5">
+                        <span className="num-mono relative flex h-7 w-7 items-center justify-center border border-line-strong bg-surface text-[10px] text-signal">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-base leading-relaxed text-muted">{step}</span>
+                      </li>
+                    </Reveal>
+                  ))}
+                </ol>
+              </div>
             </Chapter>
 
             <Chapter id="methods" index={6} title="METHODS">
@@ -215,12 +228,14 @@ export default function CaseStudy({
             </Chapter>
 
             <Chapter id="results" index={9} title="RESULTS">
-              <div className="grid gap-px bg-line sm:grid-cols-2">
-                {project.results.metrics.map((m, i) => (
-                  <Reveal key={m.label} delay={i * 80}>
-                    <Metric metric={m} size="lg" />
-                  </Reveal>
-                ))}
+              <div className="viz-frame p-4 md:p-6">
+                <div className="grid gap-px bg-line sm:grid-cols-2">
+                  {project.results.metrics.map((m, i) => (
+                    <Reveal key={m.label} delay={i * 80}>
+                      <Metric metric={m} size="lg" />
+                    </Reveal>
+                  ))}
+                </div>
               </div>
               <div className="mt-8">
                 <Prose items={project.results.narrative} />
@@ -262,7 +277,7 @@ export default function CaseStudy({
                   <Reveal key={mod.title} delay={i * 80}>
                     <Link
                       href={mod.href}
-                      className="group flex flex-col bg-surface p-5 transition-colors hover:bg-surface-2"
+                      className="card-depth group flex flex-col border border-transparent bg-surface p-5 transition-colors hover:bg-surface-2"
                     >
                       <p className="label-mono text-foreground transition-colors group-hover:text-signal">
                         {mod.title} <span aria-hidden="true">→</span>
@@ -280,7 +295,7 @@ export default function CaseStudy({
                   href={project.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex max-w-3xl items-center justify-between border border-line-strong bg-surface p-6 transition-colors hover:border-signal md:p-8"
+                  className="card-depth group flex max-w-3xl items-center justify-between border border-line-strong bg-surface p-6 transition-colors hover:border-signal md:p-8"
                 >
                   <div>
                     <p className="label-mono text-faint">SOURCE OF EVIDENCE</p>

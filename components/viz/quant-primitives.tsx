@@ -804,7 +804,7 @@ export function RegimeMap({
               {r.name}
             </text>
             {r.description && (
-              <title>{r.name}: {r.description}</title>
+              <title>{`${r.name}: ${r.description ?? r.name}`}</title>
             )}
           </g>
         );

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
-import ContactContent from "./contact-content";
+import ContactPanels from "@/components/contact/contact-panels";
+import ContactOrbitViz from "@/components/contact/contact-orbit-viz";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -70,6 +71,11 @@ export default function ContactPage() {
                             professional opportunity? Choose the most relevant way to connect.
                         </p>
                     </Reveal>
+                    <Reveal delay={320}>
+                        <div className="relative mx-auto mt-14 max-w-4xl md:mt-16">
+                            <ContactOrbitViz />
+                        </div>
+                    </Reveal>
                 </div>
             </header>
 
@@ -80,7 +86,7 @@ export default function ContactPage() {
                         <p className="label-mono text-signal">DIRECT CHANNELS</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">FIVE WAYS TO REACH ME</h2>
                     </Reveal>
-                    <ContactContent />
+                    <ContactPanels />
                 </div>
             </section>
 
@@ -135,30 +141,26 @@ export default function ContactPage() {
                             </Link>
                         </Reveal>
                         <Reveal delay={140}>
-                            <a
-                                href={site.links.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                href="/opportunities"
                                 className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
                             >
-                                <span className="label-mono text-foreground group-hover:text-signal">LINKEDIN →</span>
+                                <span className="label-mono text-foreground group-hover:text-signal">OPPORTUNITIES →</span>
                                 <span className="mt-3 text-sm leading-relaxed text-muted">
-                                    Professional profile and network.
+                                    Employment, freelance, research and partnership pathways.
                                 </span>
-                            </a>
+                            </Link>
                         </Reveal>
                         <Reveal delay={210}>
-                            <a
-                                href={site.links.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                href="/links"
                                 className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
                             >
-                                <span className="label-mono text-foreground group-hover:text-signal">GITHUB →</span>
+                                <span className="label-mono text-foreground group-hover:text-signal">LINKS →</span>
                                 <span className="mt-3 text-sm leading-relaxed text-muted">
-                                    Open-source repositories — read the code directly.
+                                    Every CN2.DEV destination and profile, indexed in one place.
                                 </span>
-                            </a>
+                            </Link>
                         </Reveal>
                     </div>
                 </div>

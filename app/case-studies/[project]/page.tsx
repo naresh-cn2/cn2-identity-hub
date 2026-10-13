@@ -79,7 +79,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ proj
                                 <Reveal key={r.id} delay={i * 80}>
                                     <Link
                                         href={`/research/${r.id}`}
-                                        className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
+                                        className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface md:p-8"
                                     >
                                         <p className="label-mono text-faint">{r.category}</p>
                                         <h3 className="display mt-3 text-xl md:text-2xl">{r.title}</h3>
@@ -99,15 +99,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ proj
             <section aria-label="Case study navigation" className="border-t border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8">
                     <div className="grid gap-px bg-line md:grid-cols-3">
-                        <Link href={`/case-studies/${prev.id}`} className="group bg-background p-6 transition-colors hover:bg-surface">
+                        <Link href={`/case-studies/${prev.id}`} className="card-depth group border border-transparent bg-background p-6 transition-colors hover:bg-surface">
                             <p className="label-mono text-[10px] text-faint">← PREVIOUS STUDY</p>
                             <p className="display mt-3 text-lg text-foreground group-hover:text-signal">{prev.shortTitle}</p>
                         </Link>
-                        <Link href={`/builds/${study.id}`} className="group bg-background p-6 transition-colors hover:bg-surface">
+                        <Link href={`/builds/${study.id}`} className="card-depth group border border-transparent bg-background p-6 transition-colors hover:bg-surface">
                             <p className="label-mono text-[10px] text-faint">PRODUCT OVERVIEW</p>
                             <p className="display mt-3 text-lg text-foreground group-hover:text-signal">{study.shortTitle} — BUILD</p>
                         </Link>
-                        <Link href={`/case-studies/${next.id}`} className="group bg-background p-6 text-right transition-colors hover:bg-surface">
+                        <Link href={`/case-studies/${next.id}`} className="card-depth group border border-transparent bg-background p-6 text-right transition-colors hover:bg-surface">
                             <p className="label-mono text-[10px] text-faint">NEXT STUDY →</p>
                             <p className="display mt-3 text-lg text-foreground group-hover:text-signal">{next.shortTitle}</p>
                         </Link>

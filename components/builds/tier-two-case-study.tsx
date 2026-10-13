@@ -5,6 +5,7 @@ import Metric from "@/components/ui/metric";
 import ProjectMark from "./project-mark";
 import ChapterNav from "@/components/case-study/chapter-nav";
 import ArchFlow from "@/components/viz/arch-flow";
+import ArchSchematic from "./arch-schematic";
 
 /**
  * Tier-2 build record.
@@ -113,7 +114,7 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
           </Reveal>
 
           <Reveal delay={340}>
-            <div className="mt-10 h-40 w-full max-w-3xl border border-line bg-surface md:h-48">
+            <div className="viz-frame mt-10 h-40 w-full max-w-3xl md:h-48">
               <ProjectMark id={project.id} />
             </div>
           </Reveal>
@@ -160,18 +161,23 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
             </Chapter>
 
             <Chapter id="architecture" index={3} title="ARCHITECTURE">
-              <ArchFlow steps={detail.architecture} />
+              <div className="space-y-10">
+                <ArchSchematic steps={detail.architecture} />
+                <ArchFlow steps={detail.architecture} />
+              </div>
             </Chapter>
 
             <Chapter id="results" index={4} title="RESULTS">
               {project.metrics.length > 0 ? (
                 <>
-                  <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
-                    {project.metrics.map((m, i) => (
-                      <Reveal key={m.label} delay={i * 70}>
-                        <Metric metric={m} size="lg" />
-                      </Reveal>
-                    ))}
+                  <div className="viz-frame p-4 md:p-6">
+                    <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
+                      {project.metrics.map((m, i) => (
+                        <Reveal key={m.label} delay={i * 70}>
+                          <Metric metric={m} size="lg" />
+                        </Reveal>
+                      ))}
+                    </div>
                   </div>
                   <div className="mt-8">
                     <Prose items={detail.results} />
@@ -218,7 +224,7 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+                    className="card-depth label-mono inline-block border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                   >
                     {project.githubVerified ? "REPOSITORY →" : "GITHUB PROFILE →"}
                   </a>

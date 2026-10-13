@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/ui/reveal';
 import PageAtmosphere from '@/components/ui/page-atmosphere';
-import { serviceOfferings, getCapability } from '@/data/services';
+import { ServicesFlowViz } from '@/components/services/service-schematics';
+import ServiceStudio from '@/components/services/service-studio';
 
 
 export const metadata: Metadata = {
@@ -19,17 +20,16 @@ export const metadata: Metadata = {
 
 /*
  * Services page — client-facing offerings grounded in actual evidence.
+ * The hero band shows how an engagement flows; the studio below lets a
+ * visitor step through each offering and see what it actually delivers.
  */
 export default function ServicesPage() {
-  // Each service is a real engagement shape anchored to a capability (spec §12)
-  const services = serviceOfferings.map((s) => ({ service: s, cap: getCapability(s.slug)! })).filter((x) => x.cap);
-
   return (
     <>
       {/* ---- header ---- */}
       <section className='relative overflow-hidden border-b border-line'>
         <div className='grid-field absolute inset-0' aria-hidden='true' />
-        <PageAtmosphere variant='signal' />
+        <PageAtmosphere variant='flow' />
         <div className='relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40'>
           <Reveal>
             <div className='flex flex-wrap items-baseline justify-between gap-4'>
@@ -50,10 +50,17 @@ export default function ServicesPage() {
               investigate, design, and solve.
             </p>
           </Reveal>
+          <Reveal delay={280}>
+            <div className='viz-frame mt-12 p-4 md:mt-16 md:p-6'>
+              <div className='relative'>
+                <ServicesFlowViz />
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ---- service offerings ---- */}
+      {/* ---- interactive service studio ---- */}
       <section aria-label='Service offerings' className='py-16 md:py-24'>
         <div className='mx-auto max-w-[1440px] px-5 sm:px-8'>
           <Reveal>
@@ -61,41 +68,11 @@ export default function ServicesPage() {
             <p className='label-mono text-faint'>DEFINED SCOPE · REPRODUCIBLE DELIVERABLES · WRITTEN LIMITS
             </p>
           </Reveal>
-          <div className='mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3'>
-            {services.map(({ service, cap }, i) => (
-              <Reveal key={service.slug} delay={i * 80}>
-                <Link
-                  href={`/services/${service.slug}`}
-                  className='group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface'
-                >
-                  <div className='flex items-baseline justify-between'>
-                    <span className='label-mono text-faint'>SERVICE / {cap.id.toUpperCase()}</span>
-                    <span className='label-mono flex items-center gap-2 text-foreground'>
-                      <span className='pulse-dot h-1.5 w-1.5 rounded-full bg-signal' aria-hidden='true' />
-                      {cap.projects.length > 0 ? 'EVIDENCED' : 'CONCEPTUAL'}
-                    </span>
-                  </div>
-                  <span className='display mt-6 block text-2xl md:text-4xl'>{cap.name}</span>
-                  <span className='mt-4 block flex-1 text-base leading-relaxed text-muted'>
-                    {service.promise}
-                  </span>
-                  {cap.technologies.length > 0 && (
-                    <span className='label-mono mt-2 block text-faint'>
-                      METHODS — {cap.technologies.slice(0, 3).join(' · ')}
-                    </span>
-                  )}
-                  {cap.research.length > 0 && (
-                    <span className='label-mono mt-1 block text-research'>
-                      RESEARCH — {cap.research.join(' · ')}
-                    </span>
-                  )}
-                  <span className='label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1'>
-                    LEARN MORE →
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={100}>
+            <div className='mt-12'>
+              <ServiceStudio />
+            </div>
+          </Reveal>
         </div>
       </section>
 

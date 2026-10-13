@@ -54,7 +54,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
       </Reveal>
 
       <Reveal delay={80}>
-        <p className="label-mono mt-4 text-faint">
+        <p className="label-mono mt-4 text-faint" aria-live="polite">
           {filtered.length} OF {projects.length} BUILDS — {active === "ALL" ? "ALL PROJECTS" : `${active} ONLY`}
         </p>
       </Reveal>
@@ -77,11 +77,11 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
         </Reveal>
       )}
 
-      {/* ---- archive grid ---- */}
-      <div className="mt-10 grid gap-px bg-line lg:grid-cols-2">
+      {/* ---- archive grid — remounts on filter change so cards re-reveal smoothly ---- */}
+      <div key={active} className="mt-10 grid gap-px bg-line lg:grid-cols-2">
         {filtered.map((p, i) => (
           <Reveal key={p.id} delay={Math.min(i, 3) * 90}>
-            <article className="flex h-full flex-col bg-background p-6 md:p-8">
+            <article className="card-depth flex h-full flex-col border border-transparent bg-background p-6 md:p-8">
               <div className="flex items-baseline justify-between gap-4">
                 <span className="num-mono text-4xl font-semibold text-line-strong md:text-5xl">
                   {p.index}
@@ -95,7 +95,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
                 </div>
               </div>
 
-              <div className="mt-6 h-36 w-full border border-line bg-surface md:h-40">
+              <div className="viz-frame mt-6 h-36 w-full md:h-40">
                 <ProjectMark id={p.id} />
               </div>
 

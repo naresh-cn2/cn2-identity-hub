@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import { ResearchArtifact } from "@/components/research/research-visual-artifacts";
+import { MethodChainRail } from "@/components/research/method-chain";
 import { researchEntries } from "@/data/research";
+import { capabilities } from "@/data/capabilities";
 import { getArchiveProject } from "@/data/archive";
 import { site } from "@/data/site";
 
@@ -53,6 +55,7 @@ export default async function ResearchEntryPage({
   const prev = researchEntries[index - 1];
   const next = researchEntries[index + 1];
   const build = entry.relatedProject ? getArchiveProject(entry.relatedProject) : undefined;
+  const relatedCaps = capabilities.filter((c) => c.research.includes(entry.id));
 
   const statusStyle =
     entry.status === "VERIFIED"
@@ -171,8 +174,15 @@ export default async function ResearchEntryPage({
             )}
           </div>
 
-          {/* ---- side rail: artifact + metadata ---- */}
+          {/* ---- side rail: method chain + artifact + metadata ---- */}
           <aside className="min-w-0 space-y-8">
+            <Reveal delay={100}>
+              <div className="border border-line bg-surface p-5">
+                <p className="label-mono mb-4 text-faint">METHOD CHAIN — {entry.status}</p>
+                <MethodChainRail entry={entry} />
+              </div>
+            </Reveal>
+
             <Reveal delay={140}>
               <div className="border border-line bg-surface p-5">
                 <p className="label-mono mb-4 text-research">GENERATIVE ARTIFACT</p>
@@ -203,6 +213,26 @@ export default async function ResearchEntryPage({
                 </dl>
               </div>
             </Reveal>
+
+            {relatedCaps.length > 0 && (
+              <Reveal delay={230}>
+                <div className="border border-line bg-surface p-5">
+                  <p className="label-mono mb-4 text-faint">COVERED IN CAPABILITIES</p>
+                  <ul className="space-y-3">
+                    {relatedCaps.map((cap) => (
+                      <li key={cap.id}>
+                        <Link href="/capabilities" className="group block">
+                          <span className="label-mono text-foreground transition-colors group-hover:text-research">
+                            {cap.name} →
+                          </span>
+                          <span className="label-mono mt-1 block text-[10px] text-research">{cap.domain}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            )}
 
             <Reveal delay={260}>
               <div className="border border-line bg-surface p-5">
@@ -249,6 +279,18 @@ export default async function ResearchEntryPage({
               className="link-line label-mono text-xs text-muted hover:text-signal"
             >
               THE BUILDS BEHIND IT →
+            </Link>
+            <Link
+              href="/capabilities"
+              className="link-line label-mono text-xs text-muted hover:text-signal"
+            >
+              CAPABILITIES →
+            </Link>
+            <Link
+              href="/lab"
+              className="link-line label-mono text-xs text-muted hover:text-signal"
+            >
+              RUN THE INSTRUMENTS →
             </Link>
           </div>
         </div>

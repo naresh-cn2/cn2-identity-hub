@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/ui/reveal";
-import { getService, getCapability, serviceSlugs } from "@/data/services";
-import { getArchiveProject } from "@/data/archive";
-import { researchEntries } from "@/data/research";
+import { getServiceBundle, serviceSlugs } from "@/data/services";
+import { ServiceSchematic } from "@/components/services/service-schematics";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
@@ -17,8 +16,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
-  if (!service) return { title: "Service not found" };
+  const bundle = getServiceBundle(slug);
+  if (!bundle) return { title: "Service not found" };
+  const { service } = bundle;
 
   return {
     title: `${service.promise.split(".")[0]} — Services`,
@@ -62,14 +62,9 @@ function Block({
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = getService(slug);
-  const capability = getCapability(slug);
-  if (!service || !capability) notFound();
-
-  const projects = capability.projects
-    .map((id) => getArchiveProject(id))
-    .filter((p): p is NonNullable<typeof p> => Boolean(p));
-  const research = researchEntries.filter((r) => capability.research.includes(r.id));
+  const bundle = getServiceBundle(slug);
+  if (!bundle) notFound();
+  const { service, capability, category, projects, research } = bundle;
 
   return (
     <>
@@ -100,12 +95,12 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </Reveal>
           <Reveal delay={260}>
             <div className="mt-10 flex flex-wrap gap-4">
-              <a
-                href={site.links.email}
+              <Link
+                href="/contact"
                 className="label-mono border border-line-strong bg-surface px-6 py-4 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
                 ENQUIRE ABOUT THIS SERVICE →
-              </a>
+              </Link>
               <Link
                 href="/opportunities/freelance"
                 className="label-mono border border-line px-6 py-4 text-muted transition-colors hover:border-line-strong hover:text-foreground"
@@ -149,13 +144,24 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </p>
           </Reveal>
           <Reveal delay={100}>
-            <div className="mt-8 corner-ticks border border-line bg-surface p-6 md:p-8">
-              <p className="label-mono text-faint">METHODS</p>
-              <p className="mt-3 text-base leading-relaxed text-foreground">
-                {capability.technologies.join(" · ")}
-              </p>
-              <p className="label-mono mt-6 text-faint">EVIDENCE</p>
-              <p className="mt-3 text-base leading-relaxed text-muted">{capability.evidence}</p>
+            <div className="mt-8 grid gap-8 md:grid-cols-2">
+              <div className="viz-frame corner-ticks max-w-[520px] p-6 md:p-8">
+                <p className="label-mono text-faint">SCHEMATIC · {category.label}</p>
+                <div className="mt-4">
+                  <ServiceSchematic
+                    schematic={category.schematic}
+                    illustrative={category.illustrative}
+                  />
+                </div>
+              </div>
+              <div className="corner-ticks border border-line bg-surface p-6 md:p-8">
+                <p className="label-mono text-faint">METHODS</p>
+                <p className="mt-3 text-base leading-relaxed text-foreground">
+                  {capability.technologies.join(" · ")}
+                </p>
+                <p className="label-mono mt-6 text-faint">EVIDENCE</p>
+                <p className="mt-3 text-base leading-relaxed text-muted">{capability.evidence}</p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -281,7 +287,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 href={site.links.email}
                 className="label-mono border border-line px-6 py-4 text-muted transition-colors hover:border-line-strong hover:text-foreground"
               >
-                ENQUIRE →
+                EMAIL DIRECTLY →
               </a>
             </div>
           </Reveal>

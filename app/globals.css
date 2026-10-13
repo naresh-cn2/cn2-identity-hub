@@ -854,6 +854,119 @@ h1.cn2-brand-word {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ---------------------------------------------------------------
+   VISUAL EXPERIENCE SYSTEM — the cinematic layer shared by every
+   destination page. Page-specific diagrams sit inside `.viz-frame`,
+   panels gain depth under `.card-depth`, timelines connect through
+   the dash rules, and the ambient helpers below drive slow motion.
+   Everything is token-driven, so both themes are designed — and
+   the reduced-motion block freezes all of it automatically.
+---------------------------------------------------------------- */
+
+/* framed technical visual — hosts each page's hero diagram.
+   Fine engineering grid + top-lit research glow are baked in;
+   stack content in a relative wrapper above them. */
+.viz-frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background-color: var(--surface);
+  background-image:
+    radial-gradient(130% 100% at 50% -10%, var(--research-soft), transparent 58%),
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: auto, 24px 24px, 24px 24px;
+}
+
+/* interactive panel depth — lift, edge light, and a single
+   restrained shadow. Pair with real links/buttons only. */
+.card-depth {
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 300ms ease,
+    background-color 300ms ease;
+}
+.card-depth:hover,
+.card-depth:focus-visible,
+.card-depth:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  box-shadow:
+    0 24px 48px -28px rgb(0 0 0 / 0.55),
+    inset 0 0 0 1px var(--signal-soft);
+}
+
+/* dashed connectors for timelines, pipelines, and pathways */
+.dash-rule-h {
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--line-strong) 0 6px,
+    transparent 6px 14px
+  );
+}
+.dash-rule-v {
+  width: 1px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--line-strong) 0 6px,
+    transparent 6px 14px
+  );
+}
+
+/* ambient motion helpers — SVG/CSS diagrams only.
+   Overridden to 0.01ms by the reduced-motion block below. */
+@keyframes cn2-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes cn2-drift-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes cn2-spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes cn2-blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+@keyframes cn2-sweep {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(330%); }
+}
+@keyframes cn2-ring {
+  0% { transform: scale(0.7); opacity: 0.85; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes cn2-march {
+  to { stroke-dashoffset: -48; }
+}
+@keyframes cn2-breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.95; }
+}
+
+.anim-float { animation: cn2-float 7s ease-in-out infinite; }
+.anim-spin-slow { animation: cn2-spin-slow 64s linear infinite; }
+.anim-blink { animation: cn2-blink 2.4s ease-in-out infinite; }
+.anim-sweep { animation: cn2-sweep 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.anim-ring { animation: cn2-ring 2.8s ease-out infinite; }
+.anim-breathe { animation: cn2-breathe 5s ease-in-out infinite; }
+/* marching dashes — requires stroke-dasharray on the element */
+.dash-march { animation: cn2-march 2.6s linear infinite; }
+/* seamless horizontal loop — duplicate content to cover 200% width */
+.drift-x { animation: cn2-drift-x 42s linear infinite; }
+/* travelling signal dot along an SVG path — element must carry
+   stroke-dasharray="0.1 100" and stroke-linecap="round"; the -100
+   offset matches the dash period, so the loop is seamless */
+@keyframes cn2-travel {
+  to { stroke-dashoffset: -100; }
+}
+.travel-pulse { animation: cn2-travel 3.4s linear infinite; }
+
 /* ---------------- reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
   html {

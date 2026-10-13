@@ -80,7 +80,7 @@ export default function RiskCalculator() {
   return (
     <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
       {/* inputs */}
-      <fieldset className="border border-line bg-surface p-6">
+      <fieldset className="card-depth border border-line bg-surface p-6">
         <legend className="label-mono mb-6 text-faint">INPUTS</legend>
         <div className="space-y-6">
           {FIELDS.map((f) => (
@@ -110,22 +110,27 @@ export default function RiskCalculator() {
 
       {/* outputs + geometry visualization */}
       <div className="flex flex-col gap-6">
-        <div className="border border-line bg-surface p-6 flex-1">
-          <p className="label-mono mb-6 text-faint">R:R GEOMETRY</p>
-          <div className="h-64 w-full relative">
-            <RiskGeometry
-              entry={inputs.entry}
-              stop={inputs.stop}
-              target={inputs.target}
-              valid={out.valid}
-              rr={out.valid ? out.rr : 0}
-              riskDistance={out.valid ? out.stopDistance : 0}
-              rewardDistance={out.valid ? Math.abs(inputs.target - inputs.entry) : 0}
-            />
+        <div className="viz-frame flex-1 p-4 md:p-5">
+          <div className="relative z-10">
+            <p className="label-mono mb-4 text-faint">R:R GEOMETRY</p>
+            <div className="h-64 w-full relative">
+              <RiskGeometry
+                entry={inputs.entry}
+                stop={inputs.stop}
+                target={inputs.target}
+                valid={out.valid}
+                rr={out.valid ? out.rr : 0}
+                riskDistance={out.valid ? out.stopDistance : 0}
+                rewardDistance={out.valid ? Math.abs(inputs.target - inputs.entry) : 0}
+              />
+            </div>
+            <p className="label-mono mt-3 text-[10px] text-faint">
+              LEVELS DERIVED FROM INPUTS · BANDS — RISK (RED) vs REWARD
+            </p>
           </div>
         </div>
 
-        <div className="border border-line bg-surface p-6">
+        <div className="card-depth border border-line bg-surface p-6">
           <p className="label-mono mb-6 text-faint">OUTPUTS</p>
           {!out.valid ? (
             <div className="border border-signal bg-surface p-6">

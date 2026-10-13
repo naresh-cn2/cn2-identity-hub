@@ -14,7 +14,7 @@ export default function InteractiveLab({ project }: { project: FlagshipProject }
     case "apex-quant-engine":
       return (
         <div className="space-y-10">
-          <div className="border border-line bg-surface p-4 md:p-6">
+          <div className="viz-frame p-4 md:p-6">
             <p className="label-mono mb-4 text-faint">
               EQUITY CURVE + DRAWDOWN — SEEDED ILLUSTRATION OF THE MASTER-FUND BACKTEST SHAPE
             </p>
@@ -24,7 +24,7 @@ export default function InteractiveLab({ project }: { project: FlagshipProject }
               summary="Seeded illustrative equity curve of the Apex master-fund backtest shape ending at plus 570.18 percent net simulated ROI, with a normalized drawdown subplot beneath."
             />
           </div>
-          <div className="border border-line bg-surface p-4 md:p-6">
+          <div className="viz-frame p-4 md:p-6">
             <p className="label-mono mb-4 text-faint">
               R-MULTIPLE DISTRIBUTION — SEEDED ILLUSTRATION OF THE TRADE POPULATION SHAPE
             </p>
@@ -40,7 +40,7 @@ export default function InteractiveLab({ project }: { project: FlagshipProject }
     case "automated-trading-os":
       return (
         <div className="space-y-10">
-          <div className="border border-line bg-surface p-4 md:p-6">
+          <div className="viz-frame p-4 md:p-6">
             <p className="label-mono mb-4 text-faint">
               TRADE DISTRIBUTION — SEEDED ILLUSTRATION UNDER THE 1:4 R:R FLOOR
             </p>
@@ -50,7 +50,7 @@ export default function InteractiveLab({ project }: { project: FlagshipProject }
               summary="Seeded illustrative distribution of trade R-multiples shaped by the structural one-to-four minimum reward-to-risk floor. Losers truncate near minus one R; runners concentrate between three and nine R."
             />
           </div>
-          <div className="border border-line bg-surface p-4 md:p-6">
+          <div className="viz-frame p-4 md:p-6">
             <p className="label-mono mb-4 text-faint">
               EQUITY SHAPE — SEEDED ILLUSTRATION OF A RISK-CAPPED PIPELINE
             </p>
@@ -65,7 +65,7 @@ export default function InteractiveLab({ project }: { project: FlagshipProject }
 
     case "market-data-replay":
       return (
-        <div className="border border-line bg-surface p-4 md:p-6">
+        <div className="viz-frame p-4 md:p-6">
           <p className="label-mono mb-4 text-faint">
             POINT-IN-TIME PREVIEW — SCRUB THE TIMESTAMP, WATCH THE INFORMATION BOUNDARY
           </p>
@@ -75,7 +75,7 @@ export default function InteractiveLab({ project }: { project: FlagshipProject }
 
     case "qrsip":
       return (
-        <div className="border border-line bg-surface p-4 md:p-6">
+        <div className="viz-frame p-4 md:p-6">
           <p className="label-mono mb-4 text-faint">
             EXPERIMENT POPULATION — SEEDED ILLUSTRATION OF VERIFIED VS ONGOING RUNS
           </p>

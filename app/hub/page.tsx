@@ -3,6 +3,8 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import HubDeck from "@/components/hub/hub-deck";
+import StatusReadout from "@/components/hub/status-readout";
+import SystemMap from "@/components/hub/system-map";
 import { hubDestinations, hubIndex, hubStatus } from "@/data/hub";
 import { researchEntries } from "@/data/research";
 import { site } from "@/data/site";
@@ -18,41 +20,6 @@ export const metadata: Metadata = {
       "One indexed gateway to everything inside CN2.DEV: builds, credentials, services, laboratory, research, opportunities and contact.",
   },
 };
-
-/** Live status readout — every figure is computed from the archive data files. */
-function StatusReadout() {
-  const rows = [
-    { k: "STATUS", v: site.status, accent: true },
-    { k: "FLAGSHIP SYSTEMS", v: `${hubStatus.flagship.length} — FULL EVIDENCE CASE STUDY` },
-    { k: "CASE STUDIES", v: String(hubStatus.caseStudies).padStart(2, "0") },
-    { k: "RESEARCH ENTRIES", v: `${hubStatus.research} · ${hubStatus.ongoingResearch} ONGOING` },
-    { k: "ARTICLES", v: String(hubStatus.articles).padStart(2, "0") },
-    { k: "LAB MODULES", v: `${hubStatus.lab} OPERATIONAL` },
-    { k: "SERVICES", v: String(hubStatus.services).padStart(2, "0") },
-    { k: "SELF-DIRECTED TRACKS", v: `${hubStatus.studyTracks} ACTIVE` },
-  ];
-
-  return (
-    <div className="corner-ticks border border-line bg-surface/60 p-5 backdrop-blur-sm md:p-6">
-      <div className="flex items-center gap-2.5 border-b border-line pb-3">
-        <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
-        <p className="label-mono text-foreground">SYSTEM READOUT</p>
-      </div>
-      <dl className="mt-4 space-y-2.5">
-        {rows.map((r) => (
-          <div key={r.k} className="flex items-baseline justify-between gap-4">
-            <dt className="label-mono text-[9px] text-muted">{r.k}</dt>
-            <dd
-              className={`num-mono text-right text-[10px] ${r.accent ? "text-signal" : "text-muted"}`}
-            >
-              {r.v}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  );
-}
 
 export default function HubPage() {
   const recentResearch = researchEntries.slice(0, 3);
@@ -106,6 +73,24 @@ export default function HubPage() {
               <StatusReadout />
             </Reveal>
           </div>
+        </div>
+
+        {/* ---- system map — the visual bridge into the destinations ---- */}
+        <div className="mx-auto max-w-[1440px] px-5 pb-14 sm:px-8 md:pb-16">
+          <Reveal delay={120}>
+            <div className="viz-frame p-4 md:p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-3 pb-4 md:pb-5">
+                <p className="label-mono text-muted">
+                  SYSTEM MAP <span className="text-signal">/</span> {hubDestinations.length} LIVE
+                  DESTINATIONS
+                </p>
+                <p className="label-mono hidden text-faint sm:block">
+                  SELECT A NODE TO OPEN ITS SECTION
+                </p>
+              </div>
+              <SystemMap destinations={hubDestinations} />
+            </div>
+          </Reveal>
         </div>
       </header>
 

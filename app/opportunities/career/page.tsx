@@ -4,6 +4,7 @@ import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import { career } from "@/data/career";
 import { studyTracks } from "@/data/certifications";
+import { RecordSpine } from "@/components/opportunities/pathway-visuals";
 
 export const metadata: Metadata = {
   title: "Career — Employment Opportunities",
@@ -22,7 +23,7 @@ export default function CareerPage() {
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="orbit" />
+        <PageAtmosphere variant="pathways" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -40,11 +41,21 @@ export default function CareerPage() {
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              I&apos;m seeking roles in quantitative development, systematic trading research,
-              market-data infrastructure, and risk engineering. Below is my study record, the
-              systems I&apos;ve built, and a print-ready CV.
-            </p>
+            <div className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                I&apos;m seeking roles in quantitative development, systematic trading research,
+                market-data infrastructure, and risk engineering. Below is my study record, the
+                systems I&apos;ve built, and a print-ready CV.
+              </p>
+              <div className="viz-frame p-4 md:p-6">
+                <div className="relative z-10">
+                  <RecordSpine />
+                  <p className="label-mono mt-3 border-t border-line pt-3 text-[10px] text-faint">
+                    CAREER PATH — STUDY, SYSTEMS, RECORD.
+                  </p>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </header>
@@ -134,7 +145,7 @@ export default function CareerPage() {
             <h2 className="display mt-4 text-3xl md:text-5xl">PRINT-READY RECORD</h2>
           </Reveal>
           <Reveal delay={120}>
-            <div className="mt-8 corner-ticks border border-line bg-surface p-6 md:p-10">
+            <div className="card-depth mt-8 corner-ticks border border-line bg-surface p-6 md:p-10">
               <p className="text-base leading-relaxed text-muted md:text-lg">
                 The full record — capability, work and study — in a print-ready format.
               </p>

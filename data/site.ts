@@ -16,6 +16,8 @@ export const site = {
     github: "https://github.com/naresh-cn2",
     linkedin: "https://www.linkedin.com/in/bukya-naresh-cn2",
     email: "mailto:bukyanaresh2003@gmail.com",
+    phone: "tel:+919490004978",
+    whatsapp: "https://wa.me/919490004978",
   },
   repos: {
     apex: "https://github.com/naresh-cn2/apex-quant-engine",

@@ -3,6 +3,7 @@ import type { FlagshipProject } from "@/data/projects";
 import Reveal from "@/components/ui/reveal";
 import Metric from "@/components/ui/metric";
 import ArchFlow from "@/components/viz/arch-flow";
+import ArchSchematic from "./arch-schematic";
 import ProjectMark from "./project-mark";
 import FlagshipInstrument from "./flagship-instrument";
 
@@ -161,8 +162,11 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                         </SpecRow>
 
                         <SpecRow label="ARCHITECTURE">
-                            <div className="max-w-4xl">
-                                <ArchFlow steps={project.architecture} compact />
+                            <div className="space-y-8">
+                                <ArchSchematic steps={project.architecture} />
+                                <div className="max-w-4xl">
+                                    <ArchFlow steps={project.architecture} compact />
+                                </div>
                             </div>
                         </SpecRow>
 
@@ -210,7 +214,7 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                                 <Reveal key={mod.title} delay={i * 80}>
                                     <Link
                                         href={mod.href}
-                                        className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
+                                        className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface"
                                     >
                                         <p className="label-mono text-foreground transition-colors group-hover:text-signal">
                                             {mod.title} <span aria-hidden="true">→</span>

@@ -4,6 +4,7 @@ import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import { engagementAreas } from "@/data/lab";
 import { labModules } from "@/data/lab";
+import { ScopeFlow } from "@/components/opportunities/pathway-visuals";
 
 export const metadata: Metadata = {
   title: "Freelance & Contracts",
@@ -22,7 +23,7 @@ export default function FreelancePage() {
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="orbit" />
+        <PageAtmosphere variant="pathways" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -40,12 +41,22 @@ export default function FreelancePage() {
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              I&apos;m available for defined-scope technical projects: research prototypes,
-              market-data tooling, quantitative analysis systems, and automation workflows.
-              Every engagement ends with working software, reproducible artifacts, and written
-              limitations.
-            </p>
+            <div className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                I&apos;m available for defined-scope technical projects: research prototypes,
+                market-data tooling, quantitative analysis systems, and automation workflows.
+                Every engagement ends with working software, reproducible artifacts, and written
+                limitations.
+              </p>
+              <div className="viz-frame p-4 md:p-6">
+                <div className="relative z-10">
+                  <ScopeFlow />
+                  <p className="label-mono mt-3 border-t border-line pt-3 text-[10px] text-faint">
+                    ENGAGEMENT FLOW — PROBLEM → BUILD → ARTIFACT.
+                  </p>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </header>
@@ -161,12 +172,12 @@ export default function FreelancePage() {
               The same instruments that power the research — available as part of the engagement.
             </p>
           </Reveal>
-          <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
             {labModules.map((m, i) => (
               <Reveal key={m.id} delay={i * 60}>
                 <Link
                   href={m.href}
-                  className="group flex h-full flex-col bg-background p-4 transition-colors hover:bg-surface"
+                  className="card-depth group flex h-full flex-col border border-line bg-background p-4"
                 >
                   <span className="label-mono text-faint">LAB / {m.code}</span>
                   <span className="display mt-2 text-lg md:text-xl">{m.name}</span>

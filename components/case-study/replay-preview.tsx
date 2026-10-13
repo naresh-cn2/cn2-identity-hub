@@ -30,7 +30,7 @@ export default function ReplayPreview() {
         role="img"
         aria-label={`Point-in-time replay view at index ${t}. Candles up to index ${t} are visible; later candles are future-dated and ghosted.`}
       >
-        <title>Point-in-time replay — information boundary at t = {t}</title>
+        <title>{`Point-in-time replay — information boundary at t = ${t}`}</title>
         {/* boundary line */}
         <line
           x1={(t + 0.5) * bw}

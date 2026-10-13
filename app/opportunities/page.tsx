@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import { site } from "@/data/site";
+import PathwayMap from "@/components/opportunities/pathway-map";
 
 export const metadata: Metadata = {
   title: "Opportunities",
@@ -16,6 +17,11 @@ export const metadata: Metadata = {
   },
 };
 
+interface EvidenceLink {
+  label: string;
+  href: string;
+}
+
 const PATHWAYS = [
   {
     code: "01",
@@ -25,6 +31,11 @@ const PATHWAYS = [
     description:
       "Seeking roles in quantitative development, systematic trading research, market-data infrastructure, and risk engineering. This page covers my education, study, projects, experience and CV.",
     status: "ACTIVE",
+    evidence: [
+      { label: "CV", href: "/cv" },
+      { label: "CAPABILITIES", href: "/capabilities" },
+      { label: "BUILDS", href: "/builds" },
+    ] satisfies EvidenceLink[],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <path d="M21 12V7H5a2 2 0 0 1 0-4h14a2 2 0 0 1 2 2v5" />
@@ -41,6 +52,11 @@ const PATHWAYS = [
     description:
       "Available for defined-scope technical projects: research prototypes, market-data tooling, quantitative analysis systems, and automation workflows. Each engagement ends with working software, reproducible artifacts, and written limitations.",
     status: "AVAILABLE",
+    evidence: [
+      { label: "SERVICES", href: "/services" },
+      { label: "LAB INSTRUMENTS", href: "/lab" },
+      { label: "CASE STUDIES", href: "/case-studies" },
+    ] satisfies EvidenceLink[],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <rect x="2" y="3" width="20" height="14" rx="2" />
@@ -57,6 +73,11 @@ const PATHWAYS = [
     description:
       "Open to research collaboration on market structure, backtesting, data integrity, risk engineering, and quantitative methods — with collaborators who value reproducible results and transparent methodology.",
     status: "OPEN",
+    evidence: [
+      { label: "RESEARCH", href: "/research" },
+      { label: "EXPERIMENTS", href: "/lab/experiments" },
+      { label: "PROOF", href: "/proof" },
+    ] satisfies EvidenceLink[],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -74,20 +95,25 @@ const PATHWAYS = [
     description:
       "Technical partnerships and product opportunities where quantitative systems and research tooling are central. I work independently and take on partnerships selectively.",
     status: "SELECTIVE",
+    evidence: [
+      { label: "BUILDS", href: "/builds" },
+      { label: "CASE STUDIES", href: "/case-studies" },
+      { label: "ABOUT", href: "/about" },
+    ] satisfies EvidenceLink[],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       </svg>
     ),
   },
-];
+] as const;
 
 export default function OpportunitiesPage() {
   return (
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="orbit" />
+        <PageAtmosphere variant="pathways" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -100,12 +126,26 @@ export default function OpportunitiesPage() {
           <Reveal delay={100}>
             <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">OPEN TO MEANINGFUL WORK.</h1>
           </Reveal>
-          <Reveal delay={200}>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              I&apos;m interested in opportunities where quantitative thinking, software,
-              data, and intelligent automation can contribute to meaningful technical work.
-            </p>
-          </Reveal>
+          <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center">
+            <Reveal delay={200}>
+              <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                I&apos;m interested in opportunities where quantitative thinking, software,
+                data, and intelligent automation can contribute to meaningful technical work.
+              </p>
+            </Reveal>
+            <Reveal delay={280}>
+              <div className="viz-frame p-4 md:p-6">
+                <div className="relative z-10">
+                  <PathwayMap
+                    pathways={PATHWAYS.map((p) => ({ code: p.code, label: p.label, status: p.status }))}
+                  />
+                  <p className="label-mono mt-3 border-t border-line pt-3 text-[10px] text-faint">
+                    PATHWAY MAP — FOUR ROUTES, ONE STANDARD OF EVIDENCE.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </header>
 
@@ -117,13 +157,10 @@ export default function OpportunitiesPage() {
               <p className="label-mono text-faint">SELECT THE ONE THAT MATCHES YOUR NEED</p>
             </div>
           </Reveal>
-          <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {PATHWAYS.map((p, i) => (
               <Reveal key={p.code} delay={i * 80}>
-                <Link
-                  href={p.href}
-                  className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
-                >
+                <article className="card-depth group flex h-full flex-col border border-line bg-background p-6 md:p-8">
                   <div className="flex items-baseline justify-between">
                     <span className="label-mono text-faint">PATH / {p.code}</span>
                     <span className="label-mono flex items-center gap-2 text-foreground">
@@ -131,15 +168,33 @@ export default function OpportunitiesPage() {
                       {p.status}
                     </span>
                   </div>
-                  <span className="display mt-6 block text-xl md:text-2xl">{p.label}</span>
-                  <span className="mt-4 block flex-1 text-base leading-relaxed text-muted">
-                    {p.title}
+                  <span className="mt-6 block text-muted transition-colors duration-300 group-hover:text-signal" aria-hidden="true">
+                    {p.icon}
                   </span>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{p.description}</p>
-                  <span className="label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1">
+                  <h3 className="display mt-4 text-xl md:text-2xl">{p.label}</h3>
+                  <p className="label-mono mt-3 text-[10px] text-foreground">{p.title}</p>
+                  <p className="mt-4 block flex-1 text-base leading-relaxed text-muted">{p.description}</p>
+                  <div className="mt-6 border-t border-line pt-4">
+                    <p className="label-mono text-[10px] text-faint">EVIDENCE</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {p.evidence.map((e) => (
+                        <Link
+                          key={e.href}
+                          href={e.href}
+                          className="label-mono border border-line px-2 py-1 text-[10px] text-muted transition-colors hover:border-signal hover:text-signal"
+                        >
+                          {e.label} →
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  <Link
+                    href={p.href}
+                    className="label-mono mt-6 text-signal transition-transform duration-300 group-hover:translate-x-1"
+                  >
                     OPEN PATHWAY →
-                  </span>
-                </Link>
+                  </Link>
+                </article>
               </Reveal>
             ))}
           </div>

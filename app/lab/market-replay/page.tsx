@@ -16,8 +16,10 @@ export const metadata: Metadata = {
 export default function MarketReplayLabPage() {
   return (
     <>
-      <LabShell code={mod.code} name={mod.name} description={mod.description} inputs={mod.inputs} outputs={mod.outputs}>
-        <ReplayPreview />
+      <LabShell code={mod.code} name={mod.name} description={mod.description} inputs={mod.inputs} outputs={mod.outputs} status={mod.status}>
+        <div className="card-depth border border-line bg-background p-4 md:p-6">
+          <ReplayPreview />
+        </div>
       </LabShell>
 
       {/* lookahead vs point-in-time educational split */}

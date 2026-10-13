@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ExperimentsLabPage() {
   return (
-    <LabShell code={mod.code} name={mod.name} description={mod.description} inputs={mod.inputs} outputs={mod.outputs}>
+    <LabShell code={mod.code} name={mod.name} description={mod.description} inputs={mod.inputs} outputs={mod.outputs} status={mod.status}>
       <ExperimentExplorer />
     </LabShell>
   );

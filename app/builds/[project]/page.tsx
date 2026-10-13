@@ -78,7 +78,7 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
                 <Reveal key={r.id} delay={i * 80}>
                   <Link
                     href={`/research/${r.id}`}
-                    className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
+                    className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface md:p-8"
                   >
                     <p className="label-mono text-faint">{r.category}</p>
                     <h3 className="display mt-3 text-xl md:text-2xl">{r.title}</h3>

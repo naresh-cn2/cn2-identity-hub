@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import ChainVisual from "@/components/case-study/chain-visual";
+import ProjectMark from "@/components/builds/project-mark";
 import { caseStudies } from "@/data/case-studies";
 import { site } from "@/data/site";
 
@@ -23,6 +25,7 @@ export default function CaseStudiesPage() {
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
         <PageAtmosphere variant="field" />
+        <ChainVisual />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -104,7 +107,7 @@ export default function CaseStudiesPage() {
               <Reveal key={study.id} delay={Math.min(i, 3) * 80}>
                 <Link
                   href={`/case-studies/${study.id}`}
-                  className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
+                  className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface md:p-8"
                 >
                   <div className="flex items-baseline justify-between">
                     <span className="label-mono text-faint">STUDY / {study.index}</span>
@@ -113,6 +116,9 @@ export default function CaseStudiesPage() {
                       {study.status}
                     </span>
                   </div>
+                  <span className="viz-frame mt-5 block h-24 w-full md:h-28" aria-hidden="true">
+                    <ProjectMark id={study.id} />
+                  </span>
                   <span className="display mt-6 block text-xl md:text-2xl">{study.title}</span>
                   <span className="mt-4 block flex-1 text-base leading-relaxed text-muted">
                     {study.thesis}

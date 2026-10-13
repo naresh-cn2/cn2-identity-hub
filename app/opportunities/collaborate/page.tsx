@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import { researchEntries } from "@/data/research";
+import { ResearchConvergence } from "@/components/opportunities/pathway-visuals";
 
 export const metadata: Metadata = {
   title: "Research Collaboration",
@@ -44,12 +45,28 @@ const COLLAB_THEMES = [
   },
 ];
 
+const BUILD_IDS = ["apex-quant-engine", "automated-trading-os", "market-data-replay", "qrsip"];
+
+/** Resolve a related-systems slug to its real destination; null keeps a plain chip. */
+function relatedHref(slug: string): { href: string; external: boolean } | null {
+  if (slug === "quant-market-data-replay") {
+    return { href: "https://github.com/naresh-cn2/quant-market-data-replay", external: true };
+  }
+  if (slug === "research" || slug === "articles") {
+    return { href: `/${slug}`, external: false };
+  }
+  if (BUILD_IDS.includes(slug)) {
+    return { href: `/builds/${slug}`, external: false };
+  }
+  return null;
+}
+
 export default function CollaboratePage() {
   return (
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="orbit" />
+        <PageAtmosphere variant="pathways" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -67,11 +84,21 @@ export default function CollaboratePage() {
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              I&apos;m open to research collaboration on market structure, backtesting, data
-              integrity, risk engineering, and quantitative methods — work where the question
-              is registered up front and the methodology stays transparent.
-            </p>
+            <div className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                I&apos;m open to research collaboration on market structure, backtesting, data
+                integrity, risk engineering, and quantitative methods — work where the question
+                is registered up front and the methodology stays transparent.
+              </p>
+              <div className="viz-frame p-4 md:p-6">
+                <div className="relative z-10">
+                  <ResearchConvergence />
+                  <p className="label-mono mt-3 border-t border-line pt-3 text-[10px] text-faint">
+                    COLLABORATION MODEL — REGISTERED QUESTIONS, SHOWN METHOD.
+                  </p>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </header>
@@ -88,16 +115,32 @@ export default function CollaboratePage() {
           <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
             {COLLAB_THEMES.map((theme, i) => (
               <Reveal key={theme.title} delay={Math.min(i, 3) * 80}>
-                <div className="corner-ticks h-full bg-background p-6 md:p-8">
+                <div className="card-depth corner-ticks h-full border border-line bg-background p-6 md:p-8">
                   <span className="num-mono text-xs text-research">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="display mt-4 text-xl md:text-2xl">{theme.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{theme.focus}</p>
                   <div className="mt-6 flex flex-wrap gap-2">
-                    {theme.related.map((r) => (
-                      <span key={r} className="label-mono border border-line px-2 py-1 text-[10px] text-muted">
-                        {r.toUpperCase()}
-                      </span>
-                    ))}
+                    {theme.related.map((r) => {
+                      const link = relatedHref(r);
+                      if (!link) {
+                        return (
+                          <span key={r} className="label-mono border border-line px-2 py-1 text-[10px] text-muted">
+                            {r.toUpperCase()}
+                          </span>
+                        );
+                      }
+                      const cls =
+                        "label-mono border border-line px-2 py-1 text-[10px] text-muted transition-colors hover:border-research hover:text-research";
+                      return link.external ? (
+                        <a key={r} href={link.href} target="_blank" rel="noopener noreferrer" className={cls}>
+                          {r.toUpperCase()} ↗
+                        </a>
+                      ) : (
+                        <Link key={r} href={link.href} className={cls}>
+                          {r.toUpperCase()} →
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               </Reveal>

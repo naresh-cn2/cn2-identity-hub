@@ -3,7 +3,10 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ResearchArchive from "@/components/research/research-archive";
-import { researchCategories, researchEntries } from "@/data/research";
+import ResearchLattice from "@/components/research/research-lattice";
+import { MethodChainStrip } from "@/components/research/method-chain";
+import { researchEntries } from "@/data/research";
+import { getArchiveProject } from "@/data/archive";
 import { flagshipProjects } from "@/data/projects";
 import { site } from "@/data/site";
 
@@ -72,12 +75,16 @@ function MethodSpine() {
 export default function ResearchPage() {
   const ongoing = researchEntries.filter((e) => e.status === "ONGOING").length;
   const verified = researchEntries.filter((e) => e.status === "VERIFIED").length;
+  const featured = researchEntries[0];
+  const featuredBuild = featured.relatedProject
+    ? getArchiveProject(featured.relatedProject)
+    : undefined;
 
   return (
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="orbit" />
+        <PageAtmosphere variant="lattice" />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -89,24 +96,110 @@ export default function ResearchPage() {
               </p>
             </div>
           </Reveal>
-          <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">QUESTIONS INTO EVIDENCE.</h1>
-          </Reveal>
-          <Reveal delay={200}>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              I investigate how markets, quantitative methods, data and software systems interact.
-              Every entry follows the same spine — question, hypothesis, method, evidence, result,
-              limitation and conclusion — including the ones still in progress and the ones whose
-              answer is a limitation rather than a finding.
-            </p>
-          </Reveal>
-          <Reveal delay={280}>
-            <div className="mt-12">
+
+          <div className="mt-8 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:gap-16">
+            <div>
+              <Reveal delay={100}>
+                <h1 className="display text-[clamp(3rem,10vw,8rem)]">QUESTIONS INTO EVIDENCE.</h1>
+              </Reveal>
+              <Reveal delay={200}>
+                <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                  I investigate how markets, quantitative methods, data and software systems
+                  interact. Every entry follows the same spine — question, hypothesis, method,
+                  evidence, result, limitation and conclusion — including the ones still in progress
+                  and the ones whose answer is a limitation rather than a finding.
+                </p>
+              </Reveal>
+            </div>
+            <Reveal delay={240}>
+              <div className="viz-frame p-4">
+                <ResearchLattice />
+                <p className="label-mono mt-3 text-center text-[10px] text-faint">
+                  RESEARCH LATTICE
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={300}>
+            <div className="mt-14 max-w-5xl">
               <MethodSpine />
             </div>
           </Reveal>
         </div>
       </header>
+
+      {/* ---- featured investigation ---- */}
+      <section aria-label="Featured investigation" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="label-mono text-research">FEATURED INVESTIGATION</p>
+                <h2 className="display mt-4 max-w-4xl text-3xl md:text-5xl">{featured.title}</h2>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="label-mono text-research">{featured.category}</span>
+                <span className="label-mono border border-line-strong px-2 py-1 text-foreground">
+                  {featured.status}
+                </span>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={80}>
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-foreground md:text-xl">
+              {featured.question}
+            </p>
+          </Reveal>
+
+          <Reveal delay={140}>
+            <div className="viz-frame mt-10 p-5 md:p-8">
+              <div className="relative">
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <p className="label-mono text-faint">METHOD CHAIN — {featured.status} AT THE TERMINAL NODE</p>
+                  {featuredBuild && (
+                    <p className="label-mono text-faint">
+                      EVIDENCE SOURCE —{" "}
+                      <Link href={`/builds/${featuredBuild.id}`} className="link-line text-research">
+                        {featuredBuild.shortTitle}
+                      </Link>
+                    </p>
+                  )}
+                </div>
+                <MethodChainStrip entry={featured} className="mt-4" />
+
+                <div className="mt-8 grid gap-8 border-t border-line pt-8 md:grid-cols-2 md:gap-12">
+                  <div>
+                    <p className="label-mono text-research">METHOD</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{featured.method}</p>
+                    <p className="label-mono mt-6 text-research">EVIDENCE</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{featured.evidence}</p>
+                  </div>
+                  <div>
+                    <p className="label-mono text-research">RESULT</p>
+                    <p className="mt-3 text-base leading-relaxed text-foreground">{featured.result}</p>
+                    <p className="label-mono mt-6 text-signal">LIMITATION</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{featured.limitation}</p>
+                    <p className="label-mono mt-6 text-foreground">CONCLUSION</p>
+                    <p className="mt-3 text-base font-medium leading-relaxed text-foreground">
+                      {featured.conclusion}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 border-t border-line pt-6">
+                  <Link
+                    href={`/research/${featured.id}`}
+                    className="label-mono inline-block border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-research hover:text-research"
+                  >
+                    OPEN THE FULL ENTRY →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ---- reading guidance ---- */}
       <section aria-label="How entries are structured" className="border-b border-line">
@@ -148,22 +241,6 @@ export default function ResearchPage() {
         </div>
         <div className="mt-12">
           <ResearchArchive entries={researchEntries} />
-        </div>
-      </section>
-
-      {/* ---- categories ---- */}
-      <section aria-label="Research categories" className="border-t border-line">
-        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
-          <Reveal>
-            <h2 className="display text-2xl md:text-4xl">CATEGORIES</h2>
-          </Reveal>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {researchCategories.map((c) => (
-              <span key={c} className="label-mono border border-line px-3 py-1.5 text-[10px] text-muted">
-                {c}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -216,6 +293,12 @@ export default function ResearchPage() {
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   ARTICLES →
+                </Link>
+                <Link
+                  href="/capabilities"
+                  className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+                >
+                  CAPABILITIES →
                 </Link>
                 <Link
                   href="/lab"

@@ -4,6 +4,7 @@ import { labModules } from "@/data/lab";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import RiskSurface from "@/components/lab/risk-surface";
+import MarketTimeline from "@/components/lab/market-timeline";
 
 export const metadata: Metadata = {
   title: "Quant Lab",
@@ -17,109 +18,79 @@ export const metadata: Metadata = {
   },
 };
 
-/** Instrument matrix — the visual language of the lab, one panel per instrument. */
-function InstrumentMatrix() {
-  const panels = [
-    {
-      code: "RISK-01",
-      art: (
-        <g>
-          <line x1="20" y1="60" x2="160" y2="60" stroke="var(--line-strong)" strokeWidth="1" />
-          <line x1="52" y1="42" x2="52" y2="78" stroke="var(--signal)" strokeWidth="1.5" />
-          <line x1="96" y1="42" x2="96" y2="78" stroke="var(--chart-axis)" strokeWidth="1.5" />
-          <line x1="140" y1="42" x2="140" y2="78" stroke="var(--research)" strokeWidth="1.5" />
-          <rect x="52" y="56" width="44" height="8" fill="var(--signal)" opacity="0.25" />
-          <rect x="96" y="56" width="44" height="8" fill="var(--research)" opacity="0.25" />
+/** Schematic panel art — one instrument diagram per module code. */
+const INSTRUMENT_ART: Record<string, React.ReactNode> = {
+  "RISK-01": (
+    <g>
+      <line x1="20" y1="60" x2="160" y2="60" stroke="var(--line-strong)" strokeWidth="1" />
+      <line x1="52" y1="42" x2="52" y2="78" stroke="var(--signal)" strokeWidth="1.5" />
+      <line x1="96" y1="42" x2="96" y2="78" stroke="var(--chart-axis)" strokeWidth="1.5" />
+      <line x1="140" y1="42" x2="140" y2="78" stroke="var(--research)" strokeWidth="1.5" />
+      <rect x="52" y="56" width="44" height="8" fill="var(--signal)" opacity="0.25" />
+      <rect x="96" y="56" width="44" height="8" fill="var(--research)" opacity="0.25" />
+    </g>
+  ),
+  "REPLAY-01": (
+    <g>
+      {Array.from({ length: 11 }, (_, i) => (
+        <g key={i} opacity={i > 7 ? 0.18 : 1}>
+          <line x1={22 + i * 13} x2={22 + i * 13} y1={36 + (i % 3) * 6} y2={84 - (i % 4) * 5} stroke="var(--research)" strokeWidth="1" />
+          <rect x={18 + i * 13} y={46 + (i % 3) * 4} width={7} height={20 - (i % 4) * 3} fill="var(--research)" opacity="0.6" />
         </g>
-      ),
-    },
-    {
-      code: "REPLAY-01",
-      art: (
-        <g>
-          {Array.from({ length: 11 }, (_, i) => (
-            <g key={i} opacity={i > 7 ? 0.18 : 1}>
-              <line x1={22 + i * 13} x2={22 + i * 13} y1={36 + (i % 3) * 6} y2={84 - (i % 4) * 5} stroke="var(--research)" strokeWidth="1" />
-              <rect x={18 + i * 13} y={46 + (i % 3) * 4} width="7" height={20 - (i % 4) * 3} fill="var(--research)" opacity="0.6" />
-            </g>
-          ))}
-          <line x1="126" y1="30" x2="126" y2="90" stroke="var(--signal)" strokeWidth="1.5" strokeDasharray="4 4" />
-        </g>
-      ),
-    },
-    {
-      code: "STRAT-01",
-      art: (
-        <g>
-          <path d="M30 84 L90 84 L150 40" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-          <path d="M30 84 L90 40 L150 84 Z" fill="none" stroke="var(--research)" strokeWidth="1.5" />
-          <circle cx="90" cy="40" r="4" fill="var(--signal)" />
-          <line x1="30" y1="84" x2="30" y2="40" stroke="var(--line)" strokeWidth="1" strokeDasharray="3 3" />
-        </g>
-      ),
-    },
-    {
-      code: "SURF-01",
-      art: (
-        <g>
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <line
-              key={`r${i}`}
-              x1={26 + i * 6}
-              y1={38 + i * 8}
-              x2={148 - i * 6}
-              y2={38 + i * 8}
-              stroke="var(--research)"
-              strokeWidth="1"
-              opacity={0.25 + i * 0.12}
-            />
-          ))}
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <line
-              key={`c${i}`}
-              x1={32 + i * 21}
-              y1={38 + i * 3}
-              x2={32 + i * 21}
-              y2={82 - i * 3}
-              stroke="var(--chart-axis)"
-              strokeWidth="1"
-              opacity="0.5"
-            />
-          ))}
-        </g>
-      ),
-    },
-    {
-      code: "EXP-01",
-      art: (
-        <g>
-          {[
-            [34, 80],
-            [70, 46],
-            [110, 46],
-            [146, 80],
-          ].map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="7" fill={i === 2 ? "var(--signal)" : "var(--research)"} opacity="0.75" />
-          ))}
-          <path d="M41 76 L63 50 M77 46 L103 46 M117 50 L139 76" stroke="var(--line-strong)" strokeWidth="1" fill="none" />
-        </g>
-      ),
-    },
-  ];
-
-  return (
-    <div className="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-5">
-      {panels.map((p) => (
-        <div key={p.code} className="bg-surface p-4">
-          <p className="label-mono text-[9px] text-faint">{p.code}</p>
-          <svg viewBox="0 0 180 120" className="mt-3 h-auto w-full" aria-hidden="true">
-            {p.art}
-          </svg>
-        </div>
       ))}
-    </div>
-  );
-}
+      <line x1="126" y1="30" x2="126" y2="90" stroke="var(--signal)" strokeWidth="1.5" strokeDasharray="4 4" className="dash-march" />
+    </g>
+  ),
+  "STRAT-01": (
+    <g>
+      <path d="M30 84 L90 84 L150 40" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
+      <path d="M30 84 L90 40 L150 84 Z" fill="none" stroke="var(--research)" strokeWidth="1.5" />
+      <circle cx="90" cy="40" r="4" fill="var(--signal)" />
+      <line x1="30" y1="84" x2="30" y2="40" stroke="var(--line)" strokeWidth="1" strokeDasharray="3 3" />
+    </g>
+  ),
+  "SURF-01": (
+    <g>
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <line
+          key={`r${i}`}
+          x1={26 + i * 6}
+          y1={38 + i * 8}
+          x2={148 - i * 6}
+          y2={38 + i * 8}
+          stroke="var(--research)"
+          strokeWidth="1"
+          opacity={0.25 + i * 0.12}
+        />
+      ))}
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <line
+          key={`c${i}`}
+          x1={32 + i * 21}
+          y1={38 + i * 3}
+          x2={32 + i * 21}
+          y2={82 - i * 3}
+          stroke="var(--chart-axis)"
+          strokeWidth="1"
+          opacity="0.5"
+        />
+      ))}
+    </g>
+  ),
+  "EXP-01": (
+    <g>
+      {[
+        [34, 80],
+        [70, 46],
+        [110, 46],
+        [146, 80],
+      ].map(([px, py], i) => (
+        <circle key={i} cx={px} cy={py} r="7" fill={i === 2 ? "var(--signal)" : "var(--research)"} opacity="0.75" />
+      ))}
+      <path d="M41 76 L63 50 M77 46 L103 46 M117 50 L139 76" stroke="var(--line-strong)" strokeWidth="1" fill="none" />
+    </g>
+  ),
+};
 
 export default function LabPage() {
   return (
@@ -151,13 +122,8 @@ export default function LabPage() {
           </Reveal>
           <Reveal delay={280}>
             <div className="mt-12">
-              <InstrumentMatrix />
+              <MarketTimeline />
             </div>
-          </Reveal>
-          <Reveal delay={320}>
-            <p className="label-mono mt-4 text-[10px] text-faint">
-              INSTRUMENT PANELS ABOVE ARE SCHEMATIC REPRESENTATIONS OF EACH MODULE.
-            </p>
           </Reveal>
         </div>
       </header>
@@ -171,27 +137,32 @@ export default function LabPage() {
               <p className="label-mono text-faint">INPUTS DECLARED · OUTPUTS DERIVED</p>
             </div>
           </Reveal>
-          <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {labModules
               .filter((m) => m.href !== "/lab#surface")
               .map((m, i) => (
                 <Reveal key={m.id} delay={i * 80}>
                   <Link
                     href={m.href}
-                    className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
+                    className="card-depth group flex h-full flex-col border border-line bg-background p-6 md:p-8"
                   >
-                    <div className="flex items-baseline justify-between">
+                    <span className="flex items-baseline justify-between">
                       <span className="label-mono text-faint">LAB / {m.code}</span>
                       <span className="label-mono flex items-center gap-2 text-foreground">
                         <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
                         {m.status}
                       </span>
-                    </div>
-                    <span className="display mt-6 block text-2xl md:text-4xl">{m.name}</span>
+                    </span>
+                    <span className="display mt-5 block text-2xl md:text-3xl">{m.name}</span>
                     <span className="mt-4 block flex-1 text-base leading-relaxed text-muted">
                       {m.description}
                     </span>
-                    <span className="label-mono mt-6 block text-faint">
+                    <span className="viz-frame mt-6 block p-3">
+                      <svg viewBox="0 0 180 120" className="relative z-10 h-auto w-full" aria-hidden="true">
+                        {INSTRUMENT_ART[m.code]}
+                      </svg>
+                    </span>
+                    <span className="label-mono mt-5 block text-faint">
                       IN — {m.inputs.join(" · ")}
                     </span>
                     <span className="label-mono mt-1 block text-research">
@@ -204,6 +175,12 @@ export default function LabPage() {
                 </Reveal>
               ))}
           </div>
+
+          <Reveal delay={80}>
+            <p className="label-mono mt-4 text-[10px] text-faint">
+              PANEL ART IS SCHEMATIC REPRESENTATION — EACH CARD OPENS THE REAL INSTRUMENT.
+            </p>
+          </Reveal>
 
           <Reveal delay={120}>
             <div className="mt-10 border border-line bg-surface p-6">
@@ -238,8 +215,10 @@ export default function LabPage() {
             </p>
           </Reveal>
           <Reveal delay={120}>
-            <div className="mt-10">
-              <RiskSurface />
+            <div className="viz-frame mt-10 p-3 md:p-5">
+              <div className="relative z-10">
+                <RiskSurface />
+              </div>
             </div>
           </Reveal>
         </div>

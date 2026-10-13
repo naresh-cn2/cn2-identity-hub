@@ -108,10 +108,10 @@ export default function RiskSurface() {
   };
 
   return (
-    <div>
+    <div className="card-depth">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full cursor-grab touch-none border border-line bg-background active:cursor-grabbing"
+        className="h-auto w-full cursor-grab touch-none active:cursor-grabbing"
         role="img"
         aria-label="Interactive projected 3D surface. Horizontal axes are volatility and reward-to-risk; height is a deterministic performance heuristic. Drag to rotate."
         onPointerDown={onPointerDown}

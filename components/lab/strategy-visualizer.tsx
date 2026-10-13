@@ -31,44 +31,46 @@ export default function StrategyVisualizer() {
 
   return (
     <div>
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full border border-line bg-surface"
-        role="img"
-        aria-label={`Trade geometry: entry ${entry}, stop ${stop} risking ${risk.toFixed(2)}, target ${target} rewarding ${reward.toFixed(2)} — reward to risk ${rr.toFixed(2)} to 1.`}
-      >
-        <title>R:R geometry — entry, stop and target</title>
-        {[
-          { p: target, label: `TARGET ${target}`, color: "var(--foreground)" },
-          { p: entry, label: `ENTRY ${entry}`, color: "var(--chart-axis)" },
-          { p: stop, label: `STOP ${stop}`, color: "var(--signal)" },
-        ].map((l) => (
-          <g key={l.label}>
-            <line x1={0} x2={W} y1={y(l.p)} y2={y(l.p)} stroke={l.color} strokeWidth={1.5} />
-            <text x={8} y={y(l.p) - 6} className="label-mono" fill={l.color} fontSize={12}>
-              {l.label}
-            </text>
-          </g>
-        ))}
-        {/* risk / reward bands */}
-        <rect
-          x={W * 0.55}
-          y={Math.min(y(entry), y(stop))}
-          width={W * 0.42}
-          height={Math.abs(y(entry) - y(stop)) || 1}
-          fill="var(--signal-soft)"
-        />
-        <rect
-          x={W * 0.55}
-          y={Math.min(y(entry), y(target))}
-          width={W * 0.42}
-          height={Math.abs(y(entry) - y(target)) || 1}
-          fill="var(--grid-line)"
-        />
-      </svg>
+      <div className="viz-frame p-4 md:p-5">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="relative z-10 h-auto w-full"
+          role="img"
+          aria-label={`Trade geometry: entry ${entry}, stop ${stop} risking ${risk.toFixed(2)}, target ${target} rewarding ${reward.toFixed(2)} — reward to risk ${rr.toFixed(2)} to 1.`}
+        >
+          <title>R:R geometry — entry, stop and target</title>
+          {[
+            { p: target, label: `TARGET ${target}`, color: "var(--foreground)" },
+            { p: entry, label: `ENTRY ${entry}`, color: "var(--chart-axis)" },
+            { p: stop, label: `STOP ${stop}`, color: "var(--signal)" },
+          ].map((l) => (
+            <g key={l.label}>
+              <line x1={0} x2={W} y1={y(l.p)} y2={y(l.p)} stroke={l.color} strokeWidth={1.5} />
+              <text x={8} y={y(l.p) - 6} className="label-mono" fill={l.color} fontSize={12}>
+                {l.label}
+              </text>
+            </g>
+          ))}
+          {/* risk / reward bands */}
+          <rect
+            x={W * 0.55}
+            y={Math.min(y(entry), y(stop))}
+            width={W * 0.42}
+            height={Math.abs(y(entry) - y(stop)) || 1}
+            fill="var(--signal-soft)"
+          />
+          <rect
+            x={W * 0.55}
+            y={Math.min(y(entry), y(target))}
+            width={W * 0.42}
+            height={Math.abs(y(entry) - y(target)) || 1}
+            fill="var(--grid-line)"
+          />
+        </svg>
+      </div>
 
       <div className="mt-8 grid gap-10 md:grid-cols-2">
-        <fieldset className="grid grid-cols-2 gap-6">
+        <fieldset className="card-depth grid grid-cols-2 gap-6 border border-line bg-surface p-6">
           <legend className="label-mono mb-2 text-faint">GEOMETRY INPUTS</legend>
           {(
             [
@@ -99,24 +101,27 @@ export default function StrategyVisualizer() {
           ))}
         </fieldset>
 
-        <div aria-live="polite" className="space-y-px bg-line">
-          {(
-            [
-              ["RISK PER UNIT", risk.toFixed(2)],
-              ["REWARD PER UNIT", reward.toFixed(2)],
-              ["R MULTIPLE", `${rr.toFixed(2)} : 1`],
-              ["BREAK-EVEN WIN RATE", `${(breakEven * 100).toFixed(1)}%`],
-              ["1:4 STRUCTURAL FLOOR", rr >= 4 ? "PASSES" : "FAILS — BELOW FLOOR"],
-            ] as const
-          ).map(([label, value]) => (
-            <div
-              key={label}
-              className="flex items-baseline justify-between bg-surface px-5 py-4"
-            >
-              <span className="label-mono text-muted">{label}</span>
-              <span className="num-mono text-lg font-semibold text-foreground">{value}</span>
-            </div>
-          ))}
+        <div aria-live="polite" className="card-depth border border-line bg-surface p-6">
+          <p className="label-mono mb-5 text-faint">READOUTS</p>
+          <div className="space-y-px bg-line">
+            {(
+              [
+                ["RISK PER UNIT", risk.toFixed(2)],
+                ["REWARD PER UNIT", reward.toFixed(2)],
+                ["R MULTIPLE", `${rr.toFixed(2)} : 1`],
+                ["BREAK-EVEN WIN RATE", `${(breakEven * 100).toFixed(1)}%`],
+                ["1:4 STRUCTURAL FLOOR", rr >= 4 ? "PASSES" : "FAILS — BELOW FLOOR"],
+              ] as const
+            ).map(([label, value]) => (
+              <div
+                key={label}
+                className="flex items-baseline justify-between bg-surface px-5 py-4"
+              >
+                <span className="label-mono text-muted">{label}</span>
+                <span className="num-mono text-lg font-semibold text-foreground">{value}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

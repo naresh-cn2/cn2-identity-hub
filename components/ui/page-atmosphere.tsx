@@ -27,6 +27,22 @@ import { useTheme } from "@/components/providers/theme-provider";
  *              with the pointer, shooting stars and red embers rising from the
  *              hand (about — the picture itself never moves)
  *
+ * Added for the visual-experience pass. Page-side variant swaps are applied
+ * at integration — until a page opts in, it keeps its current variant:
+ *   schematic — drafting-table blueprint: fine registration grid, a slow
+ *               horizontal scan sweep, ruler/measure ticks and rare red
+ *               sheet-registration accents (intended for /builds)
+ *   flow      — data-flow routing: orthogonal lanes with a few slow,
+ *               staggered pulses travelling along them (intended for
+ *               /services)
+ *   lattice   — structured constellation lattice: nodes pinned to a soft
+ *               regular grid, neighbour links breathing, a shimmer drifting
+ *               across the mesh (intended for /research — reads clearly
+ *               against the sparse random `network` graph)
+ *   pathways  — branching transit-map routes splitting out of two trunks
+ *               with slow travelling dots (intended for /opportunities and
+ *               its subpages)
+ *
  * Rules honoured here:
  *  - Light originates from drawn sources only; alpha budget stays low so the
  *    content above always wins. Nothing glows from the screen edges.
@@ -36,7 +52,19 @@ import { useTheme } from "@/components/providers/theme-provider";
  *  - aria-hidden + pointer-events:none — navigation and controls are untouched.
  */
 
-type Variant = "network" | "field" | "motes" | "signal" | "orbit" | "solids" | "city" | "cosmos";
+type Variant =
+    | "network"
+    | "field"
+    | "motes"
+    | "signal"
+    | "orbit"
+    | "solids"
+    | "city"
+    | "cosmos"
+    | "schematic"
+    | "flow"
+    | "lattice"
+    | "pathways";
 type Mode = "dark" | "light";
 type RGB = [number, number, number];
 
@@ -118,6 +146,10 @@ const SEEDS: Record<Variant, number> = {
     solids: 515020,
     city: 7712026,
     cosmos: 99182733,
+    schematic: 48151623,
+    flow: 2718281,
+    lattice: 1618033,
+    pathways: 14142135,
 };
 
 export default function PageAtmosphere({
@@ -190,6 +222,18 @@ export default function PageAtmosphere({
         interface Ember { x: number; y: number; r: number; ph: number; sp: number; rise: number }
         interface Streak { t: number; gap: number; x: number; y: number; vx: number; vy: number }
 
+        interface SchMark { x: number; y: number; ph: number } // measure marks, fractional
+
+        interface FlowLane { pts: [number, number][] }
+        interface FlowPulse { l: number; t: number; dur: number; wait: number; red: boolean }
+
+        interface LatNode { bx: number; by: number; ph: number; hub: boolean }
+        interface LatLink { a: number; b: number; ph: number }
+
+        interface PathSeg { x1: number; y1: number; x2: number; y2: number; shared: boolean }
+        interface PathJunction { x: number; y: number }
+        interface PathDot { r: number; t: number; dur: number; wait: number; red: boolean }
+
         const nodes: NetNode[] = [];
         const edges: NetEdge[] = [];
         const pulses: Pulse[] = [];
@@ -201,6 +245,16 @@ export default function PageAtmosphere({
         const cosStars: CosStar[] = [];
         const embers: Ember[] = [];
         const streak: Streak = { t: 8.5, gap: 2, x: 0, y: 0, vx: 0, vy: 0 };
+
+        const schMarks: SchMark[] = [];
+        const flowLanes: FlowLane[] = [];
+        const flowPulses: FlowPulse[] = [];
+        const latNodes: LatNode[] = [];
+        const latLinks: LatLink[] = [];
+        const pathSegs: PathSeg[] = [];
+        const pathRoutes: number[][] = [];
+        const pathJunctions: PathJunction[] = [];
+        const pathDots: PathDot[] = [];
 
         if (variant === "network") {
             const cols = small ? 5 : 8;
@@ -363,6 +417,152 @@ export default function PageAtmosphere({
                     ph: rand() * Math.PI * 2,
                     sp: 0.5 + rand() * 0.9,
                     rise: 0.03 + rand() * 0.05,
+                });
+            }
+        }
+
+        /* ---- added variants: schematic / flow / lattice / pathways ---- */
+
+        if (variant === "schematic") {
+            // a handful of measure marks — snapped to the major grid at draw
+            // time so the sheet reads drafted, not scattered
+            const count = small ? 3 : 6;
+            for (let i = 0; i < count; i++) {
+                schMarks.push({
+                    x: 0.12 + rand() * 0.76,
+                    y: 0.16 + rand() * 0.68,
+                    ph: rand() * Math.PI * 2,
+                });
+            }
+        }
+
+        if (variant === "flow") {
+            // orthogonal routing lanes, each with one Manhattan jog
+            const lanesN = small ? 3 : 5;
+            for (let i = 0; i < lanesN; i++) {
+                const y0 = (i + 0.5) / lanesN + (rand() - 0.5) * 0.05;
+                const jog = 0.05 + rand() * 0.06;
+                const jx = 0.28 + rand() * 0.44;
+                const dir = rand() < 0.5 ? -1 : 1;
+                const jy = Math.max(0.07, Math.min(0.93, y0 + dir * jog));
+                flowLanes.push({
+                    pts: [
+                        [-0.05, y0],
+                        [jx, y0],
+                        [jx, jy],
+                        [1.05, jy],
+                    ],
+                });
+            }
+            // a few slow pulses, staggered; exactly one restrained red accent
+            const pcount = small ? 2 : 4;
+            for (let i = 0; i < pcount; i++) {
+                flowPulses.push({
+                    l: i % Math.max(1, flowLanes.length),
+                    t: rand(),
+                    dur: 7 + rand() * 5,
+                    wait: rand() * 4,
+                    red: i === 1,
+                });
+            }
+        }
+
+        if (variant === "lattice") {
+            // nodes seated on a soft regular grid — jitter stays micro so the
+            // mesh reads structured where `network` reads scattered
+            const cols = small ? 4 : 7;
+            const rows = small ? 3 : 4;
+            for (let iy = 0; iy < rows; iy++) {
+                for (let ix = 0; ix < cols; ix++) {
+                    latNodes.push({
+                        bx: (ix + 0.5) / cols + (rand() - 0.5) * 0.02,
+                        by: (iy + 0.5) / rows + (rand() - 0.5) * 0.03,
+                        ph: ix * 0.55 + iy * 0.42, // travelling-wave phase
+                        hub: ix % 3 === 1 && iy % 2 === 0,
+                    });
+                }
+            }
+            // links weave right, down and on alternate diagonals — breathing
+            // phase follows the midpoint so the shimmer crosses the whole mesh
+            const link = (a: number, b: number) => {
+                const na = latNodes[a];
+                const nb = latNodes[b];
+                latLinks.push({
+                    a,
+                    b,
+                    ph: ((na.bx + nb.bx) * 0.5) * 2.4 + ((na.by + nb.by) * 0.5) * 1.6,
+                });
+            };
+            for (let iy = 0; iy < rows; iy++) {
+                for (let ix = 0; ix < cols; ix++) {
+                    const i = iy * cols + ix;
+                    if (ix + 1 < cols) link(i, i + 1);
+                    if (iy + 1 < rows) link(i, i + cols);
+                    if ((ix + iy) % 2 === 0 && ix + 1 < cols && iy + 1 < rows) link(i, i + cols + 1);
+                }
+            }
+        }
+
+        if (variant === "pathways") {
+            // transit-map branching: two trunks splitting into routes.
+            // Fractional coordinates so the composition holds any viewport.
+            const seg = (x1: number, y1: number, x2: number, y2: number) => {
+                pathSegs.push({ x1, y1, x2, y2, shared: false });
+                return pathSegs.length - 1;
+            };
+            const trunk = seg(-0.05, 0.64, 0.24, 0.64);
+            const upA = seg(0.24, 0.64, 0.33, 0.55);
+            const upB = seg(0.33, 0.55, 0.6, 0.55);
+            const upC = seg(0.6, 0.55, 0.68, 0.46);
+            const upD = seg(0.68, 0.46, 1.05, 0.46);
+            const upE = seg(0.6, 0.55, 1.05, 0.55);
+            const dnA = seg(0.24, 0.64, 0.33, 0.73);
+            const dnB = seg(0.33, 0.73, 0.58, 0.73);
+            const dnC = seg(0.58, 0.73, 0.66, 0.82);
+            const dnD = seg(0.66, 0.82, 1.05, 0.82);
+            const dnE = seg(0.58, 0.73, 1.05, 0.73);
+            pathRoutes.push(
+                [trunk, upA, upB, upC, upD],
+                [trunk, upA, upB, upE],
+                [trunk, dnA, dnB, dnC, dnD],
+                [trunk, dnA, dnB, dnE],
+            );
+            if (!small) {
+                // a second trunk merges into the lower branch
+                const sec = seg(-0.05, 0.93, 0.22, 0.93);
+                const sec2 = seg(0.22, 0.93, 0.33, 0.82);
+                const sec3 = seg(0.33, 0.82, 0.33, 0.73);
+                pathRoutes.push([sec, sec2, sec3, dnB, dnC, dnD], [sec, sec2, sec3, dnB, dnE]);
+            }
+            // segments ridden by more than one route are the solid trunks;
+            // leaf runs read as routes still being drawn (faint dashes)
+            const usage = new Array<number>(pathSegs.length).fill(0);
+            for (const r of pathRoutes) for (const si of r) usage[si]++;
+            for (let i = 0; i < pathSegs.length; i++) pathSegs[i].shared = usage[i] > 1;
+            // junction rings where routes split or merge (degree >= 3 endpoints)
+            const deg = new Map<string, number>();
+            const bump = (x: number, y: number) => {
+                const k = `${x},${y}`;
+                deg.set(k, (deg.get(k) ?? 0) + 1);
+            };
+            for (const s of pathSegs) {
+                bump(s.x1, s.y1);
+                bump(s.x2, s.y2);
+            }
+            for (const [k, d] of deg) {
+                if (d < 3) continue;
+                const [x, y] = k.split(",").map(Number);
+                pathJunctions.push({ x, y });
+            }
+            // a few slow travelling dots, root to leaf; one restrained red
+            const dcount = small ? 2 : 4;
+            for (let i = 0; i < dcount && pathRoutes.length; i++) {
+                pathDots.push({
+                    r: i % pathRoutes.length,
+                    t: rand(),
+                    dur: 6 + rand() * 6,
+                    wait: rand() * 4,
+                    red: i === dcount - 1,
                 });
             }
         }
@@ -783,6 +983,353 @@ export default function PageAtmosphere({
             }
         };
 
+        const drawSchematic = (t: number) => {
+            const minor = small ? 44 : 32;
+            const major = minor * 5;
+
+            // fine registration grid — one batched path for the whole sheet
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = rgba(pal.deep, 0.055 * dim);
+            ctx.beginPath();
+            for (let x = minor, i = 1; x < w; x += minor, i++) {
+                if (i % 5 === 0) continue;
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+            }
+            for (let y = minor, i = 1; y < h; y += minor, i++) {
+                if (i % 5 === 0) continue;
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+            }
+            ctx.stroke();
+
+            // major division lines, one shade stronger
+            ctx.strokeStyle = rgba(pal.structure, 0.075 * dim);
+            ctx.beginPath();
+            for (let x = major; x < w; x += major) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+            }
+            for (let y = major; y < h; y += major) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+            }
+            ctx.stroke();
+
+            // drafting ruler ticks along the left and bottom sheet edges
+            ctx.strokeStyle = rgba(pal.structure, 0.16 * dim);
+            ctx.beginPath();
+            for (let y = minor, i = 1; y < h; y += minor, i++) {
+                const len = i % 5 === 0 ? 11 : 5;
+                ctx.moveTo(0, y);
+                ctx.lineTo(len, y);
+            }
+            for (let x = minor, i = 1; x < w; x += minor, i++) {
+                const len = i % 5 === 0 ? 11 : 5;
+                ctx.moveTo(x, h);
+                ctx.lineTo(x, h - len);
+            }
+            ctx.stroke();
+
+            // measure marks — dimension crosses with end serifs, snapped to majors
+            for (const m of schMarks) {
+                const mx = Math.min(w - major, Math.max(major, Math.round((m.x * w) / major) * major));
+                const my = Math.min(h - major, Math.max(major, Math.round((m.y * h) / major) * major));
+                const a = (0.14 + 0.12 * (0.5 + 0.5 * Math.sin(t * 0.35 + m.ph))) * dim;
+                ctx.strokeStyle = rgba(pal.structure, a);
+                ctx.beginPath();
+                ctx.moveTo(mx - 14, my);
+                ctx.lineTo(mx + 14, my);
+                ctx.moveTo(mx - 14, my - 4);
+                ctx.lineTo(mx - 14, my + 4);
+                ctx.moveTo(mx + 14, my - 4);
+                ctx.lineTo(mx + 14, my + 4);
+                ctx.moveTo(mx, my - 8);
+                ctx.lineTo(mx, my + 8);
+                ctx.stroke();
+            }
+
+            // sheet registration corners — the rare red accents, slow blink
+            const corners: Array<[number, number, number]> = [
+                [22, 22, 0],
+                [w - 22, h - 22, 1.9],
+            ];
+            ctx.lineWidth = 1;
+            for (const [cx, cy, ph] of corners) {
+                const blink = 0.35 + 0.65 * Math.sin(t * 0.28 + ph) ** 2;
+                ctx.strokeStyle = rgba(pal.signal, 0.3 * blink * dim);
+                ctx.beginPath();
+                ctx.moveTo(cx - 8, cy);
+                ctx.lineTo(cx + 8, cy);
+                ctx.moveTo(cx, cy - 8);
+                ctx.lineTo(cx, cy + 8);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // slow horizontal scan sweep — the sheet's one moving light
+            const sweep = ((t * 0.045 + 0.5) % 1.7) - 0.35;
+            const sy = sweep * h;
+            const g = ctx.createLinearGradient(0, sy - 80, 0, sy + 80);
+            g.addColorStop(0, rgba(pal.bright, 0));
+            g.addColorStop(0.5, rgba(pal.bright, 0.05 * dim));
+            g.addColorStop(1, rgba(pal.bright, 0));
+            ctx.fillStyle = g;
+            ctx.fillRect(0, sy - 80, w, 160);
+            ctx.strokeStyle = rgba(pal.bright, 0.12 * dim);
+            ctx.beginPath();
+            ctx.moveTo(0, sy);
+            ctx.lineTo(w, sy);
+            ctx.stroke();
+        };
+
+        /* point at fraction u along a fractional-coordinate polyline, in px */
+        const flowAt = (pts: [number, number][], u: number): [number, number] => {
+            let total = 0;
+            for (let i = 0; i < pts.length - 1; i++) {
+                total += Math.hypot((pts[i + 1][0] - pts[i][0]) * w, (pts[i + 1][1] - pts[i][1]) * h);
+            }
+            let d = u * total;
+            for (let i = 0; i < pts.length - 1; i++) {
+                const dx = (pts[i + 1][0] - pts[i][0]) * w;
+                const dy = (pts[i + 1][1] - pts[i][1]) * h;
+                const len = Math.hypot(dx, dy);
+                if (d <= len || i === pts.length - 2) {
+                    const f = len > 0 ? Math.min(1, d / len) : 0;
+                    return [
+                        (pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f) * w,
+                        (pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f) * h,
+                    ];
+                }
+                d -= len;
+            }
+            return [pts[pts.length - 1][0] * w, pts[pts.length - 1][1] * h];
+        };
+
+        const drawFlow = (t: number) => {
+            // routing lanes — orthogonal, faint, dashed like a trace map
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 7]);
+            ctx.strokeStyle = rgba(pal.structure, 0.09 * dim);
+            ctx.beginPath();
+            for (const lane of flowLanes) {
+                const pts = lane.pts;
+                ctx.moveTo(pts[0][0] * w, pts[0][1] * h);
+                for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0] * w, pts[i][1] * h);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // bends — junction beads, one batched path, breathing almost imperceptibly
+            const beadA = (0.26 + 0.06 * Math.sin(t * 0.5)) * dim;
+            ctx.fillStyle = rgba(pal.structure, beadA);
+            ctx.beginPath();
+            for (const lane of flowLanes) {
+                for (let i = 1; i < lane.pts.length - 1; i++) {
+                    const x = lane.pts[i][0] * w;
+                    const y = lane.pts[i][1] * h;
+                    ctx.moveTo(x + 1.7, y);
+                    ctx.arc(x, y, 1.7, 0, Math.PI * 2);
+                }
+            }
+            ctx.fill();
+
+            // slow pulses travelling the lanes — a few at a time, staggered
+            for (const p of flowPulses) {
+                if (p.wait > 0) {
+                    p.wait -= 1 / 60;
+                    continue;
+                }
+                p.t += 1 / 60 / p.dur;
+                if (p.t >= 1) {
+                    p.t = 0;
+                    p.wait = 2 + Math.random() * 5;
+                    p.l = Math.floor(Math.random() * Math.max(1, flowLanes.length));
+                }
+                const lane = flowLanes[p.l];
+                if (!lane) continue;
+                const [x, y] = flowAt(lane.pts, p.t);
+                const [tx, ty] = flowAt(lane.pts, Math.max(0, p.t - 0.1));
+                const col = p.red ? pal.signal : pal.bright;
+                const g = ctx.createLinearGradient(tx, ty, x, y);
+                g.addColorStop(0, rgba(col, 0));
+                g.addColorStop(1, rgba(col, 0.42 * dim));
+                ctx.strokeStyle = g;
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.moveTo(tx, ty);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.fillStyle = rgba(col, 0.6 * dim);
+                ctx.beginPath();
+                ctx.arc(x, y, 1.7, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        };
+
+        /* soft lattice anchor — nodes breathe microscopically around their
+           grid seat so the mesh never reads as a rigid table */
+        const latPos = (n: LatNode, t: number): [number, number] => [
+            (n.bx + Math.sin(t * 0.2 + n.ph * 0.7) * 0.003) * w,
+            (n.by + Math.cos(t * 0.17 + n.ph * 0.7) * 0.004) * h,
+        ];
+
+        /* diamond vertex marker (path only — the caller strokes or fills) */
+        const diamond = (x: number, y: number, r: number) => {
+            ctx.moveTo(x, y - r);
+            ctx.lineTo(x + r, y);
+            ctx.lineTo(x, y + r);
+            ctx.lineTo(x - r, y);
+            ctx.closePath();
+        };
+
+        const drawLattice = (t: number) => {
+            // a soft light drifting over the lattice — where the shimmer comes from
+            const gx = w * (0.5 + Math.sin(t * 0.06) * 0.3);
+            const gy = h * (0.5 + Math.cos(t * 0.047) * 0.26);
+            const glow = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.max(w, h) * 0.5);
+            glow.addColorStop(0, rgba(pal.structure, 0.05 * dim));
+            glow.addColorStop(1, rgba(pal.structure, 0));
+            ctx.fillStyle = glow;
+            ctx.fillRect(0, 0, w, h);
+
+            // neighbour links, breathing gently out of phase across the grid
+            ctx.lineWidth = 1;
+            for (const l of latLinks) {
+                const [x1, y1] = latPos(latNodes[l.a], t);
+                const [x2, y2] = latPos(latNodes[l.b], t);
+                const br = 0.5 + 0.5 * Math.sin(t * 0.4 + l.ph);
+                ctx.strokeStyle = rgba(pal.structure, (0.045 + 0.05 * br) * dim);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+            }
+
+            // nodes — diamond vertices with a shimmer travelling across the mesh
+            for (const n of latNodes) {
+                const [x, y] = latPos(n, t);
+                const tw = 0.5 + 0.5 * Math.sin(t * 0.55 - n.ph * 1.4);
+                if (n.hub) {
+                    ctx.strokeStyle = rgba(pal.structure, 0.2 * tw * dim);
+                    ctx.beginPath();
+                    diamond(x, y, 7);
+                    ctx.stroke();
+                }
+                ctx.fillStyle = rgba(
+                    n.hub ? pal.bright : pal.structure,
+                    (n.hub ? 0.5 : 0.3) * (0.4 + 0.6 * tw) * dim
+                );
+                ctx.beginPath();
+                diamond(x, y, n.hub ? 2.6 : 1.5);
+                ctx.fill();
+            }
+        };
+
+        /* point at fraction u along a route (segment indices into pathSegs) */
+        const pathAt = (route: number[], u: number): [number, number] => {
+            let total = 0;
+            for (const si of route) {
+                const s = pathSegs[si];
+                total += Math.hypot((s.x2 - s.x1) * w, (s.y2 - s.y1) * h);
+            }
+            let d = u * total;
+            for (const si of route) {
+                const s = pathSegs[si];
+                const dx = (s.x2 - s.x1) * w;
+                const dy = (s.y2 - s.y1) * h;
+                const len = Math.hypot(dx, dy);
+                if (d <= len) {
+                    const f = len > 0 ? d / len : 0;
+                    return [(s.x1 + (s.x2 - s.x1) * f) * w, (s.y1 + (s.y2 - s.y1) * f) * h];
+                }
+                d -= len;
+            }
+            const last = pathSegs[route[route.length - 1]];
+            return [last.x2 * w, last.y2 * h];
+        };
+
+        const drawPathways = (t: number) => {
+            // shared trunk routes — solid, faint strokes under everything
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = rgba(pal.structure, 0.09 * dim);
+            ctx.beginPath();
+            for (const s of pathSegs) {
+                if (!s.shared) continue;
+                ctx.moveTo(s.x1 * w, s.y1 * h);
+                ctx.lineTo(s.x2 * w, s.y2 * h);
+            }
+            ctx.stroke();
+
+            // leaf runs — receding dashes, the routes still being drawn
+            ctx.setLineDash([4, 8]);
+            ctx.strokeStyle = rgba(pal.deep, 0.13 * dim);
+            ctx.beginPath();
+            for (const s of pathSegs) {
+                if (s.shared) continue;
+                ctx.moveTo(s.x1 * w, s.y1 * h);
+                ctx.lineTo(s.x2 * w, s.y2 * h);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // split / merge junctions — small open rings on the junction nodes
+            const jA = (0.28 + 0.06 * Math.sin(t * 0.5)) * dim;
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = rgba(pal.bright, jA);
+            ctx.fillStyle = rgba(pal.bright, jA + 0.04 * dim);
+            ctx.beginPath();
+            for (const j of pathJunctions) {
+                const x = j.x * w;
+                const y = j.y * h;
+                ctx.moveTo(x + 3.4, y);
+                ctx.arc(x, y, 3.4, 0, Math.PI * 2);
+            }
+            ctx.stroke();
+            ctx.beginPath();
+            for (const j of pathJunctions) {
+                const x = j.x * w;
+                const y = j.y * h;
+                ctx.moveTo(x + 1.2, y);
+                ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+            }
+            ctx.fill();
+
+            // slow travelling dots riding the routes root to leaf
+            for (const d of pathDots) {
+                if (d.wait > 0) {
+                    d.wait -= 1 / 60;
+                    continue;
+                }
+                d.t += 1 / 60 / d.dur;
+                if (d.t >= 1) {
+                    d.t = 0;
+                    d.wait = 1.5 + Math.random() * 4;
+                    d.r = Math.floor(Math.random() * Math.max(1, pathRoutes.length));
+                }
+                const route = pathRoutes[d.r];
+                if (!route || !route.length) continue;
+                const [x, y] = pathAt(route, d.t);
+                const [tx, ty] = pathAt(route, Math.max(0, d.t - 0.1));
+                const col = d.red ? pal.signal : pal.bright;
+                const g = ctx.createLinearGradient(tx, ty, x, y);
+                g.addColorStop(0, rgba(col, 0));
+                g.addColorStop(1, rgba(col, 0.4 * dim));
+                ctx.strokeStyle = g;
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.moveTo(tx, ty);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.fillStyle = rgba(col, 0.6 * dim);
+                ctx.beginPath();
+                ctx.arc(x, y, 1.7, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        };
+
         const draw = (t: number) => {
             ctx.clearRect(0, 0, w, h);
             switch (variant) {
@@ -809,6 +1356,18 @@ export default function PageAtmosphere({
                     break;
                 case "cosmos":
                     drawCosmos(t);
+                    break;
+                case "schematic":
+                    drawSchematic(t);
+                    break;
+                case "flow":
+                    drawFlow(t);
+                    break;
+                case "lattice":
+                    drawLattice(t);
+                    break;
+                case "pathways":
+                    drawPathways(t);
                     break;
             }
         };

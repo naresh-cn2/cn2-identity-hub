@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import BuildsArchive from "@/components/builds/builds-archive";
+import HeroTopology from "@/components/builds/hero-topology";
 import { archiveProjects } from "@/data/archive";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
@@ -26,7 +27,8 @@ export default function BuildsPage() {
     <>
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
-        <PageAtmosphere variant="field" />
+        <PageAtmosphere variant="schematic" />
+        <HeroTopology projects={archiveProjects} />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">

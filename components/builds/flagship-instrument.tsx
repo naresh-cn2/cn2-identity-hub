@@ -65,7 +65,7 @@ function Frame({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border border-line bg-surface p-4 md:p-6">
+    <div className="viz-frame p-4 md:p-6">
       <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3">
         <p className="label-mono text-research">{label}</p>
         <p className="label-mono text-faint">{note}</p>
@@ -132,11 +132,11 @@ export default function FlagshipInstrument({ project }: { project: FlagshipProje
     case "qrsip":
       return (
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="border border-line bg-surface p-4 md:p-6">
+          <div className="viz-frame p-4 md:p-6">
             <p className="label-mono mb-5 text-research">INSTRUMENT / GOVERNANCE FLOW</p>
             <PipelineFlow stages={QRSIP_STAGES} flowDirection="vertical" animated />
           </div>
-          <div className="border border-line bg-surface p-4 md:p-6">
+          <div className="viz-frame p-4 md:p-6">
             <p className="label-mono mb-5 text-research">INSTRUMENT / EXPERIMENT TOPOLOGY</p>
             <RegimeMap regimes={QRSIP_REGIMES} width={600} height={480} />
             <p className="mt-4 text-sm leading-relaxed text-muted">
