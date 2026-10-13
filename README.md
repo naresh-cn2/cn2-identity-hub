@@ -1,276 +1,122 @@
+<img src="public/images/cn2-hero-final.png" alt="CN2.DEV" width="900" />
+
 # CN2.DEV
 
-**Quantitative Developer Digital Headquarters**
+**The digital headquarters of Bukya Naresh — Quantitative Developer**
 
-CN2.DEV is a premium, cinematic, multi‑page web application that serves as a professional platform for a quantitative developer, researcher, and builder. It showcases quantitative development, algorithmic‑trading research, financial analytics, data engineering, software products, technical projects, research and experimentation, professional credentials, client services, employment and freelance opportunities, and research collaborations.
+[Live site](https://cn2-identity-hub.vercel.app) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub)
 
-The site is built with a futuristic science‑fiction aesthetic, deep graphite environments, restrained red‑signal accents, electric‑blue/cyan illumination, reflective surfaces, and sophisticated glass interfaces. Every major route has its own visual design and interactive experience, while sharing a consistent navigation, theming, and accessibility foundation.
-
----
-
-## Table of Contents
-
-- [About CN2.DEV](#about-cn2dev)
-- [Technologies](#technologies)
-- [Repository Structure](#repository-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running in Development](#running-in-development)
-  - [Linting](#linting)
-  - [Building for Production](#building-for-production)
-  - [Starting the Production Server](#starting-the-production-server)
-- [Available Scripts](#available-scripts)
-- [Environment Variables](#environment-variables)
-- [Deployment](#deployment)
-- [Repository Organization](#repository-organization)
-- [Contributing](#contributing)
-- [License](#license)
+CN2.DEV is a multi-route professional platform covering quantitative development, systematic trading research, engineering services, and published technical writing. Every claim on the site is backed by real artifacts — working systems, test suites, research entries, certificates with verification links — and nothing is invented: no fabricated credentials, clients, metrics, or quotations.
 
 ---
 
-## About CN2.DEV
+## What lives here
 
-CN2.DEV is a single‑source‑of‑truth digital headquarters that combines:
+| Destination | What it is |
+| --- | --- |
+| `/hub` | Headquarters — the master index of every destination |
+| `/builds` | Project showcase stack; each build opens a **project world** (`/builds/<project>`) with architecture, evidence, limitations and related research |
+| `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
+| `/research` | Research entries with stated method, findings and limitations |
+| `/articles` | Engineering articles |
+| `/capabilities` | Capability map grounded in the archive |
+| `/services` | Service offerings anchored to capabilities and proven by projects |
+| `/lab` | Interactive tools — risk calculator, strategy viewer, market replay, experiments |
+| `/intelligence` | Knowledge graph connecting projects, research and capabilities |
+| `/certifications` | Issued certificates with issuer, IDs, dates and verification URLs |
+| `/opportunities` | Career, freelance, collaboration and partnership pathways |
+| `/testimonials` | Reviews & testimonials — consented feedback with per-review ratings |
+| `/about`, `/identity`, `/cv`, `/proof`, `/links`, `/contact` | Profile, record and contact surfaces |
 
-- A cinematic entry hero with portal‑centric lighting, drifting smoke, and subtle parallax.
-- Project and product galleries (`/builds`), with individual project pages and case studies (`/case-studies`).
-- A credential and education archive (`/credentials` / `/about`).
-- Service offerings grounded in real capabilities (`/services` / `data/services.ts`).
-- Interactive laboratory tools (`/lab`) – risk calculator, strategy visualizer, etc.
-- A research library and technical journal (`/research`).
-- Opportunity pathways: career, freelance, collaboration, and partnerships (`/opportunities`).
-- An immersive contact page with floating glass panels (`/contact`).
-- An intelligence graph connecting projects, cases, research, and credentials (`/intelligence`).
-
-All routes are fully navigable, SEO‑friendly (static HTML generation), and share a consistent navigation bar, theme toggle (dark/light), and accessible controls.
+The four-level architecture: **Showcase → Project World → World Sections (architecture, evidence, limitations, research) → Knowledge Graph links**. Worlds are registered in `data/project-worlds.ts`; a world's navigation and sections are derived from the content that actually exists — empty sections are never padded.
 
 ---
 
-## Technologies
+## Tech stack
 
 | Layer | Technology |
-|-------|------------|
-| **Framework** | [Next.js 16](https://nextjs.org) (App Router) |
-| **UI** | [React 19](https://reactjs.org), [Tailwind CSS 4](https://tailwindcss.com) |
-| **3D / Visuals** | [Three.js](https://threejs.org), [@react-three/fiber](https://github.com/pmndrs/react-three-fiber), [@react-three/drei](https://github.com/pmndrs/react-three-drei), GSAP |
-| **Data / Utilities** | [gray‑matter](https://github.com/jfm display/gray-matter), local `data/` modules (`site.ts`, `capabilities.ts`, `case-studies.ts`, `services.ts`) |
-| **Icons** | [lucide-react](https://lucide.dev) |
-| **Animation** | [GSAP](https://gsap.com) (timeline & morph animations) |
-| **Theme** | Custom dark/light theme tokens, persisted via `prefers-color-scheme` and local storage |
-| **Accessibility** | Semantic HTML, ARIA labels, focus-visible states, `prefers-reduced-motion` support |
-| **Deployment** | Vercel (continuous deployment from `main` branch) |
+| --- | --- |
+| Framework | [Next.js 16](https://nextjs.org) (App Router, static generation) |
+| UI | React 19, TypeScript (strict), Tailwind CSS 4 (CSS-first config in `app/globals.css`) |
+| Visual system | CSS, SVG and Canvas 2D — the site's core motion and atmosphere layer |
+| Cinematic scenes | Three.js / react-three-fiber, limited to the home entry and the about figure; GSAP powers the home scroll choreography |
+| Icons | lucide-react |
+| Content | Typed data modules under `data/` — the single source of truth for pages, navigation and SEO |
+| Reviews backend | Route handler + GitHub contents API (no database, no new services) |
+| Accessibility | Semantic HTML, ARIA, visible focus states, `prefers-reduced-motion` support |
+| Deployment | Vercel — every push to `main` deploys production |
 
 ---
 
-## Repository Structure
+## Getting started
 
-```
-app/                ← Next.js App Router pages/routes
-  /builds           ← project gallery
-  /case-studies     ← case‑study index + per‑project pages
-  /services         ← service index + /services/[slug]
-  /opportunities    ← career, freelance, collaborate, partnerships
-  /lab              ← interactive experiment tools
-  /research         ← research articles & technical notes
-  /about            ← personal background & capabilities
-  /contact          ← immersive floating‑panel contact
-  /intelligence     ← connected knowledge graph
-  /how-i-work       ← workflow narrative
-  /cv               ← downloadable CV
-  /proof            │
-  /links            │
-  /testimonials     │
-  /certifications   │
-  /work-with-me     │
-components/
-  home/             ← cinematic hero & entry components
-  navigation/       ← navbar, command‑palette, theme toggle
-  visualizations/   • rr‑distribution, quant‑primitives, knowledge‑graph, hero‑field,
-                    figure‑silhouette, equity‑curve, cinematic‑human‑figure,
-                    arch‑flow
-  case-study/       • interactive‑lab, replay‑preview, chapter‑nav
-  lab/              • risk‑calculator, strategy‑visualizer, experiment‑explorer, …
-  contact/          • floating‑panel UI, copy‑email
-  layout/           • page‑transition, footer, navbar (with bak)
-  ui/               • section‑header, reveal, metric, magnetic, text‑reactive (deleted)
-data/               ← structured content
-  site.ts           ← navigation metadata
-  capabilities.ts   • capability definitions
-  case-studies.ts   • project‑case data
-  services.ts       • service offerings (anchored to capabilities)
-  lab.ts            • lab module definitions
-styles/               (Tailwind‑driven; no separate CSS repo)
-public/               • static assets (hero image, wordmark SVG, icons)
-package.json          • dependencies & scripts
-tsconfig.json         • TypeScript configuration
-tailwind.config.js    • Tailwind v4 configuration
-eslint.config.mjs     • ESLint config
-next.config.ts        • Next.js settings
-.env*                 • (none required currently; .gitignore covers them)
-```
-
-Only the folders and files that exist in the repository are listed; redundant or unused files have been removed during the recent organization pass.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org) **v20 or later** (the project uses Next 16 which requires Node 20+).
-- [pnpm](https://pnpm.io) (recommended) – the lockfile is `pnpm-lock.yaml`. If you prefer npm or yarn, the scripts in `package.json` will also work with those managers.
-
-### Installation
+**Requirements:** Node.js 20+ and npm (the repository ships a `package-lock.json`).
 
 ```bash
-# 1️⃣ Clone the repository
 git clone https://github.com/naresh-cn2/cn2-identity-hub.git
 cd cn2-identity-hub
-
-# 2️⃣ Install dependencies (pnpm)
-pnpm install
-# or with npm/yarn:
-#   npm install
-#   yarn install
+npm install
+npm run dev        # development server → http://localhost:3000
 ```
 
-### Running in Development
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Development server with hot reload |
+| `npm run lint` | ESLint across the codebase |
+| `npm run build` | Type-check + production build (all routes prerendered) |
+| `npm start` | Serve the production build locally |
 
-```bash
-pnpm dev
-# or
-npm run dev
-# or
-yarn dev
-```
+---
 
-The development server starts at <http://localhost:3000>. Open that URL in a browser to see the site. Hot‑module replacement is enabled; modifying any `app/`, `components/`, or `data/` file updates the page automatically.
+## Environment variables
 
-### Linting
+The site runs with **no** environment variables. One optional integration exists — the testimonials publishing pipeline (see `.env.example`):
 
-```bash
-pnpm lint
-# or
-npm run lint
-# or
-yarn lint
-```
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `REVIEWS_GH_TOKEN` | — | Fine-grained GitHub token (Contents: Read+Write on this repository). Enables automatic publishing of approved reviews. Without it, submissions are accepted into the owner's private server logs and publishing stays off. |
+| `REVIEWS_REPO` | `naresh-cn2/cn2-identity-hub` | Repository used as the review store |
+| `REVIEWS_PUBLISH_MODE` | `auto` | `auto` publishes validated, consented 4–5★ reviews immediately; `queue` commits them as pending until their status is flipped to `published` |
 
-ESlint runs against the whole codebase. No errors or warnings are produced when the code is in a clean state.
+### How reviews are stored
 
-### Building for Production
+Serverless filesystems are ephemeral and this project has no database, so the repository itself is the store: a validated submission with publication consent and a positive rating is committed to `data/testimonials.json` through the GitHub API, the existing GitHub → Vercel pipeline rebuilds, and the review appears on the site automatically. Lower ratings and reviews without publication consent are **never** committed — the repository is public, so that private feedback lives only in the owner's function logs. Public pages show per-review ratings only; no aggregate score is ever computed from a filtered set.
 
-```bash
-pnpm build
-# or
-npm run build
-# or
-yarn build
-```
+---
 
-This invokes `next build`, which:
+## Quality standards
 
-- Type‑checks all `.tsx` files.
-- Prerenders every route listed in the app directory (SSG/Static HTML).
-- Emits the `.next` build cache and `out/` directory (if using the older export).
-- Produces a production‑optimized bundle.
+- **Editorial honesty** — real evidence only; synthetic visuals are labeled `ILLUSTRATIVE`; testimonials appear only with the writer's consent and their own rating.
+- **Responsive** — verified with rendered overflow sweeps from 320 px to 2560 px on every route; touch devices receive enlarged hit areas for compact controls while desktop sizing stays untouched.
+- **Accessible** — keyboard-completable interactions (including the star-rating radiogroup), focus-visible states, reduced-motion freezes every animation at its neutral rest state.
+- **Performance-conscious** — static generation for all content routes; canvases are DPR-capped, pause when the tab is hidden, and degrade deliberately on small screens.
+- **SEO** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs.
 
-The just‑completed build output (as of the last successful run) shows all expected routes, e.g.:
+---
+
+## Repository structure
 
 ```
-/, /builds, /case-studies, /services, /lab, /research, /about,
-/opportunities, /contact, /intelligence, /credentials, /how‑i‑work,
-/cv, /proof, /links, /work‑with‑me
-plus all slugged sub‑routes.
+app/                     App Router routes (see the route table above)
+  api/testimonials/      Reviews intake — validation, rate limiting, publishing
+components/
+  builds/  projects/     Showcase stack, project worlds, architecture explorer
+  case-study/  viz/      Evidence instruments, charts, schematics, canvas scenes
+  hub/  testimonials/    Headquarters sections; review form, grid, endorsements
+  layout/  ui/           Navbar, footer, ambience layer; reveal, atmosphere
+data/                    Single source of truth — site, projects, worlds, reviews…
+lib/                     Review submission validation (pure, framework-free)
+public/                  Static assets (hero renders, identity photography)
+app/globals.css          Design tokens, themes, motion system (Tailwind v4)
+.env.example             Reviews publishing configuration
 ```
 
-### Starting the Production Server
-
-```bash
-pnpm start
-# or
-npm start
-# or
-yarn start
-```
-
-Serves the `.next` build on <http://localhost:3000>. This mirrors the Vercel production environment.
+Adding a project world = one entry in `data/project-worlds.ts`; navigation and sections derive from the registered content automatically.
 
 ---
 
-## Available Scripts (package.json)
+## License & contact
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| `dev` | `next dev` | Starts the Next.js development server with HMR. |
-| `build` | `next build` | Produces a production build (type‑check + SSG). |
-| `start` | `next start` | Serves the production build locally. |
-| `lint` | `eslint` | Runs ESLint across the codebase. |
+No license file is published — this is a personal project; all rights reserved.
 
-> **Note:** No test script is currently configured. If you add Jest, Playwright, or similar, you can extend `package.json` accordingly.
-
----
-
-## Environment Variables
-
-The repository’s `.gitignore` already contains `*.env*`, meaning any `.env` files you create will be ignored by Git. At present the site does **not** require any environment variables to run. If you need to inject configuration (e.g., a Google Analytics ID), add a `.env.local` file and reference `process.env.YOUR_VAR` in your code; just remember to add the variable to `.gitignore` if it contains secrets.
-
----
-
-## Deployment
-
-The project is configured for seamless deployment on **Vercel**:
-
-1. Connect the GitHub repository `naresh-cn2/cn2-identity-hub` to a new Vercel project.
-2. Vercel will automatically run `pnpm build` on each push to `main`.
-3. The production site will be available at `https://cn2-identity-hub.vercel.app/` (the current live URL).
-
-No special `vercel.json` configuration is required beyond the default Next.js preset. If you add server‑side functions, place them in `api/` and they will be auto‑deployed.
-
----
-
-## Repository Organization (for future maintainers)
-
-- **`app/`** – All route files and page components. The App Router structure mirrors the specification’s route tree.
-- **`components/`** – Reusable UI pieces, grouped by domain (home, navigation, visualizations, case‑study, lab, contact, layout, generic UI).
-- **`data/`** – Single‑source‑of‑truth data modules (`site.ts`, `capabilities.ts`, `case-studies.ts`, `services.ts`, `lab.ts`). These drive the static site generation and navigation metadata.
-- **`public/`** – Static assets: the hero background image, CN2.DEV wordmark SVG, favicons, and any other publicly referenced files.
-- **`styles/`** – Tailwind‑based styling; no separate CSS repo. All design tokens (colors, fonts, breakpoints) live in `tailwind.config.js`.
-- **`package.json` / `pnpm-lock.yaml`** – Dependencies and reproducible installs.
-- **`tsconfig.json`** – TypeScript strict mode; no `any` unless truly necessary.
-- **`eslint.config.mjs`** – Linting rules aligned with the Next.js recommended config plus custom rules (e.g., no `console.log` in production, accessible anchor patterns).
-
-When adding new pages or features, prefer extending existing modules rather than creating parallel implementations. Keep route slugs stable and reference them from `sitemap.ts` and the navigation config.
-
----
-
-## Contributing
-
-1. **Preserve existing work.** Before making any changes, run `pnpm build` and `pnpm lint` to confirm the baseline is clean.
-2. **Create a feature branch** off `main` (e.g., `git checkout -b feat/new‑lab‑tool`).
-3. **Implement** the change, keeping the cinematic visual direction, accessibility, and theming constraints in mind.
-4. **Test** locally: `pnpm dev`, verify dark/light theme toggle, check reduced‑motion preference.
-5. **Commit** with a descriptive message (e.g., `chore(repo): add risk‑calculator accessible labels`).
-6. **Push** and open a Pull Request against `main`. The CI (Vercel preview) will automatically run the build; resolve any failures before merging.
-7. **Respect the `.gitignore`** – never commit `.next`, `node_modules`, `*.env*`, or Vercel cache files.
-
-If you are unsure whether a change fits the project’s scope, open a discussion issue first.
-
----
-
-## License
-
-No license file is currently present in the repository. If you wish to add one, consider a permissive license (e.g., MIT) or a custom statement that reflects the quantitative‑research nature of the project. Until a license is added, the code is for personal/internal use only.
-
----
-
-## Contact
-
-- **GitHub:** <https://github.com/naresh-cn2/cn2-identity-hub>
-- **Live site:** <https://cn2-identity-hub.vercel.app/>
-- **Author:** BUKYA NARESH – Quantitative Developer & Researcher
-
----
-
-*Generated on 2026‑10‑12. The repository is in a clean, buildable state with all routes prerendered, lint passing, and TypeScript checks passing.*
+**Bukya Naresh** — Quantitative Developer · [Live site](https://cn2-identity-hub.vercel.app) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub)
