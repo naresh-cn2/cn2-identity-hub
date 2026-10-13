@@ -37,8 +37,12 @@ jobs:
       - name: Serve production build
         shell: powershell
         run: |
-          $proc = Start-Process -FilePath npm -ArgumentList "run","start" -PassThru -NoNewWindow
-          "SERVER_PID=$($proc.Id)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          # Start-Process cannot execute the npm.cmd shim on Windows, so
+          # launch next's bin through node.exe directly.
+          $log = Join-Path $env:RUNNER_TEMP "next-start.log"
+          $err = Join-Path $env:RUNNER_TEMP "next-start.err"
+          $proc = Start-Process -FilePath "node" -ArgumentList "node_modules\next\dist\bin\next","start" -PassThru -NoNewWindow -RedirectStandardOutput $log -RedirectStandardError $err
+          "SERVER_PID=$($proc.Id)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding ascii
           $ok = $false
           for ($i = 0; $i -lt 60; $i++) {
             try {
@@ -46,7 +50,14 @@ jobs:
               if ($r.StatusCode -eq 200) { $ok = $true; break }
             } catch { Start-Sleep -Seconds 1 }
           }
-          if (-not $ok) { Write-Error "server did not come up"; exit 1 }
+          if (-not $ok) {
+            Write-Host "::error::server did not come up on :3000"
+            if (Test-Path $log) { Get-Content $log -Tail 40 }
+            if (Test-Path $err) { Get-Content $err -Tail 40 }
+            netstat -ano | Select-String ":3000"
+            exit 1
+          }
+          Write-Host "server up (pid $($proc.Id)) after $i s"
 
       - name: QA suites
         shell: powershell
