@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { RELATIONSHIP_LABELS, type Relationship } from "@/data/testimonials";
+import TiltCard from "@/components/ui/tilt-card";
 import { Stars } from "./stars";
 
 /** Serialized review view-model, built server-side by the testimonials page. */
@@ -59,7 +60,8 @@ export default function TestimonialGrid({ items }: { items: TestimonialView[] })
 
             <div className="mt-8 grid gap-6 md:grid-cols-2 md:gap-8">
                 {shown.map((t) => (
-                    <figure key={t.id} className="flex h-full flex-col border border-line bg-surface/40 p-6 md:p-8">
+                    <TiltCard key={t.id} className="h-full">
+                        <figure className="flex h-full flex-col border border-line bg-surface/40 p-6 md:p-8">
                         <div className="flex items-center justify-between gap-4">
                             <Stars rating={t.rating} className="text-signal" />
                             <span className="label-mono text-faint">{t.dateLabel}</span>
@@ -84,7 +86,8 @@ export default function TestimonialGrid({ items }: { items: TestimonialView[] })
                                 )}
                             </div>
                         </figcaption>
-                    </figure>
+                        </figure>
+                    </TiltCard>
                 ))}
             </div>
         </>

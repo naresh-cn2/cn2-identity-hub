@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
@@ -95,7 +96,7 @@ export default async function ResearchEntryPage({
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-6 max-w-5xl text-[clamp(2rem,5.4vw,4.4rem)]">{entry.title}</h1>
+            <KineticText className="display mt-6 max-w-5xl text-[clamp(2rem,5.4vw,4.4rem)]">{entry.title}</KineticText>
           </Reveal>
 
           <Reveal delay={180}>

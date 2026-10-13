@@ -6,7 +6,7 @@ export function Stars({ rating, className = "" }: { rating: number; className?: 
     const clamped = Math.min(5, Math.max(1, Math.round(rating)));
     return (
         <span
-            className={`inline-flex items-center gap-1 ${className}`}
+            className={`star-row inline-flex items-center gap-1 ${className}`}
             role="img"
             aria-label={`Rated ${clamped} of 5`}
         >

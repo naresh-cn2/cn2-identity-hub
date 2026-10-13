@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
+import TiltCard from "@/components/ui/tilt-card";
 import ProjectSignature from "@/components/projects/project-signature";
 import { TAG_TONE } from "./project-mark";
 import { archiveCategories, type ArchiveCategory, type ArchiveProject } from "@/data/archive";
@@ -90,11 +91,11 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
   );
 
   const visual = (
-    <div className={`min-w-0 ${flip ? "lg:order-2" : ""}`}>
+    <TiltCard className={`min-w-0 ${flip ? "lg:order-2" : ""}`} max={2.5}>
       <Link href={`/builds/${project.id}`} aria-hidden="true" tabIndex={-1} className="block">
         <ProjectSignature project={project} />
       </Link>
-    </div>
+    </TiltCard>
   );
 
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
@@ -124,7 +125,7 @@ export default function OpportunitiesPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">OPEN TO MEANINGFUL WORK.</h1>
+            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]">OPEN TO MEANINGFUL WORK.</KineticText>
           </Reveal>
           <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center">
             <Reveal delay={200}>

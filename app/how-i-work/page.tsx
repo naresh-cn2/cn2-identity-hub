@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import KineticText from "@/components/ui/kinetic-text";
 import Link from 'next/link';
 import Reveal from '@/components/ui/reveal';
 import PageAtmosphere from '@/components/ui/page-atmosphere';
@@ -36,7 +37,7 @@ export default function HowIWorkPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>HOW I WORK</h1>
+            <KineticText className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>HOW I WORK</KineticText>
           </Reveal>
           <Reveal delay={200}>
             <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>

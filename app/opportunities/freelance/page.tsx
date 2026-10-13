@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
@@ -34,11 +35,9 @@ export default function FreelancePage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(2.8rem,9vw,7rem)]">
+            <KineticText accent={"CONTRACTS"} className="display mt-8 text-[clamp(2.8rem,9vw,7rem)]">
               FREELANCE
-              <br />
-              <span className="text-signal">CONTRACTS</span>
-            </h1>
+            </KineticText>
           </Reveal>
           <Reveal delay={200}>
             <div className="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">

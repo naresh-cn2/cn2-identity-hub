@@ -86,6 +86,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* theme cross-fade — the canvas dissolves between day and night */
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
@@ -1309,5 +1311,190 @@ button.corner-ticks {
   .cn2-floor-glow,
   .cn2-text-tint {
     transition: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   CINEMATIC PASS — site-wide depth & motion layer
+   kinetic headings · 3D tilt cards · cursor light · scroll reel ·
+   route-change veil · palette spring · star twinkle
+---------------------------------------------------------------- */
+
+/* route-change vignette — a shutter flash at the edges while the new page
+   settles; the centre of the screen stays clear so content never hides */
+@keyframes curtain-veil-fade {
+  0% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.curtain-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 69;
+  pointer-events: none;
+  background: radial-gradient(130% 100% at 50% 50%,
+      transparent 38%,
+      color-mix(in srgb, var(--background) 62%, transparent) 84%);
+  animation: curtain-veil-fade 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* kinetic headings — words rise out of a clipped mask, one after another */
+.kinetic .kt-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.kinetic .kt-inner {
+  display: inline-block;
+  transform: translateY(115%);
+}
+
+.kinetic.is-visible .kt-inner {
+  animation: kt-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes kt-rise {
+  from {
+    transform: translateY(115%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* 3D tilt cards — the card leans toward the pointer, a specular glare
+   tracks the contact point, then everything settles flat on leave */
+.tilt-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tilt-card:hover {
+  transition: transform 0.12s ease-out;
+}
+
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(260px 260px at var(--kt-x, 50%) var(--kt-y, 50%),
+      color-mix(in srgb, var(--foreground) 8%, transparent),
+      transparent 70%);
+}
+
+.tilt-card:hover .tilt-glare {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .tilt-card,
+  .tilt-card:hover {
+    transition: none;
+  }
+
+  .tilt-glare {
+    display: none;
+  }
+}
+
+/* scroll reel — a signal-to-research hairline tracks reading progress */
+.scroll-progress-bar {
+  width: 100%;
+  background: linear-gradient(90deg, var(--signal), var(--research));
+  transform: scaleX(0);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* cursor light — a soft studio glow trails the pointer through the room */
+.cursor-light-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 32rem;
+  height: 32rem;
+  border-radius: 9999px;
+  opacity: 0;
+  transform: translate3d(50vw, 45vh, 0) translate(-50%, -50%);
+  transition: opacity 0.6s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  background: radial-gradient(closest-side,
+      color-mix(in srgb, var(--research) 6%, transparent),
+      transparent 72%);
+}
+
+.dark .cursor-light-dot {
+  background: radial-gradient(closest-side,
+      color-mix(in srgb, var(--research) 11%, transparent),
+      transparent 72%);
+}
+
+/* command palette — rows cascade in behind the springing panel */
+[data-open="true"] [role="option"] {
+  animation: palette-row 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(min(var(--pr-i, 0), 9) * 28ms);
+}
+
+@keyframes palette-row {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* star twinkle — each star catches the light a beat after the last */
+.star-row svg {
+  transition: transform 0.3s ease;
+}
+
+.star-row:hover svg {
+  animation: star-twinkle 1.1s ease-in-out both;
+}
+
+.star-row:hover svg:nth-child(2) {
+  animation-delay: 0.09s;
+}
+
+.star-row:hover svg:nth-child(3) {
+  animation-delay: 0.18s;
+}
+
+.star-row:hover svg:nth-child(4) {
+  animation-delay: 0.27s;
+}
+
+.star-row:hover svg:nth-child(5) {
+  animation-delay: 0.36s;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.25) rotate(-6deg);
   }
 }

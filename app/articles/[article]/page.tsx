@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
@@ -88,7 +89,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ articl
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h1 className="display mt-6 max-w-5xl text-[clamp(1.9rem,5.2vw,4.2rem)]">{article.title}</h1>
+              <KineticText className="display mt-6 max-w-5xl text-[clamp(1.9rem,5.2vw,4.2rem)]">{article.title}</KineticText>
             </Reveal>
             <Reveal delay={180}>
               <p className="mt-8 max-w-3xl text-lg leading-relaxed text-muted md:text-xl">{article.dek}</p>

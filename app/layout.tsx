@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono, Orbitron } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Navbar from "@/components/layout/navbar";
@@ -8,6 +8,8 @@ import CommandPalette from "@/components/layout/command-palette";
 import PageTransition from "@/components/layout/page-transition";
 import SiteAmbience from "@/components/layout/site-ambience";
 import BackButton from "@/components/layout/back-button";
+import ScrollProgress from "@/components/layout/scroll-progress";
+import CursorLight from "@/components/layout/cursor-light";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -19,12 +21,6 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-plex-mono",
-});
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["700", "800", "900"],
-  variable: "--font-orbitron",
 });
 
 export const metadata: Metadata = {
@@ -80,7 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`dark ${archivo.variable} ${plexMono.variable} ${orbitron.variable}`}
+      className={`dark ${archivo.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -97,6 +93,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           <CommandPalette />
           <SiteAmbience />
+          <CursorLight />
+          <ScrollProgress />
           <PageTransition>
             <main id="main">{children}</main>
           </PageTransition>

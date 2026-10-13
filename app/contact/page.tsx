@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
@@ -57,7 +58,7 @@ export default function ContactPage() {
                         </p>
                     </Reveal>
                     <Reveal delay={100}>
-                        <h1 className="display mt-8 text-[clamp(3rem,12vw,9rem)]">LET&apos;S BUILD SOMETHING MEANINGFUL.</h1>
+                        <KineticText className="display mt-8 text-[clamp(3rem,12vw,9rem)]">LET&apos;S BUILD SOMETHING MEANINGFUL.</KineticText>
                     </Reveal>
                     <Reveal delay={180}>
                         <p className="label-mono mt-6 flex items-center justify-center gap-2 text-foreground">

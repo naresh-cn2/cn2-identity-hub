@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
@@ -47,11 +48,9 @@ export default function LinksPage() {
             </p>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(2.6rem,8vw,5.5rem)]">
+            <KineticText accent={site.identity} className="display mt-8 text-[clamp(2.6rem,8vw,5.5rem)]">
               {site.name}
-              <br />
-              <span className="text-signal">{site.identity}</span>
-            </h1>
+            </KineticText>
             <p className="display-condensed mt-6 text-2xl text-muted md:text-3xl">
               {site.system} / {site.descriptor}
             </p>

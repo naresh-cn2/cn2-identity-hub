@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
@@ -100,7 +101,7 @@ export default function ResearchPage() {
           <div className="mt-8 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:gap-16">
             <div>
               <Reveal delay={100}>
-                <h1 className="display text-[clamp(3rem,10vw,8rem)]">QUESTIONS INTO EVIDENCE.</h1>
+                <KineticText className="display text-[clamp(3rem,10vw,8rem)]">QUESTIONS INTO EVIDENCE.</KineticText>
               </Reveal>
               <Reveal delay={200}>
                 <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">

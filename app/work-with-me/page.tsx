@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import { engagementAreas } from "@/data/lab";
 import { site, utilityLinks } from "@/data/site";
@@ -84,11 +85,9 @@ export default function WorkWithMePage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(2.8rem,9.5vw,7.5rem)]">
+            <KineticText accent={"WITH ME"} className="display mt-8 text-[clamp(2.8rem,9.5vw,7.5rem)]">
               WORK
-              <br />
-              <span className="text-signal">WITH ME</span>
-            </h1>
+            </KineticText>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">

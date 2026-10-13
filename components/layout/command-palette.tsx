@@ -198,6 +198,7 @@ export default function CommandPalette() {
     <div
       className={`fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[14vh] transition-opacity duration-200 print:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
+      data-open={open}
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
@@ -210,7 +211,7 @@ export default function CommandPalette() {
         aria-hidden="true"
       />
       <div
-        className={`relative w-full max-w-xl border border-line bg-background shadow-2xl transition-all duration-200 ${open ? "translate-y-0 scale-100 opacity-100" : "-translate-y-2 scale-[0.98] opacity-0"
+        className={`scanlines relative w-full max-w-xl border border-line bg-background shadow-2xl transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "translate-y-0 scale-100 opacity-100" : "-translate-y-3 scale-[0.96] opacity-0"
           }`}
       >
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
@@ -246,6 +247,7 @@ export default function CommandPalette() {
                     role="option"
                     aria-selected={isActive}
                     data-active={isActive}
+                    style={{ "--pr-i": idx } as React.CSSProperties}
                     onMouseEnter={() => setActive(idx)}
                     onClick={() => run(cmd)}
                     className={`flex w-full items-center justify-between gap-4 px-4 py-2.5 text-left transition-colors duration-100 ${isActive ? "bg-signal-soft text-foreground" : "text-muted hover:text-foreground"

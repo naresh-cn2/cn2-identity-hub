@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import KineticText from "@/components/ui/kinetic-text";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import PageAtmosphere from "@/components/ui/page-atmosphere";
@@ -76,11 +77,9 @@ export default function CvPage() {
             <p className="label-mono text-faint print:hidden">CTRL/CMD + P — PRINT OR SAVE AS PDF</p>
           </div>
 
-          <h1 className="display mt-8 text-[clamp(2.75rem,8vw,5.5rem)] print:mt-4 print:text-4xl">
+          <KineticText accent={site.identity} className="display mt-8 text-[clamp(2.75rem,8vw,5.5rem)] print:mt-4 print:text-4xl">
             {site.name}
-            <br />
-            <span className="text-signal">{site.identity}</span>
-          </h1>
+          </KineticText>
 
           <p className="display-condensed mt-6 text-2xl text-muted md:text-3xl">
             {site.system} / {site.descriptor}

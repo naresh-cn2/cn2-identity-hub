@@ -38,12 +38,15 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         {children}
       </div>
       {sweeping && (
-        <div
-          key={sweep}
-          className="curtain-signal"
-          aria-hidden="true"
-          onAnimationEnd={() => setSweeping(false)}
-        />
+        <>
+          <div key={`veil-${sweep}`} className="curtain-veil" aria-hidden="true" />
+          <div
+            key={`sig-${sweep}`}
+            className="curtain-signal"
+            aria-hidden="true"
+            onAnimationEnd={() => setSweeping(false)}
+          />
+        </>
       )}
     </>
   );
