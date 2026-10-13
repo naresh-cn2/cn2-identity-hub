@@ -3,6 +3,7 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import PosterPlate from "@/components/viz/poster-plates";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -51,11 +52,22 @@ export default function LinksPage() {
             <KineticText accent={site.identity} className="display mt-8 text-[clamp(2.6rem,8vw,5.5rem)]">
               {site.name}
             </KineticText>
-            <p className="display-condensed mt-6 text-2xl text-muted md:text-3xl">
-              {site.system} / {site.descriptor}
-            </p>
-            <p className="label-mono mt-4 text-faint">{site.subtitle}</p>
           </Reveal>
+          <div className="mt-6 grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-14">
+            <Reveal delay={160}>
+              <p className="display-condensed text-2xl text-muted md:text-3xl">
+                {site.system} / {site.descriptor}
+              </p>
+              <p className="label-mono mt-4 text-faint">{site.subtitle}</p>
+            </Reveal>
+            <Reveal delay={220}>
+              <PosterPlate
+                variant="beacon"
+                label="PLATE / BEACON"
+                alt="Illustration: a beacon node sending slow ripples out to six orbiting destination nodes, one of them lit red."
+              />
+            </Reveal>
+          </div>
         </div>
       </header>
 

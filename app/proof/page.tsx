@@ -3,6 +3,7 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import PosterPlate from "@/components/viz/poster-plates";
 import { archiveProjects } from "@/data/archive";
 import { researchEntries } from "@/data/research";
 import { credentials } from "@/data/certifications";
@@ -48,13 +49,22 @@ export default function ProofPage() {
                     <Reveal delay={100}>
                         <KineticText className="display mt-8 text-[clamp(2.8rem,9vw,7rem)]">PROOF</KineticText>
                     </Reveal>
-                    <Reveal delay={200}>
-                        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-                            The repositories, the reproduced research and the measured figures behind my
-                            work — each one labelled for the kind of result it is, and each linked to its
-                            source.
-                        </p>
-                    </Reveal>
+                    <div className="mt-8 grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-14">
+                        <Reveal delay={200}>
+                            <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                                The repositories, the reproduced research and the measured figures behind my
+                                work — each one labelled for the kind of result it is, and each linked to its
+                                source.
+                            </p>
+                        </Reveal>
+                        <Reveal delay={260}>
+                            <PosterPlate
+                                variant="vault"
+                                label="PLATE / PROOF"
+                                alt="Illustration: a monolith of stacked record strata — three rows lit blue, one marked red — standing in portal light above a reflective floor."
+                            />
+                        </Reveal>
+                    </div>
                 </div>
             </header>
 

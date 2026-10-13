@@ -7,6 +7,7 @@ import Footer from "@/components/layout/footer";
 import CommandPalette from "@/components/layout/command-palette";
 import PageTransition from "@/components/layout/page-transition";
 import SiteAmbience from "@/components/layout/site-ambience";
+import StageVFX from "@/components/cinematic/stage-vfx";
 import BackButton from "@/components/layout/back-button";
 import ScrollProgress from "@/components/layout/scroll-progress";
 import CursorLight from "@/components/layout/cursor-light";
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           <CommandPalette />
           <SiteAmbience />
+          <StageVFX />
           <CursorLight />
           <ScrollProgress />
           <PageTransition>

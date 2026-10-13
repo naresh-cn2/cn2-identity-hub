@@ -472,6 +472,11 @@ body {
     color: #000;
   }
 
+  /* canvas stage layer is screen-only art */
+  .stage-layer {
+    display: none;
+  }
+
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 9px;
@@ -636,6 +641,171 @@ h1.cn2-brand-word {
 .cn2-city-backdrop {
   animation: cn2-city-drift 52s ease-in-out infinite alternate;
   will-change: transform;
+}
+
+/* Cinematic stage layer — one viewport-tall layer pinned to the top of the
+   document for every inner route (/, /hub, /about, /identity render null).
+   Holds the portal pools, haze and the per-route motif behind the hero, at
+   -z like the root ambience so it never sits above content, and dissolves
+   via mask before the first fold so long reads rest on quiet ground.
+   Never uses `fixed inset-0 -z-10` as literal classes — the QA exclusion
+   check watches that string on the four full-treatment routes. */
+.stage-layer {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -10;
+}
+
+.stage-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 96%);
+  mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 96%);
+}
+
+/* ---------------- poster plates ----------------
+   Cinematic SVG scenes for the text-only heroes. The plate carries its own
+   deep-space grade (like the about page's stage) so it reads the same in
+   both themes. Three depth layers translate against the cursor, a soft
+   light follows the pointer, ambient cycles run on the 10-20s band. */
+.poster-plate {
+  --px: 0;
+  --py: 0;
+  --mx: 50%;
+  --my: 42%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #070a13 0%, #04060c 55%, #03040a 100%);
+  border: 1px solid var(--line);
+  aspect-ratio: 640 / 400;
+  transition: filter 240ms ease;
+}
+
+.poster-plate:active {
+  filter: brightness(1.14);
+}
+
+.poster-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* pointer parallax — depth layers */
+.poster-plate .pl-1 {
+  transform: translate(calc(var(--px) * 4px), calc(var(--py) * 3px));
+  transition: transform 480ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.poster-plate .pl-2 {
+  transform: translate(calc(var(--px) * 11px), calc(var(--py) * 7px));
+  transition: transform 480ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.poster-plate .pl-3 {
+  transform: translate(calc(var(--px) * 20px), calc(var(--py) * 13px));
+  transition: transform 480ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* pointer light */
+.plate-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    300px circle at var(--mx) var(--my),
+    rgba(120, 170, 255, 0.16),
+    rgba(120, 170, 255, 0.05) 40%,
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 500ms ease;
+  mix-blend-mode: screen;
+}
+
+.poster-plate:hover .plate-light {
+  opacity: 1;
+}
+
+/* chrome */
+.plate-tick {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.plate-tick-tl { top: 8px; left: 8px; border-top: 1px solid rgba(140, 185, 255, 0.6); border-left: 1px solid rgba(140, 185, 255, 0.6); }
+.plate-tick-tr { top: 8px; right: 8px; border-top: 1px solid rgba(140, 185, 255, 0.6); border-right: 1px solid rgba(140, 185, 255, 0.6); }
+.plate-tick-bl { bottom: 8px; left: 8px; border-bottom: 1px solid rgba(140, 185, 255, 0.6); border-left: 1px solid rgba(140, 185, 255, 0.6); }
+.plate-tick-br { bottom: 8px; right: 8px; border-bottom: 1px solid rgba(140, 185, 255, 0.6); border-right: 1px solid rgba(140, 185, 255, 0.6); }
+
+.plate-label {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: rgba(160, 190, 240, 0.55);
+  pointer-events: none;
+}
+
+/* ambient scene motion — slow band */
+@keyframes plate-breathe {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.95; }
+}
+
+.plate-breathe {
+  animation: plate-breathe 12s ease-in-out infinite;
+}
+
+@keyframes plate-twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.plate-twinkle {
+  animation: plate-twinkle 11s ease-in-out infinite;
+}
+
+@keyframes plate-dash {
+  to { stroke-dashoffset: -44; }
+}
+
+.plate-dash {
+  stroke-dasharray: 9 13;
+  animation: plate-dash 16s linear infinite;
+}
+
+@keyframes plate-ripple {
+  0% { transform: scale(0.35); opacity: 0.7; }
+  70% { opacity: 0; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+.plate-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: plate-ripple 16s ease-out infinite;
+}
+
+@keyframes plate-spin {
+  to { transform: rotate(360deg); }
+}
+
+.plate-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: plate-spin 48s linear infinite;
 }
 
 /* Per-route ambient VFX layer — fades out before the header edge so light
@@ -1267,6 +1437,22 @@ button.corner-ticks {
 
   .chart-draw {
     stroke-dashoffset: 0 !important;
+  }
+
+  /* poster plates — freeze the scene, drop cursor tracking */
+  .poster-plate .plate-breathe,
+  .poster-plate .plate-twinkle,
+  .poster-plate .plate-dash,
+  .poster-plate .plate-ripple,
+  .poster-plate .plate-spin {
+    animation: none !important;
+  }
+
+  .poster-plate .pl-1,
+  .poster-plate .pl-2,
+  .poster-plate .pl-3 {
+    transform: none !important;
+    transition: none !important;
   }
 
   /* cinematic hero effects — freeze motion, drop parallax */

@@ -3,6 +3,7 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from 'next/link';
 import Reveal from '@/components/ui/reveal';
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import PosterPlate from "@/components/viz/poster-plates";
 
 
 export const metadata: Metadata = {
@@ -39,18 +40,27 @@ export default function HowIWorkPage() {
           <Reveal delay={100}>
             <KineticText className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>HOW I WORK</KineticText>
           </Reveal>
-          <Reveal delay={200}>
-            <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>
-              My process for technical work, from first conversation to delivery:
-              discover the real need, define requirements, research options,
-              specify details, design the architecture, build, test against
-              edge cases, validate the results, deliver with documentation,
-              and iterate on feedback.
-              Every claim stays checkable, every limitation is documented,
-              and each figure comes with its method — so results can be
-              challenged without anyone taking them on faith.
-            </p>
-          </Reveal>
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-14">
+            <Reveal delay={200}>
+              <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                My process for technical work, from first conversation to delivery:
+                discover the real need, define requirements, research options,
+                specify details, design the architecture, build, test against
+                edge cases, validate the results, deliver with documentation,
+                and iterate on feedback.
+                Every claim stays checkable, every limitation is documented,
+                and each figure comes with its method — so results can be
+                challenged without anyone taking them on faith.
+              </p>
+            </Reveal>
+            <Reveal delay={260}>
+              <PosterPlate
+                variant="bench"
+                label="PLATE / WORKBENCH"
+                alt="Illustration: a seated figure at a three-screen workbench, screens glowing blue in the dark beside a small red mug."
+              />
+            </Reveal>
+          </div>
         </div>
       </section>
 

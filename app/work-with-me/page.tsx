@@ -5,6 +5,7 @@ import { engagementAreas } from "@/data/lab";
 import { site, utilityLinks } from "@/data/site";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import PosterPlate from "@/components/viz/poster-plates";
 
 export const metadata: Metadata = {
   title: "Work With Me",
@@ -89,17 +90,28 @@ export default function WorkWithMePage() {
               WORK
             </KineticText>
           </Reveal>
-          <Reveal delay={200}>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Research-grade engineering for quantitative problems. This is an individual practice —
-              one person, named on every deliverable, no agency and no bench behind the curtain.
-            </p>
-          </Reveal>
-          <Reveal delay={280}>
-            <p className="label-mono mt-8 text-muted">
-              {site.name} / {site.identity} / {site.system}
-            </p>
-          </Reveal>
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-14">
+            <div>
+              <Reveal delay={200}>
+                <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                  Research-grade engineering for quantitative problems. This is an individual practice —
+                  one person, named on every deliverable, no agency and no bench behind the curtain.
+                </p>
+              </Reveal>
+              <Reveal delay={280}>
+                <p className="label-mono mt-8 text-muted">
+                  {site.name} / {site.identity} / {site.system}
+                </p>
+              </Reveal>
+            </div>
+            <Reveal delay={320}>
+              <PosterPlate
+                variant="threshold"
+                label="PLATE / THRESHOLD"
+                alt="Illustration: a hooded figure seen from behind, rim-lit red on one side and portal-blue on the other, standing where three light paths converge."
+              />
+            </Reveal>
+          </div>
         </div>
       </header>
 

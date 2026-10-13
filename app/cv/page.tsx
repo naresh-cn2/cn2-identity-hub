@@ -3,6 +3,7 @@ import KineticText from "@/components/ui/kinetic-text";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import PageAtmosphere from "@/components/ui/page-atmosphere";
+import PosterPlate from "@/components/viz/poster-plates";
 import { capabilities } from "@/data/capabilities";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
@@ -86,33 +87,42 @@ export default function CvPage() {
           </p>
           <p className="label-mono mt-4 text-faint">{site.subtitle}</p>
 
-          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 print:mt-5">
-            <li className="min-w-0">
-              <a
-                href={site.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-line label-mono break-words text-muted"
-              >
-                GITHUB / {displayUrl(site.links.github)}
-              </a>
-            </li>
-            <li className="min-w-0">
-              <a
-                href={site.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-line label-mono break-words text-muted"
-              >
-                LINKEDIN / {displayUrl(site.links.linkedin)}
-              </a>
-            </li>
-            <li className="min-w-0">
-              <a href={site.links.email} className="link-line label-mono break-words text-muted">
-                EMAIL / {site.email}
-              </a>
-            </li>
-          </ul>
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-14 print:mt-5">
+            <ul className="flex flex-wrap gap-x-8 gap-y-3">
+              <li className="min-w-0">
+                <a
+                  href={site.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-line label-mono break-words text-muted"
+                >
+                  GITHUB / {displayUrl(site.links.github)}
+                </a>
+              </li>
+              <li className="min-w-0">
+                <a
+                  href={site.links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-line label-mono break-words text-muted"
+                >
+                  LINKEDIN / {displayUrl(site.links.linkedin)}
+                </a>
+              </li>
+              <li className="min-w-0">
+                <a href={site.links.email} className="link-line label-mono break-words text-muted">
+                  EMAIL / {site.email}
+                </a>
+              </li>
+            </ul>
+            <div className="print:hidden">
+              <PosterPlate
+                variant="route"
+                label="PLATE / ROUTE"
+                alt="Illustration: a light path climbing over layered ridge lines through four glowing waypoints, the last one red, against a dawn horizon."
+              />
+            </div>
+          </div>
         </div>
       </header>
 

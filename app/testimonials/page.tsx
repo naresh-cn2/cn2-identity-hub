@@ -3,6 +3,7 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from 'next/link';
 import Reveal from '@/components/ui/reveal';
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import PosterPlate from "@/components/viz/poster-plates";
 import ReviewForm from '@/components/testimonials/review-form';
 import TestimonialGrid, { type TestimonialView } from '@/components/testimonials/testimonial-grid';
 import { Stars } from '@/components/testimonials/stars';
@@ -100,14 +101,23 @@ export default function TestimonialsPage() {
                     <Reveal delay={100}>
                         <KineticText className='display mt-8 text-[clamp(2.4rem,10vw,8rem)]'>TESTIMONIALS</KineticText>
                     </Reveal>
-                    <Reveal delay={200}>
-                        <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>
-                            Feedback from the people I&apos;ve worked with — collaborators, clients
-                            and peers. Each testimonial is published with the person&apos;s chosen
-                            attribution, their own rating and the context of the work, shared with
-                            their permission.
-                        </p>
-                    </Reveal>
+                    <div className="mt-8 grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end lg:gap-14">
+                        <Reveal delay={200}>
+                            <p className="max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+                                Feedback from the people I&apos;ve worked with — collaborators, clients
+                                and peers. Each testimonial is published with the person&apos;s chosen
+                                attribution, their own rating and the context of the work, shared with
+                                their permission.
+                            </p>
+                        </Reveal>
+                        <Reveal delay={260}>
+                            <PosterPlate
+                                variant="reserve"
+                                label="PLATE / RESERVED"
+                                alt="Illustration: a quiet night sky where eight faint stars ring one bright star — the reserved place a new testimonial will occupy."
+                            />
+                        </Reveal>
+                    </div>
                 </div>
             </section>
 
