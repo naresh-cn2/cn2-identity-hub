@@ -58,6 +58,24 @@ jobs:
             exit 1
           }
           Write-Host "server up (pid $($proc.Id)) after $i s"
+          # Snapshot loopback state right after the first 200 — handed to the
+          # QA step via GITHUB_ENV so its failure annotations can show whether
+          # a POST was already refused at this point (step-boundary issue)
+          # or only later (inherent GET/POST asymmetry).
+          $post = "unknown"
+          try {
+            $p = Invoke-WebRequest -Uri "http://localhost:3000/api/__ci-probe" -Method Post -ContentType "application/json" -Body "{}" -UseBasicParsing -TimeoutSec 5
+            $post = "HTTP $($p.StatusCode)"
+          } catch {
+            $pc = $null
+            try { $pc = $_.Exception.Response.StatusCode.value__ } catch { }
+            if ($pc) { $post = "HTTP $pc" } else { $post = "REFUSED" }
+          }
+          $listen = "none"
+          try { $listen = ((Get-NetTCPConnection -LocalPort 3000 -ErrorAction Stop | ForEach-Object { "$($_.LocalAddress):$($_.State):pid$($_.OwningProcess)" } | Sort-Object -Unique) -join "; ") } catch { }
+          $alive = "alive"
+          if (-not (Get-Process -Id $proc.Id -ErrorAction SilentlyContinue)) { $alive = "DEAD" }
+          "SERVE_PROBE=get200 post=$post listen=[$listen] pid=$($proc.Id):$alive" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding ascii
 
       - name: QA suites
         shell: powershell
@@ -66,12 +84,31 @@ jobs:
           # design. Every suite exits 0/1 deterministically; all four always
           # run so one run yields full signal, and failing lines are surfaced
           # as annotations (readable without log access).
-          $connDiag = ""
-          try { $connDiag += "dns=[" + (([System.Net.Dns]::GetHostAddresses("localhost") | ForEach-Object { $_.IPAddressToString }) -join ",") + "]" } catch { $connDiag += "dns=ERR" }
-          foreach ($a in @("127.0.0.1", "::1")) {
-            try { $t = New-Object System.Net.Sockets.TcpClient; $t.Connect($a, 3000); $t.Close(); $connDiag += " ${a}=OPEN" } catch { $connDiag += " ${a}=REFUSED" }
+          function Probe([string]$tag) {
+            $d = "$tag"
+            try { $d += " dns=[" + (([System.Net.Dns]::GetHostAddresses("localhost") | ForEach-Object { $_.IPAddressToString }) -join ",") + "]" } catch { $d += " dns=ERR" }
+            foreach ($a in @("127.0.0.1", "::1")) {
+              try { $t = New-Object System.Net.Sockets.TcpClient; $t.Connect([System.Net.IPAddress]::Parse($a), 3000); $t.Close(); $d += " ${a}=OPEN" } catch { $d += " ${a}=REFUSED" }
+            }
+            try { $g = Invoke-WebRequest -Uri "http://localhost:3000/" -UseBasicParsing -TimeoutSec 5; $d += " GET=$($g.StatusCode)" } catch { $d += " GET=ERR" }
+            try {
+              $p = Invoke-WebRequest -Uri "http://localhost:3000/api/__ci-probe" -Method Post -ContentType "application/json" -Body "{}" -UseBasicParsing -TimeoutSec 5
+              $d += " POST=$($p.StatusCode)"
+            } catch {
+              $pc = $null
+              try { $pc = $_.Exception.Response.StatusCode.value__ } catch { }
+              if ($pc) { $d += " POST=HTTP $pc" } else { $d += " POST=REFUSED" }
+            }
+            $listen = "none"
+            try { $listen = ((Get-NetTCPConnection -LocalPort 3000 -ErrorAction Stop | ForEach-Object { "$($_.LocalAddress):$($_.State):pid$($_.OwningProcess)" } | Sort-Object -Unique) -join "; ") } catch { }
+            $d += " listen=[$listen]"
+            $alive = "alive"
+            if (-not (Get-Process -Id $env:SERVER_PID -ErrorAction SilentlyContinue)) { $alive = "DEAD" }
+            $d += " pid=$($env:SERVER_PID):$alive"
+            Write-Host "connectivity $d"
+            return $d
           }
-          Write-Host "connectivity: $connDiag"
+          $connDiag = (Probe "pre") + " || serve=[$($env:SERVE_PROBE)]"
           $failed = $false
           foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1")) {
             $out = & ".\scripts\qa\$s" *>&1 | ForEach-Object { "$_" }
@@ -87,7 +124,11 @@ jobs:
               $failed = $true
             }
           }
-          if ($failed) { exit 1 }
+          if ($failed) {
+            $postProbe = (Probe "post")
+            Write-Host ("::error title=QA connectivity summary::" + $postProbe.Replace("`r", "%0A").Replace("`n", "%0A"))
+            exit 1
+          }
           Write-Host "all four suites green"
 
       - name: Stop server
