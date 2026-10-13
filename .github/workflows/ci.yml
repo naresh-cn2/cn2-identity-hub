@@ -34,15 +34,18 @@ jobs:
       - name: Type-check
         run: npx tsc --noEmit
 
-      - name: Serve production build
+      # Serve and QA MUST share one step: the Windows runner wraps each
+      # step in a job object and kills every descendant process when the
+      # step ends, so a server started in its own step is dead before the
+      # suites can reach it (observed: pid DEAD, :3000 unbound at QA start).
+      - name: Serve production build and run QA suites
         shell: powershell
         run: |
-          # Start-Process cannot execute the npm.cmd shim on Windows, so
-          # launch next's bin through node.exe directly.
           $log = Join-Path $env:RUNNER_TEMP "next-start.log"
           $err = Join-Path $env:RUNNER_TEMP "next-start.err"
+          # Start-Process cannot execute the npm.cmd shim on Windows, so
+          # launch next's bin through node.exe directly.
           $proc = Start-Process -FilePath "node" -ArgumentList "node_modules\next\dist\bin\next","start" -PassThru -NoNewWindow -RedirectStandardOutput $log -RedirectStandardError $err
-          "SERVER_PID=$($proc.Id)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding ascii
           $ok = $false
           for ($i = 0; $i -lt 60; $i++) {
             try {
@@ -55,35 +58,14 @@ jobs:
             if (Test-Path $log) { Get-Content $log -Tail 40 }
             if (Test-Path $err) { Get-Content $err -Tail 40 }
             netstat -ano | Select-String ":3000"
+            Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
             exit 1
           }
           Write-Host "server up (pid $($proc.Id)) after $i s"
-          # Snapshot loopback state right after the first 200 — handed to the
-          # QA step via GITHUB_ENV so its failure annotations can show whether
-          # a POST was already refused at this point (step-boundary issue)
-          # or only later (inherent GET/POST asymmetry).
-          $post = "unknown"
-          try {
-            $p = Invoke-WebRequest -Uri "http://localhost:3000/api/__ci-probe" -Method Post -ContentType "application/json" -Body "{}" -UseBasicParsing -TimeoutSec 5
-            $post = "HTTP $($p.StatusCode)"
-          } catch {
-            $pc = $null
-            try { $pc = $_.Exception.Response.StatusCode.value__ } catch { }
-            if ($pc) { $post = "HTTP $pc" } else { $post = "REFUSED" }
-          }
-          $listen = "none"
-          try { $listen = ((Get-NetTCPConnection -LocalPort 3000 -ErrorAction Stop | ForEach-Object { "$($_.LocalAddress):$($_.State):pid$($_.OwningProcess)" } | Sort-Object -Unique) -join "; ") } catch { }
-          $alive = "alive"
-          if (-not (Get-Process -Id $proc.Id -ErrorAction SilentlyContinue)) { $alive = "DEAD" }
-          "SERVE_PROBE=get200 post=$post listen=[$listen] pid=$($proc.Id):$alive" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding ascii
 
-      - name: QA suites
-        shell: powershell
-        run: |
-          # api-check must run first: it ends on the per-IP 429 limiter by
-          # design. Every suite exits 0/1 deterministically; all four always
-          # run so one run yields full signal, and failing lines are surfaced
-          # as annotations (readable without log access).
+          # Ground-truth probe: address resolution, per-address TCP, a
+          # limiter-neutral POST, the :3000 listen table and server PID
+          # liveness. Distinguishes transport failures from HTTP answers.
           function Probe([string]$tag) {
             $d = "$tag"
             try { $d += " dns=[" + (([System.Net.Dns]::GetHostAddresses("localhost") | ForEach-Object { $_.IPAddressToString }) -join ",") + "]" } catch { $d += " dns=ERR" }
@@ -103,12 +85,17 @@ jobs:
             try { $listen = ((Get-NetTCPConnection -LocalPort 3000 -ErrorAction Stop | ForEach-Object { "$($_.LocalAddress):$($_.State):pid$($_.OwningProcess)" } | Sort-Object -Unique) -join "; ") } catch { }
             $d += " listen=[$listen]"
             $alive = "alive"
-            if (-not (Get-Process -Id $env:SERVER_PID -ErrorAction SilentlyContinue)) { $alive = "DEAD" }
-            $d += " pid=$($env:SERVER_PID):$alive"
+            if (-not (Get-Process -Id $proc.Id -ErrorAction SilentlyContinue)) { $alive = "DEAD" }
+            $d += " pid=$($proc.Id):$alive"
             Write-Host "connectivity $d"
             return $d
           }
-          $connDiag = (Probe "pre") + " || serve=[$($env:SERVE_PROBE)]"
+          $connDiag = (Probe "pre")
+
+          # api-check must run first: it ends on the per-IP 429 limiter by
+          # design. Every suite exits 0/1 deterministically; all four always
+          # run so one run yields full signal, and failing lines are surfaced
+          # as annotations (readable without log access).
           $failed = $false
           foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1")) {
             $out = & ".\scripts\qa\$s" *>&1 | ForEach-Object { "$_" }
@@ -124,17 +111,12 @@ jobs:
               $failed = $true
             }
           }
+
           if ($failed) {
             $postProbe = (Probe "post")
             Write-Host ("::error title=QA connectivity summary::" + $postProbe.Replace("`r", "%0A").Replace("`n", "%0A"))
+            Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
             exit 1
           }
           Write-Host "all four suites green"
-
-      - name: Stop server
-        if: always()
-        shell: powershell
-        run: |
-          if ($env:SERVER_PID) {
-            Stop-Process -Id $env:SERVER_PID -Force -ErrorAction SilentlyContinue
-          }
+          Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
