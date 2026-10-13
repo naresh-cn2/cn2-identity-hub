@@ -13,32 +13,42 @@ function Assert([string]$name, [bool]$cond) {
 }
 
 function Post-RV($body) {
-    # IWR, not Invoke-RestMethod: on the CI runner PS 5.1's RM resolves
-    # localhost to 127.0.0.1 and hits a refused socket, while IWR (the same
-    # stack the page suites use) reaches the server fine.
-    try {
-        $r = Invoke-WebRequest -Uri ($base + "/api/testimonials") -Method Post -ContentType "application/json" -Body $body -UseBasicParsing -TimeoutSec 30
-        return @{ code = $r.StatusCode; body = ($r.Content | ConvertFrom-Json -ErrorAction SilentlyContinue) }
-    } catch {
-        $code = $null
-        try { $code = $_.Exception.Response.StatusCode.value__ } catch { }
-        $etype = $_.Exception.GetType().FullName
-        $emsg = $_.Exception.Message
-        $inner = ""
-        if ($_.Exception.InnerException) { $inner = " INNER: " + $_.Exception.InnerException.Message }
-        Write-Host ("diag-post-error " + $etype + ": " + $emsg + $inner)
-        $raw = ""
-        if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
-            $raw = $_.ErrorDetails.Message
-        } else {
-            try {
-                $stream = $_.Exception.Response.GetResponseStream()
-                $reader = New-Object System.IO.StreamReader($stream)
-                $raw = $reader.ReadToEnd()
-            } catch { }
+    # Base fallback: on the CI runner the server answers GETs on localhost
+    # but POSTs to 127.0.0.1 get refused — so try every loopback spelling
+    # and cache the one that actually reaches the app. Transport failures
+    # never reached the server, so retrying cannot double-count against
+    # the rate limiter; a real HTTP answer is returned as-is.
+    $bases = @($base, "http://127.0.0.1:3000", "http://[::1]:3000")
+    if ($script:apiBase) { $bases = @($script:apiBase) + @($bases | Where-Object { $_ -ne $script:apiBase }) }
+    $lastErr = $null
+    foreach ($b in $bases) {
+        try {
+            $r = Invoke-WebRequest -Uri ($b + "/api/testimonials") -Method Post -ContentType "application/json" -Body $body -UseBasicParsing -TimeoutSec 30
+            $script:apiBase = $b
+            return @{ code = $r.StatusCode; body = ($r.Content | ConvertFrom-Json -ErrorAction SilentlyContinue) }
+        } catch {
+            $code = $null
+            try { $code = $_.Exception.Response.StatusCode.value__ } catch { }
+            if ($code -ne $null) {
+                $script:apiBase = $b
+                $raw = ""
+                if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
+                    $raw = $_.ErrorDetails.Message
+                } else {
+                    try {
+                        $stream = $_.Exception.Response.GetResponseStream()
+                        $reader = New-Object System.IO.StreamReader($stream)
+                        $raw = $reader.ReadToEnd()
+                    } catch { }
+                }
+                return @{ code = $code; body = ($raw | ConvertFrom-Json -ErrorAction SilentlyContinue) }
+            }
+            $lastErr = $_
+            Write-Host ("diag-post-transport " + $b + " " + $_.Exception.Message)
         }
-        return @{ code = $code; body = ($raw | ConvertFrom-Json -ErrorAction SilentlyContinue) }
     }
+    Write-Host ("diag-post-error all bases failed: " + $lastErr.Exception.Message)
+    return @{ code = $null; body = $null }
 }
 
 $now = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()

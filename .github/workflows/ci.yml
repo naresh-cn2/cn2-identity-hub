@@ -66,13 +66,19 @@ jobs:
           # design. Every suite exits 0/1 deterministically; all four always
           # run so one run yields full signal, and failing lines are surfaced
           # as annotations (readable without log access).
+          $connDiag = ""
+          try { $connDiag += "dns=[" + (([System.Net.Dns]::GetHostAddresses("localhost") | ForEach-Object { $_.IPAddressToString }) -join ",") + "]" } catch { $connDiag += "dns=ERR" }
+          foreach ($a in @("127.0.0.1", "::1")) {
+            try { $t = New-Object System.Net.Sockets.TcpClient; $t.Connect($a, 3000); $t.Close(); $connDiag += " ${a}=OPEN" } catch { $connDiag += " ${a}=REFUSED" }
+          }
+          Write-Host "connectivity: $connDiag"
           $failed = $false
           foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1")) {
             $out = & ".\scripts\qa\$s" *>&1 | ForEach-Object { "$_" }
             $out | Write-Host
             if ($LASTEXITCODE -ne 0) {
-              $bad = @($out | Where-Object { "$_" -match "FAIL|FAILED|Exception|error|At line|diag" } | Select-Object -First 25)
-              $diag = ($bad -join ' | ')
+              $bad = @($out | Where-Object { "$_" -match "FAIL|FAILED|Exception|error|At line|diag|connectivity" } | Select-Object -First 25)
+              $diag = $connDiag + " || " + ($bad -join ' | ')
               foreach ($f in @("next-start.log", "next-start.err")) {
                 $p = Join-Path $env:RUNNER_TEMP $f
                 if (Test-Path $p) { $diag += "`n--- $f tail ---`n" + ((Get-Content $p -Tail 40) -join "`n") }
