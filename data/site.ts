@@ -112,6 +112,7 @@ export const allRoutes: NavLeaf[] = [
   { label: workRoute.label, href: workRoute.href, code: workRoute.code },
   { label: "CV", href: "/cv", code: "18" },
   { label: "LINKS", href: "/links", code: "19" },
+  { label: "TESTIMONIALS", href: "/testimonials", code: "21" },
 ];
 
 /** Deduplicated route index (a group landing href can repeat as a child). */

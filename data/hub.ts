@@ -115,4 +115,5 @@ export const hubIndex: { label: string; href: string }[] = [
   { label: "IDENTITY", href: "/identity" },
   { label: "CV", href: "/cv" },
   { label: "LINKS", href: "/links" },
+  { label: "TESTIMONIALS", href: "/testimonials" },
 ];

@@ -151,7 +151,7 @@ export default function Navbar() {
               {/* compact menu trigger inside the panel */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="label-mono shrink-0 border border-white/20 px-3 py-1.5 text-white/70 transition-colors hover:border-white/40 hover:text-white lg:hidden"
+                className="label-mono menu-hit shrink-0 border border-white/20 px-3 py-1.5 text-white/70 transition-colors hover:border-white/40 hover:text-white lg:hidden"
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
               >
@@ -326,7 +326,7 @@ export default function Navbar() {
               {!isIdentityPage && (
                 <button
                   onClick={() => setMenuOpen(!menuOpen)}
-                  className="label-mono border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground lg:hidden"
+                  className="label-mono menu-hit border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground lg:hidden"
                   aria-expanded={menuOpen}
                   aria-controls="mobile-menu"
                 >

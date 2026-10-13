@@ -21,7 +21,7 @@ type Filter = ArchiveCategory | "ALL";
 
 function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean }) {
   const copy = (
-    <div className={flip ? "lg:order-1" : ""}>
+    <div className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
       <div className="flex items-baseline justify-between gap-4">
         <span className="num-mono text-3xl font-semibold text-line-strong md:text-4xl">
           {project.index}
@@ -90,7 +90,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
   );
 
   const visual = (
-    <div className={flip ? "lg:order-2" : ""}>
+    <div className={`min-w-0 ${flip ? "lg:order-2" : ""}`}>
       <Link href={`/builds/${project.id}`} aria-hidden="true" tabIndex={-1} className="block">
         <ProjectSignature project={project} />
       </Link>
@@ -145,7 +145,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
                 type="button"
                 onClick={() => setActive(c)}
                 aria-pressed={isActive}
-                className={`label-mono border px-3 py-1.5 text-[10px] transition-colors duration-200 ${
+                className={`label-mono chip-hit border px-3 py-1.5 text-[10px] transition-colors duration-200 ${
                   isActive
                     ? "border-signal bg-signal text-background"
                     : "border-line text-muted hover:border-line-strong hover:text-foreground"

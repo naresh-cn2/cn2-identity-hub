@@ -41,7 +41,7 @@ export default function Footer() {
                 <li key={route.href}>
                   <Link
                     href={route.href}
-                    className="label-mono text-xs text-muted transition-colors hover:text-signal"
+                    className="label-mono footer-hit text-xs text-muted transition-colors hover:text-signal"
                   >
                     {route.code} — {route.label}
                   </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
                       href={l.href}
                       target={l.href.startsWith("http") ? "_blank" : undefined}
                       rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="label-mono text-xs text-muted transition-colors hover:text-signal"
+                      className="label-mono footer-hit text-xs text-muted transition-colors hover:text-signal"
                     >
                       {l.label}
                     </a>
@@ -69,7 +69,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="label-mono text-xs text-muted transition-colors hover:text-signal"
+                      className="label-mono footer-hit text-xs text-muted transition-colors hover:text-signal"
                     >
                       {l.label}
                     </Link>

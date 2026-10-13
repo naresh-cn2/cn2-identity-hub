@@ -162,6 +162,20 @@ export default function ContactPage() {
                                 </span>
                             </Link>
                         </Reveal>
+                        <Reveal delay={280} className="sm:col-span-2 lg:col-span-4">
+                            <Link
+                                href="/testimonials#share"
+                                className="group flex h-full flex-col justify-center bg-background p-6 transition-colors hover:bg-surface md:flex-row md:items-center md:justify-between md:gap-8 md:p-8"
+                            >
+                                <span className="label-mono text-foreground group-hover:text-signal">
+                                    LEAVE FEEDBACK →
+                                </span>
+                                <span className="mt-3 max-w-2xl text-sm leading-relaxed text-muted md:mt-0">
+                                    Worked with me or used the work? Share your experience and rating —
+                                    it helps others know what collaboration is actually like.
+                                </span>
+                            </Link>
+                        </Reveal>
                     </div>
                 </div>
             </section>

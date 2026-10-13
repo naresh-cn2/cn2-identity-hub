@@ -6,6 +6,7 @@ import ChapterNav from "@/components/case-study/chapter-nav";
 import ArchFlow from "@/components/viz/arch-flow";
 import ArchitectureExplorer from "./architecture-explorer";
 import ProjectSignature from "./project-signature";
+import WorkEndorsement from "@/components/testimonials/work-endorsement";
 import { getArchiveProject, type ArchiveProject } from "@/data/archive";
 import { getWorldNav, getProjectWorld } from "@/data/project-worlds";
 import { researchEntries } from "@/data/research";
@@ -269,6 +270,8 @@ export default function ProjectWorld({ project }: { project: ArchiveProject }) {
                     </a>
                   </Reveal>
                 )}
+                {/* published, consented feedback about this world — absent until it exists */}
+                <WorkEndorsement kind="project" slug={project.id} />
               </div>
             </Section>
 

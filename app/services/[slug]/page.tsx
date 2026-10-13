@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import Reveal from "@/components/ui/reveal";
 import { getServiceBundle, serviceSlugs } from "@/data/services";
 import { ServiceSchematic } from "@/components/services/service-schematics";
+import { getTestimonialsForWork } from "@/data/testimonials";
+import WorkEndorsement from "@/components/testimonials/work-endorsement";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
@@ -166,6 +168,17 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </Reveal>
         </div>
       </section>
+
+      {/* ---- feedback about this service — only when a published review exists ---- */}
+      {getTestimonialsForWork("service", slug).length > 0 && (
+        <section aria-label="Feedback about this service" className="border-b border-line">
+          <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+            <Reveal>
+              <WorkEndorsement kind="service" slug={slug} />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* ---- related project examples ---- */}
       {projects.length > 0 && (
