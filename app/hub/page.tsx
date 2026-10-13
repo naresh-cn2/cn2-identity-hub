@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import HubDeck from "@/components/hub/hub-deck";
+import IntelligenceCore from "@/components/hub/intelligence-core";
 import StatusReadout from "@/components/hub/status-readout";
 import SystemMap from "@/components/hub/system-map";
 import { hubDestinations, hubIndex, hubStatus } from "@/data/hub";
@@ -10,12 +11,12 @@ import { researchEntries } from "@/data/research";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Headquarters",
+  title: "Intelligence Nexus",
   description:
-    "The CN2.DEV digital headquarters — one indexed gateway to builds, credentials, services, laboratory, research, opportunities and contact.",
+    "The CN2.DEV Intelligence Nexus — one indexed gateway to builds, credentials, services, laboratory, research, opportunities and contact.",
   alternates: { canonical: "/hub" },
   openGraph: {
-    title: "Headquarters — Bukya Naresh / CN2.DEV",
+    title: "Intelligence Nexus — Bukya Naresh / CN2.DEV",
     description:
       "One indexed gateway to everything inside CN2.DEV: builds, credentials, services, laboratory, research, opportunities and contact.",
   },
@@ -26,7 +27,7 @@ export default function HubPage() {
 
   return (
     <>
-      {/* ---- headquarters deck ---- */}
+      {/* ---- intelligence nexus deck ---- */}
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
         <PageAtmosphere variant="network" />
@@ -34,7 +35,7 @@ export default function HubPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 00 — HEADQUARTERS
+                SECTION <span className="text-signal">/</span> 00 — INTELLIGENCE NEXUS
               </p>
               <Link
                 href="/"
@@ -49,9 +50,9 @@ export default function HubPage() {
             <div>
               <Reveal delay={80}>
                 <h1 className="display text-[clamp(2.6rem,8.5vw,6.5rem)]">
-                  DIGITAL
+                  INTELLIGENCE
                   <br />
-                  <span className="text-signal">HEADQUARTERS</span>
+                  <span className="text-signal">NEXUS</span>
                 </h1>
               </Reveal>
               <Reveal delay={160}>
@@ -73,6 +74,28 @@ export default function HubPage() {
               <StatusReadout />
             </Reveal>
           </div>
+
+          {/* ---- intelligence core — the nexus centerpiece ---- */}
+          <Reveal delay={120}>
+            <div className="corner-ticks mt-14 border border-line bg-surface md:mt-16">
+              <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line px-4 py-3 md:px-6">
+                <p className="label-mono text-muted">
+                  INTELLIGENCE CORE <span className="text-signal">/</span> CONNECTED DISCIPLINES
+                </p>
+                <p className="label-mono hidden text-faint md:block">
+                  ILLUSTRATIVE DIAGRAM · HOVER A NODE TO LIGHT ITS PATH
+                </p>
+              </div>
+              <div className="aspect-[1200/620] w-full">
+                <IntelligenceCore />
+              </div>
+              <div className="border-t border-line px-4 py-3 md:px-6">
+                <p className="label-mono text-faint">
+                  DATA · RESEARCH · MODELS · SYSTEMS · AUTOMATION · MARKETS
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
 
         {/* ---- system map — the visual bridge into the destinations ---- */}

@@ -967,6 +967,39 @@ h1.cn2-brand-word {
 }
 .travel-pulse { animation: cn2-travel 3.4s linear infinite; }
 
+/* ---------------- intelligence nexus (hub centerpiece) ---------------- */
+/* Slow orbital motion. The viewBox centre sits on the core, so every
+   rotation revolves around it regardless of the child's own geometry. */
+.nexus-spin,
+.nexus-spin-rev,
+.nexus-spin-2,
+.nexus-ping {
+  transform-box: view-box;
+  transform-origin: center;
+}
+.nexus-spin { animation: cn2-spin-slow 64s linear infinite; }
+.nexus-spin-rev { animation: cn2-spin-slow 64s linear infinite reverse; }
+.nexus-spin-2 { animation: cn2-spin-slow 96s linear infinite; }
+/* radar ping — re-origins the shared ring keyframe onto the core */
+.nexus-ping { animation: cn2-ring 2.8s ease-out infinite; }
+/* node interaction — chip lift, frame light, spoke energises */
+.nexus-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+.nexus-node .nexus-node-frame,
+.nexus-node .nexus-node-accent,
+.nexus-node .nexus-link {
+  transition: stroke 0.25s ease, fill 0.25s ease, opacity 0.25s ease;
+}
+.nexus-node text { transition: fill 0.25s ease; }
+.nexus-node:hover { transform: translateY(-3px); }
+.nexus-node:hover .nexus-node-frame { stroke: var(--signal); }
+.nexus-node:hover .nexus-node-accent { fill: var(--signal); opacity: 0.9; }
+.nexus-node:hover .nexus-link { stroke: var(--signal); opacity: 0.9; }
+.nexus-node:hover .nexus-node-label { fill: var(--foreground); }
+
 /* ---------------- reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
   html {
