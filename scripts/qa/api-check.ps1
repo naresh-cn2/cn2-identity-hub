@@ -17,7 +17,13 @@ function Post-RV($body) {
         $r = Invoke-RestMethod -Uri ($base + "/api/testimonials") -Method Post -ContentType "application/json" -Body $body -TimeoutSec 30
         return @{ code = 200; body = $r }
     } catch {
-        $code = $_.Exception.Response.StatusCode.value__
+        $code = $null
+        try { $code = $_.Exception.Response.StatusCode.value__ } catch { }
+        $etype = $_.Exception.GetType().FullName
+        $emsg = $_.Exception.Message
+        $inner = ""
+        if ($_.Exception.InnerException) { $inner = " INNER: " + $_.Exception.InnerException.Message }
+        Write-Host ("diag-post-error " + $etype + ": " + $emsg + $inner)
         $raw = ""
         if ($_.ErrorDetails -and $_.ErrorDetails.Message) {
             $raw = $_.ErrorDetails.Message

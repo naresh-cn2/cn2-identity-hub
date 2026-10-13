@@ -77,7 +77,7 @@ jobs:
                 $p = Join-Path $env:RUNNER_TEMP $f
                 if (Test-Path $p) { $diag += "`n--- $f tail ---`n" + ((Get-Content $p -Tail 40) -join "`n") }
               }
-              Write-Host "::error title=QA $s failed::$diag"
+              Write-Host ("::error title=QA $s failed::" + $diag.Replace("`r", "%0A").Replace("`n", "%0A"))
               $failed = $true
             }
           }
