@@ -97,7 +97,7 @@ export default function TestimonialsPage() {
                         </div>
                     </Reveal>
                     <Reveal delay={100}>
-                        <h1 className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>TESTIMONIALS</h1>
+                        <h1 className='display mt-8 text-[clamp(2.4rem,10vw,8rem)]'>TESTIMONIALS</h1>
                     </Reveal>
                     <Reveal delay={200}>
                         <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>

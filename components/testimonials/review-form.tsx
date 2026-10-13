@@ -312,7 +312,7 @@ export default function ReviewForm({ workOptions }: { workOptions: WorkOption[] 
                     OVERALL EXPERIENCE *
                 </p>
                 <div
-                    className="mt-3 flex items-center gap-1"
+                    className="mt-3 flex flex-wrap items-center gap-1"
                     role="radiogroup"
                     aria-labelledby="rv-rating-label"
                     onKeyDown={(e) => {
