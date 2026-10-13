@@ -1,33 +1,32 @@
-import { archiveProjects } from "./archive";
-import { researchEntries } from "./research";
-import { labModules } from "./lab";
-import { serviceSlugs } from "./services";
-import { capabilities } from "./capabilities";
-import { credentials, studyTracks } from "./certifications";
-
 /**
- * Destination registry (spec: /hub).
+ * Destination registry (spec: /hub — the CN2.DEV universe).
  *
- * Single source of truth for the /hub journey — every destination gets one
- * full-screen section driven from here. The hub is a wayfinding layer: it
- * introduces a destination and shows a live count drawn from that
- * destination's own data file. It never restates the content of the page it
- * points at, so a count or status can never drift out of sync with the
- * archive behind it.
+ * Single source of truth for the hub journey. Every destination gets one
+ * full-screen section: a short human-readable introduction, one prominent
+ * action, and a visual identity. There are no counts or statistics here by
+ * design — the hub is an introduction, never a dashboard. Content and
+ * measurements belong to the destination page itself, where they can be
+ * explained properly.
  *
- * Every `href` here is an existing route. No section is decorative: each one
- * opens its destination.
+ * Every `href` is an existing route, verified in `app/`. No section is
+ * decorative: each one opens its destination.
  */
 
 export interface HubDestination {
-  /** Journey index shown in the section header — matches the route index. */
+  /** Stable journey key — also the section's anchor code. */
   code: string;
+  /** Display title. */
   label: string;
+  /** The real destination route. */
   href: string;
-  /** One line on who this destination is for. */
+  /** One short invitation into the destination. */
   blurb: string;
-  /** Live figure pulled from the destination's own data source. */
-  metric: { value: string; label: string };
+  /** The action label — what the visitor taps to enter. */
+  action: string;
+  /** Short identity word for the visual's caption. */
+  caption: string;
+  /** True when the visual contains real, working links. */
+  interactive?: boolean;
 }
 
 export const hubDestinations: HubDestination[] = [
@@ -36,78 +35,84 @@ export const hubDestinations: HubDestination[] = [
     label: "BUILDS",
     href: "/builds",
     blurb:
-      "Systems, engines and tools — with status, stack and the evidence behind each one.",
-    metric: { value: String(archiveProjects.length), label: "SYSTEMS ARCHIVED" },
+      "Explore the software, quantitative systems, and technical infrastructure I'm building.",
+    action: "ENTER BUILDS",
+    caption: "ARCHITECTURE",
   },
   {
     code: "02",
     label: "CREDENTIALS",
     href: "/certifications",
     blurb:
-      "Education, certifications and self-directed study — each marked as accredited, in progress or self-directed.",
-    metric: {
-      value: `${credentials.length} / ${studyTracks.length}`,
-      label: "FORMAL / STUDY TRACKS",
-    },
+      "Education, certifications, and self-directed learning that shape my technical development.",
+    action: "EXPLORE CREDENTIALS",
+    caption: "LEARNING STRATA",
   },
   {
     code: "03",
     label: "SERVICES",
     href: "/services",
     blurb:
-      "What can be delivered for someone else: scope, deliverables, explicit boundaries and how to enquire.",
-    metric: { value: String(serviceSlugs.length), label: "ENGAGEMENT TYPES" },
+      "Explore the technical work I can deliver, the problems I can help solve, and how we could work together.",
+    action: "EXPLORE SERVICES",
+    caption: "DELIVERY FLOW",
   },
   {
     code: "04",
     label: "LABORATORY",
     href: "/lab",
     blurb:
-      "Working instruments — risk arithmetic, point-in-time replay and strategy geometry — plus experiments that failed.",
-    metric: { value: String(labModules.length), label: "OPERATIONAL MODULES" },
+      "Explore quantitative experiments, analytical instruments, strategy research, and the results behind tested ideas.",
+    action: "ENTER THE LAB",
+    caption: "INSTRUMENT",
   },
   {
     code: "05",
     label: "RESEARCH",
     href: "/research",
     blurb:
-      "Questions, method, evidence, result, limitation, conclusion — the written record behind the systems.",
-    metric: { value: String(researchEntries.length), label: "RESEARCH ENTRIES" },
+      "Investigate the questions, experiments, evidence, and conclusions behind my work.",
+    action: "EXPLORE RESEARCH",
+    caption: "EVIDENCE CHAIN",
   },
   {
     code: "06",
     label: "OPPORTUNITIES",
     href: "/opportunities",
     blurb:
-      "Employment, freelance contracts, research collaboration and technical partnerships — four distinct pathways.",
-    metric: { value: "04", label: "PATHWAYS OPEN" },
+      "Discover ways to work together through employment, freelance projects, research, and technical collaboration.",
+    action: "EXPLORE OPPORTUNITIES",
+    caption: "PATHWAYS",
   },
   {
     code: "07",
-    label: "ABOUT",
+    label: "ABOUT ME",
     href: "/about",
     blurb:
-      "Who is behind CN2.DEV: background, direction, working philosophy and what is being built right now.",
-    metric: { value: String(capabilities.length), label: "MAPPED CAPABILITIES" },
+      "The person, thinking, interests, and ambitions behind CN2.DEV.",
+    action: "GET TO KNOW ME",
+    caption: "HORIZON",
   },
   {
     code: "08",
-    label: "CONNECT",
+    label: "LET'S CONNECT",
     href: "/contact",
     blurb:
-      "Get in touch directly — email, GitHub, LinkedIn and enquiry routes.",
-    metric: { value: "04", label: "CONTACT ROUTES" },
+      "Have a project, opportunity, research idea, or technical question? Let's start a conversation.",
+    action: "GET IN TOUCH",
+    caption: "CHANNELS",
+    interactive: true,
   },
 ];
 
 /** Secondary destinations the hub index carries below the journey. */
-export const hubIndex: { label: string; href: string; code: string }[] = [
-  { label: "CASE STUDIES", href: "/case-studies", code: "02" },
-  { label: "CAPABILITIES", href: "/capabilities", code: "03" },
-  { label: "ARTICLES", href: "/articles", code: "05" },
-  { label: "INTELLIGENCE", href: "/intelligence", code: "06" },
-  { label: "PROOF", href: "/proof", code: "09" },
-  { label: "IDENTITY", href: "/identity", code: "10" },
-  { label: "CV", href: "/cv", code: "18" },
-  { label: "LINKS", href: "/links", code: "19" },
+export const hubIndex: { label: string; href: string }[] = [
+  { label: "CASE STUDIES", href: "/case-studies" },
+  { label: "CAPABILITIES", href: "/capabilities" },
+  { label: "ARTICLES", href: "/articles" },
+  { label: "INTELLIGENCE", href: "/intelligence" },
+  { label: "PROOF", href: "/proof" },
+  { label: "IDENTITY", href: "/identity" },
+  { label: "CV", href: "/cv" },
+  { label: "LINKS", href: "/links" },
 ];

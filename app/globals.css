@@ -1022,6 +1022,100 @@ h1.cn2-brand-word {
 .nexus-node:hover .nexus-link { stroke: var(--signal); opacity: 0.9; }
 .nexus-node:hover .nexus-node-label { fill: var(--foreground); }
 
+/* ---------------- hub universe (destination scenes) ---------------- */
+/* scene hover language — the SVG overlay's interactive layer */
+.hv .hv-frame,
+.hv .hv-side,
+.hv .hv-accent,
+.hv .hv-link,
+.hv .hv-tag {
+  transition: stroke 0.25s ease, fill 0.25s ease, opacity 0.25s ease;
+}
+/* the role label is revealed only while its component is lit */
+.hv .hv-label {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.hv:hover .hv-label { opacity: 1; }
+.hv:hover .hv-frame { stroke: var(--signal); }
+.hv:hover .hv-side { stroke: var(--signal); }
+.hv:hover .hv-accent { fill: var(--signal); opacity: 0.95; }
+.hv:hover .hv-link { stroke: var(--signal); opacity: 0.95; }
+.hv:hover .hv-tag { fill: var(--foreground); }
+
+/* connect — real channel nodes (hover + keyboard focus light the same way) */
+.chan .chan-frame,
+.chan .chan-core,
+.chan .chan-ring,
+.chan .chan-label {
+  transition: stroke 0.25s ease, stroke-width 0.25s ease, fill 0.25s ease, opacity 0.25s ease;
+}
+.chan:focus-visible { outline: none; }
+.chan:hover .chan-frame,
+.chan:focus-visible .chan-frame {
+  stroke: var(--signal);
+  stroke-width: 2;
+}
+.chan:hover .chan-core { fill: var(--signal); }
+.chan:hover .chan-label,
+.chan:focus-visible .chan-label { fill: var(--foreground); }
+.chan:focus-visible .chan-ring { opacity: 0.85; }
+
+/* scroll cue — the journey continues below */
+.dest-cue {
+  display: block;
+  width: 1px;
+  height: 56px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--line-strong) 0 6px,
+    transparent 6px 14px
+  );
+  position: relative;
+}
+.dest-cue::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--signal);
+  animation: cn2-cue 3.2s ease-in-out infinite;
+}
+@keyframes cn2-cue {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(52px); opacity: 0; }
+}
+
+/* scroll-linked depth — where the browser supports scroll timelines the
+   destination scene recedes as its section leaves the viewport; elsewhere
+   the plain reveal system carries the transition */
+@supports (animation-timeline: view()) {
+  .dest-recede {
+    animation: cn2-recede linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 90%;
+  }
+}
+@keyframes cn2-recede {
+  to { opacity: 0.4; transform: scale(0.965) translateY(-2.5%); }
+}
+/* the hero gate leans with the page scroll */
+@supports (animation-timeline: scroll()) {
+  .hub-portal-parallax {
+    animation: cn2-portal-par linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes cn2-portal-par {
+  from { transform: translateY(0); }
+  to { transform: translateY(-7%); }
+}
+
 /* ---------------- reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1054,6 +1148,14 @@ h1.cn2-brand-word {
   .cn2-portal-glow-core,
   .cn2-text-shimmer::before,
   .cn2-hero-zoom {
+    animation: none !important;
+  }
+
+  /* hub universe — scroll timelines don't respond to duration capping,
+     so the recede, portal lean and cue dot are removed outright */
+  .dest-recede,
+  .hub-portal-parallax,
+  .dest-cue::after {
     animation: none !important;
   }
 
