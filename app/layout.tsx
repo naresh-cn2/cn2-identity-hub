@@ -7,6 +7,7 @@ import Footer from "@/components/layout/footer";
 import CommandPalette from "@/components/layout/command-palette";
 import PageTransition from "@/components/layout/page-transition";
 import SiteAmbience from "@/components/layout/site-ambience";
+import BackButton from "@/components/layout/back-button";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <main id="main">{children}</main>
           </PageTransition>
           <Footer />
+          <BackButton />
         </ThemeProvider>
       </body>
     </html>

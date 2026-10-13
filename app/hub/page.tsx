@@ -64,12 +64,6 @@ export default function HubPage() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/"
-              className="label-mono ml-auto text-[10px] text-muted transition-colors hover:text-signal"
-            >
-              ↑ RETURN TO ENTRANCE
-            </Link>
           </div>
         </div>
       </section>

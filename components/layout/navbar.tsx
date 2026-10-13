@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -11,7 +11,7 @@ import {
   type NavItem,
 } from "@/data/site";
 import { useTheme } from "@/components/providers/theme-provider";
-import { Sun, Moon, Search, ArrowLeft } from "lucide-react";
+import { Sun, Moon, Search } from "lucide-react";
 
 /**
  * Helper for conditional class names
@@ -34,8 +34,6 @@ export default function Navbar() {
   const isIdentityPage = pathname === "/identity";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -45,10 +43,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setMenuOpen(false);
-      setOpenGroup(null);
-    }, 0);
+    const t = setTimeout(() => setMenuOpen(false), 0);
     return () => clearTimeout(t);
   }, [pathname]);
 
@@ -59,24 +54,7 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenGroup(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
   const openPalette = () => window.dispatchEvent(new CustomEvent("open-palette"));
-
-  const enterGroup = (label: string) => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpenGroup(label);
-  };
-  const scheduleClose = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setOpenGroup(null), 160);
-  };
 
   return (
     <>
@@ -201,113 +179,12 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* ---- desktop navigation (not on the identity portrait page) ---- */}
-            {!isIdentityPage && (
-              <nav className="hidden w-auto items-center gap-1 lg:flex" aria-label="Primary">
-              <Link
-                href="/"
-                aria-current={pathname === "/" ? "page" : undefined}
-                className={cn(
-                  "link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200",
-                  pathname === "/" ? "text-signal" : "text-muted hover:text-foreground"
-                )}
-              >
-                HOME
-              </Link>
-              {primaryNav.map((item) => {
-                const active = isActiveNavItem(pathname, item);
-                const hasChildren = Boolean(item.children?.length);
-                const isOpen = openGroup === item.label;
+            {/* ---- desktop navigation is intentionally absent: the command
+                 palette (search) is the wayfinding surface on every page ---- */}
 
-                if (!hasChildren) {
-                  return (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "link-line label-mono px-3 py-2 text-[10px] transition-colors duration-200",
-                        active ? "text-signal" : "text-muted hover:text-foreground"
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                }
-
-                return (
-                  <div
-                    key={item.label}
-                    className="relative"
-                    onMouseEnter={() => enterGroup(item.label)}
-                    onMouseLeave={scheduleClose}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => (isOpen ? setOpenGroup(null) : enterGroup(item.label))}
-                      aria-expanded={isOpen}
-                      aria-haspopup="true"
-                      className={cn(
-                        "label-mono flex items-center gap-1.5 px-3 py-2 text-[10px] transition-colors duration-200",
-                        active ? "text-signal" : "text-muted hover:text-foreground"
-                      )}
-                    >
-                      {item.label}
-                      <span
-                        aria-hidden="true"
-                        className={cn("text-[8px] transition-transform duration-200", isOpen ? "rotate-180" : "")}
-                      >
-                        ▾
-                      </span>
-                    </button>
-
-                    <div
-                      className={cn(
-                        "absolute left-0 top-full pt-2 transition-all duration-200",
-                        isOpen
-                          ? "pointer-events-auto translate-y-0 opacity-100"
-                          : "pointer-events-none -translate-y-1 opacity-0"
-                      )}
-                    >
-                      <div className="min-w-[15rem] border border-line bg-background/95 p-2 shadow-2xl backdrop-blur-md">
-                        {item.children!.map((child) => {
-                          const childActive = isActiveRoute(pathname, child.href);
-                          return (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              onMouseEnter={() => enterGroup(item.label)}
-                              className={cn(
-                                "flex items-baseline justify-between gap-4 px-3 py-2.5 transition-colors duration-150",
-                                childActive
-                                  ? "bg-signal-soft text-signal"
-                                  : "text-muted hover:bg-surface-2 hover:text-foreground"
-                              )}
-                            >
-                              <span className="label-mono text-[11px]">{child.label}</span>
-                              <span className="num-mono text-[9px] text-faint">{child.code}</span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-              </nav>
-            )}
-
-            {/* ---- actions: back · search · theme — every inner page can
-                 return to the entrance, and the search sits directly left
-                 of the moon on all pages ---- */}
+            {/* ---- actions: search · theme; the bottom-left BACK control
+                 returns to wherever the visitor came from ---- */}
             <div className={cn("flex shrink-0 items-center gap-2", isIdentityPage && "ml-auto")}>
-              <Link
-                href="/"
-                aria-label="Back to home"
-                className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </Link>
               <button
                 onClick={openPalette}
                 className="grid h-10 w-10 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"

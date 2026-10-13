@@ -32,12 +32,6 @@ export default function UniverseIntro() {
             <p className="label-mono text-muted">
               CN2.DEV <span className="text-signal">/</span> HEADQUARTERS
             </p>
-            <Link
-              href="/"
-              className="label-mono text-muted transition-colors hover:text-signal"
-            >
-              ← RETURN TO ENTRANCE
-            </Link>
           </div>
         </Reveal>
 
