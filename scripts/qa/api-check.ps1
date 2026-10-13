@@ -13,9 +13,12 @@ function Assert([string]$name, [bool]$cond) {
 }
 
 function Post-RV($body) {
+    # IWR, not Invoke-RestMethod: on the CI runner PS 5.1's RM resolves
+    # localhost to 127.0.0.1 and hits a refused socket, while IWR (the same
+    # stack the page suites use) reaches the server fine.
     try {
-        $r = Invoke-RestMethod -Uri ($base + "/api/testimonials") -Method Post -ContentType "application/json" -Body $body -TimeoutSec 30
-        return @{ code = 200; body = $r }
+        $r = Invoke-WebRequest -Uri ($base + "/api/testimonials") -Method Post -ContentType "application/json" -Body $body -UseBasicParsing -TimeoutSec 30
+        return @{ code = $r.StatusCode; body = ($r.Content | ConvertFrom-Json -ErrorAction SilentlyContinue) }
     } catch {
         $code = $null
         try { $code = $_.Exception.Response.StatusCode.value__ } catch { }
