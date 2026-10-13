@@ -60,6 +60,15 @@ Assert "feedback field error surfaced" (@($t3.body.errors | Where-Object { $_.fi
 $t4 = Post-RV ($bad | ConvertTo-Json)
 Assert "rate limiter engages (429)" ($t4.code -eq 429)
 
+# diagnostic line for CI annotations — actual codes and truncated bodies
+foreach ($t in @(@("t1-valid", $t1), @("t2-honeypot", $t2), @("t3-linky", $t3), @("t4-limiter", $t4))) {
+    $b = ""
+    try { $b = ($t[1].body | ConvertTo-Json -Compress -Depth 5) } catch { }
+    if (-not $b) { $b = "<empty>" }
+    if ($b.Length -gt 200) { $b = $b.Substring(0, 200) }
+    Write-Host ("diag " + $t[0] + " code=" + $t[1].code + " body=" + $b)
+}
+
 Write-Host ""
 Write-Host ("TOTAL: " + ($pass + $fail) + "  PASS: " + $pass + "  FAIL: " + $fail)
 if ($fail -gt 0) { exit 1 }

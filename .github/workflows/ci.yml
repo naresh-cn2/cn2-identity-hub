@@ -71,8 +71,13 @@ jobs:
             $out = & ".\scripts\qa\$s" *>&1 | ForEach-Object { "$_" }
             $out | Write-Host
             if ($LASTEXITCODE -ne 0) {
-              $bad = @($out | Where-Object { "$_" -match "FAIL|FAILED|Exception|error|At line" } | Select-Object -First 20)
-              Write-Host "::error title=QA $s failed::$($bad -join ' | ')"
+              $bad = @($out | Where-Object { "$_" -match "FAIL|FAILED|Exception|error|At line|diag" } | Select-Object -First 25)
+              $diag = ($bad -join ' | ')
+              foreach ($f in @("next-start.log", "next-start.err")) {
+                $p = Join-Path $env:RUNNER_TEMP $f
+                if (Test-Path $p) { $diag += "`n--- $f tail ---`n" + ((Get-Content $p -Tail 40) -join "`n") }
+              }
+              Write-Host "::error title=QA $s failed::$diag"
               $failed = $true
             }
           }
