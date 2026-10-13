@@ -63,15 +63,21 @@ jobs:
         shell: powershell
         run: |
           # api-check must run first: it ends on the per-IP 429 limiter by
-          # design. Every suite now exits 0/1 deterministically, so a simple
-          # LASTEXITCODE gate is reliable; run all four regardless to get
-          # full signal from one run.
+          # design. Every suite exits 0/1 deterministically; all four always
+          # run so one run yields full signal, and failing lines are surfaced
+          # as annotations (readable without log access).
           $failed = $false
           foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1")) {
-            & ".\scripts\qa\$s"
-            if ($LASTEXITCODE -ne 0) { $failed = $true }
+            $out = & ".\scripts\qa\$s" *>&1 | ForEach-Object { "$_" }
+            $out | Write-Host
+            if ($LASTEXITCODE -ne 0) {
+              $bad = @($out | Where-Object { "$_" -match "FAIL|FAILED|Exception|error|At line" } | Select-Object -First 20)
+              Write-Host "::error title=QA $s failed::$($bad -join ' | ')"
+              $failed = $true
+            }
           }
           if ($failed) { exit 1 }
+          Write-Host "all four suites green"
 
       - name: Stop server
         if: always()
