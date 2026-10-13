@@ -71,7 +71,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
           className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
         >
           ENTER PROJECT WORLD
-          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+          <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
             →
           </span>
         </Link>

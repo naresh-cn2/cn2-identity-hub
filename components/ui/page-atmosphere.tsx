@@ -52,7 +52,7 @@ import { useTheme } from "@/components/providers/theme-provider";
  *  - aria-hidden + pointer-events:none — navigation and controls are untouched.
  */
 
-type Variant =
+export type Variant =
     | "network"
     | "field"
     | "motes"
@@ -155,9 +155,12 @@ const SEEDS: Record<Variant, number> = {
 export default function PageAtmosphere({
     variant,
     className = "",
+    intensity = 1,
 }: {
     variant: Variant;
     className?: string;
+    /** Alpha-budget multiplier — the site-wide quiet layer uses ~0.7. */
+    intensity?: number;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { theme } = useTheme();
@@ -170,7 +173,7 @@ export default function PageAtmosphere({
 
         const mode: Mode = theme === "light" ? "light" : "dark";
         const pal = PALETTES[mode];
-        const dim = mode === "light" ? 0.72 : 1; // light mode reads calmer on white surfaces
+        const dim = (mode === "light" ? 0.72 : 1) * intensity; // light mode reads calmer on white surfaces
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const small = window.innerWidth < 768;
 
@@ -1426,7 +1429,7 @@ export default function PageAtmosphere({
             ro.disconnect();
             window.removeEventListener("pointermove", onPointer);
         };
-    }, [variant, theme]);
+    }, [variant, theme, intensity]);
 
     return (
         <canvas

@@ -68,7 +68,7 @@ export default function DestinationSection({ destination, contentSide, ambient, 
                   className="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal/70 bg-signal/10 px-8 py-4 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
                 >
                   {destination.action}
-                  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                  <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
                 </Link>

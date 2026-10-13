@@ -38,7 +38,7 @@ function Section({
     <section id={id} className="scroll-mt-28 border-t border-line pt-10 md:pt-14">
       <Reveal>
         <div className="flex items-center gap-3">
-          <span className="h-2 w-2 shrink-0 rotate-45 bg-signal" aria-hidden="true" />
+          <span className="h-2 w-2 shrink-0 rotate-45 bg-signal anim-breathe" aria-hidden="true" />
           <h2 className="display text-2xl md:text-4xl">{title}</h2>
         </div>
       </Reveal>
@@ -144,14 +144,14 @@ export default function ProjectWorld({ project }: { project: ArchiveProject }) {
                     className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
                   >
                     EXPLORE ARCHITECTURE
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
+                    <span aria-hidden="true" className="arr-down transition-transform duration-300 group-hover:translate-y-1">↓</span>
                   </a>
                   <a
                     href="#evidence"
                     className="label-mono group inline-flex items-center gap-3 border border-line-strong px-7 py-3.5 text-foreground transition-colors hover:border-research hover:text-research"
                   >
                     VIEW EVIDENCE
-                    <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1">↓</span>
+                    <span aria-hidden="true" className="arr-down transition-transform duration-300 group-hover:translate-y-1">↓</span>
                   </a>
                   {project.github && (
                     <a

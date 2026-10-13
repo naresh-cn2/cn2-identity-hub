@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Reveal from "@/components/ui/reveal";
 
 interface ArchFlowProps {
@@ -38,7 +39,8 @@ export default function ArchFlow({ steps, compact = false }: ArchFlowProps) {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span
-                className={`mt-2 w-px flex-1 ${i === steps.length - 1 ? "bg-transparent" : "bg-line-strong"}`}
+                className={`mt-2 w-px flex-1 ${i === steps.length - 1 ? "bg-transparent" : "bg-line-strong flow-live"}`}
+                style={{ "--flow-delay": `${(i % 4) * 0.9}s` } as CSSProperties}
                 aria-hidden="true"
               />
             </div>

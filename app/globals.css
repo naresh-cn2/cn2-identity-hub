@@ -161,18 +161,39 @@ body {
       transparent 3px);
 }
 
-/* red signal rule */
+/* red signal rule — a slow light travels along it while it is visible */
 .signal-rule {
   height: 2px;
-  background: var(--signal);
+  background-color: var(--signal);
+  background-image: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%);
+  background-size: 30% 100%;
+  background-repeat: no-repeat;
+  background-position: -40% 0;
   transform-origin: left;
+  animation: cn2-rule-sweep 7s ease-in-out infinite;
 }
 
-/* blue research rule */
+@keyframes cn2-rule-sweep {
+  0%, 100% { background-position: -40% 0; }
+  50% { background-position: 140% 0; }
+}
+
+/* blue research rule — same slow travelling light as the signal rule */
 .research-rule {
   height: 1px;
-  background: var(--research);
+  background-color: var(--research);
+  background-image: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.65) 50%,
+      transparent 100%);
+  background-size: 30% 100%;
+  background-repeat: no-repeat;
+  background-position: -40% 0;
   transform-origin: left;
+  animation: cn2-rule-sweep 8.5s ease-in-out infinite;
 }
 
 /* ---- hub journey ambients — one soft light source per destination ---- */
@@ -989,6 +1010,69 @@ h1.cn2-brand-word {
 }
 .travel-pulse { animation: cn2-travel 3.4s linear infinite; }
 
+/* ---------------- site-wide live micro-motion ----------------
+   Automatic, slow, deliberate — the site runs without interaction.
+   Every effect's resting state is neutral (sweep parked off-canvas,
+   dot at opacity 0, arrow at translate 0), so the reduced-motion
+   duration cap below freezes each one into its still state. */
+
+/* a soft sheen sweeps the primary action buttons every ~9s */
+a.corner-ticks {
+  background-image: linear-gradient(105deg,
+      transparent 38%,
+      color-mix(in srgb, var(--foreground) 15%, transparent) 50%,
+      transparent 62%);
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: -80% 0;
+  animation: cn2-cta-sheen 9s ease-in-out infinite;
+}
+@keyframes cn2-cta-sheen {
+  0%, 100% { background-position: -80% 0; }
+  50% { background-position: 180% 0; }
+}
+
+/* arrows that invite the next step on their own */
+.arr-live {
+  display: inline-block;
+  animation: cn2-nudge-x 9s ease-in-out infinite;
+}
+.arr-down {
+  display: inline-block;
+  animation: cn2-nudge-y 7s ease-in-out infinite;
+}
+@keyframes cn2-nudge-x {
+  0%, 42%, 58%, 100% { translate: 0 0; }
+  50% { translate: 6px 0; }
+}
+@keyframes cn2-nudge-y {
+  0%, 40%, 60%, 100% { translate: 0 0; }
+  50% { translate: 0 5px; }
+}
+
+/* signal travelling down an architecture pipeline connector —
+   the span carries --flow-delay to stagger each step */
+.flow-live { position: relative; }
+.flow-live::after {
+  content: "";
+  position: absolute;
+  left: -1.5px;
+  top: -14px;
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, transparent, var(--signal));
+  opacity: 0;
+  animation: cn2-flow-drop 3.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: var(--flow-delay, 0s);
+}
+@keyframes cn2-flow-drop {
+  0% { top: -14px; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
 /* ---------------- intelligence nexus (hub centerpiece) ---------------- */
 /* Slow orbital motion. The viewBox centre sits on the core, so every
    rotation revolves around it regardless of the child's own geometry. */
@@ -1169,6 +1253,17 @@ h1.cn2-brand-word {
   .dest-recede,
   .hub-portal-parallax,
   .dest-cue::after {
+    animation: none !important;
+  }
+
+  /* site-wide live micro-motion — rest states are already neutral,
+     but the infinite loops are removed outright for zero churn */
+  a.corner-ticks,
+  .arr-live,
+  .arr-down,
+  .flow-live::after,
+  .signal-rule,
+  .research-rule {
     animation: none !important;
   }
 
