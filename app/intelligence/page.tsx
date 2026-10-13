@@ -53,8 +53,8 @@ export default function IntelligencePage() {
                     </Reveal>
                     <Reveal delay={200}>
                         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-                            The map behind the work. Not a skills list — a graph of how the practice areas actually
-                            relate, and the mental models, decision systems and research notes that sit on the
+                            The map behind my work — a graph of how the practice areas relate, with the
+                            mental models, decision systems and research notes that sit on the
                             connections. Hover a node to isolate what it touches.
                         </p>
                     </Reveal>

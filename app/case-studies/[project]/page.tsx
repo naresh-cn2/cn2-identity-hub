@@ -125,7 +125,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ proj
                             rel="noopener noreferrer"
                             className="link-line label-mono text-xs text-muted hover:text-signal"
                         >
-                            SOURCE OF EVIDENCE — GITHUB →
+                            SOURCE ON GITHUB →
                         </a>
                     </div>
                 </div>

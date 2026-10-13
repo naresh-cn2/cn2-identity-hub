@@ -54,9 +54,9 @@ export function SignalAct() {
               instrument talking.
             </p>
             <p className="mt-5 text-base leading-relaxed text-muted">
-              Everything downstream in this site exists to answer that question honestly: point-in-time
-              data, deterministic replay, structural risk, and a governance gate that will not accept
-              an argument in place of an artifact.
+              My answer to that question runs through point-in-time data, deterministic replay,
+              structural risk, and a governance gate that will not accept an argument in place of
+              an artifact.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
@@ -255,8 +255,7 @@ export function CurrentFocus() {
         </div>
 
         <p className="label-mono mt-6 text-[10px] leading-relaxed text-faint">
-          SELF-DIRECTED STUDY IS NOT ACCREDITED · SIMULATED RESULTS ARE LABELLED SIMULATED · UNFINISHED
-          WORK STAYS VISIBLE.
+          SELF-DIRECTED STUDY · RESULTS LABELLED BY METHOD · WORK IN PROGRESS SHOWN AS SUCH
         </p>
       </div>
     </section>
@@ -292,8 +291,7 @@ export function WhatIDo() {
         </div>
         <h2 className="display mt-6 text-[clamp(2rem,5.5vw,4rem)]">WHAT I DO</h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
-          Four areas, and every item below maps to a system or a research entry you can open. No
-          percentage bars, and no technology listed that is not in the archive.
+          Four areas, and every item below maps to a system or a research entry you can open.
         </p>
 
         <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-4">
@@ -344,8 +342,8 @@ export function SelectedBuilds() {
         </div>
         <h2 className="display mt-6 text-[clamp(2rem,5.5vw,4rem)]">SELECTED QUANT WORK</h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
-          Four flagship systems. Each has its own visual identity, its own case study, and its own
-          provenance label on every figure.
+          Four flagship systems, each with its own case study and results labelled by how they were
+          produced.
         </p>
 
         <div className="mt-12 grid gap-px bg-line lg:grid-cols-2">
@@ -493,10 +491,10 @@ export function LabTeaser() {
             ENTER LAB →
           </Link>
         </div>
-        <h2 className="display mt-6 text-[clamp(2rem,5.5vw,4rem)]">INSTRUMENTS, NOT CALCULATORS</h2>
+        <h2 className="display mt-6 text-[clamp(2rem,5.5vw,4rem)]">INSTRUMENTS YOU CAN RUN</h2>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
-          Every instrument derives from the same rules as the systems it illustrates. Change an input
-          and the arithmetic changes with it — nothing here is a demo figure.
+          Every instrument derives from the same rules as the systems it illustrates — change an
+          input and the arithmetic changes with it.
         </p>
 
         <div className="mt-12 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
@@ -538,12 +536,11 @@ export function CredentialsTeaser() {
               ACT V <span className="text-signal">/</span> THE PROOF
             </p>
             <h2 className="display mt-6 text-[clamp(1.8rem,4.6vw,3.2rem)]">
-              NOTHING INFLATED, EVERYTHING SHOWN
+              WHAT I&apos;VE LEARNED, WHAT I&apos;M LEARNING
             </h2>
             <p className="mt-6 text-base leading-relaxed text-muted">
-              {credentials.length} certificates, transcribed exactly as their issuers printed them —
-              provider, date, and verification where the provider offers it — beside what is actually
-              being studied, with the system each track produced.
+              {credentials.length} completed programmes beside the self-directed study tracks
+              I&apos;m running now — each one linked to the system it produced.
             </p>
             <Link
               href="/certifications"
@@ -556,10 +553,9 @@ export function CredentialsTeaser() {
           <div className="grid gap-px bg-line sm:grid-cols-2">
             <div className="bg-background p-6">
               <p className="num-mono text-4xl font-semibold text-foreground">{credentials.length}</p>
-              <p className="label-mono mt-2 text-[10px] text-faint">FORMAL CREDENTIALS CLAIMED</p>
+              <p className="label-mono mt-2 text-[10px] text-faint">CERTIFICATES ON RECORD</p>
               <p className="mt-4 text-sm leading-relaxed text-muted">
-                A credential appears only after it is issued — with a verification link where the
-                provider offers one.
+                Internships, boot camps and skilling programmes I&apos;ve completed.
               </p>
             </div>
             <div className="bg-background p-6">

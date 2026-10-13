@@ -164,7 +164,7 @@ export default async function ResearchEntryPage({
                     )}
                   </div>
                   <p className="label-mono mt-6 text-[10px] text-faint">
-                    PROVENANCE — {build.evidenceLabel}
+                    METHOD — {build.evidenceLabel}
                   </p>
                 </div>
               </Reveal>
@@ -180,8 +180,8 @@ export default async function ResearchEntryPage({
                   <ResearchArtifact category={entry.category} seed={index + 100} />
                 </div>
                 <p className="label-mono mt-3 text-[10px] leading-relaxed text-faint">
-                  ILLUSTRATIVE — A DETERMINISTIC DIAGRAM OF THE {entry.category} CATEGORY. IT IS NOT
-                  A MEASUREMENT AND CARRIES NO DATA.
+                  ILLUSTRATIVE — A DETERMINISTIC DIAGRAM OF THE {entry.category} CATEGORY, CARRYING
+                  NO MEASUREMENT DATA.
                 </p>
               </div>
             </Reveal>

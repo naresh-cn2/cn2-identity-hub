@@ -132,7 +132,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               />
             </Reveal>
             <Reveal delay={160}>
-              <Block label="SCOPE BOUNDARIES — OUT OF SCOPE" items={service.outOfScope} accent="muted" />
+              <Block label="OUT OF SCOPE" items={service.outOfScope} accent="muted" />
             </Reveal>
           </div>
         </div>
@@ -231,7 +231,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
             <p className="label-mono text-signal">LIMITATIONS</p>
-            <h2 className="display mt-4 text-3xl md:text-5xl">WHAT THIS SERVICE DOES NOT CLAIM</h2>
+            <h2 className="display mt-4 text-3xl md:text-5xl">SCOPE &amp; LIMITS</h2>
           </Reveal>
           <Reveal delay={100}>
             <ul className="mt-8 max-w-3xl space-y-4">

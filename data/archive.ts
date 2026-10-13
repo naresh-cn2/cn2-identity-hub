@@ -192,7 +192,7 @@ const billingDataGateway: ArchiveProject = {
     ],
     currentState: [
       "v1.0.0 released and available in its repository.",
-      "Figures quoted on this page are carried from the repository's published self-benchmark, not re-measured for this page.",
+      "Figures come from the repository's published self-benchmark.",
     ],
   },
 };
@@ -206,7 +206,7 @@ const ifmCostIntel: ArchiveProject = {
   tags: ["FINTECH", "DATA", "AI"],
   status: "ACTIVE DEVELOPMENT",
   statusNote:
-    "In progress. No published benchmark or performance claim is made for this system — the repository is the only current evidence surface.",
+    "In progress. No published benchmark has been released for this system yet.",
   thesis:
     "Enterprise cost data is a signal, not a report — it should support querying, anomaly detection and optimization decisions, not just monthly totals.",
   summary:
@@ -250,7 +250,7 @@ const ifmCostIntel: ArchiveProject = {
     ],
     results: [
       "The ingestion and structuring pipeline is implemented and under active development.",
-      "No throughput, accuracy or cost-saving figure is claimed here, because none has been published.",
+      "In development. No throughput, accuracy or cost-saving figure has been published for this system yet.",
     ],
     limitations: [
       "No public benchmark exists for this system. Any performance statement would be unsupported.",
@@ -265,8 +265,7 @@ const ifmCostIntel: ArchiveProject = {
       "Ingestion pipeline for multi-cloud expenditure datasets.",
     ],
     currentState: [
-      "ACTIVE DEVELOPMENT — no release tag, no published benchmark.",
-      "Listed here for completeness of the archive; the evidence surface is intentionally thin.",
+      "ACTIVE DEVELOPMENT — no release tag, no published benchmark, repository not yet public.",
     ],
   },
 };

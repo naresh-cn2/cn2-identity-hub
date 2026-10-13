@@ -74,8 +74,8 @@ export default function ResearchArchive({ entries }: { entries: ResearchEntry[] 
           <div className="corner-ticks mt-10 border border-line bg-surface p-8 md:p-12">
             <p className="label-mono text-research">NO ENTRIES IN {active}</p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
-              This category is registered in the archive and currently holds no entry. It stays
-              visible so an empty research area reads as empty rather than quietly disappearing.
+              No entries published in this category yet — it is one of the research areas I track,
+              and work will land here as it is written up.
             </p>
             <button
               type="button"

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
 };
 
-/** Live status readout — every figure is counted from the archive, never typed in. */
+/** Live status readout — every figure is computed from the archive data files. */
 function StatusReadout() {
   const rows = [
     { k: "STATUS", v: site.status, accent: true },
@@ -29,7 +29,7 @@ function StatusReadout() {
     { k: "ARTICLES", v: String(hubStatus.articles).padStart(2, "0") },
     { k: "LAB MODULES", v: `${hubStatus.lab} OPERATIONAL` },
     { k: "SERVICES", v: String(hubStatus.services).padStart(2, "0") },
-    { k: "SELF-DIRECTED TRACKS", v: `${hubStatus.studyTracks} ACTIVE · NOT ACCREDITED` },
+    { k: "SELF-DIRECTED TRACKS", v: `${hubStatus.studyTracks} ACTIVE` },
   ];
 
   return (
@@ -95,9 +95,9 @@ export default function HubPage() {
               </Reveal>
               <Reveal delay={240}>
                 <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-                  Everything inside CN2.DEV, indexed. Pick a destination below — each one is its own
-                  page with its own design, and each figure on this page is counted from the archive
-                  behind it rather than written by hand.
+                  Everything inside CN2.DEV, indexed. Pick a destination below to explore the systems,
+                  research and services behind my work — the figures on this page are updated from the
+                  project archive.
                 </p>
               </Reveal>
             </div>
@@ -114,8 +114,8 @@ export default function HubPage() {
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <h2 className="display text-3xl md:text-5xl">DESTINATIONS</h2>
-              <p className="label-mono text-muted">SELECT A DESTINATION — EACH OPENS ITS OWN PAGE</p>
+              <h2 className="display text-3xl md:text-5xl">EXPLORE CN2.DEV</h2>
+              <p className="label-mono text-muted">DISCOVER MY PROJECTS, RESEARCH, CAPABILITIES, LEARNING, AND PROFESSIONAL INTERESTS</p>
             </div>
           </Reveal>
           <HubDeck destinations={hubDestinations} />
@@ -145,9 +145,9 @@ export default function HubPage() {
               <p className="label-mono text-signal">CURRENT FOCUS</p>
               <h2 className="display mt-4 text-3xl md:text-5xl">WHAT IS BEING WORKED ON NOW</h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">
-                {site.status}. The work concentrates on deterministic backtesting, point-in-time
-                market-data correctness and structural risk controls — each one evidenced by a system
-                in the archive rather than claimed in prose.
+                {site.status}. My current focus is deterministic backtesting, point-in-time
+                market-data correctness and structural risk controls — each one backed by a working
+                system in the project archive.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link

@@ -7,12 +7,12 @@ import PageAtmosphere from '@/components/ui/page-atmosphere';
 export const metadata: Metadata = {
   title: 'How I Work — Bukya Naresh / CN2.dev',
   description:
-    'Transparent process for client engagement: discover, define, research, specify, design, build, test, validate, deliver, iterate—emphasizing evidence, clear requirements, and honest delivery.',
+    'How Bukya Naresh takes on technical work: understand the problem, define requirements, research, design, build, test, validate, deliver and iterate — with clear communication and documented results at every step.',
   alternates: { canonical: '/how-i-work' },
   openGraph: {
     title: 'How I Work — Bukya Naresh / CN2.dev',
     description:
-      'Transparent process for client engagement: discover, define, research, specify, design, build, test, validate, deliver, iterate—emphasizing evidence, clear requirements, and honest delivery.',
+      'How Bukya Naresh takes on technical work: understand the problem, define requirements, research, design, build, test, validate, deliver and iterate — with clear communication and documented results at every step.',
   },
 };
 
@@ -40,16 +40,14 @@ export default function HowIWorkPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>
-              A clear, evidence-based process for technical engagement:
-              discover needs, define requirements, research solutions,
-              specify details, design architecture, build prototypes,
-              test rigorously, validate results, deliver honestly,
-              and iterate based on feedback.
-              
-              This process ensures that every claim is checkable,
-              every limitation is documented, and every figure carries
-              its provenance—so results can be challenged without
-              anyone taking them on faith.
+              My process for technical work, from first conversation to delivery:
+              discover the real need, define requirements, research options,
+              specify details, design the architecture, build, test against
+              edge cases, validate the results, deliver with documentation,
+              and iterate on feedback.
+              Every claim stays checkable, every limitation is documented,
+              and each figure comes with its method — so results can be
+              challenged without anyone taking them on faith.
             </p>
           </Reveal>
         </div>
@@ -111,13 +109,12 @@ export default function HowIWorkPage() {
           <div className='mt-12 grid gap-px bg-line md:grid-cols-2'>
             <div>
               <Reveal>
-                <h3 className='display mt-4 text-xl'>EVIDENCE-FIRST APPROACH</h3>
+                <h3 className='display mt-4 text-xl'>DOCUMENTED WORK</h3>
               </Reveal>
               <p className='mt-4 text-base leading-relaxed text-muted'>
-                Every claim is grounded in verifiable evidence from the archive.
-                No unsupported assertions or exaggerated marketing.
-                Results are labelled accurately: backtested, simulated,
-                measured, or illustrative—never misrepresented.
+                Every claim points to work you can open — the builds, the lab
+                instruments, the research entries. Results are labelled for what
+                they are: backtested, simulated, measured, or illustrative.
               </p>
               <Link
                 href='/proof'

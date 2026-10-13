@@ -11,12 +11,12 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
     title: "Proof",
     description:
-        "The evidence hub — public repositories, verified research entries and measured figures with their provenance. Nothing here is claimed that cannot be checked at its source.",
+        "The repositories, research entries and measured figures behind my work — each linked to its source.",
     alternates: { canonical: "/proof" },
     openGraph: {
         title: "Proof — Bukya Naresh / CN2.dev",
         description:
-            "Inspectable, reproducible, labelled, verifiable. Real evidence only — with honest empty states where none exists.",
+            "Public repositories, reproduced research entries and measured figures, each labelled with its method.",
     },
 };
 
@@ -49,10 +49,9 @@ export default function ProofPage() {
                     </Reveal>
                     <Reveal delay={200}>
                         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-                            Everything on this page can be checked. Not a highlight reel — the repositories, the
-                            reproduced research and the measured figures, each carrying the label that says what
-                            kind of number it actually is. Where proof does not exist, the page says so instead of
-                            filling the gap.
+                            The repositories, the reproduced research and the measured figures behind my
+                            work — each one labelled for the kind of result it is, and each linked to its
+                            source.
                         </p>
                     </Reveal>
                 </div>
@@ -86,9 +85,8 @@ export default function ProofPage() {
                         <p className="label-mono text-signal">01 — INSPECTABLE SOURCE</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">PUBLIC REPOSITORIES</h2>
                         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-                            The final authority on every claim is the code. A verified repository is a dedicated,
-                            public project; where a system is still private, this page says so rather than implying
-                            a link that is only a profile.
+                            The code is the final authority on every claim. A verified repository is a
+                            dedicated, public project — systems that are still private are marked private.
                         </p>
                     </Reveal>
                     <div className="mt-10 grid gap-px bg-line md:grid-cols-2">
@@ -162,11 +160,11 @@ export default function ProofPage() {
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
                         <p className="label-mono text-signal">03 — LABELLED FIGURES</p>
-                        <h2 className="display mt-4 text-2xl md:text-4xl">MEASURED, WITH PROVENANCE</h2>
+                        <h2 className="display mt-4 text-2xl md:text-4xl">MEASURED RESULTS</h2>
                         <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted">
-                            Every number below is carried with the label that says what it is — a backtest, a
-                            simulation, a self-benchmark. None is presented as live trading performance or as an
-                            independent third-party result unless it says so.
+                            Every number below carries the label that says what it is — a backtest, a
+                            simulation, a self-benchmark. None is presented as live trading performance or as
+                            an independent third-party result unless it says so.
                         </p>
                     </Reveal>
                     <div className="mt-10 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
@@ -186,7 +184,7 @@ export default function ProofPage() {
                 </div>
             </section>
 
-            {/* ---- testimonials (honest empty state) ---- */}
+            {/* ---- testimonials (reserved space) ---- */}
             <section aria-label="Testimonials" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
@@ -224,14 +222,12 @@ export default function ProofPage() {
                                 <div className="corner-ticks max-w-3xl border border-line bg-surface p-8 md:p-10">
                                     <p className="label-mono text-signal">NO TESTIMONIALS PUBLISHED</p>
                                     <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
-                                        There are no client or colleague testimonials on this page, because none has been
-                                        given and attributed. Inventing one would be the fastest way to destroy the trust
-                                        this page exists to build. When a real testimonial is provided — with a name and a
-                                        way to verify it — it appears here, and not before.
+                                        No testimonials are published yet — this space is reserved for genuine
+                                        feedback from people I&apos;ve worked with.
                                     </p>
                                     <p className="label-mono mt-6 text-[10px] leading-relaxed text-faint">
-                                        WHAT IS HERE INSTEAD: PUBLIC CODE, REPRODUCIBLE RESEARCH AND MEASURED FIGURES WITH
-                                        THEIR PROVENANCE — THE EVIDENCE ABOVE.
+                                        WHAT IS HERE INSTEAD: PUBLIC CODE, REPRODUCIBLE RESEARCH AND MEASURED FIGURES —
+                                        HOW THE RESULTS ABOVE WERE PRODUCED.
                                     </p>
                                 </div>
                             )}
@@ -240,7 +236,7 @@ export default function ProofPage() {
                 </div>
             </section>
 
-            {/* ---- credentials (honest empty state) ---- */}
+            {/* ---- credentials (reserved state) ---- */}
             <section aria-label="Credentials" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
@@ -261,12 +257,10 @@ export default function ProofPage() {
                                 </div>
                             ) : (
                                 <div className="corner-ticks max-w-3xl border border-line bg-surface p-8 md:p-10">
-                                    <p className="label-mono text-signal">NO ACCREDITED CREDENTIALS CLAIMED</p>
+                                    <p className="label-mono text-signal">CREDENTIALS</p>
                                     <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
-                                        There is no formal, accredited certification listed on this site, because none has
-                                        been issued and independently verified. What exists instead is self-directed study,
-                                        evidenced by the systems and research in this repository — labelled as study, never
-                                        presented as a credential or as mastery.
+                                        No accredited certifications are listed here yet — my study record is
+                                        documented in full on the certifications page.
                                     </p>
                                     <Link
                                         href="/certifications#study"

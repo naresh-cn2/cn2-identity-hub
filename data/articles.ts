@@ -81,7 +81,7 @@ export const articles: Article[] = [
         body: [
           "quant-market-data-replay takes the position that information-flow correctness belongs in the storage and access layer. A query is answered at a point in time, and the access path for anything after that point does not exist. Consumers cannot opt out of the guarantee because there is no code path that returns the future.",
           "The test for this is adversarial rather than illustrative: deliberately attempt to extract future information through every access pattern available and confirm each attempt fails. A test that only confirms correct behaviour does not tell you whether the wrong behaviour is reachable.",
-          "This page's sibling instrument in the lab demonstrates the boundary directly — scrub a timestamp and the region that did not exist at that moment is rendered as unreachable rather than merely hidden.",
+          "The replay instrument in the lab demonstrates the boundary directly — scrub a timestamp and the region that did not exist at that moment is rendered as unreachable rather than merely hidden.",
         ],
       },
       {

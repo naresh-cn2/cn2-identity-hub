@@ -164,7 +164,7 @@ export default function AboutPage() {
             index="003"
             eyebrow="CAPABILITY ARCHITECTURE"
             lines={["DIFFERENT DISCIPLINES.", "ONE CONNECTED DIRECTION."]}
-            support="I work toward connecting financial understanding, quantitative reasoning, software, data, and intelligent automation. Select any discipline to see what it means, the problems it addresses, its honest status, and the work that supports it."
+            support="I work toward connecting financial understanding, quantitative reasoning, software, data, and intelligent automation. Select any discipline to see what it means, the problems it addresses, its status, and the work that supports it."
           />
           <Reveal className="mt-14">
             <CapabilityConstellation />
@@ -179,7 +179,7 @@ export default function AboutPage() {
             index="004"
             eyebrow="FROM THINKING TO EXECUTION"
             lines={["IDEAS ARE THE BEGINNING.", "SYSTEMS MAKE THEM USEFUL."]}
-            support="One process connects the disciplines: reasoning to implementation, implementation to evidence. It advances as you scroll — or select any stage directly."
+            support="One process connects the disciplines: reasoning to implementation, implementation to evidence — follow it as you scroll, or select any stage directly."
           />
           <Reveal className="mt-16">
             <ProcessChain stages={systemsStages} accent="signal" />

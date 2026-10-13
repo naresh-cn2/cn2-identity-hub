@@ -8,22 +8,19 @@ import PageAtmosphere from '@/components/ui/page-atmosphere';
 export const metadata: Metadata = {
   title: 'Testimonials — Bukya Naresh / CN2.dev',
   description:
-    'Genuine testimonials and feedback from collaborators, clients, and peers—only what is actually authorized and verified.',
+    'Feedback and testimonials from collaborators, clients and peers — published with their permission and attributed to real people.',
   alternates: { canonical: '/testimonials' },
   openGraph: {
     title: 'Testimonials — Bukya Naresh / CN2.dev',
     description:
-      'Genuine testimonials and feedback from collaborators, clients, and peers—only what is actually authorized and verified.',
+      'Feedback and testimonials from collaborators, clients and peers — published with their permission and attributed to real people.',
   },
 };
 
 /*
- * Testimonials page — genuine feedback only.
+ * Testimonials page — reserved space for genuine feedback.
  */
 export default function TestimonialsPage() {
-  // In a real implementation, this would come from data files
-  // For now, we'll show an honest state since no testimonial data exists
-  
   return (
     <>
       {/* ---- header ---- */}
@@ -36,7 +33,7 @@ export default function TestimonialsPage() {
               <p className='label-mono text-muted'>
                 SECTION <span className='text-signal'>/</span> 18 — TESTIMONIALS
               </p>
-              <p className='label-mono text-faint'>GENUINE FEEDBACK ONLY
+              <p className='label-mono text-faint'>FROM PEOPLE I&apos;VE WORKED WITH
               </p>
             </div>
           </Reveal>
@@ -45,14 +42,9 @@ export default function TestimonialsPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>
-              This page shows genuine testimonials and feedback only.
-              Each testimonial includes, where available and authorized:
-              actual text, person, role, organization, project or
-              collaboration, and date.
-              
-              No invented reviews. No fabricated profile photographs
-              or company logos. If there are no testimonials to show,
-              this honest state is preferred over false evidence.
+              Feedback from the people I&apos;ve worked with — collaborators, clients
+              and peers. Each testimonial is published with the person&apos;s name,
+              role and the context of the work, shared with their permission.
             </p>
           </Reveal>
         </div>
@@ -62,7 +54,7 @@ export default function TestimonialsPage() {
       <section aria-label='Testimonials' className='py-16 md:py-24 border-t border-line'>
         <div className='mx-auto max-w-[1440px] px-5 sm:px-8'>
           <Reveal>
-            <h2 className='display text-3xl md:text-5xl'>GENUINE TESTIMONIALS PRESENTATION</h2>
+            <h2 className='display text-3xl md:text-5xl'>TESTIMONIALS</h2>
           </Reveal>
           <div className='mt-12'>
             <div className='relative bg-background p-8'>
@@ -70,21 +62,8 @@ export default function TestimonialsPage() {
                 NO TESTIMONIALS TO SHOW
               </p>
               <p className='text-base leading-relaxed text-muted'>
-                This page is intentionally empty rather than filled
-                with plausible-looking entries.
-                
-                Testimonials appear here only when they are:
-                • Actually received from real collaborators or clients
-                • Properly authorized for public sharing
-                • Accurately attributed to real people and organizations
-                • Verified as genuine feedback on actual work
-                
-                Until such testimonials exist and are cleared for
-                public use, this restrained empty state maintains
-                the site&rsquo;s commitment to evidence and honesty.
-              </p>
-              <p className='label-mono mt-6 text-[10px] leading-relaxed text-faint'>
-                CN2.DEV VALUES TRUTH OVER APPEARANCE
+                No testimonials are published yet — this space is reserved for
+                genuine feedback from people I&apos;ve worked with.
               </p>
             </div>
           </div>
@@ -103,9 +82,8 @@ export default function TestimonialsPage() {
                 <h3 className='display mt-4 text-xl'>PROOF & EVIDENCE</h3>
               </Reveal>
               <p className='mt-4 text-base leading-relaxed text-muted'>
-                The best &lsquo;testimonial&rsquo; is verifiable evidence:
-                working systems, test suites, research artifacts,
-                and reproducible results.
+                The work itself carries the evidence: working systems,
+                test suites, research entries and reproducible results.
               </p>
               <Link
                 href='/proof'
@@ -119,9 +97,9 @@ export default function TestimonialsPage() {
                 <h3 className='display mt-4 text-xl'>RESEARCH & ARTICLES</h3>
               </Reveal>
               <p className='mt-4 text-base leading-relaxed text-muted'>
-                Technical peer review through research publications
-                and engineering articles provides another form
-                of credible feedback.
+                My research entries and engineering articles are open for
+                technical review and discussion — another way to judge the
+                work directly.
               </p>
               <Link
                 href='/research'

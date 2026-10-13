@@ -8,7 +8,7 @@ import { labModules } from "@/data/lab";
 export const metadata: Metadata = {
   title: "Freelance & Contracts",
   description:
-    "Available for defined-scope technical projects: research prototypes, market-data tooling, quantitative analysis systems, and automation workflows. All work is evidenced by actual projects in the archive.",
+    "Available for defined-scope technical projects: research prototypes, market-data tooling, quantitative analysis systems, and automation workflows.",
   alternates: { canonical: "/opportunities/freelance" },
   openGraph: {
     title: "Freelance & Contracts — Bukya Naresh / CN2.dev",
@@ -41,9 +41,10 @@ export default function FreelancePage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Available for defined-scope technical projects: research prototypes, market-data tooling,
-              quantitative analysis systems, and automation workflows. All work is evidenced by actual
-              projects in the archive.
+              I&apos;m available for defined-scope technical projects: research prototypes,
+              market-data tooling, quantitative analysis systems, and automation workflows.
+              Every engagement ends with working software, reproducible artifacts, and written
+              limitations.
             </p>
           </Reveal>
         </div>
@@ -55,9 +56,9 @@ export default function FreelancePage() {
             <p className="label-mono text-signal">SCOPE ALIGNMENT</p>
             <h2 className="display mt-4 text-3xl md:text-5xl">THE PROBLEM, THE BUILD, THE DELIVERABLE</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
-              Engagements are scoped by deliverable rather than by hours. Each row below is a real
-              problem shape from the archive, mapped to the system that addresses it and the artifact
-              that proves it was addressed.
+              I scope engagements by deliverable rather than by hours. Each row below maps a
+              common client problem to the system that addresses it and the artifact you
+              receive at handover.
             </p>
           </Reveal>
 
@@ -110,8 +111,8 @@ export default function FreelancePage() {
           <Reveal>
             <h2 className="display text-3xl md:text-5xl">ENGAGEMENT AREAS</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              Everything listed here is already evidenced somewhere in the archive — this is a record
-              of work done, not a menu written in advance of the work.
+              These are the areas where I can take work end to end — each one backed by systems
+              I have already built and used in practice.
             </p>
           </Reveal>
           <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">

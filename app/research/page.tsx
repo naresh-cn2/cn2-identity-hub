@@ -10,12 +10,12 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Research",
   description:
-    "A research archive across market structure, backtesting, data integrity, risk and quantitative methods. Every entry carries its question, hypothesis, method, evidence, result, limitation and conclusion — including the ones still in progress.",
+    "My research explores how markets, quantitative methods, data and software systems interact — the questions I investigate, the methods I use, and the findings and limitations of each study.",
   alternates: { canonical: "/research" },
   openGraph: {
     title: "Research — Bukya Naresh / CN2.dev",
     description:
-      "Questions before conclusions: falsifiable market questions, deterministic methods and published limitations.",
+      "Falsifiable market questions, deterministic methods, and the findings and limitations of each study.",
   },
 };
 
@@ -90,13 +90,14 @@ export default function ResearchPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">RESEARCH</h1>
+            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">QUESTIONS INTO EVIDENCE.</h1>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Questions before conclusions. Every entry carries its question, hypothesis, method,
-              evidence, result, limitation and conclusion — including the ones still in progress and
-              the ones whose answer is a limitation rather than a finding.
+              I investigate how markets, quantitative methods, data and software systems interact.
+              Every entry follows the same spine — question, hypothesis, method, evidence, result,
+              limitation and conclusion — including the ones still in progress and the ones whose
+              answer is a limitation rather than a finding.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -107,26 +108,27 @@ export default function ResearchPage() {
         </div>
       </header>
 
-      {/* ---- evidence policy ---- */}
-      <section aria-label="Research evidence policy" className="border-b border-line">
+      {/* ---- reading guidance ---- */}
+      <section aria-label="How entries are structured" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 md:py-16">
           <div className="grid gap-8 md:grid-cols-[16rem_1fr] md:gap-16">
             <Reveal>
-              <p className="label-mono text-research">EVIDENCE POLICY</p>
+              <p className="label-mono text-research">HOW ENTRIES ARE STRUCTURED</p>
             </Reveal>
             <Reveal delay={80}>
               <div className="grid gap-6 sm:grid-cols-2">
                 <p className="text-base leading-relaxed text-muted">
-                  Three states, and they mean exactly what they say.{" "}
+                  Each entry carries one of three statuses.{" "}
                   <span className="text-foreground">VERIFIED</span> — reproduced against the artifact.{" "}
                   <span className="text-foreground">DOCUMENTED</span> — written up from real work,
                   with limits stated. <span className="text-signal">ONGOING</span> — the question is
                   registered and the answer does not exist yet.
                 </p>
                 <p className="text-base leading-relaxed text-muted">
-                  An unfinished entry stays visible rather than being withheld until it looks
-                  impressive. The visual beside each entry is a generative diagram of its category —
-                  labelled illustrative, never presented as a measured result.
+                  Every entry states its question, method, evidence, result and limitation —
+                  including entries still in progress, which are marked as such and published
+                  alongside completed work. The visual beside each entry is a generative diagram of
+                  its category, labelled illustrative.
                 </p>
               </div>
             </Reveal>
@@ -170,7 +172,7 @@ export default function ResearchPage() {
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <p className="label-mono text-faint">WHERE THE EVIDENCE COMES FROM</p>
-            <h2 className="display mt-4 text-2xl md:text-4xl">BUILT SYSTEMS, NOT OPINIONS</h2>
+            <h2 className="display mt-4 text-2xl md:text-4xl">BUILT SYSTEMS</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
               Most entries here exist because a system was built that could answer the question.
               The builds are the evidence source; the research is what the evidence turned out to

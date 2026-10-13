@@ -38,7 +38,7 @@ export const hubDestinations: HubDestination[] = [
     label: "BUILDS",
     href: "/builds",
     blurb:
-      "Systems, engines and tools — what has actually been built, with status, stack and the evidence behind each one.",
+      "Systems, engines and tools — with status, stack and the evidence behind each one.",
     metric: { value: String(archiveProjects.length), label: "SYSTEMS ARCHIVED" },
   },
   {
@@ -46,7 +46,7 @@ export const hubDestinations: HubDestination[] = [
     label: "CREDENTIALS",
     href: "/certifications",
     blurb:
-      "Education, certifications and self-directed study — labelled honestly as accredited, in progress or self-directed.",
+      "Education, certifications and self-directed study — each marked as accredited, in progress or self-directed.",
     metric: {
       value: `${credentials.length} / ${studyTracks.length}`,
       label: "FORMAL / STUDY TRACKS",
@@ -97,7 +97,7 @@ export const hubDestinations: HubDestination[] = [
     label: "CONNECT",
     href: "/contact",
     blurb:
-      "Direct contact with real actions — email, GitHub, LinkedIn and enquiry routes that genuinely resolve.",
+      "Get in touch directly — email, GitHub, LinkedIn and enquiry routes.",
     metric: { value: "04", label: "CONTACT ROUTES" },
   },
 ];

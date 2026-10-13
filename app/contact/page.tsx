@@ -8,7 +8,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
     title: "Contact",
     description:
-        "Direct contact — no forms, no funnels. Describe the problem, the data and what evidence would count as success.",
+        "Direct contact for quantitative research, market-data systems, engineering projects and professional opportunities.",
     alternates: { canonical: "/contact" },
     openGraph: {
         title: "Contact — Bukya Naresh / CN2.dev",
@@ -56,7 +56,7 @@ export default function ContactPage() {
                         </p>
                     </Reveal>
                     <Reveal delay={100}>
-                        <h1 className="display mt-8 text-[clamp(3rem,12vw,9rem)]">CONTACT</h1>
+                        <h1 className="display mt-8 text-[clamp(3rem,12vw,9rem)]">LET&apos;S BUILD SOMETHING MEANINGFUL.</h1>
                     </Reveal>
                     <Reveal delay={180}>
                         <p className="label-mono mt-6 flex items-center justify-center gap-2 text-foreground">
@@ -66,8 +66,8 @@ export default function ContactPage() {
                     </Reveal>
                     <Reveal delay={240}>
                         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted">
-                            Direct contact — no forms, no funnels. Each method reveals on interaction.
-                            Choose the channel that fits the conversation.
+                            Have a technical challenge, a project idea, a research question, or a
+                            professional opportunity? Choose the most relevant way to connect.
                         </p>
                     </Reveal>
                 </div>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                             >
                                 <span className="label-mono text-foreground group-hover:text-signal">GITHUB →</span>
                                 <span className="mt-3 text-sm leading-relaxed text-muted">
-                                    The code is the proof — read it directly.
+                                    Open-source repositories — read the code directly.
                                 </span>
                             </a>
                         </Reveal>

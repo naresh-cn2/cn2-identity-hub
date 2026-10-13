@@ -33,7 +33,7 @@ const SERVICES: ServiceOffering[] = [
     problems: [
       "A strategy idea that looks promising but has no registered hypothesis and no test that could disprove it.",
       "Results that cannot be regenerated — every run differs, so nothing can be trusted or reviewed.",
-      "Research that ends in a number with no provenance: no cost model, no artifact, no limitation statement.",
+      "Research that ends in a number with no stated method behind it: no cost model, no artifact, no limitations.",
     ],
     deliverables: [
       "A registered hypothesis and an agreed evidence standard, fixed before data is touched.",
@@ -199,7 +199,7 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "ai-intelligence",
     promise: "AI applied to research tooling where every output is inspectable and every claim is checkable.",
     problems: [
-      "Model-generated analysis presented as a conclusion, with no provenance for where it came from.",
+      "Model-generated analysis presented as a conclusion, with no stated method or source behind it.",
       "Automation that cannot be re-run deterministically, so its output cannot be audited.",
       "Knowledge scattered across notes with no structure connecting question, method and evidence.",
     ],

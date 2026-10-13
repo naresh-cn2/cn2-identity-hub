@@ -55,7 +55,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
 
       <Reveal delay={80}>
         <p className="label-mono mt-4 text-faint">
-          {filtered.length} OF {projects.length} BUILDS — {active === "ALL" ? "COMPLETE ARCHIVE" : `${active} ONLY`}
+          {filtered.length} OF {projects.length} BUILDS — {active === "ALL" ? "ALL PROJECTS" : `${active} ONLY`}
         </p>
       </Reveal>
 
@@ -64,9 +64,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
           <div className="corner-ticks mt-10 border border-line bg-surface p-8 md:p-12">
             <p className="label-mono text-signal">NO BUILDS TAGGED {active}</p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
-              Nothing in the archive carries this tag yet. This filter is left in place rather than
-              hidden — an empty category is a truthful state, and it will populate when the work
-              behind it exists.
+              No build carries this tag yet.
             </p>
             <button
               type="button"

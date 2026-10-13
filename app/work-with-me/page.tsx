@@ -8,7 +8,7 @@ import PageAtmosphere from '@/components/ui/page-atmosphere';
 export const metadata: Metadata = {
   title: "Work With Me",
   description:
-    "Open to quantitative research, market-data systems, FinTech engineering, research tooling and technical collaboration. Scoped honestly — what gets delivered is what can be evidenced.",
+    "Open to quantitative research, market-data systems, FinTech engineering, research tooling and technical collaboration — scoped by deliverable.",
   alternates: { canonical: "/work-with-me" },
   openGraph: {
     title: "Work With Me — Bukya Naresh / CN2.dev",
@@ -111,9 +111,9 @@ export default function WorkWithMePage() {
             <p className="label-mono text-signal">SCOPE ALIGNMENT</p>
             <h2 className="display mt-4 text-3xl md:text-5xl">THE PROBLEM, THE BUILD, THE DELIVERABLE</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
-              Engagements are scoped by deliverable rather than by hours. Each row below is a real
-              problem shape from the archive, mapped to the system that addresses it and the artifact
-              that proves it was addressed.
+              I scope engagements by deliverable rather than by hours. Each row below maps a
+              common client problem to the system that addresses it and the artifact you
+              receive at handover.
             </p>
           </Reveal>
 
@@ -146,8 +146,8 @@ export default function WorkWithMePage() {
           <Reveal>
             <h2 className="display text-3xl md:text-5xl">ENGAGEMENT AREAS</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              Everything listed here is already evidenced somewhere in the archive — this is a record
-              of work done, not a menu written in advance of the work.
+              These are the areas where I can take work end to end — each one backed by systems
+              I have already built and used in practice.
             </p>
           </Reveal>
           <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
@@ -182,11 +182,11 @@ export default function WorkWithMePage() {
       <section aria-label="What I am open to" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
-            <p className="label-mono text-faint">FRAMING, STATED PLAINLY</p>
+            <p className="label-mono text-faint">CURRENTLY OPEN TO</p>
             <h2 className="display mt-4 text-3xl md:text-5xl">OPEN TO · AVAILABLE FOR · INTERESTED IN</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              No claim of prior consulting history, client roster or agency capacity is made here.
-              These are the shapes of work I am actively open to.
+              These are the shapes of work I am actively open to right now — roles, contracts
+              and collaborations where quantitative thinking and solid engineering matter.
             </p>
           </Reveal>
           <div className="mt-12 grid gap-px bg-line lg:grid-cols-3">
@@ -266,8 +266,8 @@ export default function WorkWithMePage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              Describe the problem, the data, and what evidence would count as success. Replies are
-              substantive, or an honest statement about fit.
+              Describe the problem, the data, and what would count as success — that is
+              enough to start a conversation.
             </p>
           </Reveal>
           <Reveal delay={280}>

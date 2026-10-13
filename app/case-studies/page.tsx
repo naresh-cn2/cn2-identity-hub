@@ -8,12 +8,12 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Deep-dive case studies for every flagship system — problem, architecture, data flow, experiments, results, limitations, and evidence. Each study is specific to its project and traces the full question-to-evidence chain.",
+    "Deep-dive case studies for each flagship system — the problem, architecture, data flow, experiments, results and limitations behind it.",
   alternates: { canonical: "/case-studies" },
   openGraph: {
     title: "Case Studies — Bukya Naresh / CN2.dev",
     description:
-      "Falsifiable questions, deterministic methods, published limitations. Every case study carries its question, hypothesis, method, evidence, result, limitation and conclusion.",
+      "Falsifiable questions, deterministic methods, published limitations — each study traces the question through method and evidence to the conclusion.",
   },
 };
 
@@ -39,10 +39,9 @@ export default function CaseStudiesPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Every substantial project gets a case study. Not a summary — a deep dive into the
-              problem, architecture, data flow, methods, experiments, results, limitations and
-              evidence. The case study and the build overview are the same evidence, described at
-              different resolutions.
+              Every substantial project gets a case study: a deep dive into the problem,
+              architecture, data flow, methods, experiments, results and limitations — the same
+              work the build overview covers, at full depth.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -64,26 +63,26 @@ export default function CaseStudiesPage() {
         </div>
       </header>
 
-      <section aria-label="Evidence policy" className="border-b border-line">
+      <section aria-label="Reading the results" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 md:py-16">
           <div className="grid gap-8 md:grid-cols-[16rem_1fr] md:gap-16">
             <Reveal>
-              <p className="label-mono text-signal">EVIDENCE POLICY</p>
+              <p className="label-mono text-signal">READING THE RESULTS</p>
             </Reveal>
             <Reveal delay={80}>
               <div className="grid gap-6 sm:grid-cols-2">
                 <p className="text-base leading-relaxed text-muted">
-                  Every number in these studies carries a provenance tag —{" "}
+                  Results are labelled by how they were produced —{" "}
                   <span className="text-foreground">BACKTEST</span>,{" "}
                   <span className="text-foreground">SIMULATION</span>,{" "}
                   <span className="text-foreground">SELF-BENCHMARK</span>,{" "}
                   <span className="text-foreground">TEST SUITE</span> or{" "}
-                  <span className="text-foreground">ILLUSTRATIVE</span>. A backtest is never presented
-                  as live trading.
+                  <span className="text-foreground">ILLUSTRATIVE</span>, so a simulated figure is
+                  never read as live trading.
                 </p>
                 <p className="text-base leading-relaxed text-muted">
-                  Projects with no published benchmark say so explicitly rather than borrowing
-                  credibility from the rest of the archive. Where a visual is a diagram rather than a
+                  Studies whose system is still in development are marked as such instead of
+                  carrying estimated numbers. Where a visual is a diagram rather than a
                   measurement, it is labelled as a diagram.
                 </p>
               </div>
@@ -143,9 +142,8 @@ export default function CaseStudiesPage() {
           </Reveal>
           <Reveal delay={160}>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
-              The case study is not a marketing asset — it is the structured record of how a question
-              was turned into evidence. If a link in the chain is missing, the study says so rather
-              than papering over the gap.
+              Each study follows this chain, from the question asked to the conclusion drawn —
+              including any step that is still open or unresolved.
             </p>
           </Reveal>
         </div>

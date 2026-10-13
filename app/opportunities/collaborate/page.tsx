@@ -7,7 +7,7 @@ import { researchEntries } from "@/data/research";
 export const metadata: Metadata = {
   title: "Research Collaboration",
   description:
-    "Open to research collaboration on market structure, backtesting, data integrity, risk engineering, and quantitative methods. Collaboration requires shared interest in evidence-based outcomes and transparent methodology.",
+    "Open to research collaboration on market structure, backtesting, data integrity, risk engineering, and quantitative methods — with collaborators who value reproducible results and transparent methodology.",
   alternates: { canonical: "/opportunities/collaborate" },
   openGraph: {
     title: "Research Collaboration — Bukya Naresh / CN2.dev",
@@ -68,9 +68,9 @@ export default function CollaboratePage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Open to research collaboration on market structure, backtesting, data integrity, risk
-              engineering, and quantitative methods. Collaboration requires shared interest in
-              evidence-based outcomes and transparent methodology.
+              I&apos;m open to research collaboration on market structure, backtesting, data
+              integrity, risk engineering, and quantitative methods — work where the question
+              is registered up front and the methodology stays transparent.
             </p>
           </Reveal>
         </div>
@@ -82,7 +82,7 @@ export default function CollaboratePage() {
             <h2 className="display text-3xl md:text-5xl">COLLABORATION THEMES</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
               These are the research areas where joint work produces compounding value. Each theme
-              connects to existing systems and entries in the archive.
+              connects to existing systems and published research entries.
             </p>
           </Reveal>
           <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">

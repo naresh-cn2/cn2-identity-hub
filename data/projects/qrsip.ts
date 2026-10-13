@@ -108,12 +108,12 @@ export const qrsip: FlagshipProject = {
       { value: "ALPHA", label: "PLATFORM STATUS", context: "CORE WORKFLOW LIVE" },
     ],
     narrative: [
-      "QRSIP is alpha-stage: the hypothesis-to-promotion workflow is implemented and tested, but this is a governance platform still under development. Systems deferred to later stages are not claimed here as implemented.",
+      "QRSIP is alpha-stage: the hypothesis-to-promotion workflow is implemented and tested, but this is a governance platform still under development. Systems deferred to later stages are listed as planned, not implemented.",
     ],
   },
   limitations: [
     "Alpha status — the platform is operational for its core workflow, not complete",
-    "Some planned capabilities remain deferred and are not claimed as implemented",
+    "Some planned capabilities remain deferred and are not implemented yet",
     "The promotion gate currently governs a small strategy population",
   ],
   evidence: [

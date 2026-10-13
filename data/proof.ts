@@ -33,6 +33,6 @@ export const testimonials: Testimonial[] = [];
 export const proofStandard: { label: string; detail: string }[] = [
     { label: "INSPECTABLE", detail: "A public repository you can read — not a screenshot." },
     { label: "REPRODUCIBLE", detail: "A result that regenerates from the same inputs and code." },
-    { label: "LABELLED", detail: "Every figure carries its provenance — backtest, simulation, self-benchmark." },
+    { label: "LABELLED", detail: "Each result states its method — backtest, simulation, or self-benchmark." },
     { label: "VERIFIABLE", detail: "A third party can confirm the claim at its source." },
 ];

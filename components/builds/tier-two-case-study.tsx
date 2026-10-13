@@ -182,9 +182,8 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
                   <div className="corner-ticks max-w-3xl border border-signal bg-surface p-6 md:p-8">
                     <p className="label-mono text-signal">NO PUBLISHED BENCHMARK</p>
                     <p className="mt-4 text-base leading-relaxed text-muted">
-                      This system has no released performance figures. Quoting a number here would
-                      mean inventing one, so this record stays qualitative until the benchmark is
-                      published alongside the code.
+                      No benchmark has been published for this system yet, so this record stays
+                      qualitative.
                     </p>
                   </div>
                 </Reveal>

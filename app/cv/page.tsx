@@ -9,7 +9,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "CV",
   description:
-    "Print-ready CV — BUKYA NARESH / CN2.DEV. Quantitative engines, market-data infrastructure, research governance and performance systems, with every metric's provenance tagged.",
+    "Print-ready CV — BUKYA NARESH / CN2.DEV. Quantitative engines, market-data infrastructure, research governance and performance systems.",
   alternates: { canonical: "/cv" },
 };
 
@@ -256,8 +256,8 @@ export default function CvPage() {
           </li>
         </ul>
         <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
-          Every figure above carries its provenance tag — BACKTEST, SIMULATION, SELF-BENCHMARK or TEST
-          SUITE. Simulated results are never presented as live trading.
+          Results above are labelled by method — BACKTEST, SIMULATION, SELF-BENCHMARK or TEST
+          SUITE.
         </p>
       </CvSection>
     </div>

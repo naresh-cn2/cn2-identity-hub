@@ -91,7 +91,7 @@ export default function VisionNetwork() {
       </div>
 
       <p className="label-mono mt-8 text-[10px] leading-relaxed text-faint">
-        A DIRECTION BEING DEVELOPED — NOT A COMPLETED PLATFORM.
+        A DIRECTION I AM DEVELOPING — PIECE BY PIECE.
       </p>
     </div>
   );

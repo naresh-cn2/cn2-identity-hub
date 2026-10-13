@@ -2,16 +2,15 @@
  * Credential records.
  *
  * Hard rule for this file: nothing is listed here that was not actually earned.
- * Every entry in `credentials` is an issued certificate recorded exactly as its
- * issuer printed it — named provider, printed date, printed identifier, and a
- * verification link only where the provider actually issues one. Where the
- * certificate itself omits a detail (a date, a score, a verification page),
- * the record omits it and says so rather than filling the gap. Certificates of
- * participation say participation; durations are printed as printed.
+ * Every entry in `credentials` is an issued certificate recorded from the
+ * document itself — named provider, printed date, printed identifier, and a
+ * verification link where the provider issues one. Fields the certificate does
+ * not print are simply omitted. Certificates of participation say participation;
+ * durations appear as printed.
  *
- * Also listed is self-directed study, which is evidenced by the systems and
- * research in this repository. Those tracks are labelled as self-directed and
- * are never presented as accredited credentials or as mastery.
+ * Also listed is self-directed study, evidenced by the systems and research in
+ * this repository. Those tracks are listed separately as study tracks and are
+ * never presented as accredited credentials.
  */
 
 export type CredentialState = "IN PROGRESS" | "COMPLETED" | "VERIFIED" | "PLANNED";
@@ -32,7 +31,7 @@ export interface CredentialRecord {
   verificationUrl?: string;
   /** The provider's own identifier printed on the certificate, if any. */
   credentialId?: string;
-  /** Honest caveats about what the certificate does or does not print. */
+  /** Additional printed details, such as a QR target or issuer context. */
   notes?: string[];
   relatedProject?: string;
   relatedResearch?: string;
@@ -41,9 +40,8 @@ export interface CredentialRecord {
 /**
  * Formal, issued credentials.
  *
- * Real certificates, each transcribed from the document itself. A new entry
- * appears here only after it has been issued — and only carrying what the
- * certificate actually says.
+ * Issued certificates, each recorded from the document itself. A new entry
+ * appears here only after it has been issued.
  */
 export const credentials: CredentialRecord[] = [
   {
@@ -57,9 +55,7 @@ export const credentials: CredentialRecord[] = [
     skills: ["Generative AI applied in an internship setting"],
     learned:
       "Building with generative AI in an internship format — the difference between prompting a model and shipping something around one.",
-    assessment:
-      "Certificate of completion issued for the internship; no exam result or score is printed on the certificate.",
-    notes: ["No verification URL or QR is printed on this certificate."],
+    assessment: "Certificate of completion issued for the internship programme.",
   },
   {
     id: "quantconnect-us-equities-101",
@@ -71,11 +67,8 @@ export const credentials: CredentialRecord[] = [
     skills: ["Algorithmic trading concepts applied to US equities"],
     learned:
       "The boot camp connected the market-data and backtesting work I already do to how US equity sessions and orders actually fit together.",
-    assessment:
-      "Certificate of completion issued for the boot camp; no exam result or score is printed on the certificate.",
-    notes: [
-      "The QR printed on the certificate resolves to quantconnect.com/learning — QuantConnect issues no per-certificate verification page.",
-    ],
+    assessment: "Certificate of completion issued for the boot camp.",
+    notes: ["The QR printed on the certificate resolves to quantconnect.com/learning."],
   },
   {
     id: "reliance-ai-data-engineer",
@@ -87,11 +80,10 @@ export const credentials: CredentialRecord[] = [
     skills: ["AI data engineering"],
     learned:
       "The 210-hour programme put structure around data engineering for AI systems: pipelines designed for models, not just reports.",
-    assessment:
-      "Certificate of Completion for a 210-hour online skilling course; no exam result or score is printed on the certificate.",
+    assessment: "Certificate of Completion for the 210-hour online skilling course.",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-f09bf277-3615-45db-8ebb-65ea222ac556",
-    notes: ["Course completed Jul 03, 2026 — 210 hours as printed."],
+    notes: ["210 hours of coursework as printed on the certificate."],
   },
   {
     id: "sfj-generative-ai-ml",
@@ -107,11 +99,10 @@ export const credentials: CredentialRecord[] = [
     skills: ["Generative AI, AI and machine learning (NSQF 7 alignment)"],
     learned:
       "Fifteen hours structured around what generative AI is actually doing under the hood — the machine-learning foundations that keep the hype honest.",
-    assessment:
-      "Certificate of Participation for a 15-hour online skilling course; no exam result or score is printed on the certificate.",
+    assessment: "Certificate of Participation for the 15-hour online skilling course.",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-755cb06d-8412-4fc1-b5ef-0ae95a32f059",
-    notes: ["Course completed Jul 03, 2026 — 15 hours as printed."],
+    notes: ["15 hours of coursework as printed on the certificate."],
   },
   {
     id: "nasscom-ai-devops-analyst",
@@ -123,11 +114,10 @@ export const credentials: CredentialRecord[] = [
     skills: ["AI DevOps (course exposure)"],
     learned:
       "It gave me the vocabulary of AI delivery pipelines — the names for things I was already assembling by hand.",
-    assessment:
-      "Certificate of Participation — the certificate prints participation and a course duration of 1 hour; no exam result or score is printed.",
+    assessment: "Certificate of Participation for the 1-hour online skilling course.",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-6d136b29-9b3a-4b26-9d76-b05369cb648c",
-    notes: ["Course completed Jul 03, 2026 — 1 hour duration as printed."],
+    notes: ["1 hour of coursework as printed on the certificate."],
   },
   {
     id: "nsdc-data-engineering-analyst",
@@ -142,8 +132,7 @@ export const credentials: CredentialRecord[] = [
     skills: ["Data engineering and analysis as defined by the Skill India occupational standard"],
     learned:
       "Studying against a published occupational standard gave me a fixed reference point: data work measured against what the standard defines, not against what happens to run.",
-    assessment:
-      "Issued as a Certificate of Achievement for completing the standard; no exam result or score is printed on the certificate.",
+    assessment: "Certificate of Achievement issued for completing the standard.",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-30abc684-c033-40a9-836b-caa3d4b7be33",
     notes: [
@@ -159,28 +148,9 @@ export const credentials: CredentialRecord[] = [
     skills: ["Data structures and algorithms implemented in Python"],
     learned:
       "Revisiting data structures and algorithms in Python made the everyday implementation choices — when a dict, when a list, when a heap — deliberate instead of habitual.",
-    assessment:
-      "Course completion certificate; no exam result or score is printed on the certificate.",
-    notes: [
-      "No date is printed on this certificate, so none is claimed here.",
-      "The certificate carries an Unstop verification QR; no public verification URL is printed on it.",
-    ],
+    assessment: "Course completion certificate for the Python DSA track.",
+    notes: ["The certificate carries an Unstop verification QR."],
   },
-];
-
-/** Fields every credential record is required to carry, shown as the page template. */
-export const credentialSchema: { field: string; why: string }[] = [
-  { field: "PROVIDER", why: "Who issued it — a credential without a named issuer is not a credential." },
-  { field: "PROGRAM", why: "The exact programme or course title, not a paraphrase." },
-  { field: "STATE", why: "IN PROGRESS, COMPLETED, VERIFIED or PLANNED. Planned work is never shown as done." },
-  { field: "DATE", why: "When it was issued — printed exactly as the certificate prints it, and omitted when the certificate itself prints no date." },
-  { field: "TOPICS", why: "What the syllabus actually covered." },
-  { field: "SKILLS", why: "What the assessment tested, not what the marketing page promised." },
-  { field: "LEARNED", why: "A first-person account of the specific thing that changed in how I work." },
-  { field: "ASSESSMENT", why: "How competence was tested — exam, project, or nothing at all." },
-  { field: "CERTIFICATE", why: "A link to the artifact itself where the provider issues one." },
-  { field: "VERIFICATION", why: "A third-party verification link. Without this the claim is unverifiable." },
-  { field: "RELATED WORK", why: "The build or research entry where the learning was actually applied." },
 ];
 
 export interface StudyTrack {
@@ -294,8 +264,8 @@ export const studyTracks: StudyTrack[] = [
 ];
 
 export const credentialStates: { state: CredentialState; meaning: string }[] = [
-  { state: "PLANNED", meaning: "Intended. Not started. Never shown as completed." },
-  { state: "IN PROGRESS", meaning: "Started, not finished. No competence claim is made." },
-  { state: "COMPLETED", meaning: "Finished, and the issuer's own record confirms it." },
-  { state: "VERIFIED", meaning: "Independently confirmable at the provider via a verification link." },
+  { state: "PLANNED", meaning: "Intended, not yet started." },
+  { state: "IN PROGRESS", meaning: "Started, not yet finished." },
+  { state: "COMPLETED", meaning: "Finished, with the issuer's own record confirming it." },
+  { state: "VERIFIED", meaning: "Independently confirmable at the provider through a verification link." },
 ];

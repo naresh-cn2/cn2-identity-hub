@@ -8,12 +8,12 @@ import { studyTracks } from "@/data/certifications";
 export const metadata: Metadata = {
   title: "Career — Employment Opportunities",
   description:
-    "Education, projects, experience and CV for quantitative development and research roles. Every figure carries its provenance.",
+    "Education, projects and CV for quantitative development and research roles.",
   alternates: { canonical: "/opportunities/career" },
   openGraph: {
     title: "Career — Bukya Naresh / CN2.dev",
     description:
-      "Quantitative development and research roles. Education, projects, experience and CV with evidence.",
+      "Quantitative development and research roles. Education, projects, experience and CV.",
   },
 };
 
@@ -41,9 +41,9 @@ export default function CareerPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Seeking roles in quantitative development, systematic trading research, market-data
-              infrastructure, and risk engineering. This page details education, projects, experience
-              and an actual CV — all evidenced in the archive.
+              I&apos;m seeking roles in quantitative development, systematic trading research,
+              market-data infrastructure, and risk engineering. Below is my study record, the
+              systems I&apos;ve built, and a print-ready CV.
             </p>
           </Reveal>
         </div>
@@ -55,8 +55,8 @@ export default function CareerPage() {
             <p className="label-mono text-signal">EDUCATION &amp; STUDY</p>
             <h2 className="display mt-4 text-3xl md:text-5xl">ACTIVE STUDY TRACKS</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              Self-directed study, evidenced by the archive — not credentials. Each track has
-              produced working systems you can inspect.
+              These are self-directed study tracks rather than formal qualifications — each
+              one has produced working systems you can inspect.
             </p>
           </Reveal>
           <div className="mt-10 space-y-8">

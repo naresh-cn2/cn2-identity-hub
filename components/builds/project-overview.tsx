@@ -236,8 +236,8 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                                 </h2>
                                 <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
                                     Problem, hypothesis, architecture, methodology, experiments, results — and the
-                                    failures and limitations beside them. The case study is where this build is
-                                    proven, not merely described.
+                                    failures and limitations beside them. The case study is the full write-up for
+                                    this build.
                                 </p>
                             </div>
                             <div className="flex flex-col gap-4 md:items-end">

@@ -3,7 +3,6 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import {
-  credentialSchema,
   credentialStates,
   credentials,
   studyTracks,
@@ -15,12 +14,12 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Certifications",
   description:
-    "Credential record for Bukya Naresh — issued certificates transcribed exactly as printed, each with its named issuer, printed date and verification where the issuer offers it. Self-directed study is labelled as self-directed.",
+    "Education, completed programmes and continuous learning — Bukya Naresh. Internships, courses and certifications across generative AI, quantitative finance, data and software engineering, plus active self-directed study tracks.",
   alternates: { canonical: "/certifications" },
   openGraph: {
     title: "Certifications — Bukya Naresh / CN2.dev",
     description:
-      "An evidence-first credential record: every certificate exactly as issued — no unearned claim, no self-directed study presented as accreditation.",
+      "Completed programmes, issued certificates and self-directed study — each linked to the work it produced.",
   },
 };
 
@@ -32,7 +31,7 @@ function formatDate(iso?: string) {
   return `${d} ${MONTHS[Number(m) - 1]} ${y}`;
 }
 
-/** Credential constellation — filled nodes are states actually claimed. */
+/** Credential constellation — node count reflects credentials in each state. */
 function CredentialConstellation({
   credentials,
   studyCount,
@@ -47,7 +46,7 @@ function CredentialConstellation({
       viewBox="0 0 840 132"
       className="h-auto w-full"
       role="img"
-      aria-label={`Credential constellation: ${credentials.length} credentials claimed — ${nodes
+      aria-label={`Credential counts: ${nodes
         .map((n) => `${count(n)} ${n.toLowerCase()}`)
         .join(", ")}. ${studyCount} self-directed study tracks are active.`}
     >
@@ -85,7 +84,7 @@ function CredentialConstellation({
               fill={filled ? "var(--muted)" : "var(--faint)"}
               style={{ fontFamily: "var(--font-mono)" }}
             >
-              {filled ? `${n} CLAIMED` : "NOT CLAIMED"}
+              {filled ? `${n} ${label}` : `0 ${label}`}
             </text>
           </g>
         );
@@ -102,7 +101,7 @@ function CredentialConstellation({
         fill="var(--research)"
         style={{ fontFamily: "var(--font-mono)" }}
       >
-        {studyCount} SELF-DIRECTED STUDY TRACKS — ACTIVE, NOT ACCREDITED
+        {studyCount} SELF-DIRECTED STUDY TRACKS — ACTIVE
       </text>
     </svg>
   );
@@ -118,7 +117,8 @@ export default function CertificationsPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 05 — CERTIFICATIONS
+                EDUCATION <span className="text-signal">/</span> CERTIFICATIONS{" "}
+                <span className="text-signal">/</span> CONTINUOUS LEARNING
               </p>
               <p className="label-mono text-faint">
                 {credentials.length} FORMAL · {studyTracks.length} SELF-DIRECTED
@@ -126,12 +126,16 @@ export default function CertificationsPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(2.6rem,8.5vw,6.5rem)]">CERTIFICATIONS</h1>
+            <h1 className="display mt-8 text-[clamp(2.6rem,8.5vw,6.5rem)]">
+              LEARN. BUILD. PROGRESS.
+            </h1>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              A credential page is only worth having if it is honest. This one lists no certificate
-              that was not issued, and does not present self-directed study as accreditation.
+              My learning journey spans generative AI, quantitative finance, algorithmic trading,
+              data, and software engineering. Here, I document the programmes I have completed, the
+              skills I am developing, and the knowledge I put into practice through technical
+              projects.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -145,18 +149,18 @@ export default function CertificationsPage() {
         </div>
       </header>
 
-      {/* ---- formal credentials: issued certificates, transcribed as printed ---- */}
-      <section aria-label="Formal credentials" className="border-b border-line">
+      {/* ---- completed programmes ---- */}
+      <section aria-label="Completed programmes" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
-            <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <div>
-                <p className="label-mono text-signal">FORMAL CREDENTIALS</p>
-                <h2 className="display mt-4 text-3xl md:text-4xl">EVERY CERTIFICATE, AS ISSUED</h2>
-              </div>
-              <p className="label-mono max-w-xs text-[10px] leading-relaxed text-faint">
-                TRANSCRIBED FROM THE DOCUMENT ITSELF — WHERE THE CERTIFICATE OMITS A DETAIL, THE
-                RECORD OMITS IT TOO.
+            <div>
+              <p className="label-mono text-signal">COMPLETED PROGRAMMES</p>
+              <h2 className="display mt-4 text-3xl md:text-4xl">
+                INTERNSHIPS, COURSES AND TRAINING
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
+                A record of the internships, courses, and training programmes I have completed,
+                including the knowledge and practical experience gained through each.
               </p>
             </div>
           </Reveal>
@@ -181,7 +185,7 @@ export default function CertificationsPage() {
                           {c.state}
                         </span>
                         <span className="label-mono text-[10px] text-faint">
-                          {formatDate(c.date) ?? "NO DATE PRINTED"}
+                          {formatDate(c.date)}
                         </span>
                       </div>
                       <h3 className="display mt-4 text-xl md:text-2xl">{c.program}</h3>
@@ -276,7 +280,7 @@ export default function CertificationsPage() {
               href="/builds"
               className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
             >
-              SEE THE ACTUAL EVIDENCE →
+              SEE THE PROJECTS →
             </Link>
             <Link
               href="/capabilities"
@@ -294,8 +298,8 @@ export default function CertificationsPage() {
           <Reveal>
             <h2 className="display text-2xl md:text-4xl">WHAT EACH STATE MEANS</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              Four states, used strictly. Intended work is never presented as finished work, and a
-              completed course is never presented as mastery.
+              Every record on this page carries one of four states, so you can see exactly where a
+              programme stands.
             </p>
           </Reveal>
           <div className="mt-10 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
@@ -322,12 +326,14 @@ export default function CertificationsPage() {
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <div>
                 <p className="label-mono text-research">SELF-DIRECTED STUDY</p>
-                <h2 className="display mt-4 text-3xl md:text-5xl">WHAT I AM ACTUALLY STUDYING</h2>
+                <h2 className="display mt-4 text-3xl md:text-5xl">KNOWLEDGE IN PRACTICE</h2>
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
+                  Beyond formal education, I study quantitative methods, market systems, data
+                  infrastructure, software development, and AI-assisted automation. I connect each
+                  track to the practical projects, experiments, and technical investigations where
+                  it shows up.
+                </p>
               </div>
-              <p className="label-mono max-w-xs text-[10px] leading-relaxed text-faint">
-                NOT CREDENTIALS. NO PROVIDER, NO CERTIFICATE, NO ASSESSMENT — ONLY METHOD AND THE
-                WORK IT PRODUCED.
-              </p>
             </div>
           </Reveal>
 
@@ -401,41 +407,14 @@ export default function CertificationsPage() {
         </div>
       </section>
 
-      {/* ---- record schema ---- */}
-      <section aria-label="Credential record schema" className="border-b border-line">
-        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
-          <div className="grid gap-10 md:grid-cols-[16rem_1fr] md:gap-16">
-            <Reveal>
-              <p className="label-mono text-faint">RECORD SCHEMA</p>
-            </Reveal>
-            <Reveal delay={80}>
-              <h2 className="display text-2xl md:text-4xl">EVERY CREDENTIAL MUST CARRY ALL OF THIS</h2>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-                The requirements below are fixed in advance so that no credential listed here can be
-                a vague line of text — and where an issuer prints nothing (a date, a score, a
-                verification page), the record states the gap instead of filling it.
-              </p>
-              <dl className="mt-10 grid gap-px bg-line sm:grid-cols-2">
-                {credentialSchema.map((f) => (
-                  <div key={f.field} className="bg-background p-5">
-                    <dt className="label-mono text-foreground">{f.field}</dt>
-                    <dd className="mt-2 text-sm leading-relaxed text-muted">{f.why}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
       {/* ---- continue ---- */}
       <section aria-label="Continue" className="border-t border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8">
           <Reveal>
             <div className="flex flex-wrap items-center justify-between gap-6">
               <div>
-                <p className="label-mono text-faint">PROOF OVER PAPER</p>
-                <p className="display mt-2 text-2xl md:text-3xl">JUDGE THE SYSTEMS, NOT THE CERTIFICATE</p>
+                <p className="label-mono text-faint">CONTINUE</p>
+                <p className="display mt-2 text-2xl md:text-3xl">SEE WHERE THE LEARNING SHOWS UP</p>
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link

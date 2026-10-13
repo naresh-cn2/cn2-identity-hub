@@ -7,7 +7,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Opportunities",
   description:
-    "Open to quantitative research, engineering, freelance contracts, research collaboration and technical partnerships. Scoped honestly — what gets delivered is what can be evidenced.",
+    "Open to quantitative research, engineering, freelance contracts, research collaboration and technical partnerships.",
   alternates: { canonical: "/opportunities" },
   openGraph: {
     title: "Opportunities — Bukya Naresh / CN2.dev",
@@ -23,7 +23,7 @@ const PATHWAYS = [
     label: "EMPLOYMENT",
     title: "QUANTITATIVE DEVELOPMENT & RESEARCH ROLES",
     description:
-      "Seeking roles in quantitative development, systematic trading research, market-data infrastructure, and risk engineering. This page details education, projects, experience and an actual CV — all evidenced in the archive.",
+      "Seeking roles in quantitative development, systematic trading research, market-data infrastructure, and risk engineering. This page covers my education, study, projects, experience and CV.",
     status: "ACTIVE",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -39,7 +39,7 @@ const PATHWAYS = [
     label: "FREELANCE & CONTRACTS",
     title: "TECHNICAL PROJECTS & RESEARCH PROTOTYPES",
     description:
-      "Available for defined-scope technical projects: research prototypes, market-data tooling, quantitative analysis systems, and automation workflows. All work is evidenced by actual projects in the archive.",
+      "Available for defined-scope technical projects: research prototypes, market-data tooling, quantitative analysis systems, and automation workflows. Each engagement ends with working software, reproducible artifacts, and written limitations.",
     status: "AVAILABLE",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -55,7 +55,7 @@ const PATHWAYS = [
     label: "RESEARCH COLLABORATION",
     title: "JOINT EXPERIMENTS & OPEN RESEARCH",
     description:
-      "Open to research collaboration on market structure, backtesting, data integrity, risk engineering, and quantitative methods. Collaboration requires shared interest in evidence-based outcomes and transparent methodology.",
+      "Open to research collaboration on market structure, backtesting, data integrity, risk engineering, and quantitative methods — with collaborators who value reproducible results and transparent methodology.",
     status: "OPEN",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -72,7 +72,7 @@ const PATHWAYS = [
     label: "BUSINESS & PARTNERSHIPS",
     title: "TECHNICAL PARTNERSHIPS & PRODUCT OPPORTUNITIES",
     description:
-      "Appropriate contact pathway for genuine technical partnerships and future product opportunities. No fake company claims — this is an individual practice with a serious professional identity.",
+      "Technical partnerships and product opportunities where quantitative systems and research tooling are central. I work independently and take on partnerships selectively.",
     status: "SELECTIVE",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -98,13 +98,12 @@ export default function OpportunitiesPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">OPPORTUNITIES</h1>
+            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">OPEN TO MEANINGFUL WORK.</h1>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Open to quantitative research, engineering, freelance contracts, research collaboration
-              and technical partnerships. Scoped honestly — what gets delivered is what can be
-              evidenced. Each pathway below is a real destination with its own page.
+              I&apos;m interested in opportunities where quantitative thinking, software,
+              data, and intelligent automation can contribute to meaningful technical work.
             </p>
           </Reveal>
         </div>
@@ -160,8 +159,8 @@ export default function OpportunitiesPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              Describe the problem, the data, and what evidence would count as success. Replies are
-              substantive, or an honest statement about fit.
+              Describe the problem, the data, and what would count as success — that is
+              enough to start a conversation.
             </p>
           </Reveal>
           <Reveal delay={280}>

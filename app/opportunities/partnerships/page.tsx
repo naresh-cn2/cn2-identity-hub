@@ -7,7 +7,7 @@ import { flagshipProjects } from "@/data/projects";
 export const metadata: Metadata = {
   title: "Business & Partnerships",
   description:
-    "Appropriate contact pathway for genuine technical partnerships and future product opportunities. No fake company claims — this is an individual practice with a serious professional identity.",
+    "Technical partnerships and product opportunities for quantitative systems, market-data infrastructure and research tooling — from an independent practice.",
   alternates: { canonical: "/opportunities/partnerships" },
   openGraph: {
     title: "Partnerships — Bukya Naresh / CN2.dev",
@@ -71,9 +71,9 @@ export default function PartnershipsPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Appropriate contact pathway for genuine technical partnerships and future product
-              opportunities. No fake company claims — this is an individual practice with a serious
-              professional identity.
+              I&apos;m open to technical partnerships and product opportunities where
+              quantitative systems, market-data infrastructure or research tooling is central.
+              I work independently and take on partnerships selectively.
             </p>
           </Reveal>
         </div>
@@ -84,8 +84,8 @@ export default function PartnershipsPage() {
           <Reveal>
             <h2 className="display text-3xl md:text-5xl">PARTNERSHIP MODELS</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              Each model below is grounded in systems that already exist in the archive. Nothing is
-              proposed that cannot be demonstrated.
+              Each model below builds on systems I have already built and can demonstrate —
+              with repositories, case studies and results you can inspect directly.
             </p>
           </Reveal>
           <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-4">
@@ -143,7 +143,7 @@ export default function PartnershipsPage() {
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
             <p className="label-mono text-signal">PRINCIPLES</p>
-            <h2 className="display mt-4 text-3xl md:text-5xl">WHAT I DO NOT DO</h2>
+            <h2 className="display mt-4 text-3xl md:text-5xl">WHAT I DON&apos;T TAKE ON</h2>
           </Reveal>
           <Reveal delay={120}>
             <ul className="mt-8 space-y-4 max-w-3xl">

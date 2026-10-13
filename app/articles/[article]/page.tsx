@@ -144,11 +144,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ articl
                 </section>
               </Reveal>
 
-              {/* ---- failure / honesty note ---- */}
+              {/* ---- limits note ---- */}
               <Reveal delay={160}>
                 <p className="mt-10 max-w-3xl text-sm leading-relaxed text-faint">
-                  Limits stated above are part of the argument, not a disclaimer appended to it. Where
-                  an associated study is still running, the linked research entry says so.
+                  The limits stated above are part of the argument. If an associated study is still
+                  running, the linked research entry notes it.
                 </p>
               </Reveal>
             </div>

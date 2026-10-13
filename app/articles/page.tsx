@@ -9,7 +9,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Articles",
   description:
-    "Engineering notes on quantitative systems, market data and research infrastructure — written from work that exists, with the limits stated.",
+    "Engineering notes on quantitative systems, market data and research infrastructure — written from work I've already done, with the limits stated.",
   alternates: { canonical: "/articles" },
   openGraph: {
     title: "Articles — Bukya Naresh / CN2.dev",
@@ -73,8 +73,9 @@ export default function ArticlesPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Engineering notes rather than think-pieces. Each one is written from work that already
-              exists in this repository, and each one says where its argument stops.
+              Engineering notes written from work I&apos;ve already done — not think-pieces. Each one
+              draws on a system that exists in this repository, and each one says where its argument
+              stops.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -208,9 +209,8 @@ export default function ArticlesPage() {
                 ))}
               </div>
               <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted">
-                The categories exist so future notes have somewhere to land. Everything currently
-                listed was written from a system in the archive — the note and the case study are
-                the same evidence, described at different resolutions.
+                Every note currently listed was written from a system in the archive — the note and
+                the case study cover the same work, described at different resolutions.
               </p>
             </Reveal>
           </div>

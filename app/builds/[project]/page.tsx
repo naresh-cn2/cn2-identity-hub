@@ -103,7 +103,7 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
                 href="/builds"
                 className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
-                ← COMPLETE ARCHIVE
+                ← ALL PROJECTS
               </Link>
               {flagship && (
                 <Link

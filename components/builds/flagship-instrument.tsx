@@ -96,9 +96,9 @@ export default function FlagshipInstrument({ project }: { project: FlagshipProje
           />
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted">
             The surface demonstrates the shape of a multi-strategy equity trajectory with its
-            drawdown topology. Hover to inspect any point. The measured master-fund result —
-            reported with its provenance in the results chapter below — is a backtest outcome at a
-            single point in history, not a forecast.
+            drawdown topology. Hover to inspect any point. The measured master-fund result appears
+            in the results chapter below — a backtest outcome at a single point in history, not a
+            forecast.
           </p>
         </Frame>
       );

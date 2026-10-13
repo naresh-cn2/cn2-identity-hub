@@ -8,12 +8,12 @@ import { serviceOfferings, getCapability } from '@/data/services';
 export const metadata: Metadata = {
   title: 'Services — Bukya Naresh / CN2.dev',
   description:
-    'Client-facing services offered: research prototypes, market-data tooling, quantitative analysis tools, and technical automation—all evidenced by actual work in the archive.',
+    'Defined-scope technical services: research prototypes, market-data tooling, quantitative analysis, data pipelines, and AI-assisted automation.',
   alternates: { canonical: '/services' },
   openGraph: {
     title: 'Services — Bukya Naresh / CN2.dev',
     description:
-      'Client-facing services offered: research prototypes, market-data tooling, quantitative analysis tools, and technical automation—all evidenced by actual work in the archive.',
+      'Defined-scope technical services: research prototypes, market-data tooling, quantitative analysis, data pipelines, and AI-assisted automation.',
   },
 };
 
@@ -41,14 +41,13 @@ export default function ServicesPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>SERVICES</h1>
+            <h1 className='display mt-8 text-[clamp(3rem,10vw,8rem)]'>COMPLEX PROBLEMS. PRACTICAL SOLUTIONS.</h1>
           </Reveal>
           <Reveal delay={200}>
             <p className='mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl'>
-              Client-facing services offered: research prototypes, market-data tooling,
-              quantitative analysis tools, financial data pipelines, technical automation,
-              and AI-assisted workflow tools—all evidenced by actual work in the archive.
-              Nothing is offered without a clear basis in demonstrated capability.
+              I work across quantitative research, data engineering, software development,
+              and AI-assisted automation. Explore the types of technical problems I can help
+              investigate, design, and solve.
             </p>
           </Reveal>
         </div>
@@ -58,8 +57,8 @@ export default function ServicesPage() {
       <section aria-label='Service offerings' className='py-16 md:py-24'>
         <div className='mx-auto max-w-[1440px] px-5 sm:px-8'>
           <Reveal>
-            <h2 className='display text-3xl md:text-5xl'>SERVICE OFFERINGS</h2>
-            <p className='label-mono text-faint'>EVIDENCE-BASED · SCOPE-DEFINED · NO GUARANTEED OUTCOMES
+            <h2 className='display text-3xl md:text-5xl'>HOW I CAN HELP</h2>
+            <p className='label-mono text-faint'>DEFINED SCOPE · REPRODUCIBLE DELIVERABLES · WRITTEN LIMITS
             </p>
           </Reveal>
           <div className='mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3'>
@@ -119,8 +118,8 @@ export default function ServicesPage() {
           </ol>
           <div className='mt-8 flex flex-wrap items-baseline justify-between gap-4'>
             <p className='label-mono text-faint'>
-              This process emphasizes evidence, clear requirements, testing, communication,
-              and honest delivery.  No unsupported production readiness is promised.
+              Each stage has a clear output — requirements, tests, working software and
+              written limits — so you always know what was built and what it proves.
             </p>
             <Link
               href='/how-i-work'
@@ -144,9 +143,10 @@ export default function ServicesPage() {
                 <h3 className='display mt-4 text-xl'>FREELANCE & CONTRACT</h3>
               </Reveal>
               <p className='mt-4 text-base leading-relaxed text-muted'>
-                Available for defined-scope technical projects: research prototypes,
+                I take on defined-scope technical projects: research prototypes,
                 market-data tools, quantitative analysis systems, and automation
-                workflows. All work is evidenced by actual projects in the archive.
+                workflows. Every engagement ends with working software, reproducible
+                artifacts, and written limitations.
               </p>
               <Link
                 href='/opportunities/freelance'
@@ -160,10 +160,9 @@ export default function ServicesPage() {
                 <h3 className='display mt-4 text-xl'>RESEARCH COLLABORATION</h3>
               </Reveal>
               <p className='mt-4 text-base leading-relaxed text-muted'>
-                Open to research collaboration on market structure, backtesting,
-                data integrity, risk engineering, and quantitative methods.
-                Collaboration requires shared interest in evidence-based outcomes
-                and transparent methodology.
+                I&apos;m open to research collaboration on market structure, backtesting,
+                data integrity, risk engineering, and quantitative methods — working with
+                people who value reproducible results and transparent methodology.
               </p>
               <Link
                 href='/research'

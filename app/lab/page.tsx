@@ -133,7 +133,10 @@ export default function LabPage() {
               <p className="label-mono text-muted">
                 SECTION <span className="text-signal">/</span> 03 — LAB
               </p>
-              <p className="label-mono text-faint">ALL INSTRUMENTS OPERATIONAL</p>
+              <p className="label-mono text-faint">
+                {labModules.length} INSTRUMENTS ·{" "}
+                {labModules.filter((m) => m.status === "OPERATIONAL").length} OPERATIONAL
+              </p>
             </div>
           </Reveal>
           <Reveal delay={100}>
@@ -141,8 +144,9 @@ export default function LabPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Instruments, not demos. Every module computes what it claims, labels its inputs and
-              outputs, and derives from the same rules as the systems it illustrates.
+              Interactive tools and experiments for investigating quantitative finance, market data,
+              risk, strategy design and technical systems. Explore the inputs, assumptions,
+              calculations and outputs behind each instrument.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -152,7 +156,7 @@ export default function LabPage() {
           </Reveal>
           <Reveal delay={320}>
             <p className="label-mono mt-4 text-[10px] text-faint">
-              INSTRUMENT PANELS ABOVE ARE SCHEMATIC REPRESENTATIONS OF EACH MODULE — NOT READINGS.
+              INSTRUMENT PANELS ABOVE ARE SCHEMATIC REPRESENTATIONS OF EACH MODULE.
             </p>
           </Reveal>
         </div>
@@ -164,7 +168,7 @@ export default function LabPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 className="display text-3xl md:text-5xl">INSTRUMENTS</h2>
-              <p className="label-mono text-faint">INPUTS DECLARED · OUTPUTS DERIVED · NO DEMO VALUES</p>
+              <p className="label-mono text-faint">INPUTS DECLARED · OUTPUTS DERIVED</p>
             </div>
           </Reveal>
           <div className="mt-12 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
@@ -205,9 +209,9 @@ export default function LabPage() {
             <div className="mt-10 border border-line bg-surface p-6">
               <p className="label-mono text-faint">BACKTEST EXPLORER</p>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted">
-                Backtest exploration is not a separate module — it is what the Apex case study
-                instrument does. The equity surface, drawdown subplot and trade population are
-                explored in place, against the real backtest record rather than a mock dataset.
+                Backtest exploration lives in the Apex case study instrument: the equity surface,
+                drawdown subplot and trade population are explored in place, against the real
+                backtest record rather than a mock dataset.
               </p>
               <Link
                 href="/builds/apex-quant-engine"
@@ -229,8 +233,8 @@ export default function LabPage() {
               <p className="label-mono text-faint">LAB / SURF-01 — PROJECTED 3D, 2D FALLBACK BUILT-IN</p>
             </div>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
-              A projected 3D wireframe rendered in pure SVG — no WebGL required, so the instrument
-              degrades to itself. Drag to rotate; hover for a coordinate readout.
+              A projected 3D wireframe of the risk / return surface, rendered in pure SVG so it runs
+              anywhere. Drag to rotate; hover for a coordinate readout.
             </p>
           </Reveal>
           <Reveal delay={120}>

@@ -10,12 +10,12 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Builds",
   description:
-    "The complete build archive — quantitative systems, market-data infrastructure, research tooling and financial data engines. Every figure carries its provenance.",
+    "Quantitative systems, market-data infrastructure, research tooling and financial data engines — each project documented from the problem through the implementation to its current status.",
   alternates: { canonical: "/builds" },
   openGraph: {
     title: "Builds — Bukya Naresh / CN2.dev",
     description:
-      "Quantitative systems, market-data infrastructure, research tooling and financial data engines, with evidence per claim.",
+      "Quantitative systems, market-data infrastructure, research tooling and financial data engines, documented project by project.",
   },
 };
 
@@ -39,13 +39,14 @@ export default function BuildsPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">BUILDS</h1>
+            <h1 className="display mt-8 text-[clamp(3rem,10vw,8rem)]">IDEAS INTO WORKING SYSTEMS.</h1>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              The complete work archive. Not a highlight reel — every system built for research,
-              markets or data infrastructure, including the ones still in development and the ones
-              whose evidence surface is deliberately thin.
+              Explore my work across quantitative finance, algorithmic research, data
+              infrastructure, software engineering, and technical automation. Each project
+              documents the problem, the approach, the implementation, and the progress made so
+              far.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -67,28 +68,28 @@ export default function BuildsPage() {
         </div>
       </header>
 
-      {/* ---- evidence policy ---- */}
-      <section aria-label="Evidence policy" className="border-b border-line">
+      {/* ---- reading the results ---- */}
+      <section aria-label="Reading the results" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 md:py-16">
           <div className="grid gap-8 md:grid-cols-[16rem_1fr] md:gap-16">
             <Reveal>
-              <p className="label-mono text-signal">EVIDENCE POLICY</p>
+              <p className="label-mono text-signal">READING THE RESULTS</p>
             </Reveal>
             <Reveal delay={80}>
               <div className="grid gap-6 sm:grid-cols-2">
                 <p className="text-base leading-relaxed text-muted">
-                  Every number on this page carries a provenance tag —{" "}
+                  Results are labelled by how they were produced —{" "}
                   <span className="text-foreground">BACKTEST</span>,{" "}
                   <span className="text-foreground">SIMULATION</span>,{" "}
                   <span className="text-foreground">SELF-BENCHMARK</span>,{" "}
                   <span className="text-foreground">TEST SUITE</span> or{" "}
-                  <span className="text-foreground">ILLUSTRATIVE</span>. A backtest is never presented
-                  as live trading.
+                  <span className="text-foreground">ILLUSTRATIVE</span>, so a simulated figure is
+                  never read as live trading.
                 </p>
                 <p className="text-base leading-relaxed text-muted">
-                  Projects with no published benchmark say so explicitly rather than borrowing
-                  credibility from the rest of the archive. Where a visual is a diagram rather than a
-                  measurement, it is labelled as a diagram.
+                  Projects still in development are marked as such instead of carrying estimated
+                  numbers. Where a visual is a diagram rather than a measurement, it is labelled as
+                  a diagram.
                 </p>
               </div>
             </Reveal>
@@ -110,9 +111,8 @@ export default function BuildsPage() {
               <p className="label-mono text-faint">SELECTED SYSTEMS · SOLE ARCHITECT &amp; ENGINEER</p>
             </div>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
-              Not a list of employers — a sequence of systems built end to end, each carrying its own
-              metrics and provenance. Every figure below is labelled, and every entry opens to the
-              build or repository behind it.
+              A sequence of systems I built end to end, each with its own results and a link to
+              the build or repository behind it.
             </p>
           </Reveal>
 

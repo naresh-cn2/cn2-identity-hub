@@ -59,7 +59,7 @@ export const labModules = [
 export const engagementAreas = [
   {
     title: "QUANT RESEARCH",
-    body: "Falsifiable market hypotheses tested with deterministic experiments and honest evidence.",
+    body: "Falsifiable market hypotheses tested with deterministic experiments and published limitations.",
   },
   {
     title: "DATA INFRASTRUCTURE",

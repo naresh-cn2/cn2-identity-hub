@@ -46,8 +46,7 @@ export default function ReplayLab() {
         <h2 className="display mt-2 text-3xl md:text-5xl">LOOKAHEAD VS POINT-IN-TIME SAFE</h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
           The signature research instrument. Scrub the timestamp to see the information
-          boundary — what was knowable at t, and what only existed after t. This is not
-          a simulation; it is the actual infrastructure property demonstrated.
+          boundary — what was knowable at t, and what only existed after t.
         </p>
       </div>
       
