@@ -715,7 +715,7 @@ h1.cn2-brand-word {
       rgba(120, 180, 255, 0.1) 0%,
       rgba(80, 140, 230, 0.03) 25%,
       transparent 55%);
-  animation: cn2-ambient-flicker 9s ease-in-out infinite;
+  animation: cn2-ambient-flicker 16s ease-in-out infinite;
 }
 
 @keyframes cn2-ambient-flicker {
@@ -792,7 +792,7 @@ h1.cn2-brand-word {
       rgba(226, 240, 255, 0.6) 50%,
       rgba(210, 232, 255, 0.0) 53%,
       transparent 58%);
-  animation: cn2-spec-sweep 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: cn2-spec-sweep 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes cn2-spec-sweep {
@@ -840,7 +840,7 @@ h1.cn2-brand-word {
       rgba(130, 196, 255, 0.12) 0%,
       rgba(95, 170, 248, 0.06) 38%,
       transparent 78%);
-  animation: cn2-portal-breathe 7s ease-in-out infinite;
+  animation: cn2-portal-breathe 14s ease-in-out infinite;
 }
 
 /* Light mode: same ring geometry, just brighter — makes the baked-in ring glow */
@@ -850,7 +850,7 @@ h1.cn2-brand-word {
       rgba(160, 215, 255, 0.25) 38%,
       rgba(120, 185, 250, 0.1) 62%,
       transparent 78%);
-  animation: cn2-portal-breathe 5s ease-in-out infinite;
+  animation: cn2-portal-breathe 12s ease-in-out infinite;
 }
 
 /* Floor pool — concentrated beneath the portal (its reflection).
@@ -869,7 +869,7 @@ h1.cn2-brand-word {
   background: radial-gradient(70% 100% at 60% 118%,
       rgba(150, 205, 255, 0.18) 0%,
       transparent 50%);
-  animation: cn2-floor-shimmer 6s ease-in-out infinite;
+  animation: cn2-floor-shimmer 14s ease-in-out infinite;
 }
 
 .is-light .cn2-floor-glow {
@@ -878,7 +878,7 @@ h1.cn2-brand-word {
   background: radial-gradient(70% 100% at 60% 118%,
       rgba(150, 205, 255, 0.28) 0%,
       transparent 50%);
-  animation: cn2-floor-shimmer 5s ease-in-out infinite;
+  animation: cn2-floor-shimmer 12s ease-in-out infinite;
 }
 
 @keyframes cn2-floor-shimmer {
