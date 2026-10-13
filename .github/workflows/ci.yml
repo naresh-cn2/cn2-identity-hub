@@ -13,9 +13,9 @@ jobs:
   verify:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
@@ -26,11 +26,13 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Type-check
-        run: npx tsc --noEmit
-
+      # Build first: next typegen emits LayoutProps and friends into
+      # .next/types, which tsc needs for a clean standalone pass.
       - name: Build
         run: npm run build
+
+      - name: Type-check
+        run: npx tsc --noEmit
 
       - name: Serve production build
         shell: powershell
