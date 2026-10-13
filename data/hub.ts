@@ -1,28 +1,26 @@
 import { archiveProjects } from "./archive";
-import { caseStudyCards } from "./case-studies";
 import { researchEntries } from "./research";
-import { publishedArticles } from "./articles";
 import { labModules } from "./lab";
 import { serviceSlugs } from "./services";
 import { capabilities } from "./capabilities";
 import { credentials, studyTracks } from "./certifications";
-import { site } from "./site";
 
 /**
- * Digital Headquarters registry (spec: /hub).
+ * Destination registry (spec: /hub).
  *
- * Single source of truth for the destination panels shown after ENTER CN2.DEV.
- * The hub is a wayfinding layer — it routes visitors to a destination and shows
- * a live count drawn from that destination's own data file. It never restates
- * the content of the page it points at, so a count or status can never drift
- * out of sync with the archive behind it.
+ * Single source of truth for the /hub journey — every destination gets one
+ * full-screen section driven from here. The hub is a wayfinding layer: it
+ * introduces a destination and shows a live count drawn from that
+ * destination's own data file. It never restates the content of the page it
+ * points at, so a count or status can never drift out of sync with the
+ * archive behind it.
  *
- * Every `href` here is an existing route. No panel is decorative: each one
+ * Every `href` here is an existing route. No section is decorative: each one
  * opens its destination.
  */
 
 export interface HubDestination {
-  /** Nav code shown in the panel corner — matches the route index. */
+  /** Journey index shown in the section header — matches the route index. */
   code: string;
   label: string;
   href: string;
@@ -102,7 +100,7 @@ export const hubDestinations: HubDestination[] = [
   },
 ];
 
-/** Secondary destinations the hub index carries below the main deck. */
+/** Secondary destinations the hub index carries below the journey. */
 export const hubIndex: { label: string; href: string; code: string }[] = [
   { label: "CASE STUDIES", href: "/case-studies", code: "02" },
   { label: "CAPABILITIES", href: "/capabilities", code: "03" },
@@ -113,17 +111,3 @@ export const hubIndex: { label: string; href: string; code: string }[] = [
   { label: "CV", href: "/cv", code: "18" },
   { label: "LINKS", href: "/links", code: "19" },
 ];
-
-/** Counters used by the headquarters status readout. */
-export const hubStatus = {
-  flagship: archiveProjects.filter((p) => p.tier === 1),
-  caseStudies: caseStudyCards.length,
-  research: researchEntries.length,
-  ongoingResearch: researchEntries.filter((r) => r.status === "ONGOING").length,
-  articles: publishedArticles.length,
-  lab: labModules.length,
-  services: serviceSlugs.length,
-  capabilities: capabilities.length,
-  studyTracks: studyTracks.filter((s) => s.state === "ONGOING").length,
-  status: site.status,
-} as const;

@@ -175,6 +175,28 @@ body {
   transform-origin: left;
 }
 
+/* ---- hub journey ambients — one soft light source per destination ---- */
+.amb-glow-r {
+  background: radial-gradient(55% 65% at 78% 28%,
+      color-mix(in srgb, var(--research) 15%, transparent),
+      transparent 72%);
+}
+.amb-glow-s {
+  background: radial-gradient(55% 65% at 24% 72%,
+      color-mix(in srgb, var(--signal) 11%, transparent),
+      transparent 72%);
+}
+.amb-halo {
+  background: radial-gradient(48% 58% at 50% 46%,
+      color-mix(in srgb, var(--research) 11%, transparent),
+      transparent 76%);
+}
+.amb-vignette {
+  background: radial-gradient(115% 85% at 50% 32%,
+      transparent 45%,
+      color-mix(in srgb, var(--research) 9%, transparent));
+}
+
 /* grain / film texture for editorial photography moments */
 .film-grain::after {
   content: "";

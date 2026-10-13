@@ -12,7 +12,7 @@ import type { CSSProperties } from "react";
  * numbers and shows no live data. Pure server-rendered SVG + CSS motion
  * (spin, march, travel, ring-ping), so the global reduced-motion rule
  * freezes it for free. Decorative and non-navigational (aria-hidden): real
- * destination navigation lives in the SystemMap below this plate.
+ * destination navigation lives in the journey sections below this plate.
  */
 
 const CORE_X = 600;
