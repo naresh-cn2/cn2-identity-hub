@@ -48,7 +48,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ articl
 
   return (
     <>
-      <div className="border-b border-line bg-surface">
+      <div className="border-b border-line bg-surface pt-20">
         <div className="mx-auto max-w-[1440px] px-5 py-3 sm:px-8">
           <nav aria-label="Breadcrumb" className="label-mono flex flex-wrap items-center gap-2 text-[10px] text-faint">
             <Link href="/" className="transition-colors hover:text-foreground">

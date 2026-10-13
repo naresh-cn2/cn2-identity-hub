@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ProjectOverview from "@/components/builds/project-overview";
 import TierTwoCaseStudy from "@/components/builds/tier-two-case-study";
+import ProjectWorld from "@/components/projects/project-world";
 import Reveal from "@/components/ui/reveal";
 import { archiveProjects, getArchiveProject, getFlagship } from "@/data/archive";
+import { getProjectWorld } from "@/data/project-worlds";
 import { researchEntries } from "@/data/research";
 import { site } from "@/data/site";
 
@@ -39,12 +41,13 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
   if (!record) notFound();
 
   const flagship = record.tier === 1 ? getFlagship(record.id) : undefined;
+  const world = getProjectWorld(record.id);
   const relatedResearch = researchEntries.filter((r) => r.relatedProject === record.id);
 
   return (
     <>
       {/* breadcrumb */}
-      <div className="border-b border-line bg-surface">
+      <div className="border-b border-line bg-surface pt-20">
         <div className="mx-auto max-w-[1440px] px-5 py-3 sm:px-8">
           <nav aria-label="Breadcrumb" className="label-mono flex flex-wrap items-center gap-2 text-[10px] text-faint">
             <Link href="/" className="transition-colors hover:text-foreground">
@@ -60,6 +63,11 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
         </div>
       </div>
 
+      {/* the world carries its own sections and footer */}
+      {world ? (
+        <ProjectWorld project={record} />
+      ) : (
+        <>
       {flagship ? (
         <ProjectOverview project={flagship} />
       ) : (
@@ -132,7 +140,9 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
             </div>
           </div>
         </div>
-      </section>
+        </section>
+        </>
+      )}
     </>
   );
 }
