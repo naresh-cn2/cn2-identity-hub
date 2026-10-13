@@ -63,3 +63,4 @@ Assert "rate limiter engages (429)" ($t4.code -eq 429)
 Write-Host ""
 Write-Host ("TOTAL: " + ($pass + $fail) + "  PASS: " + $pass + "  FAIL: " + $fail)
 if ($fail -gt 0) { exit 1 }
+exit 0

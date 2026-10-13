@@ -81,3 +81,4 @@ Check "css: reduced-motion kills timelines" ($css -match 'prefers-reduced-motion
 
 Write-Host "PASS: $($pass.Count)  FAIL: $($fail.Count)"
 if ($fail.Count) { $fail | ForEach-Object { Write-Host "FAILED: $_" }; exit 1 }
+exit 0

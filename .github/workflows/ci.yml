@@ -62,15 +62,16 @@ jobs:
       - name: QA suites
         shell: powershell
         run: |
-          # api-check must run first: it ends on the per-IP 429 limiter by design.
-          .\scripts\qa\api-check.ps1
-          if ($LASTEXITCODE -ne 0) { exit 1 }
-          .\scripts\qa\live-check.ps1
-          if ($LASTEXITCODE -ne 0) { exit 1 }
-          .\scripts\qa\hub-check.ps1
-          if ($LASTEXITCODE -ne 0) { exit 1 }
-          .\scripts\qa\world-check.ps1
-          if ($LASTEXITCODE -ne 0) { exit 1 }
+          # api-check must run first: it ends on the per-IP 429 limiter by
+          # design. Every suite now exits 0/1 deterministically, so a simple
+          # LASTEXITCODE gate is reliable; run all four regardless to get
+          # full signal from one run.
+          $failed = $false
+          foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1")) {
+            & ".\scripts\qa\$s"
+            if ($LASTEXITCODE -ne 0) { $failed = $true }
+          }
+          if ($failed) { exit 1 }
 
       - name: Stop server
         if: always()

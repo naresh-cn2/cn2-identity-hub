@@ -121,3 +121,4 @@ Assert "accent heading label assembled" $wwmHtml.Contains('aria-label="WORK WITH
 Write-Host ""
 Write-Host ("TOTAL: " + ($pass + $fail) + "  PASS: " + $pass + "  FAIL: " + $fail)
 if ($fail -gt 0) { exit 1 }
+exit 0

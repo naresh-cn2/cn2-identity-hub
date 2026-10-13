@@ -97,3 +97,4 @@ Check "css: wx-node focus" ($css.Contains('.wx-node:focus-visible'))
 
 Write-Host "PASS: $($pass.Count)  FAIL: $($fail.Count)"
 if ($fail.Count) { $fail | ForEach-Object { Write-Host "FAILED: $_" }; exit 1 }
+exit 0
