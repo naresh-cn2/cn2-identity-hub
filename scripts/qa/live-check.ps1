@@ -86,14 +86,18 @@ Assert "article research rule present" $articleHtml.Contains("research-rule")
 $navHtml = Get-Page "/capabilities"
 Assert "navbar signal rule present" $navHtml.Contains("signal-rule")
 
-Write-Host "== navigation surface =="
+Write-Host "== navigation surface (minimal bar: brand + search + theme) =="
 $capNav = Get-Page "/capabilities"
-Assert "desktop primary nav present" ($capNav -match 'aria-label="Primary"')
-Assert "primary strip lists destinations in order" ($capNav -match 'aria-label="Primary"[\s\S]*?>WORK</a>[\s\S]*?href="/contact"')
-Assert "menu overlay carries secondary destinations" ($capNav -match 'id="mobile-menu"[\s\S]*?LABORATORY')
+Assert "no primary nav strip on inner pages" (-not ($capNav -match 'aria-label="Primary"'))
+Assert "no MENU trigger rendered" (-not ($capNav.Contains('aria-controls="mobile-menu"')))
+Assert "no menu overlay rendered" (-not ($capNav.Contains('id="mobile-menu"')))
+Assert "brand lockup on inner page" $capNav.Contains("CN2.DEV")
 Assert "search present on inner page" $capNav.Contains("Open search")
+Assert "theme toggle present on inner page" ($capNav.Contains("Switch to light mode") -or $capNav.Contains("Switch to dark mode"))
+Assert "destinations still indexed in footer" ($capNav.Contains('href="/work"') -and $capNav.Contains('href="/research"'))
 Assert "bottom-left back on inner page" $capNav.Contains("Go back to the previous page")
 $homeNav = Get-Page "/"
+Assert "entry panel keeps brand + search" ($homeNav.Contains("Open search") -and $homeNav.Contains("CN2.DEV"))
 Assert "no back button on entry page" (-not $homeNav.Contains("Go back to the previous page"))
 $idNav2 = Get-Page "/identity"
 Assert "no back button on identity page" (-not $idNav2.Contains("Go back to the previous page"))
