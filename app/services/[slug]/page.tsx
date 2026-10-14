@@ -28,6 +28,7 @@ export async function generateMetadata({
     description: service.promise,
     alternates: { canonical: `/services/${service.slug}` },
     openGraph: {
+      images: ["/opengraph-image"],
       title: `${service.promise.split(".")[0]} — Bukya Naresh / CN2.dev`,
       description: service.promise,
     },
@@ -94,6 +95,10 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <Reveal delay={180}>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
               {service.promise}
+            </p>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+              <span className="label-mono text-signal">WHO THIS IS FOR — </span>
+              {service.audience}
             </p>
           </Reveal>
           <Reveal delay={260}>
@@ -269,18 +274,31 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ---- working process ---- */}
+      {/* ---- working process: the real stages of this engagement ---- */}
       <section aria-label="Working process" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
             <p className="label-mono text-faint">WORKING PROCESS</p>
-            <h2 className="display mt-4 text-2xl md:text-4xl">
-              DISCOVER → DEFINE → SPECIFY → BUILD → TEST → HAND OVER
-            </h2>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-              The full process, with what each stage produces, lives on the process page. Every
-              engagement starts the same way: describe the problem, the data, and the evidence that
-              would count as success.
+            <h2 className="display mt-4 text-2xl md:text-4xl">HOW THIS ENGAGEMENT RUNS</h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <ol className="mt-10 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+              {service.process.map((stage, i) => (
+                <li key={stage} className="flex h-full items-start gap-4 bg-background p-5">
+                  <span className="num-mono text-xs text-signal">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="label-mono text-foreground">{stage}</span>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+          <Reveal delay={140}>
+            <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted">
+              Each stage produces something checkable. The full process, with what every stage
+              produces across all work, lives on the process page. Every engagement starts the
+              same way: describe the problem, the data, and the evidence that would count as
+              success.
             </p>
           </Reveal>
           <Reveal delay={100}>

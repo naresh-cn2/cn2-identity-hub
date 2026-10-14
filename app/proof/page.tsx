@@ -16,6 +16,7 @@ export const metadata: Metadata = {
         "The repositories, research entries and measured figures behind my work — each linked to its source.",
     alternates: { canonical: "/proof" },
     openGraph: {
+        images: ["/opengraph-image"],
         title: "Proof — Bukya Naresh / CN2.dev",
         description:
             "Public repositories, reproduced research entries and measured figures, each labelled with its method.",

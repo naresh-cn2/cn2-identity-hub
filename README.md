@@ -98,17 +98,20 @@ The rendered-output suites live in `scripts/qa/` and run against any build serve
 
 | Suite | What it asserts |
 | --- | --- |
-| `api-check.ps1` | 7 reviews-API end-to-end checks (run first — deliberately ends on the per-IP 429 limiter) |
-| `live-check.ps1` | 80 site-wide assertions — motion, accessibility, navigation, cinematic layers |
-| `hub-check.ps1` | 56 hub-universe assertions |
+| `api-check.ps1` | 18 end-to-end API checks — reviews + enquiries + health (run first — each suite deliberately ends on its per-IP 429 limiter) |
+| `live-check.ps1` | 128 site-wide assertions — motion, accessibility, navigation, enquiry form, trust pages, 404, share-card head tags |
+| `hub-check.ps1` | 59 hub-universe assertions |
 | `world-check.ps1` | 69 project-world assertions |
+| `link-check.ps1` | 26 seed routes crawled — no dead `href="#"`, all 57 internal destinations return 200 |
+| `token-check.ps1` | static design-token contrast — every text token ≥ 4.5:1 on every surface in both themes (no server needed) |
 
 ```powershell
 npm run build; npm start          # serve the production build on :3000
+.\scripts\qa\token-check.ps1      # static — runs without a server
 .\scripts\qa\api-check.ps1        # each suite accepts -Base http://host:port
 ```
 
-GitHub Actions (`.github/workflows/ci.yml`) runs lint → type-check → production build → all four suites on every push to `main` and every pull request.
+GitHub Actions (`.github/workflows/ci.yml`) runs lint → design-token contrast → type-check → production build → all five server suites on every push to `main` and every pull request.
 
 ---
 

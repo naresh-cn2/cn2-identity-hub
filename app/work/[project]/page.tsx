@@ -28,6 +28,7 @@ export async function generateMetadata({
     description: project.thesis,
     alternates: { canonical: `/work/${project.id}` },
     openGraph: {
+      images: ["/opengraph-image"],
       title: `${project.title} — ${site.name} / ${site.identity}`,
       description: project.thesis,
       type: "article",

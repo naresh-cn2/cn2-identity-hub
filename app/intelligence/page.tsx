@@ -15,6 +15,7 @@ export const metadata: Metadata = {
         "The knowledge graph behind the work — how quant, markets, data, risk, AI and engineering relate, with the mental models, decision systems and research notes that connect them.",
     alternates: { canonical: "/intelligence" },
     openGraph: {
+        images: ["/opengraph-image"],
         title: "Intelligence — Bukya Naresh / CN2.dev",
         description:
             "An interactive knowledge graph of the practice areas and the notes that connect them.",

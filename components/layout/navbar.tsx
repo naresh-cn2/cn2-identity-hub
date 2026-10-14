@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -36,6 +36,14 @@ export default function Navbar() {
   const isIdentityPage = pathname === "/identity";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  /** The MENU button that opened the overlay — focus returns to it on close. */
+  const openerRef = useRef<HTMLElement | null>(null);
+
+  const toggleMenu = (e: React.MouseEvent<HTMLElement>) => {
+    if (!menuOpen) openerRef.current = e.currentTarget;
+    setMenuOpen(!menuOpen);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -48,6 +56,55 @@ export default function Navbar() {
     const t = setTimeout(() => setMenuOpen(false), 0);
     return () => clearTimeout(t);
   }, [pathname]);
+
+  // Escape closes the open menu.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  // Modal focus trap: Tab cycles inside the open overlay only.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const root = overlayRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          'a[href], button:not([tabindex="-1"]), input, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("disabled"));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const current = document.activeElement;
+      const inside = current instanceof HTMLElement && root.contains(current);
+      if (e.shiftKey) {
+        if (!inside || current === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (!inside || current === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  // Focus returns to the MENU button once the overlay closes.
+  useEffect(() => {
+    if (menuOpen || !openerRef.current) return;
+    const el = openerRef.current;
+    openerRef.current = null;
+    el.focus();
+  }, [menuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -130,7 +187,7 @@ export default function Navbar() {
 
               {/* compact menu trigger inside the panel */}
               <button
-                onClick={() => setMenuOpen(!menuOpen)}
+                onClick={toggleMenu}
                 className="label-mono menu-hit shrink-0 border border-white/20 px-3 py-1.5 text-white/70 transition-colors hover:border-white/40 hover:text-white lg:hidden"
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
@@ -229,7 +286,7 @@ export default function Navbar() {
               </button>
               {!isIdentityPage && (
                 <button
-                  onClick={() => setMenuOpen(!menuOpen)}
+                  onClick={toggleMenu}
                   className="label-mono menu-hit border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground"
                   aria-expanded={menuOpen}
                   aria-controls="mobile-menu"
@@ -252,12 +309,17 @@ export default function Navbar() {
       {/* ---- cinematic menu overlay — every viewport (not on the identity portrait page) ---- */}
       {!isIdentityPage && (
       <div
+        ref={overlayRef}
         id="mobile-menu"
         className={cn(
           "fixed inset-0 z-40 flex flex-col bg-background transition-all duration-500 print:hidden",
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         )}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
         <div className="grid-field h-24 shrink-0" />
         <nav

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Technical partnerships and product opportunities for quantitative systems, market-data infrastructure and research tooling — from an independent practice.",
   alternates: { canonical: "/opportunities/partnerships" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Partnerships — Bukya Naresh / CN2.dev",
     description:
       "Technical partnerships and product opportunities for quantitative systems and research infrastructure.",

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     'How Bukya Naresh takes on technical work: understand the problem, define requirements, research, design, build, test, validate, deliver and iterate — with clear communication and documented results at every step.',
   alternates: { canonical: '/how-i-work' },
   openGraph: {
+    images: ["/opengraph-image"],
     title: 'How I Work — Bukya Naresh / CN2.dev',
     description:
       'How Bukya Naresh takes on technical work: understand the problem, define requirements, research, design, build, test, validate, deliver and iterate — with clear communication and documented results at every step.',
@@ -84,11 +85,14 @@ export default function HowIWorkPage() {
                 { step: 'VALIDATE', icon: '🔬', detail: 'Validate results with independent verification when possible.' },
                 { step: 'DELIVER', icon: '📦', detail: 'Deliver working systems with clear documentation and evidence.' },
                 { step: 'ITERATE', icon: '🔄', detail: 'Incorporate feedback and improve based on real-world usage.' },
-              ].map((item, i) => (
+              ].map((item, i, arr) => {
+                const next = arr[i + 1];
+                return (
                 <Reveal key={item.step} delay={i * 80}>
                   <Link
-                    href='#'
-                    className='group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface'
+                    id={`step-${item.step.toLowerCase()}`}
+                    href={next ? `#step-${next.step.toLowerCase()}` : "/contact"}
+                    className='group flex h-full flex-col scroll-mt-24 bg-background p-6 transition-colors hover:bg-surface'
                   >
                   <div className='flex items-baseline justify-between'>
                     <span className='label-mono text-faint'>STEP / {String(i + 1).padStart(2, '0')}</span>
@@ -102,11 +106,12 @@ export default function HowIWorkPage() {
                     {item.detail}
                   </span>
                   <span className='label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1'>
-                    NEXT STEP →
+                    {next ? 'NEXT STEP →' : 'START THE CONVERSATION →'}
                   </span>
                 </Link>
               </Reveal>
-            ))}
+                );
+              })}
           </div>
         </div>
       </section>

@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "Education, projects and CV for quantitative development and research roles.",
   alternates: { canonical: "/opportunities/career" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Career — Bukya Naresh / CN2.dev",
     description:
       "Quantitative development and research roles. Education, projects, experience and CV.",

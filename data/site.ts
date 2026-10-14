@@ -93,6 +93,8 @@ export const secondaryNav: NavItem[] = [
   { label: "TESTIMONIALS", href: "/testimonials", code: "21" },
   { label: "CV", href: "/cv", code: "18" },
   { label: "LINKS", href: "/links", code: "19" },
+  { label: "PRIVACY", href: "/privacy", code: "22" },
+  { label: "TERMS", href: "/terms", code: "23" },
 ];
 
 /** The professional action, kept visually distinct from navigation. */

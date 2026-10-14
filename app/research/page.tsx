@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "My research explores how markets, quantitative methods, data and software systems interact — the questions I investigate, the methods I use, and the findings and limitations of each study.",
   alternates: { canonical: "/research" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Research — Bukya Naresh / CN2.dev",
     description:
       "Falsifiable market questions, deterministic methods, and the findings and limitations of each study.",

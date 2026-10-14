@@ -290,10 +290,11 @@ export default function ReviewForm({ workOptions }: { workOptions: WorkOption[] 
                 </Field>
                 <Field id="rv-attribution" label="HOW SHOULD YOU BE ATTRIBUTED? *" error={errors.attribution}>
                     <div className="mt-3 flex flex-wrap gap-x-6 gap-y-3">
-                        {ATTRIBUTION_CHOICES.map((c) => (
+                        {ATTRIBUTION_CHOICES.map((c, i) => (
                             <label key={c.value} className="flex min-h-11 cursor-pointer items-center gap-2.5 text-sm text-muted">
                                 <input
                                     type="radio"
+                                    id={i === 0 ? "rv-attribution" : undefined}
                                     name="attribution"
                                     value={c.value}
                                     checked={form.attribution === c.value}

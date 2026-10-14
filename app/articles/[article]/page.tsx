@@ -26,6 +26,7 @@ export async function generateMetadata({
     description: article.dek,
     alternates: { canonical: `/articles/${article.id}` },
     openGraph: {
+      images: ["/opengraph-image"],
       title: `${article.title} — ${site.name} / ${site.identity}`,
       description: article.dek,
       type: "article",

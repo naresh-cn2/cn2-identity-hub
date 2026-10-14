@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     'Defined-scope technical services: research prototypes, market-data tooling, quantitative analysis, data pipelines, and AI-assisted automation.',
   alternates: { canonical: '/services' },
   openGraph: {
+    images: ["/opengraph-image"],
     title: 'Services — Bukya Naresh / CN2.dev',
     description:
       'Defined-scope technical services: research prototypes, market-data tooling, quantitative analysis, data pipelines, and AI-assisted automation.',

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   description: site.description,
   alternates: { canonical: '/' },
   openGraph: {
+    images: ["/opengraph-image"],
     title: `${site.name} — ${site.identity}`,
     description: site.description,
     type: 'website',

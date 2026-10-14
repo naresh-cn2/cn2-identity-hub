@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     "Education, completed programmes and continuous learning — Bukya Naresh. Internships, courses and certifications across generative AI, quantitative finance, data and software engineering, plus active self-directed study tracks.",
   alternates: { canonical: "/credentials" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Credentials — Bukya Naresh / CN2.dev",
     description:
       "Completed programmes, issued certificates and self-directed study — each linked to the work it produced.",

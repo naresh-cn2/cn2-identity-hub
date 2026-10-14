@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "Products, projects and engineering — quantitative systems, market-data infrastructure, research tooling and financial data engines, each documented from the problem through the architecture and implementation to its current status.",
   alternates: { canonical: "/work" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Work — Bukya Naresh / CN2.dev",
     description:
       "Products, projects and engineering — quantitative systems, market-data infrastructure, research tooling and financial data engines, documented project by project.",

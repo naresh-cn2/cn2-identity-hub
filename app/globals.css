@@ -17,7 +17,8 @@
   --surface-2: #e4eaf5;
   --foreground: #151922;
   --muted: #525d74;
-  --faint: #7c88a3;
+  /* AA (≥4.5:1) at 10px label sizes on every surface incl. #e4eaf5 — verified by scripts/qa/token-check.ps1 */
+  --faint: #5f697e;
   --line: #d5ddec;
   --line-strong: #b6c2d9;
   --signal: #c82418;
@@ -38,11 +39,12 @@
   --surface-2: #141418;
   --foreground: #f1f1ee;
   --muted: #8e8e96;
-  --faint: #5b5b63;
+  /* AA (≥4.5:1) at 10px label sizes on every surface incl. #141418 — verified by scripts/qa/token-check.ps1 */
+  --faint: #7d7d88;
   --line: #1e1e24;
   --line-strong: #303038;
-  --signal: #e6392a;
-  --signal-soft: rgba(230, 57, 42, 0.1);
+  --signal: #e94030; /* nudge from #e6392a: keeps AA (≥4.5:1) on every surface incl. #141418 — verified by scripts/qa/token-check.ps1 */
+  --signal-soft: rgba(233, 64, 48, 0.1);
   --research: #6f96f2;
   --research-soft: rgba(111, 150, 242, 0.12);
   --research-line: rgba(111, 150, 242, 0.34);

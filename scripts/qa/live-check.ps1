@@ -9,6 +9,21 @@ function Get-Page([string]$path) {
     (Invoke-WebRequest -Uri ($base + $path) -UseBasicParsing).Content
 }
 
+# Like Get-Page but reads the body of an expected non-2xx (e.g. 404).
+function Get-ErrorPage([string]$path) {
+    try { return (Invoke-WebRequest -Uri ($base + $path) -UseBasicParsing).Content }
+    catch {
+        try {
+            $stream = $_.Exception.Response.GetResponseStream()
+            if ($stream.CanSeek) { $stream.Position = 0 }
+            $reader = New-Object System.IO.StreamReader($stream)
+            $body = $reader.ReadToEnd()
+            $reader.Dispose()
+            return $body
+        } catch { return "" }
+    }
+}
+
 function Assert([string]$name, [bool]$cond) {
     if ($cond) { $script:pass++; Write-Host ("  PASS  " + $name) }
     else { $script:fail++; Write-Host ("  FAIL  " + $name) -ForegroundColor Red }
@@ -148,6 +163,65 @@ Assert "cursor light off on identity" (-not $idNav2.Contains("cursor-light-dot")
 Assert "palette spring hook" $buildsHtml.Contains('data-open="false"')
 $wwmHtml = Get-Page "/work-with-me"
 Assert "accent heading label assembled" $wwmHtml.Contains('aria-label="WORK WITH ME"')
+
+Write-Host "== conversion core (enquiry form) =="
+Assert "contact hosts the enquiry form" $contactHtml2.Contains("PROJECT ENQUIRY")
+Assert "enquiry problem field rendered" $contactHtml2.Contains("eq-problem")
+Assert "enquiry honeypot rendered" $contactHtml2.Contains("eq-website")
+Assert "enquiry submit rendered" $contactHtml2.Contains("SEND ENQUIRY")
+Assert "privacy note shown above submit" $contactHtml2.Contains("PRIVACY PAGE FOR THE FULL DATA HANDLING")
+Assert "copy-email button mounted" $contactHtml2.Contains("COPY ADDRESS")
+
+Write-Host "== service detail completeness =="
+$svcHtml = Get-Page "/services/deterministic-backtesting"
+Assert "slug page shows per-service process" $svcHtml.Contains("HOW THIS ENGAGEMENT RUNS")
+Assert "slug page has ordered process stages" ($svcHtml -match "<ol[^>]*>[^<]*<li")
+Assert "slug page shows WHO THIS IS FOR" $svcHtml.Contains("WHO THIS IS FOR")
+Assert "services index shows WHO THIS IS FOR" ((Get-Page "/services").Contains("WHO THIS IS FOR"))
+
+Write-Host "== process page: real links only =="
+$hiwHtml = Get-Page "/how-i-work"
+Assert "no dead href=# links" (-not $hiwHtml.Contains('href="#"'))
+Assert "step anchors rendered" $hiwHtml.Contains('id="step-discover"')
+Assert "next-step chain wired" $hiwHtml.Contains('href="#step-define"')
+Assert "last step routes to contact" ($hiwHtml.Contains("START THE CONVERSATION") -and $hiwHtml.Contains('href="/contact"'))
+
+Write-Host "== trust pages & 404 =="
+$privacyHtml = Get-Page "/privacy"
+Assert "privacy loads" ($privacyHtml -match "<title>[^<]*Privacy")
+Assert "privacy states no tracking" $privacyHtml.Contains("NO TRACKING. NO SURPRISES.")
+$termsHtml = Get-Page "/terms"
+Assert "terms loads" ($termsHtml -match "<title>[^<]*Terms")
+Assert "terms plain-terms heading" $termsHtml.Contains("PLAIN TERMS.")
+Assert "footer links privacy" ($termsHtml.Contains('href="/privacy"'))
+Assert "footer links terms" ($termsHtml.Contains('href="/terms"'))
+$indexHtml = Get-Page "/links"
+Assert "links index lists privacy" $indexHtml.Contains('href="/privacy"')
+$nf = Get-StatusAndLocation "/this-route-does-not-exist"
+Assert "unknown route answers 404" ($nf.code -eq 404)
+$nfHtml = Get-ErrorPage "/this-route-does-not-exist"
+Assert "custom 404 renders" $nfHtml.Contains("THIS COORDINATE DOES NOT EXIST.")
+Assert "custom 404 offers destinations" ($nfHtml.Contains("SUGGESTED DESTINATIONS") -and $nfHtml.Contains('href="/work"'))
+
+Write-Host "== sitemap completeness =="
+$sitemapXml = Get-Page "/sitemap.xml"
+foreach ($entry in @("/testimonials", "/how-i-work", "/privacy", "/terms")) {
+    Assert ("sitemap contains " + $entry) $sitemapXml.Contains("<loc>https://cn2-identity-hub.vercel.app" + $entry + "</loc>")
+}
+
+Write-Host "== head tags: share card, icons, JSON-LD =="
+foreach ($p in @("/contact", "/hub", "/work", "/research", "/privacy", "/services")) {
+    Assert ("og:image on " + $p) ((Get-Page $p).Contains('property="og:image"'))
+}
+Assert "twitter card present" $contactHtml2.Contains('name="twitter:card"')
+Assert "manifest linked" $contactHtml2.Contains('rel="manifest"')
+Assert "icon linked" ($contactHtml2.Contains('rel="icon"'))
+Assert "JSON-LD Person injected" $contactHtml2.Contains('"@type":"Person"')
+
+Write-Host "== landmark sanity =="
+$homeOnly = Get-Page "/"
+$mainCount = ([regex]::Matches($homeOnly, "<main[ >]")).Count
+Assert "entry page has exactly one <main>" ($mainCount -eq 1)
 
 Write-Host ""
 Write-Host ("TOTAL: " + ($pass + $fail) + "  PASS: " + $pass + "  FAIL: " + $fail)

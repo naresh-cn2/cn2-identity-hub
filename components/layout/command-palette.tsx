@@ -3,14 +3,28 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { navRoutes, site, workRoute } from "@/data/site";
-import { flagshipProjects } from "@/data/projects";
+import { archiveProjects } from "@/data/archive";
 import { researchEntries } from "@/data/research";
+import { caseStudies } from "@/data/case-studies";
+import { publishedArticles } from "@/data/articles";
+import { labModules } from "@/data/lab";
+import { serviceOfferings } from "@/data/services";
+import { credentials } from "@/data/credentials";
 import { useTheme } from "@/components/providers/theme-provider";
 
 type Command = {
   id: string;
   label: string;
-  group: "NAVIGATION" | "PROJECTS" | "RESEARCH" | "ACTIONS";
+  group:
+    | "NAVIGATION"
+    | "PROJECTS"
+    | "RESEARCH"
+    | "CASE STUDIES"
+    | "ARTICLES"
+    | "SERVICES"
+    | "LAB"
+    | "CREDENTIALS"
+    | "ACTIONS";
   hint?: string;
   keywords: string;
   action: "route" | "external" | "theme";
@@ -36,23 +50,68 @@ const commands: Command[] = [
     action: "route",
     target: workRoute.href,
   },
-  ...flagshipProjects.map((p) => ({
+  ...archiveProjects.map((p) => ({
     id: `project-${p.id}`,
     label: p.shortTitle,
     group: "PROJECTS" as const,
-    hint: p.category,
-    keywords: `${p.shortTitle} ${p.title} ${p.category} project build`,
+    hint: p.categoryLabel,
+    keywords: `${p.shortTitle} ${p.title} ${p.categoryLabel} ${p.tags.join(" ")} ${p.thesis} ${p.summary} project build work`,
     action: "route" as const,
-    target: p.route,
+    target: `/work/${p.id}`,
   })),
   ...researchEntries.map((e) => ({
     id: `research-${e.id}`,
     label: e.title,
     group: "RESEARCH" as const,
     hint: e.category,
-    keywords: `${e.title} ${e.category} ${e.status} research entry`,
+    keywords: `${e.title} ${e.category} ${e.status} ${e.question} ${e.hypothesis} research entry`,
     action: "route" as const,
     target: `/research/${e.id}`,
+  })),
+  ...caseStudies.map((c) => ({
+    id: `case-${c.id}`,
+    label: c.shortTitle,
+    group: "CASE STUDIES" as const,
+    hint: c.category,
+    keywords: `${c.title} ${c.shortTitle} ${c.category} ${c.thesis} case study`,
+    action: "route" as const,
+    target: `/case-studies/${c.id}`,
+  })),
+  ...publishedArticles.map((a) => ({
+    id: `article-${a.id}`,
+    label: a.title,
+    group: "ARTICLES" as const,
+    hint: a.readingTime,
+    keywords: `${a.title} ${a.category} article note write-up`,
+    action: "route" as const,
+    target: `/articles/${a.id}`,
+  })),
+  ...serviceOfferings.map((s) => ({
+    id: `service-${s.slug}`,
+    label: s.slug.toUpperCase().replace(/-/g, " "),
+    group: "SERVICES" as const,
+    hint: s.category.toUpperCase(),
+    keywords: `${s.slug.replace(/-/g, " ")} ${s.promise} ${s.problems.join(" ")} service engage hire`,
+    action: "route" as const,
+    target: `/services/${s.slug}`,
+  })),
+  ...labModules.map((m) => ({
+    id: `lab-${m.id}`,
+    label: m.name,
+    group: "LAB" as const,
+    hint: m.code,
+    keywords: `${m.name} ${m.description} lab tool instrument`,
+    action: "route" as const,
+    target: m.href,
+  })),
+  ...credentials.map((c) => ({
+    id: `credential-${c.id}`,
+    label: c.program,
+    group: "CREDENTIALS" as const,
+    hint: c.provider,
+    keywords: `${c.program} ${c.provider} ${c.state} credential certification study`,
+    action: "route" as const,
+    target: "/credentials",
   })),
   {
     id: "action-theme",
@@ -81,7 +140,17 @@ const commands: Command[] = [
   },
 ];
 
-const GROUP_ORDER: Command["group"][] = ["NAVIGATION", "PROJECTS", "RESEARCH", "ACTIONS"];
+const GROUP_ORDER: Command["group"][] = [
+  "NAVIGATION",
+  "PROJECTS",
+  "RESEARCH",
+  "CASE STUDIES",
+  "ARTICLES",
+  "SERVICES",
+  "LAB",
+  "CREDENTIALS",
+  "ACTIONS",
+];
 
 export default function CommandPalette() {
   const router = useRouter();
@@ -91,6 +160,9 @@ export default function CommandPalette() {
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  /** The control that opened the palette — focus returns to it on close. */
+  const openerRef = useRef<HTMLElement | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -148,6 +220,8 @@ export default function CommandPalette() {
 
   useEffect(() => {
     if (open) {
+      openerRef.current =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
       // reset state + focus on the next frame (sync setState in effects is disallowed)
       const raf = requestAnimationFrame(() => {
         setQuery("");
@@ -162,6 +236,45 @@ export default function CommandPalette() {
     }
     document.body.style.overflow = "";
     return undefined;
+  }, [open]);
+
+  // Focus returns to the opener once the palette closes.
+  useEffect(() => {
+    if (open || !openerRef.current) return;
+    const el = openerRef.current;
+    openerRef.current = null;
+    el.focus();
+  }, [open]);
+
+  // Modal focus trap: Tab and Shift+Tab cycle inside the open palette only.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const root = rootRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          'a[href], button:not([tabindex="-1"]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const current = document.activeElement;
+      const inside = current instanceof HTMLElement && root.contains(current);
+      if (e.shiftKey) {
+        if (!inside || current === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (!inside || current === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   useEffect(() => {
@@ -196,6 +309,7 @@ export default function CommandPalette() {
 
   return (
     <div
+      ref={rootRef}
       className={`fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[14vh] transition-opacity duration-200 print:hidden ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       data-open={open}
@@ -203,6 +317,7 @@ export default function CommandPalette() {
       aria-modal="true"
       aria-label="Command palette"
       aria-hidden={!open}
+      inert={!open}
     >
       <button
         className="absolute inset-0 cursor-default bg-black/60 backdrop-blur-sm"
@@ -220,7 +335,7 @@ export default function CommandPalette() {
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search commands, projects, actions…"
+            placeholder="Search projects, research, articles, services…"
             className="label-mono w-full bg-transparent text-sm text-foreground outline-none placeholder:text-faint"
             aria-label="Search commands"
             autoComplete="off"

@@ -1,5 +1,6 @@
-# Continuous verification — lint, types, production build, then the four
-# PowerShell QA suites against the built site served on :3000.
+# Continuous verification — lint, design-token contrast, types, production
+# build, then the five PowerShell QA suites against the built site served
+# on :3000.
 # Runs on Windows so the suites execute under Windows PowerShell 5.1, the
 # same runtime they were authored and validated against locally.
 name: CI
@@ -25,6 +26,11 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      # Static contrast gate: parses globals.css, no server needed.
+      - name: Design token contrast
+        shell: powershell
+        run: .\scripts\qa\token-check.ps1
 
       # Build first: next typegen emits LayoutProps and friends into
       # .next/types, which tsc needs for a clean standalone pass.
@@ -74,7 +80,7 @@ jobs:
             }
             try { $g = Invoke-WebRequest -Uri "http://localhost:3000/" -UseBasicParsing -TimeoutSec 5; $d += " GET=$($g.StatusCode)" } catch { $d += " GET=ERR" }
             try {
-              $p = Invoke-WebRequest -Uri "http://localhost:3000/api/__ci-probe" -Method Post -ContentType "application/json" -Body "{}" -UseBasicParsing -TimeoutSec 5
+              $p = Invoke-WebRequest -Uri "http://localhost:3000/api/health" -Method Post -ContentType "application/json" -Body "{}" -UseBasicParsing -TimeoutSec 5
               $d += " POST=$($p.StatusCode)"
             } catch {
               $pc = $null
@@ -93,11 +99,11 @@ jobs:
           $connDiag = (Probe "pre")
 
           # api-check must run first: it ends on the per-IP 429 limiter by
-          # design. Every suite exits 0/1 deterministically; all four always
+          # design. Every suite exits 0/1 deterministically; all five always
           # run so one run yields full signal, and failing lines are surfaced
           # as annotations (readable without log access).
           $failed = $false
-          foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1")) {
+          foreach ($s in @("api-check.ps1", "live-check.ps1", "hub-check.ps1", "world-check.ps1", "link-check.ps1")) {
             $out = & ".\scripts\qa\$s" *>&1 | ForEach-Object { "$_" }
             $out | Write-Host
             if ($LASTEXITCODE -ne 0) {
@@ -118,5 +124,5 @@ jobs:
             Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
             exit 1
           }
-          Write-Host "all four suites green"
+          Write-Host "all five suites green"
           Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue

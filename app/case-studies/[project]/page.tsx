@@ -26,6 +26,7 @@ export async function generateMetadata({
         description: study.researchQuestion,
         alternates: { canonical: `/case-studies/${study.id}` },
         openGraph: {
+            images: ["/opengraph-image"],
             title: `${study.title} — Case Study — ${site.name} / ${site.identity}`,
             description: study.thesis,
             type: "article",

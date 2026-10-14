@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Open to research collaboration on market structure, backtesting, data integrity, risk engineering, and quantitative methods — with collaborators who value reproducible results and transparent methodology.",
   alternates: { canonical: "/opportunities/collaborate" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Research Collaboration — Bukya Naresh / CN2.dev",
     description:
       "Joint experiments, open research, and technical collaboration on quantitative methods and market structure.",

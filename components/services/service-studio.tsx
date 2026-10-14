@@ -59,6 +59,10 @@ function ServiceDetail({ bundle }: { bundle: ServiceBundle }) {
 
       <h3 className="display mt-4 text-3xl md:text-5xl">{capability.name}</h3>
       <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted md:text-lg">{service.promise}</p>
+      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+        <span className="label-mono text-signal">WHO THIS IS FOR — </span>
+        {service.audience}
+      </p>
 
       <div className="mt-8 grid gap-px bg-line md:grid-cols-2 xl:grid-cols-4">
         {/* schematic + methods */}

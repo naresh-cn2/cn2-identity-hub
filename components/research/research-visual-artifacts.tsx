@@ -31,6 +31,7 @@ export function ResearchArtifact({ category, seed }: ResearchVisualArtifactProps
     const GRID = 16;
     let raf = 0;
     let running = true;
+    let paused = false;
     let rotY = 0;
     let rotYOffset = 0;
     let rotXOffset = 0;
@@ -152,12 +153,25 @@ export function ResearchArtifact({ category, seed }: ResearchVisualArtifactProps
 
     const tick = () => {
       if (!running) return;
+      // Hidden tab: stop scheduling (saves the battery) and wait for visibility.
+      if (document.hidden) {
+        paused = true;
+        return;
+      }
       rotYOffset += (0 - rotYOffset) * 0.04;
       rotXOffset += (0 - rotXOffset) * 0.04;
       if (!reduced) rotY += 0.0004;
       draw();
       raf = requestAnimationFrame(tick);
     };
+
+    const onVisibility = () => {
+      if (!document.hidden && paused && running && !reduced) {
+        paused = false;
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     readColors();
     resize();
@@ -182,7 +196,9 @@ export function ResearchArtifact({ category, seed }: ResearchVisualArtifactProps
 
     return () => {
       running = false;
+      paused = false;
       cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", onVisibility);
       ro.disconnect();
       mo.disconnect();
     };

@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     alternates: { canonical: '/testimonials' },
     openGraph: {
+        images: ["/opengraph-image"],
         title: 'Testimonials — Bukya Naresh / CN2.dev',
         description: DESCRIPTION,
     },

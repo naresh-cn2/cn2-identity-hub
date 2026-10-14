@@ -29,7 +29,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/opportunities/freelance",
     "/opportunities/collaborate",
     "/opportunities/partnerships",
+    "/how-i-work",
+    "/testimonials",
     "/contact",
+    "/privacy",
+    "/terms",
     "/links",
     "/cv",
   ];

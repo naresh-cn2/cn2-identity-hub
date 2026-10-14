@@ -11,6 +11,7 @@ import StageVFX from "@/components/cinematic/stage-vfx";
 import BackButton from "@/components/layout/back-button";
 import ScrollProgress from "@/components/layout/scroll-progress";
 import CursorLight from "@/components/layout/cursor-light";
+import { site } from "@/data/site";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Bukya Naresh" }],
   creator: "Bukya Naresh",
   openGraph: {
+    images: ["/opengraph-image"],
     title: "BUKYA NARESH — CN2.DEV",
     description:
       "Quantitative development through research, markets, data and engineering.",
@@ -73,6 +75,28 @@ export const viewport: Viewport = {
 
 const themeInit = `(function(){try{var t=localStorage.getItem('ni-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.classList.toggle('dark',t==='dark');}catch(e){document.documentElement.classList.add('dark');}})();`;
 
+/** Structured data — only what the site can substantiate: identity and profiles. */
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Person",
+            "@id": `${site.url}/#person`,
+            name: "Bukya Naresh",
+            url: site.url,
+            jobTitle: "Quantitative Developer",
+            sameAs: [site.links.github, site.links.linkedin],
+        },
+        {
+            "@type": "WebSite",
+            "@id": `${site.url}/#website`,
+            name: "BUKYA NARESH — CN2.DEV",
+            url: site.url,
+            publisher: { "@id": `${site.url}/#person` },
+        },
+    ],
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -81,6 +105,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="min-h-screen antialiased">

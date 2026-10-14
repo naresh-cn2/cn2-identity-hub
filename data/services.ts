@@ -50,6 +50,8 @@ export interface ServiceOffering {
   category: ServiceCategory;
   /** Short promise shown on the service index. */
   promise: string;
+  /** Who benefits from this service — derived from the problems it addresses. */
+  audience: string;
   /** The problem shape this service exists to address. */
   problems: string[];
   /** Engagement stages in order — condensed from the deliverables below. */
@@ -68,6 +70,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "quant-research",
     category: "research",
     promise: "Falsifiable market questions turned into deterministic, reproducible experiments.",
+    audience:
+      "Anyone holding a strategy question that needs a defensible, falsifiable answer — before capital or months are committed to it.",
     problems: [
       "A strategy idea that looks promising but has no registered hypothesis and no test that could disprove it.",
       "Results that cannot be regenerated — every run differs, so nothing can be trusted or reviewed.",
@@ -100,6 +104,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "market-data",
     category: "data",
     promise: "Point-in-time correct market-data pipelines with deterministic replay.",
+    audience:
+      "Teams whose research and systems depend on market data that must be point-in-time correct, reproducible, and honest about its own gaps.",
     problems: [
       "Vendor and internal data that disagree with each other with no canonical model.",
       "Silent lookahead: reads that can reach future information and quietly invalidate research.",
@@ -133,6 +139,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "systematic-trading",
     category: "systems",
     promise: "Multi-strategy architectures where entries, exits and risk are code, not discretion.",
+    audience:
+      "Builders who want execution, risk and costs modelled in code — with paper execution as the default and live capital deliberately out of scope.",
     problems: [
       "Discretionary execution that cannot be audited, replayed or reviewed after the fact.",
       "Risk controls that exist as conventions instead of structural invariants enforced before an order exists.",
@@ -165,6 +173,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "backtesting",
     category: "research",
     promise: "Simulation harnesses that regenerate byte-identically, with costs stated explicitly.",
+    audience:
+      "Researchers who have been burned by backtests they could not reproduce, and want a harness whose honesty is itself tested.",
     problems: [
       "Backtests that drift run to run because of implicit ordering, float noise or non-seeded randomness.",
       "Fill and fee assumptions buried in code, so reported results cannot be independently checked.",
@@ -196,6 +206,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "risk",
     category: "systems",
     promise: "Risk controls as structural invariants enforced before an order can exist.",
+    audience:
+      "Anyone whose risk limits currently live in policy documents rather than in code that refuses to build the order.",
     problems: [
       "Risk limits enforced by policy documents instead of by code that refuses to build the order.",
       "Position sizing that ignores ergodicity, drawdown path or the cost of a single wrong tail bet.",
@@ -225,6 +237,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "data-infrastructure",
     category: "data",
     promise: "High-throughput, low-dependency data systems with measurement context attached.",
+    audience:
+      "Engineering work where throughput and correctness must arrive with the measurement methodology attached, not just a headline number.",
     problems: [
       "Pipelines whose performance is claimed without a stated methodology or hardware context.",
       "Dependency-heavy stacks where a single library upgrade changes numeric results.",
@@ -255,6 +269,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "performance-engineering",
     category: "systems",
     promise: "Throughput and latency work where the measurement methodology is part of the deliverable.",
+    audience:
+      "Code that is measurably too slow, where the first deliverable is a profile and the second is a guarded, measured improvement.",
     problems: [
       "Performance claims without reproducible measurement: no hardware, no dataset, no harness.",
       "Premature optimisation of the wrong layer because the profile was never taken.",
@@ -285,6 +301,8 @@ const SERVICES: ServiceOffering[] = [
     capabilityId: "ai-intelligence",
     category: "ai",
     promise: "AI applied to research tooling where every output is inspectable and every claim is checkable.",
+    audience:
+      "Research workflows that want AI assistance grounded in your own sources — with citations and deterministic reruns instead of black-box answers.",
     problems: [
       "Model-generated analysis presented as a conclusion, with no stated method or source behind it.",
       "Automation that cannot be re-run deterministically, so its output cannot be audited.",

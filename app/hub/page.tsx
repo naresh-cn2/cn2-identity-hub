@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Explore the CN2.DEV universe — a digital environment for quantitative research, software engineering, intelligent automation, and the ideas connecting them. One identity. Multiple disciplines.",
   alternates: { canonical: "/hub" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Explore the CN2.DEV Universe — Bukya Naresh / CN2.DEV",
     description:
       "One identity. Multiple disciplines. A world of things to build. Eight destinations, one immersive introduction at a time.",

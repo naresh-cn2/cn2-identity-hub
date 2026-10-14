@@ -70,7 +70,6 @@ export default function EntryHero() {
       ref={containerRef}
       className="relative min-h-screen w-full overflow-hidden"
       style={{ minHeight: "100dvh", maxHeight: "100dvh" }}
-      role="main"
     >
       {/* ---- Background image: the provided hero with baked-in typography ----
            The zoom wrapper carries the slow breathing scale, the stage carries

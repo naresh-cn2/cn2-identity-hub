@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "Available for defined-scope technical projects: research prototypes, market-data tooling, quantitative analysis systems, and automation workflows.",
   alternates: { canonical: "/opportunities/freelance" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Freelance & Contracts — Bukya Naresh / CN2.dev",
     description:
       "Technical freelance and contract work: quantitative research, market-data engineering, FinTech systems.",

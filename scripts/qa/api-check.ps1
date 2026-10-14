@@ -1,6 +1,6 @@
-# reviews API E2E -- ASCII only (PowerShell reads no-BOM .ps1 as ANSI).
+# reviews + enquiries API E2E -- ASCII only (PowerShell reads no-BOM .ps1 as ANSI).
 # Needs a local server with fresh in-memory rate windows (restart it first):
-# the 4 calls below intentionally end on the per-IP 429 limiter.
+# each suite's last call intentionally ends on its own per-IP 429 limiter.
 param([string]$Base = "http://localhost:3000")
 $ErrorActionPreference = "Stop"
 $base = $Base
@@ -12,9 +12,9 @@ function Assert([string]$name, [bool]$cond) {
     else { $script:fail++; Write-Host ("  FAIL  " + $name) -ForegroundColor Red }
 }
 
-function Post-RV($body) {
+function Post-Path([string]$path, $body) {
     # Base fallback: on the CI runner the server answers GETs on localhost
-    # but POSTs to 127.0.0.1 get refused — so try every loopback spelling
+    # but POSTs to 127.0.0.1 get refused - so try every loopback spelling
     # and cache the one that actually reaches the app. Transport failures
     # never reached the server, so retrying cannot double-count against
     # the rate limiter; a real HTTP answer is returned as-is.
@@ -23,7 +23,7 @@ function Post-RV($body) {
     $lastErr = $null
     foreach ($b in $bases) {
         try {
-            $r = Invoke-WebRequest -Uri ($b + "/api/testimonials") -Method Post -ContentType "application/json" -Body $body -UseBasicParsing -TimeoutSec 30
+            $r = Invoke-WebRequest -Uri ($b + $path) -Method Post -ContentType "application/json" -Body $body -UseBasicParsing -TimeoutSec 30
             $script:apiBase = $b
             return @{ code = $r.StatusCode; body = ($r.Content | ConvertFrom-Json -ErrorAction SilentlyContinue) }
         } catch {
@@ -48,6 +48,26 @@ function Post-RV($body) {
         }
     }
     Write-Host ("diag-post-error all bases failed: " + $lastErr.Exception.Message)
+    return @{ code = $null; body = $null }
+}
+
+function Post-RV($body) { Post-Path "/api/testimonials" $body }
+function Post-EN($body) { Post-Path "/api/enquiries" $body }
+
+function Get-Path([string]$path) {
+    $bases = @($base, "http://127.0.0.1:3000", "http://[::1]:3000")
+    if ($script:apiBase) { $bases = @($script:apiBase) + @($bases | Where-Object { $_ -ne $script:apiBase }) }
+    foreach ($b in $bases) {
+        try {
+            $r = Invoke-WebRequest -Uri ($b + $path) -UseBasicParsing -TimeoutSec 30
+            $script:apiBase = $b
+            return @{ code = $r.StatusCode; body = ($r.Content | ConvertFrom-Json -ErrorAction SilentlyContinue) }
+        } catch {
+            $code = $null
+            try { $code = $_.Exception.Response.StatusCode.value__ } catch { }
+            if ($code -ne $null) { $script:apiBase = $b; return @{ code = $code; body = $null } }
+        }
+    }
     return @{ code = $null; body = $null }
 }
 
@@ -81,6 +101,55 @@ Assert "rate limiter engages (429)" ($t4.code -eq 429)
 
 # diagnostic line for CI annotations — actual codes and truncated bodies
 foreach ($t in @(@("t1-valid", $t1), @("t2-honeypot", $t2), @("t3-linky", $t3), @("t4-limiter", $t4))) {
+    $b = ""
+    try { $b = ($t[1].body | ConvertTo-Json -Compress -Depth 5) } catch { }
+    if (-not $b) { $b = "<empty>" }
+    if ($b.Length -gt 200) { $b = $b.Substring(0, 200) }
+    Write-Host ("diag " + $t[0] + " code=" + $t[1].code + " body=" + $b)
+}
+
+Write-Host ""
+Write-Host "== health endpoint =="
+$h1 = Get-Path "/api/health"
+Assert "health responds 200" ($h1.code -eq 200)
+Assert "health payload ok" ($h1.body.ok -eq $true)
+
+Write-Host ""
+Write-Host "== enquiries API =="
+$enow = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+$etpl = @{
+    name = "Suite Enquirer"; email = "enquirer@example.com"; organization = "Example Org"
+    projectType = "freelance"
+    problem = "We need a point-in-time correct backfill with deterministic replay and clear failure states."
+    deliverables = "A reproducible research harness."; timeline = "one-to-three-months"; budget = ""
+    website = ""; startedMs = ($enow - 5000)
+}
+$evalid = $etpl | ConvertTo-Json
+$ehp = $etpl.Clone(); $ehp["website"] = "http://spam.example"
+$ebad = $etpl.Clone(); $ebad["email"] = "not-an-email"
+
+$e1 = Post-EN $evalid
+Assert "enquiry accepted 200" ($e1.code -eq 200 -and $e1.body.ok -eq $true)
+Assert "enquiry carries a real success message" ($e1.body.message -match "received")
+
+$e2 = Post-EN ($ehp | ConvertTo-Json)
+Assert "enquiry honeypot fakes success" ($e2.code -eq 200 -and $e2.body.ok -eq $true)
+Assert "enquiry honeypot carries no message" ([string]::IsNullOrEmpty($e2.body.message))
+
+$e3 = Post-EN ($ebad | ConvertTo-Json)
+Assert "invalid email rejected 400" ($e3.code -eq 400)
+Assert "email field error surfaced" (@($e3.body.errors | Where-Object { $_.field -eq "email" }).Count -gt 0)
+
+$e4 = Post-EN "this-is-not-json"
+Assert "malformed body rejected 400" ($e4.code -eq 400)
+
+$e5 = Post-EN $evalid
+Assert "duplicate enquiry deduped 200" ($e5.code -eq 200 -and $e5.body.ok -eq $true)
+
+$e6 = Post-EN $evalid
+Assert "enquiry rate limiter engages (429)" ($e6.code -eq 429)
+
+foreach ($t in @(@("e1-valid", $e1), @("e2-honeypot", $e2), @("e3-bad-email", $e3), @("e4-malformed", $e4), @("e5-dup", $e5), @("e6-limiter", $e6))) {
     $b = ""
     try { $b = ($t[1].body | ConvertTo-Json -Compress -Depth 5) } catch { }
     if (-not $b) { $b = "<empty>" }

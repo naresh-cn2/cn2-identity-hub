@@ -83,6 +83,14 @@ export default function Footer() {
         <div className="mt-16 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="num-mono text-[10px] text-muted">
             c 2026 {site.name} — all systems self-engineered
+            <span className="ml-4 inline-flex gap-3">
+              <Link href="/privacy" className="transition-colors hover:text-signal">
+                PRIVACY
+              </Link>
+              <Link href="/terms" className="transition-colors hover:text-signal">
+                TERMS
+              </Link>
+            </span>
           </p>
           <p className="num-mono text-[10px] text-muted">
             status / research · domain / CN2.dev · mode / building

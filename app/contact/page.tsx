@@ -5,6 +5,8 @@ import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ContactPanels from "@/components/contact/contact-panels";
 import ContactOrbitViz from "@/components/contact/contact-orbit-viz";
+import CopyEmail from "@/components/contact/copy-email";
+import EnquiryForm from "@/components/contact/enquiry-form";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
         "Direct contact for quantitative research, market-data systems, engineering projects and professional opportunities.",
     alternates: { canonical: "/contact" },
     openGraph: {
+        images: ["/opengraph-image"],
         title: "Contact — Bukya Naresh / CN2.dev",
         description: "Direct contact for quantitative research, market-data systems and FinTech engineering.",
     },
@@ -84,8 +87,13 @@ export default function ContactPage() {
             <section aria-label="Contact methods" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
                     <Reveal>
-                        <p className="label-mono text-signal">DIRECT CHANNELS</p>
-                        <h2 className="display mt-4 text-2xl md:text-4xl">FIVE WAYS TO REACH ME</h2>
+                        <div className="flex flex-wrap items-end justify-between gap-6">
+                            <div>
+                                <p className="label-mono text-signal">DIRECT CHANNELS</p>
+                                <h2 className="display mt-4 text-2xl md:text-4xl">FIVE WAYS TO REACH ME</h2>
+                            </div>
+                            <CopyEmail email={site.email} />
+                        </div>
                     </Reveal>
                     <ContactPanels />
                 </div>
@@ -109,6 +117,26 @@ export default function ContactPage() {
                             </Reveal>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* ---- project enquiry ---- */}
+            <section aria-label="Project enquiry" className="border-b border-line">
+                <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+                    <Reveal>
+                        <p className="label-mono text-signal">PROJECT ENQUIRY</p>
+                        <h2 className="display mt-4 text-2xl md:text-4xl">TELL ME WHAT YOU&apos;RE BUILDING</h2>
+                        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
+                            A short, specific brief gets the most useful reply: the problem, the
+                            data if there is any, and the evidence that would count as success.
+                            Every enquiry is read personally.
+                        </p>
+                    </Reveal>
+                    <Reveal delay={100}>
+                        <div className="mt-10">
+                            <EnquiryForm />
+                        </div>
+                    </Reveal>
                 </div>
             </section>
 

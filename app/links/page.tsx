@@ -31,6 +31,8 @@ const ROWS: LinkRow[] = [
   { code: "05", label: "WORK", href: "/work", kind: "internal", meta: "ENGINEERING" },
   { code: "06", label: "RESEARCH", href: "/research", kind: "internal", meta: "EVIDENCE" },
   { code: "07", label: "LAB", href: "/lab", kind: "internal", meta: "INSTRUMENTS" },
+  { code: "08", label: "PRIVACY", href: "/privacy", kind: "internal", meta: "DATA HANDLING" },
+  { code: "09", label: "TERMS", href: "/terms", kind: "internal", meta: "PLAIN TERMS" },
 ];
 
 const ROW_CLASS =

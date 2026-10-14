@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "Deep-dive case studies for each flagship system — the problem, architecture, data flow, experiments, results and limitations behind it.",
   alternates: { canonical: "/case-studies" },
   openGraph: {
+    images: ["/opengraph-image"],
     title: "Case Studies — Bukya Naresh / CN2.dev",
     description:
       "Falsifiable questions, deterministic methods, published limitations — each study traces the question through method and evidence to the conclusion.",
