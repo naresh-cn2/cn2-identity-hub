@@ -2,6 +2,7 @@
   "name": "cn2-identity-hub",
   "version": "0.1.0",
   "private": true,
+  "description": "CN2.DEV — the digital headquarters of Bukya Naresh, Quantitative Developer. Next.js App Router + typed data modules; every claim backed by real artifacts.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

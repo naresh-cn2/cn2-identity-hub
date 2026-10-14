@@ -26,7 +26,11 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | `/credentials` | Issued certificates with issuer, IDs, dates and verification URLs |
 | `/opportunities` | Career, freelance, collaboration and partnership pathways |
 | `/testimonials` | Reviews & testimonials — consented feedback with per-review ratings |
+| `/how-i-work` | How engagements actually run — six steps from brief to handover |
+| `/privacy`, `/terms` | Plain-language data handling and ground rules |
 | `/about`, `/identity`, `/cv`, `/proof`, `/links`, `/contact` | Profile, record and contact surfaces |
+
+The top bar is deliberately minimal — brand, search and the light/dark toggle. Every destination stays reachable through the command palette (<kbd>⌘K</kbd>), the footer route index, `/links` and the hub.
 
 The four-level architecture: **Showcase → Project World → World Sections (architecture, evidence, limitations, research) → Knowledge Graph links**. Worlds are registered in `data/project-worlds.ts`; a world's navigation and sections are derived from the content that actually exists — empty sections are never padded.
 
@@ -38,11 +42,10 @@ The four-level architecture: **Showcase → Project World → World Sections (ar
 | --- | --- |
 | Framework | [Next.js 16](https://nextjs.org) (App Router, static generation) |
 | UI | React 19, TypeScript (strict), Tailwind CSS 4 (CSS-first config in `app/globals.css`) |
-| Visual system | CSS, SVG and Canvas 2D — the site's core motion and atmosphere layer |
-| Cinematic scenes | Three.js / react-three-fiber, limited to the home entry and the about figure; GSAP powers the home scroll choreography |
+| Visual system | CSS, SVG and Canvas 2D — the site's entire motion and atmosphere layer (no animation frameworks; canvases pause on hidden tabs) |
 | Icons | lucide-react |
 | Content | Typed data modules under `data/` — the single source of truth for pages, navigation and SEO |
-| Reviews backend | Route handler + GitHub contents API (no database, no new services) |
+| Form backends | Route handlers — reviews (GitHub publishing, dormant until a token is set) and project enquiries (validated, rate-limited, captured to private function logs). No database, no new services |
 | Accessibility | Semantic HTML, ARIA, visible focus states, `prefers-reduced-motion` support |
 | Deployment | Vercel — every push to `main` deploys production |
 
@@ -90,7 +93,7 @@ Serverless filesystems are ephemeral and this project has no database, so the re
 - **Responsive** — verified with rendered overflow sweeps from 320 px to 2560 px on every route; touch devices receive enlarged hit areas for compact controls while desktop sizing stays untouched.
 - **Accessible** — keyboard-completable interactions (including the star-rating radiogroup), focus-visible states, reduced-motion freezes every animation at its neutral rest state.
 - **Performance-conscious** — static generation for all content routes; canvases are DPR-capped, pause when the tab is hidden, and degrade deliberately on small screens.
-- **SEO** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs.
+- **SEO** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs, a site-wide Open Graph share card (`next/og`), icons + web manifest, and JSON-LD (`Person` + `WebSite`).
 
 ### Automated QA
 
@@ -99,7 +102,7 @@ The rendered-output suites live in `scripts/qa/` and run against any build serve
 | Suite | What it asserts |
 | --- | --- |
 | `api-check.ps1` | 18 end-to-end API checks — reviews + enquiries + health (run first — each suite deliberately ends on its per-IP 429 limiter) |
-| `live-check.ps1` | 128 site-wide assertions — motion, accessibility, navigation, enquiry form, trust pages, 404, share-card head tags |
+| `live-check.ps1` | 132 site-wide assertions — motion, accessibility, minimal navigation bar, enquiry form, trust pages, 404, share-card head tags |
 | `hub-check.ps1` | 59 hub-universe assertions |
 | `world-check.ps1` | 69 project-world assertions |
 | `link-check.ps1` | 26 seed routes crawled — no dead `href="#"`, all 57 internal destinations return 200 |
@@ -119,14 +122,17 @@ GitHub Actions (`.github/workflows/ci.yml`) runs lint → design-token contrast 
 
 ```
 app/                     App Router routes (see the route table above)
+  api/enquiries/         Project-enquiry intake — validation, rate limiting, private-log capture
   api/testimonials/      Reviews intake — validation, rate limiting, publishing
+  api/health/            Liveness probe (also the CI POST target)
 components/
   work/  projects/        WORK catalogue, project worlds, architecture explorer
   case-study/  viz/      Evidence instruments, charts, schematics, canvas scenes
   hub/  testimonials/    Headquarters sections; review form, grid, endorsements
-  layout/  ui/           Navbar, footer, ambience layer; reveal, atmosphere
+  contact/  layout/  ui/ Enquiry form; navbar, footer, palette; reveal, atmosphere
 data/                    Single source of truth — site, projects, worlds, reviews…
-lib/                     Review submission validation (pure, framework-free)
+lib/                     Pure validation modules (enquiry, review submission)
+scripts/qa/              Six rendered-output QA suites (see Automated QA)
 public/                  Static assets (hero renders, identity photography)
 app/globals.css          Design tokens, themes, motion system (Tailwind v4)
 .env.example             Reviews publishing configuration

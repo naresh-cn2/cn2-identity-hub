@@ -76,7 +76,7 @@ export const primaryNav: NavItem[] = [
   { label: "CONTACT", href: "/contact", code: "16" },
 ];
 
-/** Secondary destinations — carried by the MENU overlay and the footer index. */
+/** Secondary destinations — carried by the footer index, /links and the command palette. */
 export const secondaryNav: NavItem[] = [
   { label: "LABORATORY", href: "/lab", code: "11" },
   {
