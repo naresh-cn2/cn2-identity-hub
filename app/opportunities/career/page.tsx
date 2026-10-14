@@ -4,7 +4,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import { career } from "@/data/career";
-import { studyTracks } from "@/data/certifications";
+import { studyTracks } from "@/data/credentials";
 import { RecordSpine } from "@/components/opportunities/pathway-visuals";
 
 export const metadata: Metadata = {
@@ -81,7 +81,7 @@ export default function CareerPage() {
                     <h3 className="display text-xl md:text-2xl">{track.title}</h3>
                     <p className="mt-3 text-base leading-relaxed text-muted">{track.focus}</p>
                     <Link
-                      href="/certifications#study"
+                      href="/credentials#study"
                       className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
                     >
                       FULL STUDY RECORD →
@@ -126,7 +126,7 @@ export default function CareerPage() {
                         href={exp.href}
                         className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
                       >
-                        OPEN BUILD →
+                        OPEN PROJECT →
                       </Link>
                     )}
                   </div>

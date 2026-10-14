@@ -230,10 +230,10 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
                   </a>
                 )}
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
                 >
-                  ← ALL BUILDS
+                  ← ALL WORK
                 </Link>
               </div>
             </Chapter>

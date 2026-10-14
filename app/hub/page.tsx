@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import UniverseIntro from "@/components/hub/universe-intro";
+import AudiencePathways from "@/components/hub/audience-pathways";
 import DestinationSection from "@/components/hub/destination-section";
 import DestinationVisual from "@/components/hub/destination-visual";
 import { hubDestinations, hubIndex } from "@/data/hub";
@@ -36,6 +37,9 @@ export default function HubPage() {
   return (
     <>
       <UniverseIntro />
+
+      {/* ---- audience pathways: four ways into the same universe ---- */}
+      <AudiencePathways />
 
       {/* ---- the universe: one destination per full-screen section ---- */}
       <main id="destinations" aria-label="The CN2.DEV universe">

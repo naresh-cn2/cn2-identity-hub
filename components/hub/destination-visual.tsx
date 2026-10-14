@@ -1,4 +1,4 @@
-import BuildsVisual from "./visuals/builds-visual";
+import BuildsVisual from "./visuals/work-visual";
 import CredentialsVisual from "./visuals/credentials-visual";
 import ServicesVisual from "./visuals/services-visual";
 import LabVisual from "./visuals/lab-visual";

@@ -87,7 +87,7 @@ export const capabilities: Capability[] = [
     ],
     status: "DEMONSTRATED",
     work: "Apex Quant Engine · Automated Trading OS",
-    evidence: [{ label: "OPEN THE BUILDS", href: "/builds" }],
+    evidence: [{ label: "OPEN THE WORK", href: "/work" }],
   },
   {
     id: "ai-agents",
@@ -115,7 +115,7 @@ export const capabilities: Capability[] = [
       "Knowing when a simpler solution is the better one",
     ],
     status: "DEMONSTRATED",
-    evidence: [{ label: "OPEN THE BUILDS", href: "/builds" }],
+    evidence: [{ label: "OPEN THE WORK", href: "/work" }],
   },
   {
     id: "data-infra",

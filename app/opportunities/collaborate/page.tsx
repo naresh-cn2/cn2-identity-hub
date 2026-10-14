@@ -57,7 +57,7 @@ function relatedHref(slug: string): { href: string; external: boolean } | null {
     return { href: `/${slug}`, external: false };
   }
   if (BUILD_IDS.includes(slug)) {
-    return { href: `/builds/${slug}`, external: false };
+    return { href: `/work/${slug}`, external: false };
   }
   return null;
 }

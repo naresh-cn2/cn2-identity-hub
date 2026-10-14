@@ -38,7 +38,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
 
       <p className="label-mono mt-6 text-faint">{project.categoryLabel}</p>
       <h2 className="display mt-3 text-[clamp(1.9rem,4vw,3rem)] leading-tight">
-        <Link href={`/builds/${project.id}`} className="transition-colors hover:text-signal">
+        <Link href={`/work/${project.id}`} className="transition-colors hover:text-signal">
           {project.title}
         </Link>
       </h2>
@@ -68,7 +68,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
 
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Link
-          href={`/builds/${project.id}`}
+          href={`/work/${project.id}`}
           className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
         >
           ENTER PROJECT WORLD
@@ -92,7 +92,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
 
   const visual = (
     <TiltCard className={`min-w-0 ${flip ? "lg:order-2" : ""}`} max={2.5}>
-      <Link href={`/builds/${project.id}`} aria-hidden="true" tabIndex={-1} className="block">
+      <Link href={`/work/${project.id}`} aria-hidden="true" tabIndex={-1} className="block">
         <ProjectSignature project={project} />
       </Link>
     </TiltCard>
@@ -137,7 +137,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
     <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
       {/* ---- filters ---- */}
       <Reveal>
-        <div className="flex flex-wrap items-center gap-2 border-t border-line pt-6" role="group" aria-label="Filter builds by category">
+        <div className="flex flex-wrap items-center gap-2 border-t border-line pt-6" role="group" aria-label="Filter projects by category">
           {(["ALL", ...archiveCategories] as Filter[]).map((c) => {
             const isActive = c === active;
             return (
@@ -164,14 +164,14 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
 
       <Reveal delay={80}>
         <p className="label-mono mt-4 text-faint" aria-live="polite">
-          {filtered.length} OF {projects.length} BUILDS — {active === "ALL" ? "ALL PROJECTS" : `${active} ONLY`}
+          {filtered.length} OF {projects.length} PROJECTS — {active === "ALL" ? "ALL PROJECTS" : `${active} ONLY`}
         </p>
       </Reveal>
 
       {filtered.length === 0 && (
         <Reveal delay={120}>
           <div className="corner-ticks mt-10 border border-line bg-surface p-8 md:p-12">
-            <p className="label-mono text-signal">NO BUILDS TAGGED {active}</p>
+            <p className="label-mono text-signal">NO PROJECTS TAGGED {active}</p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
               No build carries this tag yet.
             </p>
@@ -180,7 +180,7 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
               onClick={() => setActive("ALL")}
               className="label-mono mt-6 border border-line-strong px-5 py-2.5 text-foreground transition-colors hover:border-signal hover:text-signal"
             >
-              ← SHOW ALL BUILDS
+              ← SHOW ALL WORK
             </button>
           </div>
         </Reveal>

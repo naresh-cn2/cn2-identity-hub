@@ -12,12 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/hub",
     "/identity",
-    "/builds",
+    "/work",
     "/case-studies",
     "/research",
     "/articles",
     "/intelligence",
-    "/certifications",
+    "/credentials",
     "/proof",
     "/capabilities",
     "/lab",
@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/links",
     "/cv",
   ];
-  const builds = archiveProjects.map((p) => `/builds/${p.id}`);
+  const builds = archiveProjects.map((p) => `/work/${p.id}`);
   const studies = caseStudies.map((p) => `/case-studies/${p.id}`);
   const research = researchEntries.map((e) => `/research/${e.id}`);
   const articles = publishedArticles.map((a) => `/articles/${a.id}`);
@@ -45,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [...urls].map((path) => ({
     url: `${site.url}${path}`,
     changeFrequency:
-      path === "" || path === "/builds" || path === "/research" || path === "/case-studies"
+      path === "" || path === "/work" || path === "/research" || path === "/case-studies"
         ? "weekly"
         : "monthly",
     priority: path === "" ? 1 : path.split("/").length === 2 ? 0.8 : 0.6,

@@ -180,7 +180,7 @@ export default function WorkWithMePage() {
               FULL CAPABILITY MAP →
             </Link>
             <Link
-              href="/builds"
+              href="/work"
               className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
             >
               SEE THE EVIDENCE →

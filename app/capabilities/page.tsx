@@ -21,7 +21,7 @@ const researchTitles: Record<string, string> = Object.fromEntries(
 );
 
 const verifyLinks = [
-  { label: "BUILDS — ENGINEERING EVIDENCE", href: "/builds", external: false },
+  { label: "WORK — ENGINEERING EVIDENCE", href: "/work", external: false },
   { label: "RESEARCH — WRITTEN ENTRIES", href: "/research", external: false },
   { label: "LAB — RUNNABLE INSTRUMENTS", href: "/lab", external: false },
   { label: "GITHUB — ALL REPOSITORIES", href: site.links.github, external: true },

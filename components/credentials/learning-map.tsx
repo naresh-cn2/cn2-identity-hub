@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { StudyTrack } from "@/data/certifications";
+import type { StudyTrack } from "@/data/credentials";
 import { getArchiveProject } from "@/data/archive";
 import { researchEntries } from "@/data/research";
 
@@ -45,7 +45,7 @@ export default function LearningMap({ tracks }: { tracks: StudyTrack[] }) {
             kind: "BUILD",
             label: p.shortTitle,
             title: p.title,
-            href: `/builds/${p.id}`,
+            href: `/work/${p.id}`,
           });
         }
       }

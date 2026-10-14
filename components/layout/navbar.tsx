@@ -7,6 +7,7 @@ import {
   isActiveNavItem,
   isActiveRoute,
   primaryNav,
+  secondaryNav,
   site,
   type NavItem,
 } from "@/data/site";
@@ -24,7 +25,8 @@ function cn(...classes: (string | boolean | undefined)[]) {
  * Global navigation — single source of truth for all navigation.
  *
  * Entry page (/): Brand (clickable → /identity) | HOME ABOUT | CONTACT + search
- * Portfolio routes: Full primary navigation with grouped mega-menus.
+ * Inner routes: brand · six primary destinations (lg+) · search · theme · MENU.
+ * The MENU overlay carries the primary groups plus the secondary destinations.
  * The brand lockup opens the signed identity portrait on every route.
  */
 export default function Navbar() {
@@ -179,8 +181,33 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* ---- desktop navigation is intentionally absent: the command
-                 palette (search) is the wayfinding surface on every page ---- */}
+            {/* ---- desktop primary navigation: the six primary destinations.
+                 Secondary destinations stay behind the MENU control below. ---- */}
+            {!isIdentityPage && (
+              <nav
+                className="hidden min-w-0 flex-1 items-center justify-center gap-5 lg:flex xl:gap-7"
+                aria-label="Primary"
+              >
+                {primaryNav.map((item) => {
+                  const active = isActiveNavItem(pathname, item);
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "label-mono relative text-[10px] tracking-[0.18em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal",
+                        active
+                          ? "text-signal after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:bg-signal after:content-['']"
+                          : "text-muted hover:text-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            )}
 
             {/* ---- actions: search · theme; the bottom-left BACK control
                  returns to wherever the visitor came from ---- */}
@@ -203,7 +230,7 @@ export default function Navbar() {
               {!isIdentityPage && (
                 <button
                   onClick={() => setMenuOpen(!menuOpen)}
-                  className="label-mono menu-hit border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground lg:hidden"
+                  className="label-mono menu-hit border border-line px-3 py-1.5 text-muted transition-colors hover:border-line-strong hover:text-foreground"
                   aria-expanded={menuOpen}
                   aria-controls="mobile-menu"
                 >
@@ -222,12 +249,12 @@ export default function Navbar() {
         </header>
       )}
 
-      {/* ---- mobile cinematic menu (not on the identity portrait page) ---- */}
+      {/* ---- cinematic menu overlay — every viewport (not on the identity portrait page) ---- */}
       {!isIdentityPage && (
       <div
         id="mobile-menu"
         className={cn(
-          "fixed inset-0 z-40 flex flex-col bg-background transition-all duration-500 lg:hidden print:hidden",
+          "fixed inset-0 z-40 flex flex-col bg-background transition-all duration-500 print:hidden",
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         )}
         aria-hidden={!menuOpen}
@@ -235,7 +262,7 @@ export default function Navbar() {
         <div className="grid-field h-24 shrink-0" />
         <nav
           className="flex flex-1 flex-col justify-center overflow-y-auto px-6 py-6"
-          aria-label="Mobile"
+          aria-label="Menu"
         >
           <MobileNavEntry
             item={{ label: "HOME", href: "/", code: "00" }}
@@ -243,7 +270,7 @@ export default function Navbar() {
             open={menuOpen}
             pathname={pathname}
           />
-          {primaryNav.map((item, i) => (
+          {[...primaryNav, ...secondaryNav].map((item, i) => (
             <MobileNavEntry key={item.label} item={item} index={i + 1} open={menuOpen} pathname={pathname} />
           ))}
         </nav>

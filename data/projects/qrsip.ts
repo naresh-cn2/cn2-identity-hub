@@ -2,7 +2,7 @@ import type { FlagshipProject } from "./types";
 
 export const qrsip: FlagshipProject = {
   id: "qrsip",
-  route: "/builds/qrsip",
+  route: "/work/qrsip",
   index: "04",
   title: "QRSIP — QUANT RESEARCH STRATEGY INTELLIGENCE PLATFORM",
   shortTitle: "QRSIP",

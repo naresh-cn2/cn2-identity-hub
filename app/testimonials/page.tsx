@@ -43,7 +43,7 @@ function workHrefOf(t: (typeof publishedTestimonials)[number]): { href?: string;
             ? archiveProjects.find((p) => p.id === t.work)?.title ?? t.work
             : serviceOfferings.find((s) => s.slug === t.work)?.slug.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ') ?? t.work;
     return {
-        href: t.workKind === 'project' ? `/builds/${t.work}` : `/services/${t.work}`,
+        href: t.workKind === 'project' ? `/work/${t.work}` : `/services/${t.work}`,
         label: label.toUpperCase(),
     };
 }

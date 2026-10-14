@@ -34,7 +34,7 @@ const METRIC_PROVENANCE: Record<(typeof career.experience)[number]["project"], s
 };
 
 const EVIDENCE_ROUTES = [
-  { label: "BUILDS", href: "/builds" },
+  { label: "WORK", href: "/work" },
   { label: "RESEARCH", href: "/research" },
   { label: "LAB", href: "/lab" },
 ] as const;

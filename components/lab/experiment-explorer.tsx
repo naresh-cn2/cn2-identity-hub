@@ -162,7 +162,7 @@ export default function ExperimentExplorer() {
             SOURCE REPOSITORY ↗
           </a>
           <Link
-            href={`/builds/${qrsip.id}`}
+            href={`/work/${qrsip.id}`}
             className="label-mono border border-line px-5 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
           >
             OPEN THE QRSIP BUILD →

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { CredentialRecord, StudyTrack } from "@/data/certifications";
+import type { CredentialRecord, StudyTrack } from "@/data/credentials";
 import { getArchiveProject } from "@/data/archive";
 import { researchEntries } from "@/data/research";
 
@@ -286,7 +286,7 @@ export default function CredentialTimeline({
                               {(relBuild || relResearch) && (
                                 <div className="flex flex-wrap gap-x-8 gap-y-3 pt-2">
                                   {relBuild && (
-                                    <Link href={`/builds/${relBuild.id}`} className="group/link">
+                                    <Link href={`/work/${relBuild.id}`} className="group/link">
                                       <span className="label-mono block text-[10px] text-faint">APPLIED IN</span>
                                       <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
                                         {relBuild.shortTitle} →
@@ -331,7 +331,7 @@ export default function CredentialTimeline({
                           {(build || research) && (
                             <div className="flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-5 md:col-span-2">
                               {build && (
-                                <Link href={`/builds/${build.id}`} className="group/link">
+                                <Link href={`/work/${build.id}`} className="group/link">
                                   <span className="label-mono block text-[10px] text-faint">APPLIED IN</span>
                                   <span className="label-mono text-research transition-transform duration-300 group-hover/link:translate-x-1">
                                     {build.shortTitle} →

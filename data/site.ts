@@ -41,23 +41,23 @@ export interface NavItem extends NavLeaf {
 }
 
 /**
- * Primary navigation (spec §20).
+ * Primary navigation (spec §20, IA v4).
  *
- * The bar carries grouped destinations rather than every route. WORK, RESEARCH
- * and CREDENTIALS expand into mega-menus (WORK also exposes LAB); ABOUT and
- * CONTACT are direct. Each group's own `href` is its landing destination.
+ * The top bar carries the six primary destinations — WORK, RESEARCH, SERVICES,
+ * ABOUT, CREDENTIALS, CONTACT. WORK and RESEARCH keep grouped children for the
+ * menu overlay. Everything else (laboratory, opportunities, testimonials, CV,
+ * links) lives in secondaryNav and stays reachable through the MENU control.
  */
 export const primaryNav: NavItem[] = [
   {
     label: "WORK",
-    href: "/builds",
+    href: "/work",
     code: "01",
     children: [
-      { label: "BUILDS", href: "/builds", code: "01" },
+      { label: "PROJECTS", href: "/work", code: "01" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
-      { label: "SERVICES", href: "/services", code: "20" },
       { label: "CAPABILITIES", href: "/capabilities", code: "03" },
-      { label: "LAB", href: "/lab", code: "11" },
+      { label: "PROOF", href: "/proof", code: "09" },
     ],
   },
   {
@@ -70,16 +70,15 @@ export const primaryNav: NavItem[] = [
       { label: "INTELLIGENCE", href: "/intelligence", code: "06" },
     ],
   },
-  {
-    label: "CREDENTIALS",
-    href: "/certifications",
-    code: "07",
-    children: [
-      { label: "CERTIFICATIONS", href: "/certifications", code: "07" },
-      { label: "EDUCATION", href: "/certifications#study", code: "08" },
-      { label: "PROOF", href: "/proof", code: "09" },
-    ],
-  },
+  { label: "SERVICES", href: "/services", code: "20" },
+  { label: "ABOUT", href: "/about", code: "10" },
+  { label: "CREDENTIALS", href: "/credentials", code: "07" },
+  { label: "CONTACT", href: "/contact", code: "16" },
+];
+
+/** Secondary destinations — carried by the MENU overlay and the footer index. */
+export const secondaryNav: NavItem[] = [
+  { label: "LABORATORY", href: "/lab", code: "11" },
   {
     label: "OPPORTUNITIES",
     href: "/opportunities",
@@ -91,8 +90,9 @@ export const primaryNav: NavItem[] = [
       { label: "PARTNERSHIPS", href: "/opportunities/partnerships", code: "15" },
     ],
   },
-  { label: "ABOUT", href: "/about", code: "10" },
-  { label: "CONTACT", href: "/contact", code: "16" },
+  { label: "TESTIMONIALS", href: "/testimonials", code: "21" },
+  { label: "CV", href: "/cv", code: "18" },
+  { label: "LINKS", href: "/links", code: "19" },
 ];
 
 /** The professional action, kept visually distinct from navigation. */
@@ -109,10 +109,10 @@ export const allRoutes: NavLeaf[] = [
   ...primaryNav.flatMap((item) =>
     item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
   ),
+  ...secondaryNav.flatMap((item) =>
+    item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
+  ),
   { label: workRoute.label, href: workRoute.href, code: workRoute.code },
-  { label: "CV", href: "/cv", code: "18" },
-  { label: "LINKS", href: "/links", code: "19" },
-  { label: "TESTIMONIALS", href: "/testimonials", code: "21" },
 ];
 
 /** Deduplicated route index (a group landing href can repeat as a child). */

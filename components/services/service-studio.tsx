@@ -111,12 +111,12 @@ function ServiceDetail({ bundle }: { bundle: ServiceBundle }) {
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           {projects.length > 0 && (
             <div>
-              <p className="label-mono text-faint">RELEVANT BUILDS</p>
+              <p className="label-mono text-faint">RELEVANT WORK</p>
               <div className="mt-4 space-y-px bg-line">
                 {projects.map((p) => (
                   <Link
                     key={p.id}
-                    href={`/builds/${p.id}`}
+                    href={`/work/${p.id}`}
                     className="card-depth group flex h-full flex-col justify-between border border-line bg-background p-4"
                   >
                     <span className="flex items-baseline justify-between gap-3">
@@ -128,7 +128,7 @@ function ServiceDetail({ bundle }: { bundle: ServiceBundle }) {
                       {p.evidenceLabel}
                     </span>
                     <span className="label-mono mt-4 block text-signal transition-transform duration-300 group-hover:translate-x-1">
-                      OPEN BUILD →
+                      OPEN PROJECT →
                     </span>
                   </Link>
                 ))}

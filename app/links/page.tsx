@@ -28,7 +28,7 @@ const ROWS: LinkRow[] = [
   { code: "02", label: "LINKEDIN", href: site.links.linkedin, kind: "external", meta: "LINKEDIN.COM" },
   { code: "03", label: "EMAIL", href: site.links.email, kind: "mail", meta: "DIRECT" },
   { code: "04", label: "CV", href: "/cv", kind: "internal", meta: "PRINT-READY" },
-  { code: "05", label: "BUILDS", href: "/builds", kind: "internal", meta: "ENGINEERING" },
+  { code: "05", label: "WORK", href: "/work", kind: "internal", meta: "ENGINEERING" },
   { code: "06", label: "RESEARCH", href: "/research", kind: "internal", meta: "EVIDENCE" },
   { code: "07", label: "LAB", href: "/lab", kind: "internal", meta: "INSTRUMENTS" },
 ];

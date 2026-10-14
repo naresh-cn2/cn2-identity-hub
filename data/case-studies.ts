@@ -5,7 +5,7 @@ import { flagshipProjects, type FlagshipProject } from "./projects";
  *
  * Case studies are the deep technical proof for the flagship builds. This module
  * introduces NO new content — it is a thin projection over `flagshipProjects`,
- * the same single source of truth that powers /builds. /builds/[project] is the
+ * the same single source of truth that powers /work. /work/[project] is the
  * product overview; /case-studies/[project] is the full evidence chain rendered
  * by the CaseStudy component. Keeping both derived from one dataset is what
  * prevents the two routes from drifting apart.

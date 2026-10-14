@@ -4,7 +4,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ChainVisual from "@/components/case-study/chain-visual";
-import ProjectMark from "@/components/builds/project-mark";
+import ProjectMark from "@/components/work/project-mark";
 import { caseStudies } from "@/data/case-studies";
 import { site } from "@/data/site";
 
@@ -51,10 +51,10 @@ export default function CaseStudiesPage() {
           <Reveal delay={280}>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/builds"
+                href="/work"
                 className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-research hover:text-research"
               >
-                THE BUILDS →
+                THE WORK →
               </Link>
               <Link
                 href="/research"
@@ -191,7 +191,7 @@ export default function CaseStudiesPage() {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   BUILDS →

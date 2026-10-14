@@ -53,12 +53,12 @@ export default function IdentityHero() {
             <Reveal delay={380}>
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Magnetic
-                  href="/builds"
+                  href="/work"
                   strength={5}
                   className="label-mono bg-signal px-7 py-4 text-background transition-colors hover:bg-foreground hover:text-background"
                   ariaLabel="Explore builds"
                 >
-                  EXPLORE BUILDS →
+                  EXPLORE WORK →
                 </Magnetic>
                 <Magnetic
                   href="/research"
@@ -109,7 +109,7 @@ export default function IdentityHero() {
                   ACT I — THE HUMAN · {site.system}
                 </span>
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="num-mono text-[10px] text-faint transition-colors hover:text-signal"
                 >
                   SCROLL — ACT II / THE FIELD ↓

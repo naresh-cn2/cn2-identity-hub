@@ -4,7 +4,7 @@ import Reveal from "@/components/ui/reveal";
 import Metric from "@/components/ui/metric";
 import ChapterNav from "./chapter-nav";
 import ArchFlow from "@/components/viz/arch-flow";
-import ArchSchematic from "@/components/builds/arch-schematic";
+import ArchSchematic from "@/components/work/arch-schematic";
 import InteractiveLab from "./interactive-lab";
 
 const CHAPTERS = [

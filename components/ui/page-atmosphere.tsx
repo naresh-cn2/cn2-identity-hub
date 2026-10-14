@@ -31,7 +31,7 @@ import { useTheme } from "@/components/providers/theme-provider";
  * at integration — until a page opts in, it keeps its current variant:
  *   schematic — drafting-table blueprint: fine registration grid, a slow
  *               horizontal scan sweep, ruler/measure ticks and rare red
- *               sheet-registration accents (intended for /builds)
+ *               sheet-registration accents (intended for /work)
  *   flow      — data-flow routing: orthogonal lanes with a few slow,
  *               staggered pulses travelling along them (intended for
  *               /services)

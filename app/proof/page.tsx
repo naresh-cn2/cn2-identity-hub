@@ -6,7 +6,7 @@ import PageAtmosphere from '@/components/ui/page-atmosphere';
 import PosterPlate from "@/components/viz/poster-plates";
 import { archiveProjects } from "@/data/archive";
 import { researchEntries } from "@/data/research";
-import { credentials } from "@/data/certifications";
+import { credentials } from "@/data/credentials";
 import { proofStandard, testimonials } from "@/data/proof";
 import { site } from "@/data/site";
 
@@ -274,7 +274,7 @@ export default function ProofPage() {
                                         documented in full on the certifications page.
                                     </p>
                                     <Link
-                                        href="/certifications#study"
+                                        href="/credentials#study"
                                         className="label-mono mt-6 inline-block border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                                     >
                                         SEE THE STUDY RECORD →

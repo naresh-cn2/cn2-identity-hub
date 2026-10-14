@@ -15,7 +15,7 @@ import { capabilityDomains } from "@/data/capabilities";
  * EVIDENCE. Research sits at the centre because every other domain depends on it.
  */
 
-/** Project ids that have a page under /builds. Everything else is external. */
+/** Project ids that have a page under /work. Everything else is external. */
 const BUILD_ROUTES = new Set([
   "apex-quant-engine",
   "automated-trading-os",
@@ -62,7 +62,7 @@ interface Edge {
 
 /** Resolves a project id to a link, or null when there is nothing to open. */
 function projectLink(id: string): ProjectLink | null {
-  if (BUILD_ROUTES.has(id)) return { id, href: `/builds/${id}`, external: false };
+  if (BUILD_ROUTES.has(id)) return { id, href: `/work/${id}`, external: false };
   const external = EXTERNAL_PROJECTS[id];
   if (external) return { id, href: external, external: true };
   return null;

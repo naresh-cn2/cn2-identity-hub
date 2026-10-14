@@ -134,14 +134,14 @@ export default function IntelligencePage() {
                         {flagshipProjects.map((p, i) => (
                             <Reveal key={p.id} delay={i * 70}>
                                 <Link
-                                    href={`/builds/${p.id}`}
+                                    href={`/work/${p.id}`}
                                     className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
                                 >
                                     <span className="num-mono text-xs text-faint">{p.index}</span>
                                     <span className="display mt-3 text-lg">{p.shortTitle}</span>
                                     <span className="mt-3 text-sm leading-relaxed text-muted">{p.thesis}</span>
                                     <span className="label-mono mt-auto pt-6 text-research transition-transform duration-300 group-hover:translate-x-1">
-                                        OPEN BUILD →
+                                        OPEN PROJECT →
                                     </span>
                                 </Link>
                             </Reveal>

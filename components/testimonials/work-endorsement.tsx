@@ -18,7 +18,7 @@ export default function WorkEndorsement({ kind, slug }: { kind: WorkKind; slug: 
     const [item] = getTestimonialsForWork(kind, slug);
     if (!item) return null;
 
-    const href = kind === "project" ? `/builds/${slug}` : `/services/${slug}`;
+    const href = kind === "project" ? `/work/${slug}` : `/services/${slug}`;
     const linkLabel =
         kind === "project" ? "EXPLORE THE PROJECT WORLD →" : "VIEW THE SERVICE →";
 

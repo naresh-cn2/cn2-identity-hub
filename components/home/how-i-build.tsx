@@ -59,7 +59,7 @@ const STAGES: Stage[] = [
     detail:
       "Information-flow guarantees, risk gates and validation belong in the structure. If a rule depends on someone remembering it at the right moment, it is not a control.",
     output: "STRUCTURAL GUARANTEE",
-    href: "/builds/automated-trading-os",
+    href: "/work/automated-trading-os",
     hrefLabel: "EXAMPLE — TRADING OS",
   },
   {
@@ -69,7 +69,7 @@ const STAGES: Stage[] = [
     detail:
       "The build exists to answer the question, not to be impressive. Scope is kept to what the pass condition actually requires.",
     output: "WORKING SYSTEM",
-    href: "/builds/apex-quant-engine",
+    href: "/work/apex-quant-engine",
     hrefLabel: "EXAMPLE — APEX ENGINE",
   },
   {
@@ -79,7 +79,7 @@ const STAGES: Stage[] = [
     detail:
       "Confirmatory tests prove nothing about whether the wrong behaviour is reachable. The useful tests are adversarial: actively attempt the failure you are claiming is impossible.",
     output: "TEST RESULT",
-    href: "/builds/qrsip",
+    href: "/work/qrsip",
     hrefLabel: "EXAMPLE — QRSIP · 352 TESTS",
   },
   {
@@ -109,7 +109,7 @@ const STAGES: Stage[] = [
     detail:
       "Backtest, simulation, self-benchmark, test suite — the label travels with the number. Anything illustrative is marked illustrative, and unfinished work stays visible.",
     output: "INSPECTABLE EVIDENCE",
-    href: "/builds",
+    href: "/work",
     hrefLabel: "THE BUILD ARCHIVE",
   },
 ];

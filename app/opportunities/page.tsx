@@ -35,7 +35,7 @@ const PATHWAYS = [
     evidence: [
       { label: "CV", href: "/cv" },
       { label: "CAPABILITIES", href: "/capabilities" },
-      { label: "BUILDS", href: "/builds" },
+      { label: "WORK", href: "/work" },
     ] satisfies EvidenceLink[],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -97,7 +97,7 @@ const PATHWAYS = [
       "Technical partnerships and product opportunities where quantitative systems and research tooling are central. I work independently and take on partnerships selectively.",
     status: "SELECTIVE",
     evidence: [
-      { label: "BUILDS", href: "/builds" },
+      { label: "WORK", href: "/work" },
       { label: "CASE STUDIES", href: "/case-studies" },
       { label: "ABOUT", href: "/about" },
     ] satisfies EvidenceLink[],
@@ -270,7 +270,7 @@ export default function OpportunitiesPage() {
                   PROOF →
                 </Link>
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   BUILDS →

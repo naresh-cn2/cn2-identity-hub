@@ -10,16 +10,16 @@ import {
   credentialStates,
   credentials,
   studyTracks,
-} from "@/data/certifications";
+} from "@/data/credentials";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Certifications",
+  title: "Credentials",
   description:
     "Education, completed programmes and continuous learning — Bukya Naresh. Internships, courses and certifications across generative AI, quantitative finance, data and software engineering, plus active self-directed study tracks.",
-  alternates: { canonical: "/certifications" },
+  alternates: { canonical: "/credentials" },
   openGraph: {
-    title: "Certifications — Bukya Naresh / CN2.dev",
+    title: "Credentials — Bukya Naresh / CN2.dev",
     description:
       "Completed programmes, issued certificates and self-directed study — each linked to the work it produced.",
   },
@@ -101,7 +101,7 @@ function CredentialConstellation({
   );
 }
 
-export default function CertificationsPage() {
+export default function CredentialsPage() {
   return (
     <>
       <header className="relative overflow-hidden border-b border-line">
@@ -169,7 +169,7 @@ export default function CertificationsPage() {
 
           <div className="mt-12 flex flex-wrap gap-4">
             <Link
-              href="/builds"
+              href="/work"
               className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
             >
               SEE THE PROJECTS →
@@ -260,7 +260,7 @@ export default function CertificationsPage() {
                   CAPABILITIES →
                 </Link>
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   BUILDS →

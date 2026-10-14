@@ -34,7 +34,7 @@ function variantFor(path: string): Variant | null {
     if (path.startsWith("/hub")) return null;
     if (path.startsWith("/about")) return null;
     if (path.startsWith("/identity")) return null;
-    if (path.startsWith("/builds")) return "schematic";
+    if (path.startsWith("/work")) return "schematic";
     if (path.startsWith("/case-studies")) return "field";
     if (path.startsWith("/research")) return "lattice";
     if (path.startsWith("/articles")) return "motes";

@@ -160,7 +160,7 @@ export default function ResearchArchive({ entries }: { entries: ResearchEntry[] 
                       {build && (
                         <p className="label-mono text-faint">
                           EVIDENCE SOURCE —{" "}
-                          <Link href={`/builds/${build.id}`} className="link-line text-research">
+                          <Link href={`/work/${build.id}`} className="link-line text-research">
                             {build.shortTitle}
                           </Link>
                         </p>

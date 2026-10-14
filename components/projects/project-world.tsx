@@ -325,7 +325,7 @@ export default function ProjectWorld({ project }: { project: ArchiveProject }) {
                   return (
                     <Reveal key={rel.id} delay={i * 80}>
                       <Link
-                        href={`/builds/${rel.id}`}
+                        href={`/work/${rel.id}`}
                         className="card-depth group flex h-full flex-col border border-line bg-surface p-6 transition-colors hover:border-signal/60 md:p-7"
                       >
                         <p className="label-mono text-faint">{target.status}</p>
@@ -350,7 +350,7 @@ export default function ProjectWorld({ project }: { project: ArchiveProject }) {
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/builds"
+                href="/work"
                 className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
                 ← ALL PROJECTS

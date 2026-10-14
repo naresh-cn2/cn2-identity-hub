@@ -192,7 +192,7 @@ export default function LabPage() {
                 backtest record rather than a mock dataset.
               </p>
               <Link
-                href="/builds/apex-quant-engine"
+                href="/work/apex-quant-engine"
                 className="label-mono mt-5 inline-block border border-line-strong px-5 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
                 OPEN BACKTEST EXPLORER →
@@ -236,7 +236,7 @@ export default function LabPage() {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   BUILDS →

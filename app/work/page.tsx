@@ -3,25 +3,25 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
-import BuildsArchive from "@/components/builds/builds-archive";
-import HeroTopology from "@/components/builds/hero-topology";
+import BuildsArchive from "@/components/work/work-archive";
+import HeroTopology from "@/components/work/hero-topology";
 import { archiveProjects } from "@/data/archive";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Builds",
+  title: "Work",
   description:
-    "Quantitative systems, market-data infrastructure, research tooling and financial data engines — each project documented from the problem through the implementation to its current status.",
-  alternates: { canonical: "/builds" },
+    "Products, projects and engineering — quantitative systems, market-data infrastructure, research tooling and financial data engines, each documented from the problem through the architecture and implementation to its current status.",
+  alternates: { canonical: "/work" },
   openGraph: {
-    title: "Builds — Bukya Naresh / CN2.dev",
+    title: "Work — Bukya Naresh / CN2.dev",
     description:
-      "Quantitative systems, market-data infrastructure, research tooling and financial data engines, documented project by project.",
+      "Products, projects and engineering — quantitative systems, market-data infrastructure, research tooling and financial data engines, documented project by project.",
   },
 };
 
-export default function BuildsPage() {
+export default function WorkPage() {
   const flagshipCount = archiveProjects.filter((p) => p.tier === 1).length;
 
   return (
@@ -34,7 +34,7 @@ export default function BuildsPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 01 — BUILDS
+                SECTION <span className="text-signal">/</span> 01 — WORK
               </p>
               <p className="label-mono text-faint">
                 {archiveProjects.length} SYSTEMS · {flagshipCount} FLAGSHIP
@@ -42,14 +42,18 @@ export default function BuildsPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]">IDEAS INTO WORKING SYSTEMS.</KineticText>
+            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]">WORK</KineticText>
           </Reveal>
-          <Reveal delay={200}>
+          <Reveal delay={160}>
+            <p className="display-condensed mt-4 text-2xl text-foreground md:text-3xl">
+              PRODUCTS. PROJECTS. ENGINEERING.
+            </p>
+          </Reveal>
+          <Reveal delay={220}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Explore my work across quantitative finance, algorithmic research, data
-              infrastructure, software engineering, and technical automation. Each project
-              documents the problem, the approach, the implementation, and the progress made so
-              far.
+              Explore the products, software systems, and technical work I&apos;m developing —
+              from the original problem to the architecture, implementation, experiments, and
+              evidence.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -101,7 +105,7 @@ export default function BuildsPage() {
       </section>
 
       {/* ---- the archive ---- */}
-      <section aria-label="Build archive" className="py-16 md:py-24">
+      <section aria-label="Project archive" className="py-16 md:py-24">
         <BuildsArchive projects={archiveProjects} />
       </section>
 
@@ -154,7 +158,7 @@ export default function BuildsPage() {
                             href={item.href}
                             className="link-line label-mono mt-4 inline-block text-[10px] text-foreground transition-colors hover:text-signal"
                           >
-                            OPEN BUILD →
+                            OPEN PROJECT →
                           </Link>
                         )}
                       </div>

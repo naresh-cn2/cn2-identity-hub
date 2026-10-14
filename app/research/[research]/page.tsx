@@ -151,7 +151,7 @@ export default async function ResearchEntryPage({
                   <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">{build.thesis}</p>
                   <div className="mt-6 flex flex-wrap gap-4">
                     <Link
-                      href={`/builds/${build.id}`}
+                      href={`/work/${build.id}`}
                       className="label-mono border border-line-strong px-5 py-2.5 text-foreground transition-colors hover:border-signal hover:text-signal"
                     >
                       OPEN CASE STUDY →
@@ -276,10 +276,10 @@ export default async function ResearchEntryPage({
               ← RESEARCH ARCHIVE
             </Link>
             <Link
-              href="/builds"
+              href="/work"
               className="link-line label-mono text-xs text-muted hover:text-signal"
             >
-              THE BUILDS BEHIND IT →
+              THE WORK BEHIND IT →
             </Link>
             <Link
               href="/capabilities"

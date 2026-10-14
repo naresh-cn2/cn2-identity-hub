@@ -193,7 +193,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               {projects.map((p, i) => (
                 <Reveal key={p.id} delay={i * 70}>
                   <Link
-                    href={`/builds/${p.id}`}
+                    href={`/work/${p.id}`}
                     className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
                   >
                     <div className="flex items-baseline justify-between">
@@ -206,7 +206,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                       {p.evidenceLabel}
                     </span>
                     <span className="label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1">
-                      OPEN BUILD →
+                      OPEN PROJECT →
                     </span>
                   </Link>
                 </Reveal>

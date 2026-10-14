@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import ProjectOverview from "@/components/builds/project-overview";
-import TierTwoCaseStudy from "@/components/builds/tier-two-case-study";
+import ProjectOverview from "@/components/work/project-overview";
+import TierTwoCaseStudy from "@/components/work/tier-two-case-study";
 import ProjectWorld from "@/components/projects/project-world";
 import Reveal from "@/components/ui/reveal";
 import { archiveProjects, getArchiveProject, getFlagship } from "@/data/archive";
@@ -26,7 +26,7 @@ export async function generateMetadata({
   return {
     title: project.title,
     description: project.thesis,
-    alternates: { canonical: `/builds/${project.id}` },
+    alternates: { canonical: `/work/${project.id}` },
     openGraph: {
       title: `${project.title} — ${site.name} / ${site.identity}`,
       description: project.thesis,
@@ -54,8 +54,8 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
               HOME
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/builds" className="transition-colors hover:text-foreground">
-              BUILDS
+            <Link href="/work" className="transition-colors hover:text-foreground">
+              WORK
             </Link>
             <span aria-hidden="true">/</span>
             <span className="text-foreground">{record.shortTitle}</span>
@@ -108,7 +108,7 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/builds"
+                href="/work"
                 className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
                 ← ALL PROJECTS

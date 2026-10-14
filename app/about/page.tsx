@@ -114,10 +114,10 @@ export default function AboutPage() {
                 HOW I THINK ↓
               </a>
               <Link
-                href="/builds"
+                href="/work"
                 className="label-mono border border-white/25 px-4 py-2.5 text-[10px] text-white/85 transition-colors duration-300 hover:border-white/60 hover:text-white"
               >
-                EXPLORE BUILDS ↗
+                EXPLORE WORK ↗
               </Link>
             </div>
 

@@ -21,7 +21,7 @@ $btnRe = '<a class="corner-ticks group mt-9 inline-flex items-center gap-4 borde
 $btns = [regex]::Matches($html, $btnRe)
 Check "8 rendered action buttons" ($btns.Count -eq 8)
 $want = @{
-  "/builds"="ENTER BUILDS"; "/certifications"="EXPLORE CREDENTIALS"; "/services"="EXPLORE SERVICES";
+  "/work"="ENTER WORK"; "/credentials"="EXPLORE CREDENTIALS"; "/services"="EXPLORE SERVICES";
   "/lab"="ENTER THE LAB"; "/research"="EXPLORE RESEARCH"; "/opportunities"="EXPLORE OPPORTUNITIES";
   "/about"="GET TO KNOW ME"; "/contact"="GET IN TOUCH"
 }
@@ -31,9 +31,14 @@ foreach ($k in $want.Keys) { Check "button $k => $($want[$k])" (($got[$k] -eq $w
 # ---- region labelling + titles ----
 $regions = [regex]::Matches($html, '<section aria-labelledby="dest-(\d\d)"')
 Check "8 regions dest-01..08" (($regions | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique).Count -eq 8)
-foreach ($t in @('BUILDS','CREDENTIALS','SERVICES','LABORATORY','RESEARCH','OPPORTUNITIES','ABOUT ME','LET&#x27;S CONNECT')) {
+foreach ($t in @('WORK','CREDENTIALS','SERVICES','LABORATORY','RESEARCH','OPPORTUNITIES','ABOUT ME','LET&#x27;S CONNECT')) {
   Check "title contains $t" ($html.Contains(">$t<"))
 }
+
+# ---- audience pathways (IA v4) ----
+Check "pathways: START HERE eyebrow" ($html.Contains('START HERE'))
+Check "pathways: WHAT BRINGS YOU HERE" ($html.Contains('WHAT BRINGS YOU HERE'))
+Check "pathways: four pathway actions" ($html.Contains('EXPLORE CAPABILITIES') -and $html.Contains('EXPLORE PROJECTS') -and $html.Contains('EXPLORE RESEARCH'))
 
 # ---- counters removed ----
 Check "no 'OF 08'" (-not $html.Contains('OF 08'))
@@ -47,7 +52,7 @@ Check "return to entrance removed" (-not $html.Contains('RETURN TO ENTRANCE'))
 Check "bottom-left back on hub" ($html.Contains('Go back to the previous page'))
 
 # ---- eyebrow: route label, no numbering ----
-Check "eyebrow: DESTINATION /builds" ($html -match 'DESTINATION</span> <!-- -->/builds')
+Check "eyebrow: DESTINATION /work" ($html -match 'DESTINATION</span> <!-- -->/work')
 Check "no 'NN OF' eyebrow" (-not ($html -match 'OF 0?8')) 
 Check "8 route eyebrows" (([regex]::Matches($html, 'DESTINATION</span> <!-- -->/[a-z-]+')).Count -eq 8)
 

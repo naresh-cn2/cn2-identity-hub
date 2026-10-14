@@ -29,7 +29,7 @@ export function RecordSpine() {
       />
       {[
         { y: 80, label: "STUDY RECORD", sub: "SELF-DIRECTED TRACKS" },
-        { y: 160, label: "SYSTEMS BUILT", sub: "BUILDS · REPOSITORIES · METRICS" },
+        { y: 160, label: "SYSTEMS BUILT", sub: "PROJECTS · REPOSITORIES · METRICS" },
         { y: 240, label: "PRINT-READY CV", sub: "THE FULL CAREER RECORD" },
       ].map((n) => (
         <g key={n.label}>

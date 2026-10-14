@@ -133,14 +133,14 @@ export default function PartnershipsPage() {
             {flagshipProjects.map((p, i) => (
               <Reveal key={p.id} delay={i * 70}>
                 <Link
-                  href={`/builds/${p.id}`}
+                  href={`/work/${p.id}`}
                   className="card-depth group flex h-full flex-col border border-line bg-background p-6"
                 >
                   <span className="num-mono text-xs text-faint">{p.index}</span>
                   <span className="display mt-3 text-lg">{p.shortTitle}</span>
                   <p className="mt-3 text-sm leading-relaxed text-muted">{p.thesis}</p>
                   <span className="label-mono mt-auto pt-6 text-signal transition-transform duration-300 group-hover:translate-x-1">
-                    OPEN BUILD →
+                    OPEN PROJECT →
                   </span>
                 </Link>
               </Reveal>

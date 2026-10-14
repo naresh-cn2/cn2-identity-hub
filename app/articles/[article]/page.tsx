@@ -183,7 +183,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ articl
                             {build.title}
                           </h2>
                           <Link
-                            href={`/builds/${build.id}`}
+                            href={`/work/${build.id}`}
                             className="link-line label-mono mt-3 inline-block text-xs text-signal"
                           >
                             CASE STUDY →
@@ -240,7 +240,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ articl
               <Link href="/research" className="link-line label-mono text-xs text-muted hover:text-research">
                 RESEARCH →
               </Link>
-              <Link href="/builds" className="link-line label-mono text-xs text-muted hover:text-signal">
+              <Link href="/work" className="link-line label-mono text-xs text-muted hover:text-signal">
                 BUILDS →
               </Link>
               <a

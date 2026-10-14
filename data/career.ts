@@ -59,7 +59,7 @@ export const career = {
       scope:
         "Complete research-to-execution pipeline: data engine, strategy engine, risk engine, portfolio allocation, deterministic backtesting, paper execution.",
       metrics: "+570.18% net simulated ROI (master-fund backtest) · 5,867 trades · 44.50s backtest",
-      href: "/builds/apex-quant-engine",
+      href: "/work/apex-quant-engine",
     },
     {
       project: "AUTOMATED TRADING OS",
@@ -67,7 +67,7 @@ export const career = {
       scope:
         "Multi-timeframe execution architecture with verified structural controls from HTF context to order construction.",
       metrics: "1% risk cap · 1:4 R:R floor · full cost modelling",
-      href: "/builds/automated-trading-os",
+      href: "/work/automated-trading-os",
     },
     {
       project: "QUANT MARKET DATA REPLAY",
@@ -75,7 +75,7 @@ export const career = {
       scope:
         "Point-in-time safe market-data infrastructure with deterministic replay and adversarial testing.",
       metrics: "9-stage pipeline · nanosecond timestamps · SQLite WAL",
-      href: "/builds/market-data-replay",
+      href: "/work/market-data-replay",
     },
     {
       project: "QRSIP",
@@ -83,7 +83,7 @@ export const career = {
       scope:
         "Research governance platform: hypothesis → experiment → verification → artifact → report → promotion.",
       metrics: "352 tests · deterministic fixtures · CI security validation",
-      href: "/builds/qrsip",
+      href: "/work/qrsip",
     },
     {
       project: "BILLING DATA GATEWAY",

@@ -15,7 +15,7 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | Destination | What it is |
 | --- | --- |
 | `/hub` | Headquarters — the master index of every destination |
-| `/builds` | Project showcase stack; each build opens a **project world** (`/builds/<project>`) with architecture, evidence, limitations and related research |
+| `/work` | WORK — the project catalogue; each project opens its own **world** (`/work/<project>`) with architecture, evidence, limitations and related research |
 | `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
 | `/research` | Research entries with stated method, findings and limitations |
 | `/articles` | Engineering articles |
@@ -23,7 +23,7 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | `/services` | Service offerings anchored to capabilities and proven by projects |
 | `/lab` | Interactive tools — risk calculator, strategy viewer, market replay, experiments |
 | `/intelligence` | Knowledge graph connecting projects, research and capabilities |
-| `/certifications` | Issued certificates with issuer, IDs, dates and verification URLs |
+| `/credentials` | Issued certificates with issuer, IDs, dates and verification URLs |
 | `/opportunities` | Career, freelance, collaboration and partnership pathways |
 | `/testimonials` | Reviews & testimonials — consented feedback with per-review ratings |
 | `/about`, `/identity`, `/cv`, `/proof`, `/links`, `/contact` | Profile, record and contact surfaces |
@@ -118,7 +118,7 @@ GitHub Actions (`.github/workflows/ci.yml`) runs lint → type-check → product
 app/                     App Router routes (see the route table above)
   api/testimonials/      Reviews intake — validation, rate limiting, publishing
 components/
-  builds/  projects/     Showcase stack, project worlds, architecture explorer
+  work/  projects/        WORK catalogue, project worlds, architecture explorer
   case-study/  viz/      Evidence instruments, charts, schematics, canvas scenes
   hub/  testimonials/    Headquarters sections; review form, grid, endorsements
   layout/  ui/           Navbar, footer, ambience layer; reveal, atmosphere

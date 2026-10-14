@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import CaseStudy from "@/components/case-study/case-study";
-import FlagshipInstrument from "@/components/builds/flagship-instrument";
+import FlagshipInstrument from "@/components/work/flagship-instrument";
 import Reveal from "@/components/ui/reveal";
 import { caseStudies, getCaseStudy } from "@/data/case-studies";
 import { researchEntries } from "@/data/research";
@@ -103,7 +103,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ proj
                             <p className="label-mono text-[10px] text-faint">← PREVIOUS STUDY</p>
                             <p className="display mt-3 text-lg text-foreground group-hover:text-signal">{prev.shortTitle}</p>
                         </Link>
-                        <Link href={`/builds/${study.id}`} className="card-depth group border border-transparent bg-background p-6 transition-colors hover:bg-surface">
+                        <Link href={`/work/${study.id}`} className="card-depth group border border-transparent bg-background p-6 transition-colors hover:bg-surface">
                             <p className="label-mono text-[10px] text-faint">PRODUCT OVERVIEW</p>
                             <p className="display mt-3 text-lg text-foreground group-hover:text-signal">{study.shortTitle} — BUILD</p>
                         </Link>

@@ -32,17 +32,17 @@ export interface HubDestination {
 export const hubDestinations: HubDestination[] = [
   {
     code: "01",
-    label: "BUILDS",
-    href: "/builds",
+    label: "WORK",
+    href: "/work",
     blurb:
       "Explore the software, quantitative systems, and technical infrastructure I'm building.",
-    action: "ENTER BUILDS",
+    action: "ENTER WORK",
     caption: "ARCHITECTURE",
   },
   {
     code: "02",
     label: "CREDENTIALS",
-    href: "/certifications",
+    href: "/credentials",
     blurb:
       "Education, certifications, and self-directed learning that shape my technical development.",
     action: "EXPLORE CREDENTIALS",
@@ -116,4 +116,67 @@ export const hubIndex: { label: string; href: string }[] = [
   { label: "CV", href: "/cv" },
   { label: "LINKS", href: "/links" },
   { label: "TESTIMONIALS", href: "/testimonials" },
+];
+
+export interface HubPathway {
+  /** Pathway number. */
+  code: string;
+  /** The visitor's own words, as the headline. */
+  title: string;
+  /** Who this pathway serves. */
+  audience: string;
+  /** The real destination route. */
+  href: string;
+  /** The action label. */
+  action: string;
+  /** What the visitor finds by following it. */
+  blurb: string;
+}
+
+/**
+ * "What brings you here?" — audience pathways.
+ *
+ * Four large routes into the site, one per audience the headquarters serves:
+ * employers, clients, technical reviewers and collaborators. They complement
+ * the eight destination sections; they never replace them. Every card links
+ * to a real route, and none of them promise work, timelines or results that
+ * cannot be shown on the destination itself.
+ */
+export const hubPathways: HubPathway[] = [
+  {
+    code: "01",
+    title: "I'M HIRING",
+    audience: "RECRUITERS · HIRING MANAGERS · EMPLOYERS",
+    href: "/capabilities",
+    action: "EXPLORE CAPABILITIES",
+    blurb:
+      "What I can do, the work that demonstrates it, the credentials behind it, and the direct route to a conversation about a role.",
+  },
+  {
+    code: "02",
+    title: "I NEED SOMETHING BUILT",
+    audience: "BUSINESSES · FOUNDERS · FREELANCE CLIENTS",
+    href: "/services",
+    action: "EXPLORE SERVICES",
+    blurb:
+      "The problems I can help solve, what I can genuinely deliver, how I work, and a straightforward way to describe your project.",
+  },
+  {
+    code: "03",
+    title: "I WANT TO EXPLORE YOUR WORK",
+    audience: "DEVELOPERS · TECHNICAL REVIEWERS",
+    href: "/work",
+    action: "EXPLORE PROJECTS",
+    blurb:
+      "Products and project worlds — architecture, source, tests, engineering decisions, and the evidence behind each system.",
+  },
+  {
+    code: "04",
+    title: "I WANT TO COLLABORATE",
+    audience: "RESEARCHERS · DEVELOPERS · STUDENTS",
+    href: "/research",
+    action: "EXPLORE RESEARCH",
+    blurb:
+      "Research interests, documented experiments and findings, and the openings where a shared idea could begin.",
+  },
 ];

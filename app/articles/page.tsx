@@ -229,7 +229,7 @@ export default function ArticlesPage() {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/builds"
+                  href="/work"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   BUILDS →

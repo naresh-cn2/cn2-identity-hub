@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
-import ProjectMark from "@/components/builds/project-mark";
+import ProjectMark from "@/components/work/project-mark";
 import { capabilities, type CapabilityDomain } from "@/data/capabilities";
 import { flagshipProjects } from "@/data/projects";
 import { researchEntries } from "@/data/research";
 import { labModules, engagementAreas } from "@/data/lab";
-import { credentials, studyTracks } from "@/data/certifications";
+import { credentials, studyTracks } from "@/data/credentials";
 import { equitySeries, mulberry32, toPath } from "@/lib/series";
 import { site, utilityLinks } from "@/data/site";
 
@@ -182,10 +182,10 @@ export function CurrentFocus() {
                 ))}
               </ul>
               <Link
-                href="/builds"
+                href="/work"
                 className="link-line label-mono mt-auto inline-block pt-6 text-[10px] text-muted hover:text-signal"
               >
-                ALL BUILDS →
+                ALL WORK →
               </Link>
             </div>
           </Reveal>
@@ -226,7 +226,7 @@ export function CurrentFocus() {
                 ))}
               </ul>
               <Link
-                href="/certifications#study"
+                href="/credentials#study"
                 className="link-line label-mono mt-auto inline-block pt-6 text-[10px] text-muted hover:text-foreground"
               >
                 STUDY RECORD →
@@ -325,7 +325,7 @@ export function WhatIDo() {
 }
 
 /* ------------------------------------------------------------------ *
- * ACT III — SELECTED BUILDS
+ * ACT III — SELECTED WORK
  * ------------------------------------------------------------------ */
 
 export function SelectedBuilds() {
@@ -336,8 +336,8 @@ export function SelectedBuilds() {
           <p className="label-mono text-muted">
             ACT III <span className="text-signal">/</span> THE WORK
           </p>
-          <Link href="/builds" className="link-line label-mono text-[10px] text-muted hover:text-signal">
-            VIEW ALL BUILDS →
+          <Link href="/work" className="link-line label-mono text-[10px] text-muted hover:text-signal">
+            VIEW ALL WORK →
           </Link>
         </div>
         <h2 className="display mt-6 text-[clamp(2rem,5.5vw,4rem)]">SELECTED QUANT WORK</h2>
@@ -377,7 +377,7 @@ export function SelectedBuilds() {
                     href={p.route}
                     className="label-mono border border-line-strong px-5 py-2.5 text-foreground transition-colors hover:border-signal hover:text-signal"
                   >
-                    OPEN BUILD →
+                    OPEN PROJECT →
                   </Link>
                   <Link
                     href={`/case-studies/${p.id}`}
@@ -543,7 +543,7 @@ export function CredentialsTeaser() {
               I&apos;m running now — each one linked to the system it produced.
             </p>
             <Link
-              href="/certifications"
+              href="/credentials"
               className="label-mono mt-8 inline-block border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
             >
               VIEW CERTIFICATIONS →

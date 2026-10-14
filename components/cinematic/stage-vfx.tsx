@@ -16,12 +16,12 @@ import { useTheme } from "@/components/providers/theme-provider";
  * motif per route ("different style").
  *
  * Motifs (10-20s cycles, matching the slow-motion home pass):
- *   ring    — portal ring with a light sweep orbiting every 14s   /builds
+ *   ring    — portal ring with a light sweep orbiting every 14s   /work
  *   chain   — serpentine rail with energy pulses                  /case-studies
  *   stars   — rotating projected starfield with rare meteors      /research, /testimonials
  *   horizon — perspective grid floor scrolling toward the viewer  /proof, /cv
  *   wave    — layered 3D oscilloscope ribbon                      /services, /lab
- *   orbit   — armillary rings with depth-shaded travellers        /contact, /links, /certifications
+ *   orbit   — armillary rings with depth-shaded travellers        /contact, /links, /credentials
  *   paths   — branching light routes with flowing pulses          /opportunities, /work-with-me
  *   lattice — bobbing constellation mesh with a drifting shimmer  /capabilities, /intelligence
  *   dust    — volumetric light shaft over dense drifting dust     /articles, /how-i-work, default
@@ -53,7 +53,7 @@ function motifFor(path: string): StageMotif | null {
     if (path.startsWith("/hub")) return null;
     if (path.startsWith("/about")) return null;
     if (path.startsWith("/identity")) return null;
-    if (path.startsWith("/builds")) return "ring";
+    if (path.startsWith("/work")) return "ring";
     if (path.startsWith("/case-studies")) return "chain";
     if (path.startsWith("/research")) return "stars";
     if (path.startsWith("/testimonials")) return "stars";
@@ -62,7 +62,7 @@ function motifFor(path: string): StageMotif | null {
     if (path.startsWith("/services")) return "wave";
     if (path.startsWith("/lab")) return "wave";
     if (path.startsWith("/contact") || path.startsWith("/links")) return "orbit";
-    if (path.startsWith("/certifications")) return "orbit";
+    if (path.startsWith("/credentials")) return "orbit";
     if (path.startsWith("/opportunities")) return "paths";
     if (path.startsWith("/work-with-me")) return "paths";
     if (path.startsWith("/capabilities") || path.startsWith("/intelligence")) return "lattice";

@@ -4,15 +4,15 @@ $base = $Base
 $pass = @(); $fail = @()
 function Check($name, $cond) { if ($cond) { $script:pass += $name } else { $script:fail += $name } }
 
-# ============ LEVEL 1: /builds showcases ============
-$builds = (Invoke-WebRequest -Uri "$base/builds" -UseBasicParsing).Content
+# ============ LEVEL 1: /work showcases ============
+$builds = (Invoke-WebRequest -Uri "$base/work" -UseBasicParsing).Content
 
 $buildsR = [regex]::Replace($builds, '<script[\s\S]*?</script>', '')
 Check "builds: ENTER PROJECT WORLD x8" (([regex]::Matches($buildsR, 'ENTER PROJECT WORLD')).Count -eq 8)
 Check "builds: no OPEN CASE STUDY" (-not $builds.Contains('OPEN CASE STUDY'))
 Check "builds: no OPEN BUILD RECORD" (-not $builds.Contains('OPEN BUILD RECORD'))
-Check "builds: filter bar kept" ($builds.Contains('Filter builds by category') -and $builds.Contains('ALL PROJECTS'))
-Check "builds: title links to crypto world" ($builds -match '<h2 class="display[^"]*"><a class="[^"]*" href="/builds/crypto-platform"')
+Check "builds: filter bar kept" ($builds.Contains('Filter projects by category') -and $builds.Contains('ALL PROJECTS'))
+Check "builds: title links to crypto world" ($builds -match '<h2 class="display[^"]*"><a class="[^"]*" href="/work/crypto-platform"')
 Check "builds: crypto signature" ($builds -match 'SIGNATURE / STATE PIPELINE')
 Check "builds: billing signature" ($builds -match 'SIGNATURE / NORMALIZATION FLOW')
 Check "builds: costintel signature" ($builds -match 'SIGNATURE / RECONCILIATION FIELD')
@@ -24,8 +24,8 @@ Check "builds: tier-2 scene labelled ILLUSTRATIVE" ($builds -match 'ILLUSTRATIVE
 Check "builds: THE RECORD preserved" ($builds -match 'THE RECORD')
 Check "builds: hero counter removed" (-not ($builds -match 'SYSTEMS ARCHIVED'))
 
-# ============ LEVEL 2: /builds/crypto-platform world ============
-$world = (Invoke-WebRequest -Uri "$base/builds/crypto-platform" -UseBasicParsing).Content
+# ============ LEVEL 2: /work/crypto-platform world ============
+$world = (Invoke-WebRequest -Uri "$base/work/crypto-platform" -UseBasicParsing).Content
 
 Check "world: PROJECT WORLD eyebrow" ($world -match 'PROJECT WORLD[\s\S]{0,60}text-signal">/</span>')
 Check "world: index 08" ($world -match 'text-signal">/</span>[\s\S]{0,40}08')
@@ -71,21 +71,21 @@ Check "doc: section + artifacts" ($world -match 'id="documentation"')
 # related work (outward knowledge graph) - count rendered HTML only, not RSC payload
 $worldR = [regex]::Replace($world, '<script[\s\S]*?</script>', '')
 Check "related: exactly 3 cards" (([regex]::Matches($worldR, 'ENTER ITS WORLD')).Count -eq 3)
-foreach ($r in @('/builds/forex-platform','/builds/apex-quant-engine','/builds/market-data-replay')) {
+foreach ($r in @('/work/forex-platform','/work/apex-quant-engine','/work/market-data-replay')) {
   Check "related: $r" ($world.Contains("href=`"$r`""))
 }
 Check "related: reasons stated" ($world -match 'methodology twin')
 Check "world: entrance signature" ($world -match 'SIGNATURE / STATE PIPELINE')
 Check "world: atmosphere canvas" (([regex]::Matches($world, '<canvas')).Count -ge 1)
-Check "world: back to all projects" ($world -match 'href="/builds"[^>]*>\s*[^<]*ALL PROJECTS')
+Check "world: back to all projects" ($world -match 'href="/work"[^>]*>\s*[^<]*ALL PROJECTS')
 
 # ============ REGRESSIONS: legacy pages untouched ============
-$billing = (Invoke-WebRequest -Uri "$base/builds/billing-data-gateway" -UseBasicParsing).Content
+$billing = (Invoke-WebRequest -Uri "$base/work/billing-data-gateway" -UseBasicParsing).Content
 Check "regress: billing keeps BUILD RECORD page" ($billing.Contains('BUILD RECORD') -and $billing.Contains('SELF-BENCHMARK'))
 Check "regress: billing chapter nav" ($billing.Contains('aria-label="Case study chapters"'))
 Check "regress: billing has no world CTA" (-not $billing.Contains('EXPLORE ARCHITECTURE'))
 
-$apex = (Invoke-WebRequest -Uri "$base/builds/apex-quant-engine" -UseBasicParsing).Content
+$apex = (Invoke-WebRequest -Uri "$base/work/apex-quant-engine" -UseBasicParsing).Content
 Check "regress: apex keeps instrument" ($apex.Contains('INSTRUMENT / EQUITY SURFACE'))
 Check "regress: apex case study CTA" ($apex.Contains('/case-studies/apex-quant-engine'))
 Check "regress: apex has no world CTA" (-not $apex.Contains('EXPLORE ARCHITECTURE'))
