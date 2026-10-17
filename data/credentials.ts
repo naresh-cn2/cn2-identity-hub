@@ -45,6 +45,23 @@ export interface CredentialRecord {
  */
 export const credentials: CredentialRecord[] = [
   {
+    id: "wqu-data-science-lab",
+    provider: "WorldQuant University",
+    program: "Data Science Lab",
+    state: "COMPLETED",
+    date: "2026-10-15",
+    topics: ["Data science lab — applied, project-based completion programme"],
+    skills: ["Data science applied end to end in a lab setting"],
+    learned:
+      "Working through the lab end to end turned data into an analysis that had to stand on its own evidence — every step producing something inspectable, not just described.",
+    assessment: "Certificate of Completion issued by WorldQuant University.",
+    certificateUrl: "/credentials/worldquant-data-science-lab.pdf",
+    notes: [
+      "The certificate prints the recipient name and the issue date (Oct 15, 2026).",
+      "The issuer's digital badge for this completion is shown in the BADGES section below.",
+    ],
+  },
+  {
     id: "datateach-gen-ai-internship",
     provider: "DataTeach.ai",
     program: "Gen-AI Internship",
@@ -150,6 +167,37 @@ export const credentials: CredentialRecord[] = [
       "Revisiting data structures and algorithms in Python made the everyday implementation choices — when a dict, when a list, when a heap — deliberate instead of habitual.",
     assessment: "Course completion certificate for the Python DSA track.",
     notes: ["The certificate carries an Unstop verification QR."],
+  },
+];
+
+/** Issuer-issued digital badges, displayed as issued (image + printed labels). */
+export interface CredentialBadge {
+  id: string;
+  provider: string;
+  /** The title exactly as the badge prints it. */
+  label: string;
+  /** The status word printed on the badge. */
+  status: string;
+  image: string;
+  imageAlt: string;
+  /** The credential record this badge accompanies, if any. */
+  credentialId?: string;
+}
+
+/**
+ * Digital badges earned alongside issued certificates. The badge artwork and
+ * its printed labels are reproduced as issued; nothing is added or reworded.
+ */
+export const credentialBadges: CredentialBadge[] = [
+  {
+    id: "wqu-data-science-application",
+    provider: "WorldQuant University",
+    label: "Data Science Application",
+    status: "COMPLETED",
+    image: "/images/badge-wqu-data-science-application.png",
+    imageAlt:
+      "WorldQuant University digital badge — Data Science Application, Completed",
+    credentialId: "wqu-data-science-lab",
   },
 ];
 

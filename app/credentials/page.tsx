@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
@@ -7,6 +8,7 @@ import LearningNetwork from "@/components/credentials/learning-network";
 import CredentialTimeline from "@/components/credentials/credential-timeline";
 import LearningMap from "@/components/credentials/learning-map";
 import {
+  credentialBadges,
   credentialStates,
   credentials,
   studyTracks,
@@ -181,6 +183,71 @@ export default function CredentialsPage() {
             >
               CAPABILITY MAP →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- issuer digital badges ---- */}
+      <section aria-label="Issuer digital badges" className="border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <div>
+                <p className="label-mono text-signal">BADGES</p>
+                <h2 className="display mt-4 text-3xl md:text-4xl">ISSUER DIGITAL BADGES</h2>
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
+                  Digital badges issued alongside the certificates, shown exactly as the issuer
+                  designed them — each one connected to the credential record behind it.
+                </p>
+              </div>
+              <p className="label-mono text-faint">{credentialBadges.length} EARNED</p>
+            </div>
+          </Reveal>
+
+          <div
+            className={`mt-10 grid gap-px ${
+              credentialBadges.length > 1
+                ? "bg-line sm:grid-cols-2 lg:grid-cols-3"
+                : "max-w-md sm:max-w-lg"
+            }`}
+          >
+            {credentialBadges.map((b, i) => {
+              const record = credentials.find((c) => c.id === b.credentialId);
+              return (
+                <Reveal key={b.id} delay={i * 70}>
+                  <div className="flex h-full flex-col items-center bg-background p-8 text-center">
+                    <Image
+                      src={b.image}
+                      alt={b.imageAlt}
+                      width={168}
+                      height={168}
+                      className="h-40 w-40"
+                    />
+                    <p className="label-mono mt-7 text-faint">{b.provider}</p>
+                    <p className="display mt-3 text-xl">{b.label}</p>
+                    <p className="label-mono mt-3 text-signal">{b.status}</p>
+                    {record && (
+                      <div className="mt-6 border-t border-line pt-5">
+                        <p className="label-mono text-[10px] text-faint">EARNED WITH</p>
+                        <p className="mt-2 text-sm leading-snug text-muted">{record.program}</p>
+                        {record.certificateUrl && (
+                          <a
+                            href={record.certificateUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group/link mt-4 inline-block"
+                          >
+                            <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
+                              VIEW CERTIFICATE →
+                            </span>
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
