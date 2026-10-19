@@ -5,6 +5,7 @@ import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ContactPanels from "@/components/contact/contact-panels";
 import ContactOrbitViz from "@/components/contact/contact-orbit-viz";
+import SignalResonance from "@/components/visuals/signal-resonance";
 import CopyEmail from "@/components/contact/copy-email";
 import EnquiryForm from "@/components/contact/enquiry-form";
 import { site } from "@/data/site";
@@ -46,6 +47,7 @@ export default function ContactPage() {
             <header className="scanlines relative overflow-hidden border-b border-line">
                 <div className="grid-field absolute inset-0" aria-hidden="true" />
                 <PageAtmosphere variant="orbit" />
+                <SignalResonance />
                 <div
                     className="pointer-events-none absolute inset-x-0 bottom-0 h-48"
                     aria-hidden="true"

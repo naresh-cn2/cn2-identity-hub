@@ -4,6 +4,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ChainVisual from "@/components/case-study/chain-visual";
+import MarketDepth from "@/components/visuals/market-depth";
 import ProjectMark from "@/components/work/project-mark";
 import { caseStudies } from "@/data/case-studies";
 import { site } from "@/data/site";
@@ -27,6 +28,7 @@ export default function CaseStudiesPage() {
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
         <PageAtmosphere variant="field" />
+        <MarketDepth seed={7} className="opacity-70" />
         <ChainVisual />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>

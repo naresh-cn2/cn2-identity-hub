@@ -894,6 +894,16 @@ h1.cn2-brand-word {
   pointer-events: none;
 }
 
+/* Signature per-page procedural visuals (components/visuals/*). Sized by
+   SceneFrame to the wrapper's CSS box (DPR-scaled), never interactive. */
+.cn2-visual-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 /* Portal-centred ambient — light ORIGINATES at the portal and fades to nothing
    well before the screen edges, so there is never a bright border. Light mode
    raises the cool blue-white pool around the portal / smoke; dark mode adds a

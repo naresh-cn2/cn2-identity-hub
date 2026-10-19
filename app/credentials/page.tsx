@@ -5,6 +5,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import LearningNetwork from "@/components/credentials/learning-network";
+import NeuralFigure from "@/components/visuals/neural-figure";
 import CredentialTimeline from "@/components/credentials/credential-timeline";
 import LearningMap from "@/components/credentials/learning-map";
 import {
@@ -110,6 +111,7 @@ export default function CredentialsPage() {
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
         <PageAtmosphere variant="motes" />
+        <NeuralFigure compact seed={4} />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">

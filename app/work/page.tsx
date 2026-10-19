@@ -5,6 +5,7 @@ import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import BuildsArchive from "@/components/work/work-archive";
 import HeroTopology from "@/components/work/hero-topology";
+import MarketDepth from "@/components/visuals/market-depth";
 import { archiveProjects } from "@/data/archive";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
@@ -30,6 +31,7 @@ export default function WorkPage() {
       <header className="relative overflow-hidden border-b border-line">
         <div className="grid-field absolute inset-0" aria-hidden="true" />
         <PageAtmosphere variant="schematic" />
+        <MarketDepth />
         <HeroTopology projects={archiveProjects} />
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
