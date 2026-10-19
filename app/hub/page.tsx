@@ -39,9 +39,6 @@ export default function HubPage() {
     <>
       <UniverseIntro />
 
-      {/* ---- audience pathways: four ways into the same universe ---- */}
-      <AudiencePathways />
-
       {/* ---- the universe: one destination per full-screen section ---- */}
       <main id="destinations" aria-label="The CN2.DEV universe">
         {hubDestinations.map((destination, i) => (
@@ -55,7 +52,7 @@ export default function HubPage() {
         ))}
       </main>
 
-      {/* ---- secondary index + the way back out ---- */}
+      {/* ---- secondary index ---- */}
       <section aria-label="Secondary index">
         <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 md:py-12">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -72,6 +69,9 @@ export default function HubPage() {
           </div>
         </div>
       </section>
+
+      {/* ---- audience pathways: the visitor's intent, met after the whole tour ---- */}
+      <AudiencePathways />
     </>
   );
 }

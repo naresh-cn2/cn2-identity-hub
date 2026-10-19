@@ -6,10 +6,11 @@ import { hubPathways, type HubPathway } from "@/data/hub";
  * "What brings you here?" — the audience-oriented pathways on the hub.
  *
  * Four large, visually distinct routes into the site, one per audience:
- * employers, clients, technical reviewers and collaborators. They sit between
- * the universe introduction and the eight destination sections, complementing
- * them — never replacing them. Every card is a real link to a real route, and
- * the wording promises nothing the destination page cannot show.
+ * employers, clients, technical reviewers and collaborators. They close the
+ * hub page — after the introduction, the eight destination sections and the
+ * secondary index — so a visitor who has seen everything meets the intent
+ * routes as the final call to action. Every card is a real link to a real
+ * route, and the wording promises nothing the destination page cannot show.
  */
 
 function PathwayCard({ pathway }: { pathway: HubPathway }) {
