@@ -187,17 +187,21 @@ export default function CredentialsPage() {
         </div>
       </section>
 
-      {/* ---- issuer digital badges ---- */}
-      <section aria-label="Issuer digital badges" className="border-b border-line">
+      {/* ---- digital badges ---- */}
+      <section aria-label="Digital badges" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <div>
                 <p className="label-mono text-signal">BADGES</p>
-                <h2 className="display mt-4 text-3xl md:text-4xl">ISSUER DIGITAL BADGES</h2>
+                <h2 className="display mt-4 text-3xl md:text-4xl">
+                  DIGITAL BADGES I&apos;VE EARNED
+                </h2>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-                  Digital badges issued alongside the certificates, shown exactly as the issuer
-                  designed them — each one connected to the credential record behind it.
+                  A digital badge is the compact form of a completed course — issued by the
+                  programme itself and easy to spot at a glance. Every badge here links straight
+                  to the full certificate behind it, so anyone reviewing my work can open the
+                  original and verify every detail for themselves.
                 </p>
               </div>
               <p className="label-mono text-faint">{credentialBadges.length} EARNED</p>

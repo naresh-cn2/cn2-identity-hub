@@ -58,7 +58,7 @@ export const credentials: CredentialRecord[] = [
     certificateUrl: "/credentials/worldquant-data-science-lab.pdf",
     notes: [
       "The certificate prints the recipient name and the issue date (Oct 15, 2026).",
-      "The issuer's digital badge for this completion is shown in the BADGES section below.",
+      "The companion digital badge for this completion sits in the badges section below.",
     ],
   },
   {
