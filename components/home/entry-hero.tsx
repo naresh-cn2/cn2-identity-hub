@@ -53,14 +53,7 @@ export default function EntryHero() {
         role="img"
         aria-label="CN2.DEV cinematic entry gateway"
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url('/images/cn2-hero-final.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <div className="cn2-hero-bg absolute inset-0" />
       </div>
     );
   }
@@ -71,21 +64,15 @@ export default function EntryHero() {
       className="relative min-h-screen w-full overflow-hidden"
       style={{ minHeight: "100dvh", maxHeight: "100dvh" }}
     >
-      {/* ---- Background image: the provided hero with baked-in typography ----
+      {/* ---- Background image: the ultra-wide portal banner with baked-in
+           typography (.cn2-hero-bg carries the responsive cover/contain fit:
+           cover on landscape, contain on portrait so nothing is ever cut).
            The zoom wrapper carries the slow breathing scale, the stage carries
            perspective, and .cn2-hero-img carries the pointer parallax + micro
            3D tilt. Layers are separated so no transform ever fights another. */}
       <div className="cn2-hero-stage absolute inset-0" aria-hidden="true">
         <div className="cn2-hero-zoom absolute inset-0">
-          <div
-            className="cn2-hero-img absolute inset-0"
-            style={{
-              backgroundImage: "url('/images/cn2-hero-final.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
+          <div className="cn2-hero-img cn2-hero-bg absolute inset-0" />
         </div>
       </div>
 

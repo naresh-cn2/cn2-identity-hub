@@ -632,6 +632,28 @@ h1.cn2-brand-word {
   will-change: transform;
 }
 
+/* Ultra-wide portal banner (2048×768 ≈ 2.667:1) with baked-in typography.
+   Cover on landscape: at every aspect ≥ 29/25 the visible window (biased by
+   45%/42%, measured from the artwork: wordmark starts x 28.5%, ring ends
+   x 68%, ring top y 23%) fully contains the text and the portal — nothing
+   important is cropped. Below 29/25 (phones, portrait tablets) the banner
+   switches to CONTAIN so the whole artwork shows uncropped, letterboxed on
+   black. CinematicLayers mirrors this exact fit math to anchor effects. */
+.cn2-hero-bg {
+  background-image: url("/images/cn2-hero-portal.png");
+  background-size: cover;
+  background-position: 45% 42%;
+  background-repeat: no-repeat;
+  background-color: #000;
+}
+
+@media (max-aspect-ratio: 29/25) {
+  .cn2-hero-bg {
+    background-size: contain;
+    background-position: 45% 50%;
+  }
+}
+
 /* About-page night-city backdrop — an extremely slow Ken Burns drift so the
    held shot breathes like film. The global reduced-motion switch below
    collapses it to a single still frame. */
@@ -883,7 +905,7 @@ h1.cn2-brand-word {
   opacity: 0;
   transition: opacity 800ms ease;
   /* Dark mode: tight portal-centred glow, rapid falloff */
-  background: radial-gradient(48% 55% at 60% 42%,
+  background: radial-gradient(48% 55% at var(--cn2-portal-x, 60%) var(--cn2-portal-y, 47%),
       rgba(120, 180, 255, 0.1) 0%,
       rgba(80, 140, 230, 0.03) 25%,
       transparent 55%);
@@ -918,7 +940,7 @@ h1.cn2-brand-word {
 /* Light mode: ambient glow — bright icy-blue pool covering the portal ring area */
 .is-light .cn2-ambient-glow {
   --cn2-ambient-base: 1;
-  background: radial-gradient(55% 60% at 60% 42%,
+  background: radial-gradient(55% 60% at var(--cn2-portal-x, 60%) var(--cn2-portal-y, 47%),
       rgba(200, 230, 255, 0.5) 0%,
       rgba(170, 210, 250, 0.2) 30%,
       rgba(120, 170, 240, 0.06) 50%,
@@ -946,10 +968,10 @@ h1.cn2-brand-word {
 }
 
 .cn2-text-shimmer {
-  left: 7%;
-  top: 33%;
-  width: 48%;
-  height: 30%;
+  left: var(--cn2-text-x, 28.5%);
+  top: var(--cn2-text-y, 39.5%);
+  width: var(--cn2-text-w, 22%);
+  height: var(--cn2-text-h, 19%);
   overflow: hidden;
   opacity: 0.9;
 }
@@ -975,10 +997,10 @@ h1.cn2-brand-word {
 /* Portal reflection on the letters nearest the portal (right side of the
    wordmark). Stronger in light mode where the portal reads brighter. */
 .cn2-text-tint {
-  left: 30%;
-  top: 33%;
-  width: 26%;
-  height: 30%;
+  left: var(--cn2-text-x, 28.5%);
+  top: var(--cn2-text-y, 39.5%);
+  width: var(--cn2-text-w, 22%);
+  height: var(--cn2-text-h, 19%);
   background: radial-gradient(circle at 100% 50%,
       rgba(150, 205, 255, 0.28) 0%,
       transparent 68%);
@@ -997,8 +1019,8 @@ h1.cn2-brand-word {
    draws a second visible ring; it is a soft halo around the existing one. */
 .cn2-portal-glow {
   position: absolute;
-  left: 60%;
-  top: 44%;
+  left: var(--cn2-portal-x, 60%);
+  top: var(--cn2-portal-y, 47%);
   width: 36%;
   height: 64%;
   transform: translate(calc(-50% + var(--cn2-px, 0) * 16px), calc(-50% + var(--cn2-py, 0) * 12px));
@@ -1038,7 +1060,7 @@ h1.cn2-brand-word {
 .is-dark .cn2-floor-glow {
   --cn2-floor-base: 0.4;
   opacity: 0.4;
-  background: radial-gradient(70% 100% at 60% 118%,
+  background: radial-gradient(70% 100% at var(--cn2-portal-x, 60%) 118%,
       rgba(150, 205, 255, 0.18) 0%,
       transparent 50%);
   animation: cn2-floor-shimmer 14s ease-in-out infinite;
@@ -1047,7 +1069,7 @@ h1.cn2-brand-word {
 .is-light .cn2-floor-glow {
   --cn2-floor-base: 0.9;
   opacity: 0.9;
-  background: radial-gradient(70% 100% at 60% 118%,
+  background: radial-gradient(70% 100% at var(--cn2-portal-x, 60%) 118%,
       rgba(150, 205, 255, 0.28) 0%,
       transparent 50%);
   animation: cn2-floor-shimmer 12s ease-in-out infinite;

@@ -49,6 +49,65 @@ export default function CinematicLayers() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const small = window.innerWidth < 768;
 
+    // ---------- artwork anchors (image-space, measured from the banner) ----------
+    // public/images/cn2-hero-portal.png is 2048×768 (2.667:1). Coordinates are
+    // fractions OF THE IMAGE (grid-overlay measurement of the artwork) and are
+    // mapped to container space by fit(), so every effect tracks the artwork
+    // regardless of viewport aspect or cover/contain fit — mirroring the exact
+    // background-size/position math in globals.css (.cn2-hero-bg).
+    const IMG_A = 2048 / 768;
+    const COVER_MIN_A = 1.16; // must match the CSS 29/25 breakpoint in globals.css
+    const A_TEXT = { x0: 0.285, y0: 0.395, x1: 0.505, y1: 0.585 };
+    const A_PORTAL = { x: 0.6, y: 0.47 };
+    const A_FLOOR = 0.661;
+    const A_POOL = 0.8;
+
+    interface NetNode { ix: number; iy: number; x: number; y: number; red: boolean; phase: number; period: number }
+
+    let fit: (ix: number, iy: number) => [number, number] = (ix, iy) => [ix, iy];
+    let nodesRef: NetNode[] | null = null;
+    const portal = { x: A_PORTAL.x, y: A_PORTAL.y };
+    let floorY = A_FLOOR;
+    let poolY = A_POOL;
+    let bottomY = 1;
+    const textBox = { x0: A_TEXT.x0, y0: A_TEXT.y0, x1: A_TEXT.x1, y1: A_TEXT.y1 };
+    const rippleZone = { x0: 0.26, y0: 0.2, x1: 0.72, y1: 0.64 };
+
+    const setVar = (k: string, v: string) => document.documentElement.style.setProperty(k, v);
+
+    const mapAll = () => {
+      const pm = fit(A_PORTAL.x, A_PORTAL.y);
+      portal.x = pm[0];
+      portal.y = pm[1];
+      floorY = fit(0.5, A_FLOOR)[1];
+      poolY = fit(0.5, A_POOL)[1];
+      bottomY = fit(0.5, 1)[1];
+      const [tx0, ty0] = fit(A_TEXT.x0, A_TEXT.y0);
+      const [tx1, ty1] = fit(A_TEXT.x1, A_TEXT.y1);
+      textBox.x0 = Math.min(tx0, tx1);
+      textBox.y0 = Math.min(ty0, ty1);
+      textBox.x1 = Math.max(tx0, tx1);
+      textBox.y1 = Math.max(ty0, ty1);
+      rippleZone.x0 = Math.min(textBox.x0, portal.x - 0.1) - 0.02;
+      rippleZone.x1 = Math.max(textBox.x1, portal.x + 0.1) + 0.02;
+      rippleZone.y0 = Math.min(textBox.y0, portal.y - 0.18) - 0.02;
+      rippleZone.y1 = Math.max(textBox.y1, portal.y + 0.18) + 0.02;
+      if (nodesRef) {
+        for (const n of nodesRef) {
+          const [nx, ny] = fit(n.ix, n.iy);
+          n.x = nx;
+          n.y = ny;
+        }
+      }
+      // DOM layers (portal halo, text sweep/tint, floor pool) share the anchors
+      setVar("--cn2-portal-x", `${(portal.x * 100).toFixed(2)}%`);
+      setVar("--cn2-portal-y", `${(portal.y * 100).toFixed(2)}%`);
+      setVar("--cn2-text-x", `${(textBox.x0 * 100).toFixed(2)}%`);
+      setVar("--cn2-text-y", `${(textBox.y0 * 100).toFixed(2)}%`);
+      setVar("--cn2-text-w", `${((textBox.x1 - textBox.x0) * 100).toFixed(2)}%`);
+      setVar("--cn2-text-h", `${((textBox.y1 - textBox.y0) * 100).toFixed(2)}%`);
+    };
+
     // ---------- sizing (positions stored relative, scaled at draw) ----------
     let w = 0;
     let h = 0;
@@ -58,6 +117,21 @@ export default function CinematicLayers() {
       w = Math.max(1, rect.width);
       h = Math.max(1, rect.height);
       sc = Math.min(w, h) / 900;
+      const A = w / h;
+      if (A <= COVER_MIN_A) {
+        // portrait/tablet: CSS switches .cn2-hero-bg to background-size: contain
+        const m = A / IMG_A;
+        fit = (ix, iy) => [ix, 0.5 * (1 - m) + iy * m];
+      } else if (A <= IMG_A) {
+        // landscape: cover, height-bound (background-position-x 45%)
+        const k = IMG_A / A;
+        fit = (ix, iy) => [ix * k - 0.45 * (k - 1), iy];
+      } else {
+        // ultra-wide: cover, width-bound (background-position-y 42%)
+        const g = IMG_A / A;
+        fit = (ix, iy) => [ix, iy * g + 0.42 * (1 - g)];
+      }
+      mapAll();
       // Higher DPR cap for 8K-resolution feel — sharper smoke, crisper particles
       const dpr = Math.min(3, window.devicePixelRatio || 1);
       canvas.width = Math.round(w * dpr);
@@ -139,21 +213,22 @@ export default function CinematicLayers() {
     const PORTAL_CYCLE_PERIOD = 10000; // ms per state (10s on / 10s off)
     let lastPortalCycle = 0;
 
-    // ---------- network nodes (approx. over the baked grid) ----------
-    interface NetNode { x: number; y: number; red: boolean; phase: number; period: number }
+    // ---------- network nodes (measured artwork dots — image-space, mapped) ----------
     const nodeDefs: Array<[number, number, boolean]> = [
-      [0.31, 0.205, true], [0.945, 0.398, true], [0.885, 0.622, true],
-      [0.055, 0.445, true], [0.13, 0.707, true], [0.545, 0.63, true],
-      [0.63, 0.345, false], [0.575, 0.425, false], [0.47, 0.51, false],
-      [0.78, 0.28, false], [0.22, 0.33, false], [0.7, 0.66, false],
+      [0.115, 0.22, true], [0.40, 0.19, true], [0.17, 0.425, true],
+      [0.725, 0.42, true], [0.845, 0.55, true], [0.94, 0.175, true],
+      [0.02, 0.44, false], [0.17, 0.50, false], [0.17, 0.557, false],
+      [0.82, 0.44, false], [0.82, 0.555, false], [0.945, 0.50, false],
     ];
-    const nodes: NetNode[] = nodeDefs.map(([x, y, red]) => ({
-      x, y, red, phase: Math.random() * Math.PI * 2, period: 10 + Math.random() * 8,
+    const nodes: NetNode[] = nodeDefs.map(([ix, iy, red]) => ({
+      ix, iy, x: ix, y: iy, red, phase: Math.random() * Math.PI * 2, period: 10 + Math.random() * 8,
     }));
+    nodesRef = nodes;
+    mapAll(); // map the initial node positions through the fit function
 
-    // ---------- travelling pulses ----------
+    // ---------- travelling pulses (pairs follow visible artwork lines) ----------
     interface NetPulse { a: number; b: number; t: number; dur: number; wait: number; red: boolean }
-    const pulsePairs: Array<[number, number]> = [[0, 5], [1, 11], [2, 7], [3, 8], [4, 9], [6, 10], [7, 11]];
+    const pulsePairs: Array<[number, number]> = [[2, 7], [7, 8], [9, 10], [5, 11], [4, 9], [0, 1], [1, 3]];
     const pulses: NetPulse[] = pulsePairs.map(([a, b], i) => ({
       a, b, t: Math.random(), dur: 6 + Math.random() * 4, wait: 5 + Math.random() * 5, red: i % 3 === 0,
     }));
@@ -166,7 +241,6 @@ export default function CinematicLayers() {
     let px = 0;
     let py = 0;
     let lastRipple = 0;
-    const setVar = (k: string, v: string) => document.documentElement.style.setProperty(k, v);
     const onMove = (e: PointerEvent) => {
       const rect = wrap.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
@@ -176,10 +250,14 @@ export default function CinematicLayers() {
       py = Math.max(-1, Math.min(1, ry * 2 - 1));
       setVar("--cn2-px", px.toFixed(3));
       setVar("--cn2-py", py.toFixed(3));
+      // Ripples respond inside the mapped text + portal region
       const now = performance.now();
-      if (!reduced && ripples.length < 12 && now - lastRipple > 100 && rx > 0.06 && rx < 0.52 && ry > 0.34 && ry < 0.62) {
+      if (
+        !reduced && ripples.length < 12 && now - lastRipple > 100 &&
+        rx > rippleZone.x0 && rx < rippleZone.x1 && ry > rippleZone.y0 && ry < rippleZone.y1
+      ) {
         lastRipple = now;
-        ripples.push({ x: rx * w, y: ry * h, r: 6, life: 0, red: ry < 0.465 });
+        ripples.push({ x: rx * w, y: ry * h, r: 6, life: 0, red: ry < portal.y });
       }
     };
     const onLeave = () => { px = 0; py = 0; setVar("--cn2-px", "0"); setVar("--cn2-py", "0"); };
@@ -190,13 +268,12 @@ export default function CinematicLayers() {
     }
 
     // ---------- draw helpers ----------
-    const PORTAL_X = 0.6;
     let sweepX = -0.35;
 
     const drawSmoke = (isDark: boolean, dt: number, t: number) => {
       ctx.globalCompositeOperation = isDark ? "screen" : "source-over";
       for (const p of puffs) {
-        const nearPortal = 1 - Math.min(1, Math.abs(p.x - PORTAL_X) / 0.28);
+        const nearPortal = 1 - Math.min(1, Math.abs(p.x - portal.x) / 0.28);
         const curl = Math.sin(t * 0.0004 + p.phase) * p.curl * (0.3 + nearPortal);
         p.x += (p.vx + curl) * dt * 4;
         p.y += p.vy * dt * 4;
@@ -294,14 +371,14 @@ export default function CinematicLayers() {
     };
 
     const drawFloor = (isDark: boolean, dt: number, t: number) => {
-      const fy0 = h * 0.7;
+      const fy0 = floorY * h;
       // blue portal reflection pooled on the floor beneath the portal
       // Dramatically responsive to portal light level
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       ctx.globalAlpha = (isDark ? 0.3 : 0.2) * portalLightLevel;
       const pr = 180 * sc;
       const pulse = 0.7 + 0.3 * Math.sin(t * 0.00045);
-      ctx.drawImage(spriteBlue, PORTAL_X * w - pr, 0.87 * h - pr * 0.5, pr * 2, pr * pulse);
+      ctx.drawImage(spriteBlue, portal.x * w - pr, poolY * h - pr * 0.5, pr * 2, pr * pulse);
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = "source-over";
 
@@ -315,18 +392,21 @@ export default function CinematicLayers() {
       g.addColorStop(0.5, isDark ? "rgba(150,205,255,0.18)" : "rgba(120,160,215,0.12)");
       g.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = g;
-      ctx.fillRect(cx - bandW / 2, fy0, bandW, h - fy0);
+      // clamp the sweep to the artwork's own bottom edge (letterbox-safe)
+      ctx.fillRect(cx - bandW / 2, fy0, bandW, Math.max(0, bottomY * h - fy0));
 
       // red reflections beneath red signals that sit above the floor
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       for (const n of nodes) {
-        if (!n.red || n.y < 0.4 || n.y > 0.72) continue;
+        if (!n.red || n.iy < 0.4 || n.iy > 0.72) continue;
         const pulseR = 0.5 + 0.5 * Math.sin((n.phase / n.period) * Math.PI * 2);
         const ra = (0.06 + 0.08 * pulseR) * (isDark ? 1 : 0.7);
         ctx.globalAlpha = ra;
         const rxp = n.x * w;
-        const streakH = (1 - n.y) * h * 0.5;
-        ctx.drawImage(spriteRed, rxp - 18 * sc, n.y * h, 36 * sc, streakH);
+        // streak length measured in image space so it never spills outside
+        // the artwork strip when the banner is letterboxed (contain fit)
+        const streakH = Math.max(0, (bottomY - n.y) * h * 0.5);
+        if (streakH >= 2) ctx.drawImage(spriteRed, rxp - 18 * sc, n.y * h, 36 * sc, streakH);
       }
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = "source-over";
@@ -361,8 +441,8 @@ export default function CinematicLayers() {
         // Short beams — stay within portal area, don't reach character
         const beamLen = (0.08 + 0.04 * Math.sin(t * 0.0003 + i)) * w;
         const beamWidth = (10 + 5 * Math.sin(t * 0.0004 + i * 2)) * sc;
-        const x0 = PORTAL_X * w;
-        const y0 = 0.45 * h;
+        const x0 = portal.x * w;
+        const y0 = portal.y * h;
         const x1 = x0 + Math.cos(angle) * beamLen;
         const y1 = y0 + Math.sin(angle) * beamLen;
         const grad = ctx.createLinearGradient(x0, y0, x1, y1);
@@ -385,8 +465,8 @@ export default function CinematicLayers() {
       const intensity = portalLightLevel * breathe;
       if (intensity < 0.02) return;
       ctx.globalCompositeOperation = "lighter";
-      const cx = PORTAL_X * w;
-      const cy = 0.45 * h;
+      const cx = portal.x * w;
+      const cy = portal.y * h;
       const baseR = 120 * sc;
       // Outer halo — small, stays inside portal ring
       const haloR = baseR * (1.1 + 0.2 * intensity);
@@ -460,16 +540,25 @@ export default function CinematicLayers() {
     if (reduced) drawStatic();
     else raf = requestAnimationFrame(loop);
 
+    // pause when the tab is hidden OR the hero is fully scrolled out of view
+    let heroVisible = true;
     const onVis = () => {
       if (reduced) return;
-      if (document.hidden) { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+      const shouldRun = !document.hidden && heroVisible;
+      if (!shouldRun) { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
       else if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); }
     };
     document.addEventListener("visibilitychange", onVis);
+    const io = new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      onVis();
+    }, { threshold: 0 });
+    io.observe(wrap);
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
       if (!reduced) {
         window.removeEventListener("pointermove", onMove);
