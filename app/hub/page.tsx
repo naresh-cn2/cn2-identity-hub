@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import UniverseIntro from "@/components/hub/universe-intro";
-import AudiencePathways from "@/components/hub/audience-pathways";
 import DestinationSection from "@/components/hub/destination-section";
 import DestinationVisual from "@/components/hub/destination-visual";
 import { hubDestinations, hubIndex } from "@/data/hub";
@@ -69,9 +68,6 @@ export default function HubPage() {
           </div>
         </div>
       </section>
-
-      {/* ---- audience pathways: the visitor's intent, met after the whole tour ---- */}
-      <AudiencePathways />
     </>
   );
 }

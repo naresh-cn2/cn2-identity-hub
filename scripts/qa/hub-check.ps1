@@ -35,11 +35,6 @@ foreach ($t in @('WORK','CREDENTIALS','SERVICES','LABORATORY','RESEARCH','OPPORT
   Check "title contains $t" ($html.Contains(">$t<"))
 }
 
-# ---- audience pathways (IA v4) ----
-Check "pathways: START HERE eyebrow" ($html.Contains('START HERE'))
-Check "pathways: WHAT BRINGS YOU HERE" ($html.Contains('WHAT BRINGS YOU HERE'))
-Check "pathways: four pathway actions" ($html.Contains('EXPLORE CAPABILITIES') -and $html.Contains('EXPLORE PROJECTS') -and $html.Contains('EXPLORE RESEARCH'))
-
 # ---- counters removed ----
 Check "no 'OF 08'" (-not $html.Contains('OF 08'))
 Check "no 'SYSTEMS ARCHIVED'" (-not $html.Contains('SYSTEMS ARCHIVED'))
