@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     description: "The person behind CN2.DEV — Bukya Naresh.",
     images: [
       {
-        url: "/images/portrait-identity.png",
-        width: 540,
-        height: 887,
+        url: "/images/portrait-identity-2026.png",
+        width: 1211,
+        height: 1299,
         alt: "Signed portrait of Bukya Naresh",
       },
     ],
@@ -62,21 +62,21 @@ export default function IdentityPage() {
             </Reveal>
           </div>
 
-          {/* RIGHT — the signed portrait, shown whole: signature and stars never crop */}
+          {/* RIGHT — the signed portrait, shown whole: signature never crops */}
           <Reveal delay={200} className="order-1 lg:order-2">
             <figure className="relative mx-auto w-full max-w-[440px] lg:mx-0">
               <div className="relative">
-                {/* offset red frame — echo of the stripe inside the picture */}
+                {/* offset accent frame — echo of the crimson in the hoodie */}
                 <div
                   className="absolute -left-2.5 -top-2.5 h-full w-full border border-signal/50"
                   aria-hidden="true"
                 />
                 <div className="relative overflow-hidden border border-line-strong bg-surface">
                   <Image
-                    src="/images/portrait-identity.png"
-                    alt="Signed portrait of Bukya Naresh — black and white, red stripe, Naresh signature"
-                    width={540}
-                    height={887}
+                    src="/images/portrait-identity-2026.png"
+                    alt="Signed portrait of Bukya Naresh — golden-hour light, white cap, maroon hoodie, Chintu signature"
+                    width={1211}
+                    height={1299}
                     priority
                     quality={92}
                     sizes="(max-width: 1024px) min(90vw, 440px), 440px"
