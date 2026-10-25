@@ -31,28 +31,40 @@
   --chart-axis: rgba(21, 25, 34, 0.34);
   --scanline: rgba(21, 25, 34, 0.02);
   --code-bg: #e7edf8;
+  /* CN2 HOLOGRAPHIC MIDNIGHT SYSTEM — illumination tokens (light values,
+     dark-theme values live in the .dark block below) */
+  --electric: #0b57d0;
+  --holo: #0891b2;
+  --ice: #4c8ddb;
 }
 
 .dark {
-  --background: #0a0a0c;
-  --surface: #101013;
-  --surface-2: #141418;
-  --foreground: #f1f1ee;
-  --muted: #8e8e96;
-  /* AA (≥4.5:1) at 10px label sizes on every surface incl. #141418 — verified by scripts/qa/token-check.ps1 */
-  --faint: #7d7d88;
-  --line: #1e1e24;
-  --line-strong: #303038;
-  --signal: #e94030; /* nudge from #e6392a: keeps AA (≥4.5:1) on every surface incl. #141418 — verified by scripts/qa/token-check.ps1 */
-  --signal-soft: rgba(233, 64, 48, 0.1);
-  --research: #6f96f2;
-  --research-soft: rgba(111, 150, 242, 0.12);
-  --research-line: rgba(111, 150, 242, 0.34);
-  --grid-line: rgba(241, 241, 238, 0.045);
-  --chart-grid: rgba(241, 241, 238, 0.07);
-  --chart-axis: rgba(241, 241, 238, 0.32);
-  --scanline: rgba(241, 241, 238, 0.018);
-  --code-bg: #121216;
+  /* CN2 HOLOGRAPHIC MIDNIGHT SYSTEM — deep midnight-blue foundation,
+     electric-blue illumination, holographic cyan highlights, ice-blue
+     light, restrained crimson accent. */
+  --background: #030712;
+  --surface: #0B1728;
+  --surface-2: #101D30;
+  --foreground: #F5F8FF;
+  --muted: #A7B4C8;
+  /* AA (≥4.5:1) at 10px label sizes on every surface incl. #101D30 — verified by scripts/qa/token-check.ps1 */
+  --faint: #8B99AF;
+  --line: rgba(120, 170, 230, 0.18);
+  --line-strong: rgba(120, 170, 230, 0.34);
+  --signal: #FF3030; /* holographic-system crimson accent — keeps AA (≥4.5:1) on every surface incl. #101D30 — verified by scripts/qa/token-check.ps1 */
+  --signal-soft: rgba(255, 48, 48, 0.1);
+  --research: #7aa7ff;
+  --research-soft: rgba(122, 167, 255, 0.12);
+  --research-line: rgba(122, 167, 255, 0.34);
+  --grid-line: rgba(103, 232, 249, 0.068);
+  --chart-grid: rgba(184, 231, 255, 0.07);
+  --chart-axis: rgba(184, 231, 255, 0.32);
+  --scanline: rgba(184, 231, 255, 0.02);
+  --code-bg: #07111F;
+  /* holographic illumination (dark values) */
+  --electric: #1677FF;
+  --holo: #67E8F9;
+  --ice: #B8E7FF;
 }
 
 @theme inline {
@@ -69,6 +81,9 @@
   --color-research: var(--research);
   --color-research-soft: var(--research-soft);
   --color-research-line: var(--research-line);
+  --color-electric: var(--electric);
+  --color-holo: var(--holo);
+  --color-ice: var(--ice);
   --font-sans: var(--font-archivo), system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
   --tracking-display: -0.03em;
@@ -329,8 +344,8 @@ body {
   }
 }
 
-/* cinematic route change - a thin red signal bar sweeps the top edge of the
-   viewport (short, fast, never blocks interaction; reduced-motion neutralises
+/* cinematic route change - a thin holographic signal bar sweeps the top edge of
+   the viewport (short, fast, never blocks interaction; reduced-motion neutralises
    it globally). Horizontal sweep only - never a full-height vertical stripe,
    and travel distances use viewport units so it always exits the screen. */
 @keyframes curtain-travel {
@@ -354,11 +369,11 @@ body {
   pointer-events: none;
   background: linear-gradient(90deg,
       transparent 0%,
-      rgba(230, 57, 42, 0.25) 38%,
-      rgba(230, 57, 42, 0.9) 50%,
-      rgba(230, 57, 42, 0.25) 62%,
+      rgba(22, 119, 255, 0.25) 38%,
+      rgba(103, 232, 249, 0.9) 50%,
+      rgba(22, 119, 255, 0.25) 62%,
       transparent 100%);
-  box-shadow: 0 0 12px rgba(230, 57, 42, 0.35);
+  box-shadow: 0 0 12px rgba(22, 119, 255, 0.35);
   animation: curtain-travel 0.6s cubic-bezier(0.76, 0, 0.24, 1) both;
 }
 
@@ -609,13 +624,13 @@ h1.cn2-brand-word {
 /* Slow breathing zoom — a separate wrapper so it never fights the
    pointer-driven parallax transform on .cn2-hero-img itself. */
 .cn2-hero-zoom {
-  animation: cn2-hero-breathe 26s ease-in-out infinite;
+  animation: cn2-hero-breathe 17s ease-in-out infinite;
   will-change: transform;
 }
 
 @keyframes cn2-hero-breathe {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.018); }
+  50% { transform: scale(1.022); }
 }
 
 /* Pointer parallax + subtle 3D perspective tilt. Angles stay tiny (≤1.6deg)
@@ -632,26 +647,87 @@ h1.cn2-brand-word {
   will-change: transform;
 }
 
-/* Ultra-wide portal banner (2048×768 ≈ 2.667:1) with baked-in typography.
-   Cover on landscape: at every aspect ≥ 29/25 the visible window (biased by
-   45%/42%, measured from the artwork: wordmark starts x 28.5%, ring ends
-   x 68%, ring top y 23%) fully contains the text and the portal — nothing
-   important is cropped. Below 29/25 (phones, portrait tablets) the banner
+/* Neon portal banner (1627×967 ≈ 1.683:1) with baked-in typography.
+   Cover on normal landscape: at every aspect between 7/5 and 12/5 the visible
+   window (biased by 25%/42%, measured from the artwork with a grid overlay:
+   wordmark starts x 9.7%, ring spans x 46–79% / y 16–71%, floor line y 70.5%)
+   fully contains the typography and the portal — nothing important is cropped,
+   even with the scale(1.05) parallax base + breathe peak. At ≤ 7/5 (phones,
+   portrait and small landscape tablets) and at ≥ 12/5 (ultrawide) the banner
    switches to CONTAIN so the whole artwork shows uncropped, letterboxed on
-   black. CinematicLayers mirrors this exact fit math to anchor effects. */
+   black. CinematicLayers mirrors this exact fit math to anchor effects, and
+   .cn2-img-box (tagline plane) rebuilds the same rectangle for live type. */
 .cn2-hero-bg {
   background-image: url("/images/cn2-hero-portal.png");
   background-size: cover;
-  background-position: 45% 42%;
+  background-position: 25% 42%;
   background-repeat: no-repeat;
   background-color: #000;
 }
 
-@media (max-aspect-ratio: 29/25) {
+@media (max-aspect-ratio: 7/5) {
   .cn2-hero-bg {
     background-size: contain;
-    background-position: 45% 50%;
+    background-position: 50% 50%;
   }
+}
+
+@media (min-aspect-ratio: 12/5) {
+  .cn2-hero-bg {
+    background-size: contain;
+    background-position: 50% 50%;
+  }
+}
+
+/* ---- Baked-artwork tagline: "AI-NATIVE SYSTEMS ARCHITECT" ----
+   The line lives in the artwork's composition (same slot as the old baked
+   "WHERE IMAGINATION BECOMES REALITY"), so this layer rebuilds the artwork's
+   own rectangle by mirroring .cn2-hero-bg's cover/contain math exactly, then
+   places the type at image-space coordinates inside it. The plane shares
+   .cn2-hero-img's transform stack (parallax + tilt + scale), so the type
+   never drifts from the baked lettering; font-size is container-relative
+   (cqw = 1% of the mapped artwork width) so it scales like baked pixels. */
+.cn2-tag-plane {
+  pointer-events: none;
+  container-type: size;
+}
+
+.cn2-img-box {
+  --img-a: 1.6825; /* 1627 / 967 */
+  --cw: 100cqw;
+  --ch: 100cqh;
+  --pw: max(var(--cw), calc(var(--ch) * var(--img-a)));
+  position: absolute;
+  width: var(--pw);
+  height: calc(var(--pw) / var(--img-a));
+  left: calc((var(--cw) - var(--pw)) * 0.25);
+  top: calc((var(--ch) - var(--pw) / var(--img-a)) * 0.42);
+  container-type: size;
+}
+
+/* Same never-crop breakpoints as .cn2-hero-bg: the box fits inside instead of
+   overfilling, centered — so the tagline keeps the artwork's own margins. */
+@media (max-aspect-ratio: 7/5), (min-aspect-ratio: 12/5) {
+  .cn2-img-box {
+    --pw: min(var(--cw), calc(var(--ch) * var(--img-a)));
+    left: calc((var(--cw) - var(--pw)) * 0.5);
+    top: calc((var(--ch) - var(--pw) / var(--img-a)) * 0.5);
+  }
+}
+
+.cn2-tagline {
+  position: absolute;
+  left: 9.7%;
+  top: 55.3%;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.75cqw;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #eaf3ff;
+  text-shadow: 0 0 16px rgba(103, 232, 249, 0.35), 0 2px 10px rgba(0, 0, 0, 0.55);
 }
 
 /* About-page night-city backdrop — an extremely slow Ken Burns drift so the
@@ -914,12 +990,13 @@ h1.cn2-brand-word {
   inset: 0;
   opacity: 0;
   transition: opacity 800ms ease;
-  /* Dark mode: tight portal-centred glow, rapid falloff */
-  background: radial-gradient(48% 55% at var(--cn2-portal-x, 60%) var(--cn2-portal-y, 47%),
-      rgba(120, 180, 255, 0.1) 0%,
-      rgba(80, 140, 230, 0.03) 25%,
+  /* Dark mode: tight portal-centred glow, rapid falloff — electric core
+     dissolving into a holographic cyan whisper */
+  background: radial-gradient(48% 55% at var(--cn2-portal-x, 62.5%) var(--cn2-portal-y, 43.5%),
+      rgba(22, 119, 255, 0.13) 0%,
+      rgba(103, 232, 249, 0.045) 26%,
       transparent 55%);
-  animation: cn2-ambient-flicker 16s ease-in-out infinite;
+  animation: cn2-ambient-flicker 11s ease-in-out infinite;
 }
 
 @keyframes cn2-ambient-flicker {
@@ -950,7 +1027,7 @@ h1.cn2-brand-word {
 /* Light mode: ambient glow — bright icy-blue pool covering the portal ring area */
 .is-light .cn2-ambient-glow {
   --cn2-ambient-base: 1;
-  background: radial-gradient(55% 60% at var(--cn2-portal-x, 60%) var(--cn2-portal-y, 47%),
+  background: radial-gradient(55% 60% at var(--cn2-portal-x, 62.5%) var(--cn2-portal-y, 43.5%),
       rgba(200, 230, 255, 0.5) 0%,
       rgba(170, 210, 250, 0.2) 30%,
       rgba(120, 170, 240, 0.06) 50%,
@@ -978,10 +1055,10 @@ h1.cn2-brand-word {
 }
 
 .cn2-text-shimmer {
-  left: var(--cn2-text-x, 28.5%);
-  top: var(--cn2-text-y, 39.5%);
-  width: var(--cn2-text-w, 22%);
-  height: var(--cn2-text-h, 19%);
+  left: var(--cn2-text-x, 9.7%);
+  top: var(--cn2-text-y, 38.5%);
+  width: var(--cn2-text-w, 40.8%);
+  height: var(--cn2-text-h, 21.5%);
   overflow: hidden;
   opacity: 0.9;
 }
@@ -996,7 +1073,7 @@ h1.cn2-brand-word {
       rgba(226, 240, 255, 0.6) 50%,
       rgba(210, 232, 255, 0.0) 53%,
       transparent 58%);
-  animation: cn2-spec-sweep 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: cn2-spec-sweep 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes cn2-spec-sweep {
@@ -1007,10 +1084,10 @@ h1.cn2-brand-word {
 /* Portal reflection on the letters nearest the portal (right side of the
    wordmark). Stronger in light mode where the portal reads brighter. */
 .cn2-text-tint {
-  left: var(--cn2-text-x, 28.5%);
-  top: var(--cn2-text-y, 39.5%);
-  width: var(--cn2-text-w, 22%);
-  height: var(--cn2-text-h, 19%);
+  left: var(--cn2-text-x, 9.7%);
+  top: var(--cn2-text-y, 38.5%);
+  width: var(--cn2-text-w, 40.8%);
+  height: var(--cn2-text-h, 21.5%);
   background: radial-gradient(circle at 100% 50%,
       rgba(150, 205, 255, 0.28) 0%,
       transparent 68%);
@@ -1029,8 +1106,8 @@ h1.cn2-brand-word {
    draws a second visible ring; it is a soft halo around the existing one. */
 .cn2-portal-glow {
   position: absolute;
-  left: var(--cn2-portal-x, 60%);
-  top: var(--cn2-portal-y, 47%);
+  left: var(--cn2-portal-x, 62.5%);
+  top: var(--cn2-portal-y, 43.5%);
   width: 36%;
   height: 64%;
   transform: translate(calc(-50% + var(--cn2-px, 0) * 16px), calc(-50% + var(--cn2-py, 0) * 12px));
@@ -1041,10 +1118,10 @@ h1.cn2-brand-word {
   position: absolute;
   inset: 0;
   background: radial-gradient(closest-side at 50% 50%,
-      rgba(130, 196, 255, 0.12) 0%,
-      rgba(95, 170, 248, 0.06) 38%,
+      rgba(80, 160, 255, 0.14) 0%,
+      rgba(103, 232, 249, 0.06) 38%,
       transparent 78%);
-  animation: cn2-portal-breathe 14s ease-in-out infinite;
+  animation: cn2-portal-breathe 9s ease-in-out infinite;
 }
 
 /* Light mode: same ring geometry, just brighter — makes the baked-in ring glow */
@@ -1054,7 +1131,7 @@ h1.cn2-brand-word {
       rgba(160, 215, 255, 0.25) 38%,
       rgba(120, 185, 250, 0.1) 62%,
       transparent 78%);
-  animation: cn2-portal-breathe 12s ease-in-out infinite;
+  animation: cn2-portal-breathe 8s ease-in-out infinite;
 }
 
 /* Floor pool — concentrated beneath the portal (its reflection).
@@ -1070,19 +1147,19 @@ h1.cn2-brand-word {
 .is-dark .cn2-floor-glow {
   --cn2-floor-base: 0.4;
   opacity: 0.4;
-  background: radial-gradient(70% 100% at var(--cn2-portal-x, 60%) 118%,
+  background: radial-gradient(70% 100% at var(--cn2-portal-x, 62.5%) 118%,
       rgba(150, 205, 255, 0.18) 0%,
       transparent 50%);
-  animation: cn2-floor-shimmer 14s ease-in-out infinite;
+  animation: cn2-floor-shimmer 10s ease-in-out infinite;
 }
 
 .is-light .cn2-floor-glow {
   --cn2-floor-base: 0.9;
   opacity: 0.9;
-  background: radial-gradient(70% 100% at var(--cn2-portal-x, 60%) 118%,
+  background: radial-gradient(70% 100% at var(--cn2-portal-x, 62.5%) 118%,
       rgba(150, 205, 255, 0.28) 0%,
       transparent 50%);
-  animation: cn2-floor-shimmer 12s ease-in-out infinite;
+  animation: cn2-floor-shimmer 9s ease-in-out infinite;
 }
 
 @keyframes cn2-floor-shimmer {
@@ -1141,10 +1218,11 @@ h1.cn2-brand-word {
 .card-depth:focus-visible,
 .card-depth:focus-within {
   transform: translateY(-4px);
-  border-color: var(--line-strong);
+  border-color: color-mix(in srgb, var(--electric) 62%, transparent);
   box-shadow:
     0 24px 48px -28px rgb(0 0 0 / 0.55),
-    inset 0 0 0 1px var(--signal-soft);
+    0 0 0 1px color-mix(in srgb, var(--electric) 30%, transparent),
+    0 0 28px -8px color-mix(in srgb, var(--holo) 40%, transparent);
 }
 
 /* dashed connectors for timelines, pipelines, and pathways */
@@ -1199,7 +1277,7 @@ h1.cn2-brand-word {
 }
 
 .anim-float { animation: cn2-float 7s ease-in-out infinite; }
-.anim-spin-slow { animation: cn2-spin-slow 64s linear infinite; }
+.anim-spin-slow { animation: cn2-spin-slow 46s linear infinite; }
 .anim-blink { animation: cn2-blink 2.4s ease-in-out infinite; }
 .anim-sweep { animation: cn2-sweep 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
 .anim-ring { animation: cn2-ring 2.8s ease-out infinite; }
@@ -1315,9 +1393,9 @@ button.corner-ticks {
   transform-box: view-box;
   transform-origin: center;
 }
-.nexus-spin { animation: cn2-spin-slow 64s linear infinite; }
-.nexus-spin-rev { animation: cn2-spin-slow 64s linear infinite reverse; }
-.nexus-spin-2 { animation: cn2-spin-slow 96s linear infinite; }
+.nexus-spin { animation: cn2-spin-slow 46s linear infinite; }
+.nexus-spin-rev { animation: cn2-spin-slow 46s linear infinite reverse; }
+.nexus-spin-2 { animation: cn2-spin-slow 70s linear infinite; }
 /* radar ping — re-origins the shared ring keyframe onto the core */
 .nexus-ping { animation: cn2-ring 2.8s ease-out infinite; }
 /* node interaction — chip lift, frame light, spoke energises */
@@ -1562,8 +1640,9 @@ button.corner-ticks {
   z-index: 69;
   pointer-events: none;
   background: radial-gradient(130% 100% at 50% 50%,
-      transparent 38%,
-      color-mix(in srgb, var(--background) 62%, transparent) 84%);
+      transparent 36%,
+      color-mix(in srgb, var(--electric) 14%, transparent) 68%,
+      color-mix(in srgb, var(--holo) 8%, transparent) 86%);
   animation: curtain-veil-fade 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
@@ -1633,16 +1712,16 @@ button.corner-ticks {
   }
 }
 
-/* scroll reel — a signal-to-research hairline tracks reading progress */
+/* scroll reel — a crimson→electric→holo hairline tracks reading progress */
 .scroll-progress-bar {
   width: 100%;
-  background: linear-gradient(90deg, var(--signal), var(--research));
+  background: linear-gradient(90deg, var(--signal), var(--electric) 55%, var(--holo));
   transform: scaleX(0);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
-/* cursor light — a soft studio glow trails the pointer through the room */
+/* cursor light — an electric holographic halo trails the pointer through the room */
 .cursor-light-dot {
   position: absolute;
   left: 0;
@@ -1655,13 +1734,14 @@ button.corner-ticks {
   transition: opacity 0.6s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
   background: radial-gradient(closest-side,
-      color-mix(in srgb, var(--research) 6%, transparent),
+      color-mix(in srgb, var(--electric) 9%, transparent),
       transparent 72%);
 }
 
 .dark .cursor-light-dot {
   background: radial-gradient(closest-side,
-      color-mix(in srgb, var(--research) 11%, transparent),
+      color-mix(in srgb, var(--electric) 18%, transparent),
+      color-mix(in srgb, var(--holo) 6%, transparent) 55%,
       transparent 72%);
 }
 

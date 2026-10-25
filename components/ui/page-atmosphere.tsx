@@ -110,10 +110,10 @@ interface Palette {
 
 const PALETTES: Record<Mode, Palette> = {
     dark: {
-        structure: [111, 150, 242],
-        deep: [60, 76, 120],
-        signal: [230, 57, 42],
-        bright: [190, 215, 255],
+        structure: [58, 136, 255],   // electric-blue network / grid lines
+        deep: [42, 72, 132],         // receding navy
+        signal: [255, 48, 48],       // restrained crimson accents
+        bright: [184, 231, 255],     // ice-blue highlight nodes / pulses
     },
     light: {
         structure: [27, 77, 201],
@@ -173,7 +173,7 @@ export default function PageAtmosphere({
 
         const mode: Mode = theme === "light" ? "light" : "dark";
         const pal = PALETTES[mode];
-        const dim = (mode === "light" ? 0.72 : 1) * intensity; // light mode reads calmer on white surfaces
+        const dim = (mode === "light" ? 0.72 : 1.3) * intensity; // light mode reads calmer on white surfaces; dark mode lifted for visible holographic depth
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const small = window.innerWidth < 768;
 

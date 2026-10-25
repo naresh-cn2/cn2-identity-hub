@@ -23,8 +23,8 @@ export default function OpenGraphImage() {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    backgroundColor: "#0a0a0c",
-                    color: "#f1f1ee",
+                    backgroundColor: "#030712",
+                    color: "#F5F8FF",
                     padding: "72px 80px",
                 }}
             >
@@ -37,7 +37,7 @@ export default function OpenGraphImage() {
                             marginRight: 24,
                         }}
                     />
-                    <div style={{ fontSize: 28, letterSpacing: 6, color: "#8e8e96" }}>
+                    <div style={{ fontSize: 28, letterSpacing: 6, color: "#A7B4C8" }}>
                         BUKYA NARESH
                     </div>
                 </div>
@@ -50,10 +50,10 @@ export default function OpenGraphImage() {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-                    <div style={{ fontSize: 28, color: "#8e8e96", letterSpacing: 4 }}>
+                    <div style={{ fontSize: 28, color: "#A7B4C8", letterSpacing: 4 }}>
                         QUANTITATIVE DEVELOPER
                     </div>
-                    <div style={{ fontSize: 24, color: "#5f697e", letterSpacing: 2 }}>
+                    <div style={{ fontSize: 24, color: "#8B99AF", letterSpacing: 2 }}>
                         RESEARCH · DATA · SYSTEMS
                     </div>
                 </div>

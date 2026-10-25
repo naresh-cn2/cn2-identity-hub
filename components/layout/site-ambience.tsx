@@ -55,7 +55,7 @@ export default function SiteAmbience() {
 
     return (
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
-            <PageAtmosphere variant={variant} intensity={0.7} className="cn2-atmosphere-plain" />
+            <PageAtmosphere variant={variant} intensity={1} className="cn2-atmosphere-plain" />
         </div>
     );
 }

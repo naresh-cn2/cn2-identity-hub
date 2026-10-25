@@ -82,11 +82,11 @@ interface StagePalette {
 
 const PALETTES: Record<Mode, StagePalette> = {
     dark: {
-        glow: [86, 148, 255],
-        structure: [111, 150, 242],
-        signal: [230, 57, 42],
-        bright: [198, 222, 255],
-        deep: [54, 72, 118],
+        glow: [46, 132, 255],    // electric-blue portal pool / primary light
+        structure: [58, 136, 255], // electric mesh lines, rails
+        signal: [255, 48, 48],   // restrained crimson accents
+        bright: [184, 231, 255], // ice-blue highlights, sweeps, sparks
+        deep: [40, 70, 128],     // receding navy tones, haze
     },
     light: {
         glow: [64, 118, 232],
@@ -138,7 +138,7 @@ export default function StageVFX() {
 
         const mode: Mode = theme === "light" ? "light" : "dark";
         const pal = PALETTES[mode];
-        const dim = mode === "light" ? 0.66 : 1;
+        const dim = mode === "light" ? 0.66 : 1.25;
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const fine = window.matchMedia("(pointer: fine)").matches;
         const small = window.innerWidth < 768;

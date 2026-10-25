@@ -23,8 +23,8 @@ export default function GlobalError({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "#0a0a0c",
-                    color: "#f1f1ee",
+                    background: "#030712",
+                    color: "#F5F8FF",
                     fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
                 }}
             >
@@ -42,13 +42,13 @@ export default function GlobalError({
                     >
                         THE SITE ITSELF HIT AN ERROR.
                     </h1>
-                    <p style={{ color: "#8e8e96", lineHeight: 1.7, marginTop: "1.25rem" }}>
+                    <p style={{ color: "#A7B4C8", lineHeight: 1.7, marginTop: "1.25rem" }}>
                         The root layout failed to render. Retrying reloads it. If it keeps
                         happening, something is wrong at the deployment level — the digest below
                         identifies this error in the server logs.
                     </p>
                     {error?.digest && (
-                        <p style={{ color: "#7d7d88", fontSize: 12, marginTop: "1rem" }}>
+                        <p style={{ color: "#8B99AF", fontSize: 12, marginTop: "1rem" }}>
                             DIGEST / {error.digest}
                         </p>
                     )}
@@ -57,8 +57,8 @@ export default function GlobalError({
                             onClick={() => retry()}
                             style={{
                                 background: "transparent",
-                                border: "1px solid #303038",
-                                color: "#f1f1ee",
+                                border: "1px solid rgba(120, 170, 230, 0.34)",
+                                color: "#F5F8FF",
                                 padding: "0.9rem 1.6rem",
                                 fontSize: 11,
                                 letterSpacing: "0.2em",
@@ -71,8 +71,8 @@ export default function GlobalError({
                         <Link
                             href="/"
                             style={{
-                                border: "1px solid #303038",
-                                color: "#8e8e96",
+                                border: "1px solid rgba(120, 170, 230, 0.34)",
+                                color: "#A7B4C8",
                                 padding: "0.9rem 1.6rem",
                                 fontSize: 11,
                                 letterSpacing: "0.2em",

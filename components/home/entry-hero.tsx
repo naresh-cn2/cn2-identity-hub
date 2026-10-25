@@ -8,8 +8,11 @@ import CinematicLayers from "@/components/home/cinematic-layers";
  * EntryHero — the cinematic gateway experience.
  *
  * Uses the provided hero image as the full-bleed background. The image
- * already contains the CN2.DEV wordmark, BUKYA NARESH, divider, and
- * tagline, so no coded hero typography is rendered.
+ * already contains the CN2.DEV wordmark and BUKYA NARESH, so no coded
+ * hero typography is rendered for them — but the tagline slot is live:
+ * "AI-NATIVE SYSTEMS ARCHITECT" is rendered as real text on a plane that
+ * mirrors the artwork's own cover/contain rectangle (cn2-img-box), so it
+ * tracks the baked lettering at every viewport like it was baked in too.
  *
  * CinematicLayers adds theme-aware ambient lighting and restrained motion
  * (portal glow, drifting particles, network pulses, floor sweep, cursor
@@ -54,6 +57,11 @@ export default function EntryHero() {
         aria-label="CN2.DEV cinematic entry gateway"
       >
         <div className="cn2-hero-bg absolute inset-0" />
+        <div className="cn2-hero-img cn2-tag-plane absolute inset-0">
+          <div className="cn2-img-box">
+            <p className="cn2-tagline">AI-NATIVE SYSTEMS ARCHITECT</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -70,9 +78,16 @@ export default function EntryHero() {
            The zoom wrapper carries the slow breathing scale, the stage carries
            perspective, and .cn2-hero-img carries the pointer parallax + micro
            3D tilt. Layers are separated so no transform ever fights another. */}
-      <div className="cn2-hero-stage absolute inset-0" aria-hidden="true">
+      <div className="cn2-hero-stage absolute inset-0">
         <div className="cn2-hero-zoom absolute inset-0">
-          <div className="cn2-hero-img cn2-hero-bg absolute inset-0" />
+          <div className="cn2-hero-img cn2-hero-bg absolute inset-0" aria-hidden="true" />
+          {/* Live tagline on the artwork's own rectangle — shares the transform
+              stack above so it never drifts from the baked lettering. */}
+          <div className="cn2-hero-img cn2-tag-plane absolute inset-0">
+            <div className="cn2-img-box">
+              <p className="cn2-tagline">AI-NATIVE SYSTEMS ARCHITECT</p>
+            </div>
+          </div>
         </div>
       </div>
 

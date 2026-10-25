@@ -50,17 +50,18 @@ export default function CinematicLayers() {
     const small = window.innerWidth < 768;
 
     // ---------- artwork anchors (image-space, measured from the banner) ----------
-    // public/images/cn2-hero-portal.png is 2048×768 (2.667:1). Coordinates are
+    // public/images/cn2-hero-portal.png is 1627×967 (1.683:1). Coordinates are
     // fractions OF THE IMAGE (grid-overlay measurement of the artwork) and are
     // mapped to container space by fit(), so every effect tracks the artwork
     // regardless of viewport aspect or cover/contain fit — mirroring the exact
     // background-size/position math in globals.css (.cn2-hero-bg).
-    const IMG_A = 2048 / 768;
-    const COVER_MIN_A = 1.16; // must match the CSS 29/25 breakpoint in globals.css
-    const A_TEXT = { x0: 0.285, y0: 0.395, x1: 0.505, y1: 0.585 };
-    const A_PORTAL = { x: 0.6, y: 0.47 };
-    const A_FLOOR = 0.661;
-    const A_POOL = 0.8;
+    const IMG_A = 1627 / 967;
+    const COVER_MIN_A = 1.4; // must match the CSS 7/5 breakpoint in globals.css
+    const WIDE_CONTAIN_A = 2.4; // must match the CSS 12/5 breakpoint in globals.css
+    const A_TEXT = { x0: 0.097, y0: 0.385, x1: 0.505, y1: 0.6 };
+    const A_PORTAL = { x: 0.625, y: 0.435 };
+    const A_FLOOR = 0.705;
+    const A_POOL = 0.85;
 
     interface NetNode { ix: number; iy: number; x: number; y: number; red: boolean; phase: number; period: number }
 
@@ -119,15 +120,20 @@ export default function CinematicLayers() {
       sc = Math.min(w, h) / 900;
       const A = w / h;
       if (A <= COVER_MIN_A) {
-        // portrait/tablet: CSS switches .cn2-hero-bg to background-size: contain
+        // portrait / small landscape: CSS switches .cn2-hero-bg to contain (7/5)
         const m = A / IMG_A;
         fit = (ix, iy) => [ix, 0.5 * (1 - m) + iy * m];
+      } else if (A >= WIDE_CONTAIN_A) {
+        // ultrawide: CSS switches .cn2-hero-bg to contain (12/5) — banner fits
+        // height, pillarboxed; position centers it (50% 50%)
+        const f = IMG_A / A;
+        fit = (ix, iy) => [0.5 * (1 - f) + ix * f, iy];
       } else if (A <= IMG_A) {
-        // landscape: cover, height-bound (background-position-x 45%)
+        // landscape: cover, height-bound (background-position-x 25%)
         const k = IMG_A / A;
-        fit = (ix, iy) => [ix * k - 0.45 * (k - 1), iy];
+        fit = (ix, iy) => [ix * k - 0.25 * (k - 1), iy];
       } else {
-        // ultra-wide: cover, width-bound (background-position-y 42%)
+        // wide: cover, width-bound (background-position-y 42%)
         const g = IMG_A / A;
         fit = (ix, iy) => [ix, iy * g + 0.42 * (1 - g)];
       }
@@ -196,8 +202,8 @@ export default function CinematicLayers() {
       particles.push({
         x: Math.random(), y: Math.random(), z,
         r: (0.5 + Math.random() * 1.6) * z,
-        vx: (Math.random() - 0.5) * 0.007 * z,
-        vy: -(0.003 + Math.random() * 0.01) * z,
+        vx: (Math.random() - 0.5) * 0.011 * z,
+        vy: -(0.005 + Math.random() * 0.014) * z,
         red: Math.random() < 0.12,
         base: 0.18 + Math.random() * 0.4,
         tw: Math.random() * Math.PI * 2,
@@ -205,20 +211,24 @@ export default function CinematicLayers() {
     }
 
     // ---------- portal light cycling (slow cinematic on/off) ----------
-    // Each state holds for 10s, so one full coming-and-going cycle takes
-    // 20s — slow motion rather than a 1-2s strobe. Transitions themselves
+    // Each state holds for 7.5s, so one full coming-and-going cycle takes
+    // 15s — slow motion rather than a 1-2s strobe. Transitions themselves
     // ease over ~2-3s (see lerpSpeed below).
     let portalLightLevel = 1; // 0=off, 1=full on
     let portalTarget = 1;
-    const PORTAL_CYCLE_PERIOD = 10000; // ms per state (10s on / 10s off)
+    const PORTAL_CYCLE_PERIOD = 7500; // ms per state (7.5s on / 7.5s off)
     let lastPortalCycle = 0;
 
     // ---------- network nodes (measured artwork dots — image-space, mapped) ----------
+    // 1627×967 grid overlay: red signal dots on the left line (x 15.5%),
+    // right line (x 90.5%), the upper diagonal (34/20.5), the floor line
+    // (10.5/72.5) and mid-left (43/60.5); blue node circles ride the same
+    // vertical rules so pulses travel along visible artwork lines.
     const nodeDefs: Array<[number, number, boolean]> = [
-      [0.115, 0.22, true], [0.40, 0.19, true], [0.17, 0.425, true],
-      [0.725, 0.42, true], [0.845, 0.55, true], [0.94, 0.175, true],
-      [0.02, 0.44, false], [0.17, 0.50, false], [0.17, 0.557, false],
-      [0.82, 0.44, false], [0.82, 0.555, false], [0.945, 0.50, false],
+      [0.34, 0.205, true], [0.43, 0.605, true], [0.155, 0.455, true],
+      [0.87, 0.24, true], [0.905, 0.405, true], [0.105, 0.725, true],
+      [0.155, 0.485, false], [0.155, 0.515, false], [0.905, 0.445, false],
+      [0.905, 0.49, false], [0.905, 0.545, false], [0.03, 0.5, false],
     ];
     const nodes: NetNode[] = nodeDefs.map(([ix, iy, red]) => ({
       ix, iy, x: ix, y: iy, red, phase: Math.random() * Math.PI * 2, period: 10 + Math.random() * 8,
@@ -228,7 +238,7 @@ export default function CinematicLayers() {
 
     // ---------- travelling pulses (pairs follow visible artwork lines) ----------
     interface NetPulse { a: number; b: number; t: number; dur: number; wait: number; red: boolean }
-    const pulsePairs: Array<[number, number]> = [[2, 7], [7, 8], [9, 10], [5, 11], [4, 9], [0, 1], [1, 3]];
+    const pulsePairs: Array<[number, number]> = [[2, 6], [6, 7], [4, 8], [8, 9], [9, 10], [0, 3], [3, 4]];
     const pulses: NetPulse[] = pulsePairs.map(([a, b], i) => ({
       a, b, t: Math.random(), dur: 6 + Math.random() * 4, wait: 5 + Math.random() * 5, red: i % 3 === 0,
     }));
@@ -282,7 +292,7 @@ export default function CinematicLayers() {
         else if (p.x > 0.88) p.x = 0.38;
         const r = p.r * sc;
         // Dramatic light-reactive: smoke blazes when portal light is on, nearly vanishes when off
-        const lightBoost = 0.02 + 0.98 * portalLightLevel * p.lightResp;
+        const lightBoost = 0.28 + 0.72 * portalLightLevel * p.lightResp;
         const alpha = p.a * (isDark ? 1 : 0.8) * (0.7 + 0.5 * nearPortal) * lightBoost;
         ctx.globalAlpha = Math.min(0.5, alpha);
         const sprite = p.white ? spriteWhite : spriteBlue;
@@ -377,7 +387,7 @@ export default function CinematicLayers() {
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       ctx.globalAlpha = (isDark ? 0.3 : 0.2) * portalLightLevel;
       const pr = 180 * sc;
-      const pulse = 0.7 + 0.3 * Math.sin(t * 0.00045);
+      const pulse = 0.7 + 0.3 * Math.sin(t * 0.00075);
       ctx.drawImage(spriteBlue, portal.x * w - pr, poolY * h - pr * 0.5, pr * 2, pr * pulse);
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = "source-over";
@@ -398,7 +408,7 @@ export default function CinematicLayers() {
       // red reflections beneath red signals that sit above the floor
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       for (const n of nodes) {
-        if (!n.red || n.iy < 0.4 || n.iy > 0.72) continue;
+        if (!n.red || n.iy < 0.4 || n.iy > 0.75) continue;
         const pulseR = 0.5 + 0.5 * Math.sin((n.phase / n.period) * Math.PI * 2);
         const ra = (0.06 + 0.08 * pulseR) * (isDark ? 1 : 0.7);
         ctx.globalAlpha = ra;
@@ -439,14 +449,14 @@ export default function CinematicLayers() {
       for (let i = 0; i < beamCount; i++) {
         const angle = (i / beamCount) * Math.PI * 2 + t * 0.0004;
         // Short beams — stay within portal area, don't reach character
-        const beamLen = (0.08 + 0.04 * Math.sin(t * 0.0003 + i)) * w;
+        const beamLen = (0.08 + 0.04 * Math.sin(t * 0.00055 + i)) * w;
         const beamWidth = (10 + 5 * Math.sin(t * 0.0004 + i * 2)) * sc;
         const x0 = portal.x * w;
         const y0 = portal.y * h;
         const x1 = x0 + Math.cos(angle) * beamLen;
         const y1 = y0 + Math.sin(angle) * beamLen;
         const grad = ctx.createLinearGradient(x0, y0, x1, y1);
-        const intensity = 0.08 * portalLightLevel * (0.5 + 0.5 * Math.sin(t * 0.0005 + i));
+        const intensity = 0.08 * portalLightLevel * (0.5 + 0.5 * Math.sin(t * 0.00085 + i));
         grad.addColorStop(0, `rgba(180,220,255,${intensity.toFixed(3)})`);
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.strokeStyle = grad;
@@ -461,7 +471,7 @@ export default function CinematicLayers() {
 
     // ---------- portal glow halo (subtle — stays within portal ring, doesn't cross character) ----------
     const drawPortalHalo = (isDark: boolean, t: number) => {
-      const breathe = 0.6 + 0.4 * Math.sin(t * 0.0005);
+      const breathe = 0.6 + 0.4 * Math.sin(t * 0.00085);
       const intensity = portalLightLevel * breathe;
       if (intensity < 0.02) return;
       ctx.globalCompositeOperation = "lighter";
@@ -471,7 +481,7 @@ export default function CinematicLayers() {
       // Outer halo — small, stays inside portal ring
       const haloR = baseR * (1.1 + 0.2 * intensity);
       const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, haloR);
-      const a = 0.08 * intensity * (isDark ? 1 : 0.6);
+      const a = 0.12 * intensity * (isDark ? 1 : 0.6);
       grad.addColorStop(0, `rgba(80,150,255,${a.toFixed(3)})`);
       grad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = grad;
