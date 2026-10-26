@@ -258,12 +258,49 @@ export default function CaseStudy({
             </Chapter>
 
             <Chapter id="evidence" index={12} title="EVIDENCE">
+              {project.verified && (
+                <Reveal>
+                  <div
+                    data-verified={project.verified.date}
+                    className="corner-ticks mb-8 max-w-3xl border border-line bg-surface p-6"
+                  >
+                    <p className="label-mono text-faint">
+                      LAST VERIFIED <span className="text-signal">{project.verified.date}</span>
+                      {" — "}{project.verified.method}
+                      {project.verified.baseline && <> · BASELINE {project.verified.baseline}</>}
+                      {project.verified.href && (
+                        <>
+                          {" · "}
+                          <a
+                            href={project.verified.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-signal transition-colors hover:text-foreground"
+                          >
+                            VIEW THE RUN →
+                          </a>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </Reveal>
+              )}
               <div className="grid gap-px bg-line md:grid-cols-3">
                 {project.evidence.map((e, i) => (
                   <Reveal key={e.label} delay={i * 80}>
                     <div className="bg-surface p-5">
                       <p className="label-mono text-foreground">{e.label}</p>
                       <p className="mt-3 text-sm leading-relaxed text-muted">{e.detail}</p>
+                      {e.href && (
+                        <a
+                          href={e.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="label-mono mt-4 inline-block text-signal transition-colors hover:text-foreground"
+                        >
+                          OPEN THE SOURCE →
+                        </a>
+                      )}
                     </div>
                   </Reveal>
                 ))}

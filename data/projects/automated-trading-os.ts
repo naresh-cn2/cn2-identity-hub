@@ -13,7 +13,7 @@ export const automatedTradingOs: FlagshipProject = {
   thesis:
     "A trade is not a signal — it is a pipeline of decisions from higher timeframe context down to fill, each stage governed by explicit risk rules.",
   summary:
-    "An operating-system-style architecture for systematic trading: higher-timeframe context flows down through mid- and lower-timeframe analysis into risk, trade management and execution — every stage bounded by verified controls: 1% per-trade risk cap, minimum 1:4 reward-to-risk, fee and slippage modelling, cost-budget filtering, profit lock and giveback limit.",
+    "An operating-system-style architecture for systematic trading: higher-timeframe context flows down through mid- and lower-timeframe analysis into risk, trade management and execution — every stage bounded by structural controls: 1% per-trade risk cap, minimum 1:4 reward-to-risk, fee and slippage modelling, cost-budget filtering, profit lock and giveback limit.",
   problem: [
     "Most trading systems are built as a single indicator that prints buy/sell signals. That model collapses context, risk and execution into one fragile decision.",
     "Real systematic trading is layered: what the higher timeframe permits, the mid timeframe structures, the lower timeframe triggers — and none of it matters if position size, costs and exit management are not governed explicitly.",
@@ -26,7 +26,7 @@ export const automatedTradingOs: FlagshipProject = {
     "Does explicit multi-timeframe separation, with hard risk controls at every layer boundary, improve trade quality enough to survive modeled costs?",
   objective: [
     "Separate HTF / MTF / LTF analysis into distinct pipeline stages with defined contracts",
-    "Enforce verified risk controls as structural invariants: 1% per-trade risk cap, minimum 1:4 R:R",
+    "Enforce risk controls as structural invariants: 1% per-trade risk cap, minimum 1:4 R:R",
     "Model fees and slippage at execution, and filter trades whose cost budget cannot support the setup",
     "Manage open trades with profit lock and giveback limits instead of static stops only",
   ],
@@ -111,7 +111,7 @@ export const automatedTradingOs: FlagshipProject = {
       { value: "100%", label: "FILLS COST-MODELED", context: "FEES + SLIPPAGE" },
     ],
     narrative: [
-      "The verified results here are architectural: the controls exist, are enforced structurally, and are experiment-ready. Performance figures from this architecture will be published only as labeled backtests when runs complete.",
+      "The results here are architectural: the controls exist, are enforced structurally, and are experiment-ready. Performance figures from this architecture will be published only as labeled backtests when runs complete.",
     ],
   },
   limitations: [
@@ -120,8 +120,8 @@ export const automatedTradingOs: FlagshipProject = {
     "Cost models approximate fills and do not capture all extreme-liquidity scenarios",
   ],
   evidence: [
-    { label: "REPOSITORY", detail: "Architecture and control implementations on GitHub" },
-    { label: "VERIFIED CONTROLS", detail: "Risk cap, R:R floor, cost filter, profit lock, giveback limit — all present in code" },
+    { label: "REPOSITORY", detail: "Architecture and control implementations on GitHub", href: "https://github.com/naresh-cn2/automated_trading_os" },
+    { label: "CONTROLS IN CODE", detail: "Risk cap, R:R floor, cost filter, profit lock, giveback limit - enforced structurally and exercised by local tests; no CI runs yet" },
     { label: "PIPELINE MODEL", detail: "HTF → MTF → LTF → RISK → TRADE MANAGEMENT → EXECUTION" },
   ],
   technologies: ["Python", "Multi-timeframe analysis", "Risk engine", "Paper execution"],
@@ -129,7 +129,7 @@ export const automatedTradingOs: FlagshipProject = {
   interactive: [
     {
       title: "RISK CALCULATOR",
-      description: "Compute position size, R:R and net risk under the OS's verified control rules.",
+      description: "Compute position size, R:R and net risk under the OS's structural control rules.",
       href: "/lab/risk",
     },
     {

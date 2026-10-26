@@ -4,7 +4,15 @@ import { automatedTradingOs } from "./automated-trading-os";
 import { marketDataReplay } from "./market-data-replay";
 import { qrsip } from "./qrsip";
 
-export type { FlagshipProject, ProjectMetric, ArchLayer, EvidenceItem, InteractiveModule } from "./types";
+export type {
+  FlagshipProject,
+  ProjectMetric,
+  ArchLayer,
+  EvidenceItem,
+  InteractiveModule,
+  ResultClass,
+  VerificationRecord,
+} from "./types";
 
 export const flagshipProjects: FlagshipProject[] = [
   apexQuantEngine,

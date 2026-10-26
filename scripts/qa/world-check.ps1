@@ -90,6 +90,50 @@ Check "regress: apex keeps instrument" ($apex.Contains('INSTRUMENT / EQUITY SURF
 Check "regress: apex case study CTA" ($apex.Contains('/case-studies/apex-quant-engine'))
 Check "regress: apex has no world CTA" (-not $apex.Contains('EXPLORE ARCHITECTURE'))
 
+# ============ EVIDENCE SCHEMA: optional fields ============
+$qrsipP = (Invoke-WebRequest -Uri "$base/work/qrsip" -UseBasicParsing).Content
+$mdrP = (Invoke-WebRequest -Uri "$base/work/market-data-replay" -UseBasicParsing).Content
+$atosP = (Invoke-WebRequest -Uri "$base/work/automated-trading-os" -UseBasicParsing).Content
+$csQrsip = (Invoke-WebRequest -Uri "$base/case-studies/qrsip" -UseBasicParsing).Content
+
+# populated: result classifications render as badges
+Check "schema: apex BACKTEST badge" ($apex.Contains('data-result-class="BACKTEST"'))
+Check "schema: apex SELF-BENCHMARK badge" ($apex.Contains('data-result-class="SELF-BENCHMARK"'))
+Check "schema: qrsip TEST-SUITE badge" ($qrsipP.Contains('data-result-class="TEST-SUITE"'))
+
+# populated: provenance states honest limits
+Check "schema: apex window/seed not documented" ($apex.Contains('evaluation window and seed not documented'))
+Check "schema: apex machine spec not documented" ($apex.Contains('machine specification not documented'))
+
+# populated: dated verification records (date + baseline + run link)
+Check "schema: qrsip verified 2026-09-25 at 8fc4590" ($qrsipP.Contains('data-verified="2026-09-25"') -and $qrsipP.Contains('8fc4590'))
+Check "schema: qrsip run link" ($qrsipP.Contains('actions/runs/36135583631'))
+Check "schema: mdr verified 2026-09-17 at a72d803" ($mdrP.Contains('data-verified="2026-09-17"') -and $mdrP.Contains('a72d803'))
+Check "schema: mdr run link" ($mdrP.Contains('actions/runs/35232102872'))
+Check "schema: case study renders verification too" ($csQrsip.Contains('data-verified="2026-09-25"'))
+
+# evidence links point at real artifacts
+Check "schema: qrsip links tests dir" ($qrsipP.Contains('/tree/main/tests'))
+Check "schema: mdr links verification guide" ($mdrP.Contains('/blob/main/VERIFICATION_GUIDE.md'))
+Check "schema: apex links README artifacts" ($apex.Contains('/blob/main/README.md'))
+
+# claim hygiene: ATOS no longer implies independent verification
+Check "schema: atos CONTROLS IN CODE, not VERIFIED CONTROLS" ($atosP.Contains('CONTROLS IN CODE') -and (-not $atosP.Contains('VERIFIED CONTROLS')))
+Check "schema: atos admits no CI runs yet" ($atosP.Contains('no CI runs yet'))
+
+# absent optional fields render nothing at all
+Check "schema: atos has no verification line" (-not $atosP.Contains('data-verified='))
+Check "schema: atos metrics carry no badge" (-not $atosP.Contains('data-result-class='))
+
+# legacy tier-2 record untouched by the new fields
+Check "schema: billing legacy record has no badges" (-not ($billing.Contains('data-result-class=') -or $billing.Contains('data-verified=')))
+
+# no serialization leakage in rendered HTML (scripts stripped: RSC payload
+# legitimately contains the framework's "$undefined" sentinel)
+$all4 = $apex + $qrsipP + $mdrP + $atosP
+$all4R = [regex]::Replace($all4, '<script[\s\S]*?</script>', '')
+Check "schema: no undefined or object leakage (rendered HTML)" (-not ($all4R.Contains('undefined') -or $all4R.Contains('[object Object]')))
+
 # ============ CSS layer ============
 $css = (Get-ChildItem ".next/static/chunks" -Filter "*.css" | ForEach-Object { Get-Content $_.FullName -Raw }) -join "`n"
 Check "css: wx-panel animation" ($css.Contains('wx-panel') -and $css.Contains('cn2-panel-in'))

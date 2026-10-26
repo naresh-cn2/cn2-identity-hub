@@ -106,21 +106,29 @@ export const apexQuantEngine: FlagshipProject = {
         value: "+570.18%",
         label: "NET SIMULATED ROI",
         context: "MASTER-FUND BACKTEST",
+        resultClass: "BACKTEST",
+        provenance:
+          "Self-reported master-fund backtest after modeled fees and slippage; evaluation window and seed not documented",
       },
       {
         value: "5,867",
         label: "COMPLETED BACKTEST TRADES",
         context: "FULL-HISTORY SIMULATION",
+        resultClass: "BACKTEST",
       },
       {
         value: "11.9M+",
         label: "1-MINUTE BARS PROCESSED",
         context: "BTC / ETH / SOL",
+        resultClass: "BACKTEST",
       },
       {
         value: "44.50s",
         label: "BACKTEST EXECUTION TIME",
         context: "MASTER-FUND RUN",
+        resultClass: "SELF-BENCHMARK",
+        provenance:
+          "Self-reported single-run benchmark; machine specification not documented",
       },
     ],
     narrative: [
@@ -134,8 +142,17 @@ export const apexQuantEngine: FlagshipProject = {
     "Historical performance of a strategy set does not imply future performance",
   ],
   evidence: [
-    { label: "REPOSITORY", detail: "Full source, strategies and simulation harness on GitHub" },
-    { label: "BACKTEST ARTIFACTS", detail: "Equity curves, trade logs and run configurations reproducible from the repository" },
+    {
+      label: "REPOSITORY",
+      detail: "Full source, strategies and simulation harness on GitHub",
+      href: "https://github.com/naresh-cn2/apex-quant-engine",
+    },
+    {
+      label: "BACKTEST ARTIFACTS",
+      detail:
+        "Equity curves, trade logs and run configurations reproducible from the repository",
+      href: "https://github.com/naresh-cn2/apex-quant-engine/blob/main/README.md",
+    },
     { label: "PAPER MODE", detail: "Forward paper-execution mode runs the identical code path" },
   ],
   technologies: ["Python", "Pandas / NumPy", "SQLite", "Cryptocurrency exchange APIs"],

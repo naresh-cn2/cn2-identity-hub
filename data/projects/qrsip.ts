@@ -103,7 +103,14 @@ export const qrsip: FlagshipProject = {
   ],
   results: {
     metrics: [
-      { value: "352", label: "TESTS", context: "DETERMINISTIC FIXTURES" },
+      {
+        value: "352",
+        label: "TESTS",
+        context: "DETERMINISTIC FIXTURES",
+        resultClass: "TEST-SUITE",
+        provenance:
+          "pytest 8.4.2 on Python 3.12; 352 passed at baseline 8fc4590 (2026-09-25)",
+      },
       { value: "6", label: "WORKFLOW STAGES", context: "HYPOTHESIS → PROMOTION" },
       { value: "ALPHA", label: "PLATFORM STATUS", context: "CORE WORKFLOW LIVE" },
     ],
@@ -115,11 +122,23 @@ export const qrsip: FlagshipProject = {
     "Alpha status — the platform is operational for its core workflow, not complete",
     "Some planned capabilities remain deferred and are not implemented yet",
     "The promotion gate currently governs a small strategy population",
+    "External acceptance evidence (clean-container run) remains outstanding - last verification 2026-09-25 at baseline 8fc4590",
   ],
   evidence: [
-    { label: "REPOSITORY", detail: "Platform source on GitHub" },
-    { label: "TEST SUITE", detail: "352 tests on deterministic fixtures" },
-    { label: "STATUS", detail: "Alpha-stage workflow: hypothesis → experiment → verification → artifact → report → promotion" },
+    {
+      label: "REPOSITORY",
+      detail: "Platform source on GitHub",
+      href: "https://github.com/naresh-cn2/quant-research-strategy-intelligence-platform",
+    },
+    {
+      label: "TEST SUITE",
+      detail: "352 tests on deterministic fixtures",
+      href: "https://github.com/naresh-cn2/quant-research-strategy-intelligence-platform/tree/main/tests",
+    },
+    {
+      label: "STATUS",
+      detail: "Alpha-stage workflow: hypothesis → experiment → verification → artifact → report → promotion",
+    },
   ],
   technologies: ["Python", "CI pipelines", "Deterministic fixtures", "Report generation"],
   visualMetaphor: "experiment graph / verification pipeline",
@@ -131,4 +150,10 @@ export const qrsip: FlagshipProject = {
     },
   ],
   github: "https://github.com/naresh-cn2/quant-research-strategy-intelligence-platform",
+  verified: {
+    date: "2026-09-25",
+    method: "pytest 8.4.2 (Python 3.12): 352 passed; CI and Security workflow runs passed",
+    baseline: "8fc4590",
+    href: "https://github.com/naresh-cn2/quant-research-strategy-intelligence-platform/actions/runs/36135583631",
+  },
 };

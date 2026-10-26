@@ -8,7 +8,7 @@ export const marketDataReplay: FlagshipProject = {
   shortTitle: "DATA REPLAY",
   category: "POINT-IN-TIME SAFE MARKET-DATA INFRASTRUCTURE",
   status: "RELEASED",
-  statusNote: "Core infrastructure implemented and tested.",
+  statusNote: "Core infrastructure implemented; 70-test suite passes CI on Python 3.10-3.12.",
   position: "Point-in-time safe market-data infrastructure for quantitative research.",
   thesis:
     "Every backtest is a claim about the past — and most are wrong in a specific, preventable way: they let strategies see the future.",
@@ -139,9 +139,21 @@ export const marketDataReplay: FlagshipProject = {
     "Quarantine policy is conservative — some late-arriving but valid data may be held for inspection",
   ],
   evidence: [
-    { label: "REPOSITORY", detail: "Full pipeline implementation on GitHub" },
-    { label: "ADVERSARIAL TESTS", detail: "Deliberate attempts to extract future information fail" },
-    { label: "DETERMINISM", detail: "Byte-identical replay across runs, including tie-breaking" },
+    {
+      label: "REPOSITORY",
+      detail: "Full pipeline implementation on GitHub",
+      href: "https://github.com/naresh-cn2/quant-market-data-replay",
+    },
+    {
+      label: "ADVERSARIAL TESTS",
+      detail: "Deliberate attempts to extract future information fail",
+      href: "https://github.com/naresh-cn2/quant-market-data-replay/tree/main/tests/adversarial",
+    },
+    {
+      label: "DETERMINISM",
+      detail: "Byte-identical replay across runs, including tie-breaking",
+      href: "https://github.com/naresh-cn2/quant-market-data-replay/blob/main/VERIFICATION_GUIDE.md",
+    },
   ],
   technologies: ["Python", "SQLite WAL", "Exact decimal arithmetic", "Nanosecond timestamps"],
   visualMetaphor: "temporal data stream / replay environment",
@@ -153,4 +165,10 @@ export const marketDataReplay: FlagshipProject = {
     },
   ],
   github: "https://github.com/naresh-cn2/quant-market-data-replay",
+  verified: {
+    date: "2026-09-17",
+    method: "GitHub Actions CI: full unittest suite passed on Python 3.10-3.12",
+    baseline: "a72d803",
+    href: "https://github.com/naresh-cn2/quant-market-data-replay/actions/runs/35232102872",
+  },
 };
