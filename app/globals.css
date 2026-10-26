@@ -679,7 +679,7 @@ h1.cn2-brand-word {
   }
 }
 
-/* ---- Baked-artwork tagline: "AI-NATIVE SYSTEMS ARCHITECT" ----
+/* ---- Baked-artwork tagline: "QUANTITATIVE DEVELOPER" ----
    The line lives in the artwork's composition (same slot as the old baked
    "WHERE IMAGINATION BECOMES REALITY"), so this layer rebuilds the artwork's
    own rectangle by mirroring .cn2-hero-bg's cover/contain math exactly, then

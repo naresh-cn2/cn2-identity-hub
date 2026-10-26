@@ -57,7 +57,7 @@ export default function IdentityPage() {
               <p className="label-mono mt-4 text-muted">
                 AUTOMATION <span className="text-signal">·</span> DATA
                 <span className="text-signal"> ·</span> FINANCE
-                <span className="text-signal"> ·</span> ARTIFICIAL INTELLIGENCE
+                <span className="text-signal"> ·</span> TRADING SYSTEMS
               </p>
             </Reveal>
           </div>

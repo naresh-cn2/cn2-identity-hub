@@ -19,7 +19,7 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Credentials",
   description:
-    "Education, completed programmes and continuous learning — Bukya Naresh. Internships, courses and certifications across generative AI, quantitative finance, data and software engineering, plus active self-directed study tracks.",
+    "Education, completed programmes and continuous learning — Bukya Naresh. Internships, courses and certifications across quantitative finance, data and software engineering, generative AI, plus active self-directed study tracks.",
   alternates: { canonical: "/credentials" },
   openGraph: {
     images: ["/opengraph-image"],
@@ -131,8 +131,9 @@ export default function CredentialsPage() {
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              My learning journey spans generative AI, quantitative finance, algorithmic trading,
-              data, and software engineering. Here, I document the programmes I have completed, the
+              My learning journey spans quantitative finance, algorithmic trading, data,
+              software engineering, and generative AI. Here, I document the programmes I have
+              completed, the
               skills I am developing, and the knowledge I put into practice through technical
               projects.
             </p>

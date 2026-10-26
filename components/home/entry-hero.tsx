@@ -10,7 +10,7 @@ import CinematicLayers from "@/components/home/cinematic-layers";
  * Uses the provided hero image as the full-bleed background. The image
  * already contains the CN2.DEV wordmark and BUKYA NARESH, so no coded
  * hero typography is rendered for them — but the tagline slot is live:
- * "AI-NATIVE SYSTEMS ARCHITECT" is rendered as real text on a plane that
+ * "QUANTITATIVE DEVELOPER" is rendered as real text on a plane that
  * mirrors the artwork's own cover/contain rectangle (cn2-img-box), so it
  * tracks the baked lettering at every viewport like it was baked in too.
  *
@@ -59,7 +59,7 @@ export default function EntryHero() {
         <div className="cn2-hero-bg absolute inset-0" />
         <div className="cn2-hero-img cn2-tag-plane absolute inset-0">
           <div className="cn2-img-box">
-            <p className="cn2-tagline">AI-NATIVE SYSTEMS ARCHITECT</p>
+            <p className="cn2-tagline">QUANTITATIVE DEVELOPER</p>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function EntryHero() {
               stack above so it never drifts from the baked lettering. */}
           <div className="cn2-hero-img cn2-tag-plane absolute inset-0">
             <div className="cn2-img-box">
-              <p className="cn2-tagline">AI-NATIVE SYSTEMS ARCHITECT</p>
+              <p className="cn2-tagline">QUANTITATIVE DEVELOPER</p>
             </div>
           </div>
         </div>
