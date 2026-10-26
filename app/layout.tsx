@@ -10,7 +10,6 @@ import SiteAmbience from "@/components/layout/site-ambience";
 import StageVFX from "@/components/cinematic/stage-vfx";
 import BackButton from "@/components/layout/back-button";
 import ScrollProgress from "@/components/layout/scroll-progress";
-import CursorLight from "@/components/layout/cursor-light";
 import { site } from "@/data/site";
 
 const archivo = Archivo({
@@ -120,7 +119,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <CommandPalette />
           <SiteAmbience />
           <StageVFX />
-          <CursorLight />
           <ScrollProgress />
           <PageTransition>
             <main id="main">{children}</main>

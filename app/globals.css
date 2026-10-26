@@ -1721,30 +1721,6 @@ button.corner-ticks {
   transition: opacity 0.4s ease;
 }
 
-/* cursor light — an electric holographic halo trails the pointer through the room */
-.cursor-light-dot {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 32rem;
-  height: 32rem;
-  border-radius: 9999px;
-  opacity: 0;
-  transform: translate3d(50vw, 45vh, 0) translate(-50%, -50%);
-  transition: opacity 0.6s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-  background: radial-gradient(closest-side,
-      color-mix(in srgb, var(--electric) 9%, transparent),
-      transparent 72%);
-}
-
-.dark .cursor-light-dot {
-  background: radial-gradient(closest-side,
-      color-mix(in srgb, var(--electric) 18%, transparent),
-      color-mix(in srgb, var(--holo) 6%, transparent) 55%,
-      transparent 72%);
-}
-
 /* command palette — rows cascade in behind the springing panel */
 [data-open="true"] [role="option"] {
   animation: palette-row 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
