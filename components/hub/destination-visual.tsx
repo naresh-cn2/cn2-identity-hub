@@ -8,7 +8,8 @@ import AboutVisual from "./visuals/about-visual";
 import ConnectVisual from "./visuals/connect-visual";
 
 /**
- * DestinationVisual — routes a destination code to its own scene.
+ * DestinationVisual - routes a journey position (destination code) to that
+ * destination's scene, so each scene travels with its destination.
  *
  * One shared frame (canvas ambience under crisp SVG structure), eight
  * distinct compositions. Each visual evolves independently in its own file.
@@ -18,13 +19,13 @@ export default function DestinationVisual({ code }: { code: string }) {
     case "01":
       return <BuildsVisual />;
     case "02":
-      return <CredentialsVisual />;
-    case "03":
-      return <ServicesVisual />;
-    case "04":
-      return <LabVisual />;
-    case "05":
       return <ResearchVisual />;
+    case "03":
+      return <LabVisual />;
+    case "04":
+      return <ServicesVisual />;
+    case "05":
+      return <CredentialsVisual />;
     case "06":
       return <OpportunitiesVisual />;
     case "07":

@@ -29,36 +29,33 @@ export interface HubDestination {
   interactive?: boolean;
 }
 
+/**
+ * Journey order (P1-A, owner-approved): WORK → RESEARCH → LABORATORY →
+ * SERVICES → CREDENTIALS → OPPORTUNITIES → ABOUT ME → LET'S CONNECT.
+ * Codes are positional (01–08 in array order); each destination keeps its
+ * own visual and ambient wherever it sits in the journey.
+ */
 export const hubDestinations: HubDestination[] = [
   {
     code: "01",
     label: "WORK",
     href: "/work",
     blurb:
-      "Explore the software, quantitative systems, and technical infrastructure I'm building.",
+      "Explore the quantitative systems, market-data infrastructure, and research tooling I build — each documented from problem through architecture to current status.",
     action: "ENTER WORK",
     caption: "ARCHITECTURE",
   },
   {
     code: "02",
-    label: "CREDENTIALS",
-    href: "/credentials",
+    label: "RESEARCH",
+    href: "/research",
     blurb:
-      "Education, certifications, and self-directed learning that shape my technical development.",
-    action: "EXPLORE CREDENTIALS",
-    caption: "LEARNING STRATA",
+      "Investigate the questions, experiments, evidence, and conclusions behind my work.",
+    action: "EXPLORE RESEARCH",
+    caption: "EVIDENCE CHAIN",
   },
   {
     code: "03",
-    label: "SERVICES",
-    href: "/services",
-    blurb:
-      "Explore the technical work I can deliver, the problems I can help solve, and how we could work together.",
-    action: "EXPLORE SERVICES",
-    caption: "DELIVERY FLOW",
-  },
-  {
-    code: "04",
     label: "LABORATORY",
     href: "/lab",
     blurb:
@@ -67,13 +64,22 @@ export const hubDestinations: HubDestination[] = [
     caption: "INSTRUMENT",
   },
   {
-    code: "05",
-    label: "RESEARCH",
-    href: "/research",
+    code: "04",
+    label: "SERVICES",
+    href: "/services",
     blurb:
-      "Investigate the questions, experiments, evidence, and conclusions behind my work.",
-    action: "EXPLORE RESEARCH",
-    caption: "EVIDENCE CHAIN",
+      "Explore the technical work I can deliver, the problems I can help solve, and how we could work together.",
+    action: "EXPLORE SERVICES",
+    caption: "DELIVERY FLOW",
+  },
+  {
+    code: "05",
+    label: "CREDENTIALS",
+    href: "/credentials",
+    blurb:
+      "Education, certifications, and self-directed learning that shape my technical development.",
+    action: "EXPLORE CREDENTIALS",
+    caption: "LEARNING STRATA",
   },
   {
     code: "06",
@@ -105,15 +111,19 @@ export const hubDestinations: HubDestination[] = [
   },
 ];
 
-/** Secondary destinations the hub index carries below the journey. */
+/**
+ * Secondary destinations the hub index carries below the journey.
+ * P1-A: PROOF and CV lead the row — evidence and professional record sit
+ * directly under the journey instead of being buried mid-row.
+ */
 export const hubIndex: { label: string; href: string }[] = [
+  { label: "PROOF", href: "/proof" },
+  { label: "CV", href: "/cv" },
   { label: "CASE STUDIES", href: "/case-studies" },
   { label: "CAPABILITIES", href: "/capabilities" },
   { label: "ARTICLES", href: "/articles" },
   { label: "INTELLIGENCE", href: "/intelligence" },
-  { label: "PROOF", href: "/proof" },
   { label: "IDENTITY", href: "/identity" },
-  { label: "CV", href: "/cv" },
   { label: "LINKS", href: "/links" },
   { label: "TESTIMONIALS", href: "/testimonials" },
 ];

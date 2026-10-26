@@ -23,14 +23,14 @@ export const metadata: Metadata = {
  * distinct enough that every destination owns its own atmosphere.
  */
 const AMBIENTS: Record<string, string> = {
-  "01": "grid-field opacity-60",
-  "02": "amb-glow-r",
-  "03": "scanlines",
-  "04": "amb-halo",
-  "05": "grid-field-fine opacity-40",
-  "06": "amb-glow-s",
-  "07": "amb-vignette",
-  "08": "amb-glow-r",
+  "01": "grid-field opacity-60", // WORK
+  "02": "grid-field-fine opacity-40", // RESEARCH
+  "03": "amb-halo", // LABORATORY
+  "04": "scanlines", // SERVICES
+  "05": "amb-glow-r", // CREDENTIALS
+  "06": "amb-glow-s", // OPPORTUNITIES
+  "07": "amb-vignette", // ABOUT ME
+  "08": "amb-glow-r", // LET'S CONNECT
 };
 
 export default function HubPage() {

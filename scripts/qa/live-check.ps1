@@ -29,6 +29,10 @@ function Assert([string]$name, [bool]$cond) {
     else { $script:fail++; Write-Host ("  FAIL  " + $name) -ForegroundColor Red }
 }
 
+Write-Host "== hero identity regression lock (P1-F) =="
+$heroHtml = Get-Page "/"
+Assert "hero identity: QUANTITATIVE DEVELOPER present and former tagline absent" ($heroHtml.Contains("QUANTITATIVE DEVELOPER") -and (-not $heroHtml.Contains("AI-NATIVE SYSTEMS ARCHITECT")))
+
 Write-Host "== stylesheet: new live-motion CSS =="
 $homeHtml = Get-Page "/"
 $cssLinks = [regex]::Matches($homeHtml, 'href="(/_next/static/[^"]+\.css)"') | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
