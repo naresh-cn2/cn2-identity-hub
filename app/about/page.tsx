@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import SystemsUniverse from "@/components/about/systems-universe";
 import Link from "next/link";
 import PageAtmosphere from "@/components/ui/page-atmosphere";
 import Reveal from "@/components/ui/reveal";
@@ -128,18 +128,8 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* the figure — whole, never cropped; sets the section height */}
-        <Image
-          src="/images/about-cosmos.png"
-          alt="A figure formed of starlight, holding a burning red ember against a field of stars"
-          width={1085}
-          height={1450}
-          sizes="100vw"
-          priority
-          className="block h-auto w-full"
-        />
-
-        <PageAtmosphere variant="cosmos" className="cn2-atmosphere-plain" />
+        {/* 100% Coded Systems & Trajectories Canvas */}
+        <SystemsUniverse />
       </section>
 
       {/* ---- 02 · THE WAY I THINK ------------------------------------- */}
@@ -249,3 +239,5 @@ export default function AboutPage() {
     </>
   );
 }
+
+
