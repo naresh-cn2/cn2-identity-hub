@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import QuantitativeUniverse from "@/components/home/quantitative-universe";
 
@@ -17,13 +17,7 @@ import QuantitativeUniverse from "@/components/home/quantitative-universe";
  */
 export default function EntryHero() {
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(raf);
-  }, []);
 
   // CTA click handler — enter the platform at the headquarters (/hub)
   const handleEnter = () => {

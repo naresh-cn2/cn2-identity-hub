@@ -191,6 +191,9 @@ export default function CredentialTimeline({
                           {c.credentialId && (
                             <span className="num-mono ml-3 text-faint normal-case">{c.credentialId}</span>
                           )}
+                          {c.expires && (
+                            <span className="label-mono ml-3 text-faint">· {c.expires}</span>
+                          )}
                         </span>
                       )}
                     </span>
@@ -250,6 +253,12 @@ export default function CredentialTimeline({
                             <p className="mt-3 text-sm leading-relaxed text-muted">{c.learned}</p>
                             <p className="label-mono mt-6 text-faint">ASSESSMENT</p>
                             <p className="mt-3 text-sm leading-relaxed text-muted">{c.assessment}</p>
+                            {c.expires && (
+                              <>
+                                <p className="label-mono mt-6 text-faint">VALIDITY</p>
+                                <p className="mt-2 text-sm leading-relaxed text-muted">{c.expires}</p>
+                              </>
+                            )}
                           </div>
 
                           {(c.verificationUrl || c.certificateUrl || (c.notes?.length ?? 0) > 0 || relBuild || relResearch) && (

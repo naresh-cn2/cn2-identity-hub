@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
 
@@ -23,24 +23,24 @@ const drawAbout: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
     const sx = (Math.abs(Math.sin(i * 91.7 + 11.3) * 43758.5) % 1) * w;
     const sy = (Math.abs(Math.sin(i * 47.9 + 3.7) * 43758.5) % 1) * hz * 0.96;
     const drift = reduced ? 0 : Math.sin(t * 0.05 + i) * 2;
-    const a = (0.1 + layer * 0.3) * (0.55 + 0.45 * Math.sin(t * (0.3 + layer * 0.4) + i * 1.7)) * dim;
+    const a = (0.2 + layer * 0.45) * (0.6 + 0.4 * Math.sin(t * (0.3 + layer * 0.4) + i * 1.7)) * dim;
     ctx.fillStyle = rgba(pal.bright, a);
     ctx.beginPath();
-    ctx.arc(sx + drift, sy, 0.5 + layer * 0.8, 0, Math.PI * 2);
+    ctx.arc(sx + drift, sy, 0.7 + layer * 1.1, 0, Math.PI * 2);
     ctx.fill();
   }
 
   /* volumetric shaft rising above the gateway */
   const shaft = ctx.createLinearGradient(0, h * 0.06, 0, gy);
   shaft.addColorStop(0, rgba(pal.structure, 0));
-  shaft.addColorStop(0.7, rgba(pal.structure, 0.045 * dim * breathe(t, 0.5, 0)));
-  shaft.addColorStop(1, rgba(pal.bright, 0.08 * dim));
+  shaft.addColorStop(0.5, rgba(pal.structure, 0.18 * dim * breathe(t, 0.5, 0)));
+  shaft.addColorStop(1, rgba(pal.bright, 0.4 * dim));
   ctx.fillStyle = shaft;
   ctx.beginPath();
   ctx.moveTo(gx - w * 0.02, gy);
   ctx.lineTo(gx + w * 0.02, gy);
-  ctx.lineTo(gx + w * 0.075, h * 0.04);
-  ctx.lineTo(gx - w * 0.075, h * 0.04);
+  ctx.lineTo(gx + w * 0.085, h * 0.04);
+  ctx.lineTo(gx - w * 0.085, h * 0.04);
   ctx.closePath();
   ctx.fill();
 
@@ -48,16 +48,20 @@ const drawAbout: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
   for (let k = 0; k < 3; k++) {
     const y = hz - h * (0.03 + k * 0.05);
     const g = ctx.createLinearGradient(0, y - 14, 0, y + 14);
-    g.addColorStop(0, rgba(pal.deep, 0));
-    g.addColorStop(0.5, rgba(pal.deep, (0.05 - k * 0.012) * dim));
-    g.addColorStop(1, rgba(pal.deep, 0));
+    g.addColorStop(0, rgba(pal.structure, 0));
+    g.addColorStop(0.5, rgba(pal.structure, (0.16 - k * 0.03) * dim));
+    g.addColorStop(1, rgba(pal.structure, 0));
     ctx.fillStyle = g;
     ctx.fillRect(0, y - 14, w, 28);
   }
 
   /* reflective ground: the gateway's light pooling toward the viewer */
   const pool = ctx.createRadialGradient(gx, hz, 0, gx, hz, h * 0.5);
-  pool.addColorStop(0, rgba(pal.bright, 0.07 * dim));
+  pool.addColorStop(0, rgba(pal.bright, 0.28 * dim));
+  pool.addColorStop(0.5, rgba(pal.structure, 0.12 * dim));
+  pool.addColorStop(1, rgba(pal.structure, 0));
+  ctx.fillStyle = pool;
+  ctx.fillRect(0, hz, w, h - hz);
   pool.addColorStop(0.4, rgba(pal.structure, 0.03 * dim));
   pool.addColorStop(1, rgba(pal.structure, 0));
   ctx.fillStyle = pool;

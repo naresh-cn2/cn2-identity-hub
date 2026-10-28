@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
 
@@ -13,26 +13,27 @@ import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
  */
 
 const drawCredentials: SceneDraw = (ctx, { t, w, h, pal, dim, small }) => {
-  /* drifting light â€” a soft source wandering behind the strata */
+  /* drifting light — an ambient nebula source behind the strata */
   const gx = w * (0.5 + Math.sin(t * 0.07) * 0.28);
   const gy = h * (0.5 + Math.cos(t * 0.05) * 0.2);
   const glow = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.max(w, h) * 0.6);
-  glow.addColorStop(0, rgba(pal.structure, 0.05 * dim));
+  glow.addColorStop(0, rgba(pal.structure, 0.18 * dim));
+  glow.addColorStop(0.5, rgba(pal.deep, 0.08 * dim));
   glow.addColorStop(1, rgba(pal.structure, 0));
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, w, h);
 
-  /* slow luminous dust */
-  const count = small ? 14 : 30;
+  /* luminous particle dust climbing upwards */
+  const count = small ? 18 : 36;
   for (let i = 0; i < count; i++) {
     const seed = Math.abs(Math.sin(i * 71.3 + 9.1) * 43758.5) % 1;
     const seed2 = Math.abs(Math.sin(i * 27.7 + 3.3) * 43758.5) % 1;
-    const x = seed * w + Math.sin(t * 0.18 + i) * 6;
-    const y = ((seed2 * h - t * (3 + (i % 5))) % h + h) % h;
-    const a = (0.07 + 0.1 * breathe(t, 0.5 + (i % 4) * 0.2, i)) * dim;
-    ctx.fillStyle = rgba(pal.structure, a);
+    const x = seed * w + Math.sin(t * 0.22 + i) * 8;
+    const y = ((seed2 * h - t * (5 + (i % 6))) % h + h) % h;
+    const a = (0.2 + 0.35 * breathe(t, 0.6 + (i % 4) * 0.2, i)) * dim;
+    ctx.fillStyle = rgba(i % 4 === 0 ? pal.bright : pal.structure, a);
     ctx.beginPath();
-    ctx.arc(x, y, 0.9, 0, Math.PI * 2);
+    ctx.arc(x, y, i % 5 === 0 ? 1.6 : 1.1, 0, Math.PI * 2);
     ctx.fill();
   }
 };

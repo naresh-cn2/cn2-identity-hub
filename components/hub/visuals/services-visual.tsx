@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { breathe, pulseAt, rgba, type SceneDraw } from "./scene";
 
@@ -11,14 +11,14 @@ import SceneCanvas, { breathe, pulseAt, rgba, type SceneDraw } from "./scene";
  * routing lanes with slow pulses and a soft scanning light.
  */
 
-const drawServices: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
-  /* two faint routing lanes behind the pipeline */
+const drawServices: SceneDraw = (ctx, { t, w, h, pal, dim, reduced }) => {
+  /* pipeline routing lanes behind the pipeline */
   const lanes = [
     [0.05, 0.24, 0.55, 0.16, 0.95, 0.3],
     [0.05, 0.86, 0.5, 0.94, 0.95, 0.82],
   ];
-  ctx.strokeStyle = rgba(pal.deep, 0.1 * dim);
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = rgba(pal.structure, 0.28 * dim);
+  ctx.lineWidth = 1.5;
   ctx.setLineDash([5, 8]);
   ctx.beginPath();
   for (const [x0, y0, xm, ym, x1, y1] of lanes) {
@@ -30,37 +30,36 @@ const drawServices: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => 
   if (!reduced) {
     for (let i = 0; i < 2; i++) {
       const [x0, y0, xm, ym, x1, y1] = lanes[i];
-      const u = pulseAt(t, 7 + i * 2.5, i * 0.4);
+      const u = pulseAt(t, 5 + i * 2, i * 0.4);
       const a = 1 - u;
       const x = (a * a * x0 + 2 * a * u * xm + u * u * x1) * w;
       const y = (a * a * y0 + 2 * a * u * ym + u * u * y1) * h;
-      ctx.fillStyle = rgba(pal.structure, 0.3 * dim);
+      ctx.fillStyle = rgba(i === 0 ? pal.bright : pal.signal, 0.85 * dim);
       ctx.beginPath();
-      ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+      ctx.arc(x, y, 2.5, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
-  /* soft scanning light raking the stage row */
-  const sweep = ((t * 0.06) % 1.6) - 0.3;
+  /* scanning light raking the stage row */
+  const sweep = ((t * 0.08) % 1.6) - 0.3;
   const sx = sweep * w;
-  const g = ctx.createLinearGradient(sx - 60, 0, sx + 60, 0);
+  const g = ctx.createLinearGradient(sx - 70, 0, sx + 70, 0);
   g.addColorStop(0, rgba(pal.bright, 0));
-  g.addColorStop(0.5, rgba(pal.bright, 0.045 * dim));
+  g.addColorStop(0.5, rgba(pal.bright, 0.18 * dim));
   g.addColorStop(1, rgba(pal.bright, 0));
   ctx.fillStyle = g;
-  ctx.fillRect(sx - 60, 0, 120, h);
+  ctx.fillRect(sx - 70, 0, 140, h);
 
   /* halo under the deliverable end */
-  const halo = ctx.createRadialGradient(w * 0.88, h * 0.5, 0, w * 0.88, h * 0.5, w * 0.16);
-  halo.addColorStop(0, rgba(pal.signal, 0.07 * dim * breathe(t, 0.8, 0)));
+  const halo = ctx.createRadialGradient(w * 0.88, h * 0.5, 0, w * 0.88, h * 0.5, w * 0.22);
+  halo.addColorStop(0, rgba(pal.signal, 0.35 * dim * breathe(t, 1.2, 0)));
+  halo.addColorStop(0.5, rgba(pal.structure, 0.12 * dim));
   halo.addColorStop(1, rgba(pal.signal, 0));
   ctx.fillStyle = halo;
   ctx.beginPath();
-  ctx.arc(w * 0.88, h * 0.5, w * 0.16, 0, Math.PI * 2);
+  ctx.arc(w * 0.88, h * 0.5, w * 0.22, 0, Math.PI * 2);
   ctx.fill();
-
-  if (small) return;
 };
 
 const STAGES = ["PROBLEM", "DESIGN", "IMPLEMENT", "VALIDATE", "DELIVER"];

@@ -39,6 +39,10 @@ const NODE_POS: Record<string, { x: number; y: number }> = {
   "data-infrastructure": { x: 87, y: 58 },
   "performance-engineering": { x: 66, y: 83 },
   "ai-intelligence": { x: 61, y: 13 },
+  "systems-programming": { x: 50, y: 88 },
+  "algorithmic-foundations": { x: 33, y: 45 },
+  "cloud-devops": { x: 85, y: 78 },
+  "fullstack-quant-ui": { x: 38, y: 15 },
 };
 
 type Filter = CapabilityDomain | "ALL";

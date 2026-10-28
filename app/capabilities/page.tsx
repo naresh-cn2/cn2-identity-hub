@@ -4,6 +4,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import CapabilityMap from "@/components/capabilities/capability-map";
+import TechStackMatrix from "@/components/capabilities/tech-stack-matrix";
 import KnowledgeGraph from "@/components/viz/knowledge-graph";
 import { capabilities } from "@/data/capabilities";
 import { researchEntries } from "@/data/research";
@@ -86,6 +87,26 @@ export default function CapabilitiesPage() {
       <section aria-label="Capability map" className="border-t border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <CapabilityMap capabilities={capabilities} researchTitles={researchTitles} />
+        </div>
+      </section>
+
+
+      {/* ---- tech stack & tooling architecture ---- */}
+      <section aria-label="Tech stack and tooling architecture" className="border-t border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h2 className="display text-3xl md:text-5xl">TECH STACK & TOOLING</h2>
+              <p className="label-mono text-faint">CATEGORIZED · PRODUCTION · SYSTEMS & RESEARCH</p>
+            </div>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
+              Languages, cloud platforms, computational libraries, databases, and DevOps tooling deployed
+              across research engines, trading architectures, and evidence-driven software systems.
+            </p>
+          </Reveal>
+          <div className="mt-12">
+            <TechStackMatrix />
+          </div>
         </div>
       </section>
 

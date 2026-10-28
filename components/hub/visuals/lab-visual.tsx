@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
 
@@ -12,16 +12,17 @@ import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
  */
 
 const drawLab: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
-  /* centre halo â€” the instrument's backlight */
+  /* centre halo — the instrument's backlight */
   const halo = ctx.createRadialGradient(w * 0.5, h * 0.48, 0, w * 0.5, h * 0.48, Math.max(w, h) * 0.55);
-  halo.addColorStop(0, rgba(pal.structure, 0.055 * dim));
+  halo.addColorStop(0, rgba(pal.structure, 0.18 * dim));
+  halo.addColorStop(0.5, rgba(pal.deep, 0.08 * dim));
   halo.addColorStop(1, rgba(pal.structure, 0));
   ctx.fillStyle = halo;
   ctx.fillRect(0, 0, w, h);
 
   /* dense analytical grid */
   const step = small ? 28 : 24;
-  ctx.strokeStyle = rgba(pal.deep, 0.07 * dim);
+  ctx.strokeStyle = rgba(pal.structure, 0.16 * dim);
   ctx.lineWidth = 1;
   ctx.beginPath();
   for (let x = step; x < w; x += step) {
@@ -34,29 +35,30 @@ const drawLab: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
   }
   ctx.stroke();
 
-  /* the sweep â€” the instrument's moving light */
-  const sweep = reduced ? 0.62 : ((t * 0.11) % 1.25) - 0.12;
+  /* the sweep — the instrument's moving light */
+  const sweep = reduced ? 0.62 : ((t * 0.14) % 1.25) - 0.12;
   const sx = sweep * w;
-  const g = ctx.createLinearGradient(sx - 46, 0, sx + 46, 0);
+  const g = ctx.createLinearGradient(sx - 60, 0, sx + 60, 0);
   g.addColorStop(0, rgba(pal.bright, 0));
-  g.addColorStop(0.5, rgba(pal.bright, 0.06 * dim));
+  g.addColorStop(0.5, rgba(pal.bright, 0.22 * dim));
   g.addColorStop(1, rgba(pal.bright, 0));
   ctx.fillStyle = g;
-  ctx.fillRect(sx - 46, 0, 92, h);
-  ctx.strokeStyle = rgba(pal.bright, 0.14 * dim);
+  ctx.fillRect(sx - 60, 0, 120, h);
+  ctx.strokeStyle = rgba(pal.bright, 0.45 * dim);
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.moveTo(sx, 0);
   ctx.lineTo(sx, h);
   ctx.stroke();
 
   /* readout glow under the caliper leg */
-  const pulse = breathe(t, 1.9, 0);
-  const dot = ctx.createRadialGradient(w * 0.848, h * 0.333, 0, w * 0.848, h * 0.333, 14);
-  dot.addColorStop(0, rgba(pal.signal, 0.2 * pulse * dim));
+  const pulse = breathe(t, 2.2, 0);
+  const dot = ctx.createRadialGradient(w * 0.848, h * 0.333, 0, w * 0.848, h * 0.333, 20);
+  dot.addColorStop(0, rgba(pal.signal, 0.5 * pulse * dim));
   dot.addColorStop(1, rgba(pal.signal, 0));
   ctx.fillStyle = dot;
   ctx.beginPath();
-  ctx.arc(w * 0.848, h * 0.333, 14, 0, Math.PI * 2);
+  ctx.arc(w * 0.848, h * 0.333, 20, 0, Math.PI * 2);
   ctx.fill();
 };
 

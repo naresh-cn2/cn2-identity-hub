@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import SystemsUniverse from "@/components/about/systems-universe";
 import Link from "next/link";
-import PageAtmosphere from "@/components/ui/page-atmosphere";
 import Reveal from "@/components/ui/reveal";
 import MindsetDiagram from "@/components/about/mindset-diagram";
 import CapabilityConstellation from "@/components/about/capability-constellation";

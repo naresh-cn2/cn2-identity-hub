@@ -4,7 +4,7 @@ import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
 import ResearchArchive from "@/components/research/research-archive";
-import ResearchLattice from "@/components/research/research-lattice";
+import GaussianManifold from "@/components/research/gaussian-manifold";
 import { MethodChainStrip } from "@/components/research/method-chain";
 import { researchEntries } from "@/data/research";
 import { getArchiveProject } from "@/data/archive";
@@ -115,9 +115,9 @@ export default function ResearchPage() {
             </div>
             <Reveal delay={240}>
               <div className="viz-frame p-4">
-                <ResearchLattice />
+                <GaussianManifold />
                 <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                  RESEARCH LATTICE
+                  GAUSSIAN PROBABILITY MANIFOLD · 3D DENSITY DISTRIBUTION
                 </p>
               </div>
             </Reveal>

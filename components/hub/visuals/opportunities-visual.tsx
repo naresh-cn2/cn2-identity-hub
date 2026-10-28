@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { pulseAt, rgba, type SceneDraw } from "./scene";
 
@@ -12,9 +12,10 @@ import SceneCanvas, { pulseAt, rgba, type SceneDraw } from "./scene";
  */
 
 const drawOpportunities: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
-  /* deep ground haze under the origin */
+  /* ground haze under the origin */
   const haze = ctx.createRadialGradient(w * 0.5, h * 0.95, 0, w * 0.5, h * 0.95, w * 0.5);
-  haze.addColorStop(0, rgba(pal.deep, 0.08 * dim));
+  haze.addColorStop(0, rgba(pal.structure, 0.22 * dim));
+  haze.addColorStop(0.5, rgba(pal.deep, 0.1 * dim));
   haze.addColorStop(1, rgba(pal.deep, 0));
   ctx.fillStyle = haze;
   ctx.beginPath();
@@ -23,7 +24,7 @@ const drawOpportunities: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }
 
   if (reduced || small) return;
 
-  /* one analytic dot riding each route (fractions of the plate) */
+  /* analytic luminous dots riding each route */
   const routes: [number, number, number, number, number, number][] = [
     [0.5, 0.85, 0.34, 0.52, 0.232, 0.28],
     [0.5, 0.85, 0.46, 0.44, 0.425, 0.155],
@@ -32,13 +33,13 @@ const drawOpportunities: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }
   ];
   for (let i = 0; i < routes.length; i++) {
     const [x0, y0, cx, cy, x1, y1] = routes[i];
-    const u = pulseAt(t, 5 + i * 0.9, i * 0.25);
+    const u = pulseAt(t, 4 + i * 0.8, i * 0.25);
     const a = 1 - u;
     const x = (a * a * x0 + 2 * a * u * cx + u * u * x1) * w;
     const y = (a * a * y0 + 2 * a * u * cy + u * u * y1) * h;
-    ctx.fillStyle = rgba(i === 3 ? pal.signal : pal.bright, 0.4 * dim);
+    ctx.fillStyle = rgba(i === 3 ? pal.signal : pal.bright, 0.85 * dim);
     ctx.beginPath();
-    ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+    ctx.arc(x, y, 2.4, 0, Math.PI * 2);
     ctx.fill();
   }
 };

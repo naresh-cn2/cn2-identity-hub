@@ -15,6 +15,9 @@ export const site = {
   links: {
     github: "https://github.com/naresh-cn2",
     linkedin: "https://www.linkedin.com/in/bukya-naresh-cn2",
+    orcid: "https://orcid.org/0009-0007-7269-1583",
+    contra: "https://contra.com/naresh_cn2",
+    twitter: "https://x.com/mr_cn2",
     email: "mailto:bukyanaresh2003@gmail.com",
     phone: "tel:+919490004978",
     whatsapp: "https://wa.me/919490004978",

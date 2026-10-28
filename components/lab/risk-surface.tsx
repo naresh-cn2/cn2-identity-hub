@@ -49,18 +49,18 @@ export default function RiskSurface() {
       };
     };
 
-    const lines: [number, number, number, number][] = [];
+    const lines: { x1: number; y1: number; x2: number; y2: number; zAvg: number }[] = [];
     for (let i = 0; i < N; i++) {
       for (let j = 0; j < N; j++) {
         if (i + 1 < N) {
           const a = project(i, j);
           const b = project(i + 1, j);
-          lines.push([a.px, a.py, b.px, b.py]);
+          lines.push({ x1: a.px, y1: a.py, x2: b.px, y2: b.py, zAvg: (a.z + b.z) * 0.5 });
         }
         if (j + 1 < N) {
           const a = project(i, j);
           const b = project(i, j + 1);
-          lines.push([a.px, a.py, b.px, b.py]);
+          lines.push({ x1: a.px, y1: a.py, x2: b.px, y2: b.py, zAvg: (a.z + b.z) * 0.5 });
         }
       }
     }
@@ -123,14 +123,41 @@ export default function RiskSurface() {
         onPointerLeave={onPointerUp}
       >
         <title>Risk / return surface — drag to rotate</title>
-        {lines.map(([x1, y1, x2, y2], i) => (
-          <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--chart-axis)" strokeWidth={0.7} />
-        ))}
+        {lines.map((l, i) => {
+          const high = l.zAvg > 0.7;
+          const mid = l.zAvg > 0.35;
+          const stroke = high
+            ? "var(--signal)"
+            : mid
+            ? "var(--research)"
+            : "var(--line-strong)";
+          const opacity = high ? 0.95 : mid ? 0.75 : 0.35;
+          const width = high ? 1.4 : mid ? 1 : 0.75;
+          return (
+            <line
+              key={i}
+              x1={l.x1}
+              y1={l.y1}
+              x2={l.x2}
+              y2={l.y2}
+              stroke={stroke}
+              strokeWidth={width}
+              opacity={opacity}
+            />
+          );
+        })}
         {/* highlight highest band */}
         {cells
-          .filter((c) => c.z > 0.85)
+          .filter((c) => c.z > 0.75)
           .map((c) => (
-            <circle key={`${c.i}-${c.j}`} cx={c.px} cy={c.py} r={2} fill="var(--signal)" />
+            <circle
+              key={`${c.i}-${c.j}`}
+              cx={c.px}
+              cy={c.py}
+              r={c.z > 0.9 ? 2.5 : 1.8}
+              fill="var(--signal)"
+              className={c.z > 0.9 ? "pulse-dot" : undefined}
+            />
           ))}
         {hover && (
           <g>

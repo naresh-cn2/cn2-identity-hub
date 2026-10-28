@@ -23,6 +23,8 @@ export interface CredentialRecord {
   state: CredentialState;
   /** ISO date. Omitted while a credential is only planned. */
   date?: string;
+  /** Expiration policy or date. E.g. "Does not expire". */
+  expires?: string;
   topics: string[];
   skills: string[];
   learned: string;
@@ -44,6 +46,46 @@ export interface CredentialRecord {
  * appears here only after it has been issued.
  */
 export const credentials: CredentialRecord[] = [
+  {
+    id: "cs50x-introduction-to-computer-science",
+    provider: "CS50 — Harvard University",
+    program: "CS50x: Introduction to Computer Science",
+    state: "VERIFIED",
+    date: "2026-10-28",
+    expires: "Does not expire",
+    credentialId: "67a061b2-60c1-4e24-aa33-ef02f59fdbdc",
+    verificationUrl: "https://certificates.cs50.io/67a061b2-60c1-4e24-aa33-ef02f59fdbdc",
+    certificateUrl: "https://certificates.cs50.io/67a061b2-60c1-4e24-aa33-ef02f59fdbdc.pdf",
+    topics: [
+      "Computational thinking, algorithmic complexity and Big O notation",
+      "Low-level memory management, pointers, and memory layout in C",
+      "Data structures: linked lists, hash tables, tries, binary search trees",
+      "Algorithms: linear and binary search, sorting (merge, selection, bubble)",
+      "Web development, HTTP protocols, API integration, and SQL relational databases",
+      "Software engineering with Python, Flask, and deterministic test harnesses",
+      "Ten problem sets spanning low-level and high-level systems, plus a comprehensive final project",
+    ],
+    skills: [
+      "C",
+      "Python",
+      "SQL",
+      "Data Structures",
+      "Algorithms",
+      "Memory Management",
+      "Computational Thinking",
+      "Flask",
+      "Software Engineering",
+    ],
+    learned:
+      "Working through CS50x from manual byte manipulation, pointers, and heap allocations in C to full-stack systems with Python and relational SQL established a rigorous, first-principles foundation for high-performance software engineering and algorithmic analysis.",
+    assessment:
+      "Certificate of Completion issued by CS50, Harvard University, awarded by David J. Malan for completing ten problem sets and a capstone project.",
+    notes: [
+      "Awarded by David J. Malan, Gordon McKay Professor of the Practice of Computer Science, Harvard University.",
+      "Credential does not expire.",
+      "Credential ID: 67a061b2-60c1-4e24-aa33-ef02f59fdbdc.",
+    ],
+  },
   {
     id: "wqu-data-science-lab",
     provider: "WorldQuant University",

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { breathe, pulseAt, rgba, type SceneDraw } from "./scene";
 
@@ -20,21 +20,21 @@ const drawBuilds: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
 
   /* haze behind the towers */
   const haze = ctx.createRadialGradient(w * 0.5, h * 0.45, 0, w * 0.5, h * 0.45, w * 0.5);
-  haze.addColorStop(0, rgba(pal.deep, 0.06 * dim));
+  haze.addColorStop(0, rgba(pal.deep, 0.22 * dim));
   haze.addColorStop(1, rgba(pal.deep, 0));
   ctx.fillStyle = haze;
   ctx.fillRect(0, 0, w, h);
 
   /* floor grid under the plate */
-  ctx.strokeStyle = rgba(pal.deep, 0.08 * dim);
+  ctx.strokeStyle = rgba(pal.structure, 0.28 * dim);
   ctx.lineWidth = 1;
   ctx.beginPath();
-  for (let i = -5; i <= 5; i++) {
+  for (let i = -6; i <= 6; i++) {
     ctx.moveTo(w * 0.5, floorY);
-    ctx.lineTo(w * 0.5 + i * w * 0.16, h * 1.02);
+    ctx.lineTo(w * 0.5 + i * w * 0.18, h * 1.05);
   }
-  for (let k = 1; k <= 3; k++) {
-    const y = floorY + ((h - floorY) * k) / 3.4;
+  for (let k = 1; k <= 4; k++) {
+    const y = floorY + ((h - floorY) * k) / 4;
     ctx.moveTo(0, y);
     ctx.lineTo(w, y);
   }
@@ -43,47 +43,45 @@ const drawBuilds: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
   /* light columns rising off each tower */
   for (let i = 0; i < COLS.length; i++) {
     const x = COLS[i] * w;
-    const a = (0.05 + 0.035 * breathe(t, 0.7, i * 2.1)) * dim;
+    const a = (0.2 + 0.15 * breathe(t, 0.7, i * 2.1)) * dim;
     const g = ctx.createLinearGradient(x, h * BUS_Y + 8, x, floorY);
-    g.addColorStop(0, rgba(pal.structure, a));
+    g.addColorStop(0, rgba(pal.structure, a * 1.5));
     g.addColorStop(1, rgba(pal.structure, 0));
     ctx.fillStyle = g;
     ctx.fillRect(x - w * 0.055, h * BUS_Y + 8, w * 0.11, floorY - h * BUS_Y - 8);
+
+    // Glowing column edges
+    ctx.strokeStyle = rgba(pal.structure, a * 1.8);
+    ctx.beginPath();
+    ctx.moveTo(x - w * 0.055, h * BUS_Y + 8);
+    ctx.lineTo(x - w * 0.055, floorY);
+    ctx.moveTo(x + w * 0.055, h * BUS_Y + 8);
+    ctx.lineTo(x + w * 0.055, floorY);
+    ctx.stroke();
   }
 
-  /* the data bus â€” two pulses running between the risers */
+  /* the data bus — two pulses running between the risers */
   const by = h * BUS_Y;
-  ctx.strokeStyle = rgba(pal.structure, 0.16 * dim);
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4, 8]);
+  ctx.strokeStyle = rgba(pal.structure, 0.45 * dim);
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 6]);
   ctx.beginPath();
   ctx.moveTo(COLS[0] * w, by);
-  ctx.lineTo(COLS[2] * w, by);
+  ctx.lineTo(COLS[COLS.length - 1] * w, by);
   ctx.stroke();
   ctx.setLineDash([]);
-  if (!reduced) {
-    for (let i = 0; i < 2; i++) {
-      const u = pulseAt(t, 3.6 + i * 1.7, i * 0.5);
-      const x = (COLS[0] + (COLS[2] - COLS[0]) * u) * w;
-      const tx = (COLS[0] + (COLS[2] - COLS[0]) * Math.max(0, u - 0.1)) * w;
-      const col = i === 1 ? pal.signal : pal.bright;
-      const g = ctx.createLinearGradient(tx, by, x, by);
-      g.addColorStop(0, rgba(col, 0));
-      g.addColorStop(1, rgba(col, 0.42 * dim));
-      ctx.strokeStyle = g;
-      ctx.lineWidth = 1.4;
-      ctx.beginPath();
-      ctx.moveTo(tx, by);
-      ctx.lineTo(x, by);
-      ctx.stroke();
-      ctx.fillStyle = rgba(col, 0.6 * dim);
-      ctx.beginPath();
-      ctx.arc(x, by, 1.6, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
 
-  if (small) return; /* towers render in the SVG layer at every size */
+  if (reduced || small) return;
+
+  /* pulses travelling along the bus */
+  for (let i = 0; i < 2; i++) {
+    const u = pulseAt(t, 4 + i * 1.6, i * 0.5);
+    const px = (COLS[0] + (COLS[COLS.length - 1] - COLS[0]) * u) * w;
+    ctx.fillStyle = rgba(i === 0 ? pal.signal : pal.bright, 0.9 * dim);
+    ctx.beginPath();
+    ctx.arc(px, by, 3, 0, Math.PI * 2);
+    ctx.fill();
+  }
 };
 
 const TOWERS = [

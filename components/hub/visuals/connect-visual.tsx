@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { pulseAt, rgba, type SceneDraw } from "./scene";
 import { site } from "@/data/site";
@@ -27,9 +27,9 @@ const drawConnect: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
   const cy = (CY / 420) * h;
 
   /* core glow */
-  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(w, h) * 0.4);
-  core.addColorStop(0, rgba(pal.signal, 0.06 * dim));
-  core.addColorStop(0.5, rgba(pal.structure, 0.035 * dim));
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(w, h) * 0.45);
+  core.addColorStop(0, rgba(pal.signal, 0.22 * dim));
+  core.addColorStop(0.4, rgba(pal.structure, 0.14 * dim));
   core.addColorStop(1, rgba(pal.structure, 0));
   ctx.fillStyle = core;
   ctx.fillRect(0, 0, w, h);
@@ -40,24 +40,24 @@ const drawConnect: SceneDraw = (ctx, { t, w, h, pal, dim, reduced, small }) => {
   for (let i = 0; i < NODES.length; i++) {
     const nx = (NODES[i].x / 560) * w;
     const ny = (NODES[i].y / 420) * h;
-    const u = pulseAt(t, 4.2 + i * 0.7, i * 0.25);
+    const u = pulseAt(t, 3.6 + i * 0.6, i * 0.25);
     const x = cx + (nx - cx) * u;
     const y = cy + (ny - cy) * u;
-    const tx = cx + (nx - cx) * Math.max(0, u - 0.12);
-    const ty = cy + (ny - cy) * Math.max(0, u - 0.12);
+    const tx = cx + (nx - cx) * Math.max(0, u - 0.15);
+    const ty = cy + (ny - cy) * Math.max(0, u - 0.15);
     const col = i === 3 ? pal.signal : pal.bright;
     const g = ctx.createLinearGradient(tx, ty, x, y);
     g.addColorStop(0, rgba(col, 0));
-    g.addColorStop(1, rgba(col, 0.4 * dim));
+    g.addColorStop(1, rgba(col, 0.85 * dim));
     ctx.strokeStyle = g;
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(tx, ty);
     ctx.lineTo(x, y);
     ctx.stroke();
-    ctx.fillStyle = rgba(col, 0.55 * dim);
+    ctx.fillStyle = rgba(col, 0.95 * dim);
     ctx.beginPath();
-    ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+    ctx.arc(x, y, 2.8, 0, Math.PI * 2);
     ctx.fill();
   }
 };

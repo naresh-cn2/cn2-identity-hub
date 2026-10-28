@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
 
@@ -12,24 +12,41 @@ import SceneCanvas, { breathe, rgba, type SceneDraw } from "./scene";
  */
 
 const drawResearch: SceneDraw = (ctx, { t, w, h, pal, dim, small }) => {
-  /* a soft light wandering over the field â€” where the shimmer comes from */
-  const gx = w * (0.5 + Math.sin(t * 0.05) * 0.3);
-  const gy = h * (0.5 + Math.cos(t * 0.04) * 0.22);
-  const glow = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.max(w, h) * 0.5);
-  glow.addColorStop(0, rgba(pal.structure, 0.05 * dim));
+  /* glowing probability density aura wandering over the field */
+  const gx = w * (0.5 + Math.sin(t * 0.08) * 0.25);
+  const gy = h * (0.5 + Math.cos(t * 0.06) * 0.2);
+  const glow = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.max(w, h) * 0.55);
+  glow.addColorStop(0, rgba(pal.structure, 0.2 * dim));
+  glow.addColorStop(0.5, rgba(pal.deep, 0.1 * dim));
   glow.addColorStop(1, rgba(pal.structure, 0));
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, w, h);
 
-  /* sparse stars, breathing out of phase */
-  const count = small ? 10 : 20;
+  /* analytical coordinate grid */
+  ctx.strokeStyle = rgba(pal.structure, 0.12 * dim);
+  ctx.lineWidth = 1;
+  ctx.setLineDash([2, 8]);
+  ctx.beginPath();
+  for (let x = 40; x < w; x += 60) {
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, h);
+  }
+  for (let y = 30; y < h; y += 50) {
+    ctx.moveTo(0, y);
+    ctx.lineTo(w, y);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  /* luminous stars breathing out of phase */
+  const count = small ? 16 : 32;
   for (let i = 0; i < count; i++) {
     const sx = (Math.abs(Math.sin(i * 12.9 + 4.7) * 43758.5) % 1) * w;
     const sy = (Math.abs(Math.sin(i * 31.7 + 1.9) * 43758.5) % 1) * h;
-    const a = (0.1 + 0.22 * breathe(t, 0.4 + (i % 5) * 0.18, i * 1.3)) * dim;
-    ctx.fillStyle = rgba(pal.bright, a);
+    const a = (0.2 + 0.45 * breathe(t, 0.5 + (i % 5) * 0.2, i * 1.3)) * dim;
+    ctx.fillStyle = rgba(i % 5 === 0 ? pal.signal : pal.bright, a);
     ctx.beginPath();
-    ctx.arc(sx, sy, i % 6 === 0 ? 1.3 : 0.8, 0, Math.PI * 2);
+    ctx.arc(sx, sy, i % 6 === 0 ? 1.8 : 1.1, 0, Math.PI * 2);
     ctx.fill();
   }
 };
