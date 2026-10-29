@@ -1,113 +1,233 @@
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
-import TiltCard from "@/components/ui/tilt-card";
+import BuildsVisual from "@/components/hub/visuals/work-visual";
+import ResearchVisual from "@/components/hub/visuals/research-visual";
+import PersonalVisual from "@/components/hub/visuals/personal-visual";
 import { WORK_CATEGORIES, getWorksByCategory } from "@/data/works";
 
 export default function CategoryDoors() {
-  const categories = Object.values(WORK_CATEGORIES);
+  const products = WORK_CATEGORIES.products;
+  const projects = WORK_CATEGORIES.projects;
+  const personal = WORK_CATEGORIES.personal;
+
+  const productItems = getWorksByCategory("products");
+  const projectItems = getWorksByCategory("projects");
+  const personalItems = getWorksByCategory("personal");
 
   return (
-    <section aria-label="Works categories" className="border-b border-line bg-surface/40">
-      <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
-        <Reveal>
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <div>
-              <p className="label-mono text-signal">DISCIPLINES / THREE CORE TIERS</p>
-              <h2 className="display mt-2 text-2xl md:text-4xl">CATEGORIES OF WORK</h2>
-            </div>
-            <p className="label-mono text-faint">
-              SELECT A CATALOGUE TO EXPLORE SPECIFIC SYSTEMS &amp; PROOFS
-            </p>
-          </div>
-        </Reveal>
-
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {categories.map((cat, i) => {
-            const items = getWorksByCategory(cat.id);
-            const accentBorder =
-              cat.accent === "signal"
-                ? "hover:border-signal/70 group-hover:border-signal"
-                : cat.accent === "research"
-                ? "hover:border-research/70 group-hover:border-research"
-                : "hover:border-cyan-500/70 group-hover:border-cyan-500";
-
-            const accentText =
-              cat.accent === "signal"
-                ? "text-signal"
-                : cat.accent === "research"
-                ? "text-research"
-                : "text-cyan-500 dark:text-cyan-400";
-
-            return (
-              <Reveal key={cat.id} delay={i * 90}>
-                <TiltCard className="h-full">
-                  <div
-                    className={`group relative flex h-full flex-col justify-between border border-line bg-surface p-7 transition-all duration-300 ${accentBorder} shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_36px_rgba(0,0,0,0.08)]`}
-                  >
-                    <div>
-                      {/* Top Meta Line */}
-                      <div className="flex items-center justify-between border-b border-line/60 pb-4">
-                        <span className={`num-mono text-2xl font-bold ${accentText}`}>
-                          {cat.number}
-                        </span>
-                        <span className="label-mono border border-line px-2 py-0.5 text-[9px] text-faint">
-                          {items.length} {items.length === 1 ? "SYSTEM" : "SYSTEMS"}
-                        </span>
-                      </div>
-
-                      {/* Title & Badge */}
-                      <p className={`label-mono mt-5 text-[10px] tracking-wider ${accentText}`}>
-                        {cat.badge}
-                      </p>
-                      <h3 className="display mt-2 text-2xl md:text-3xl text-foreground">
-                        <Link
-                          href={`/works/${cat.slug}`}
-                          className="transition-colors hover:text-signal"
-                        >
-                          {cat.title}
-                        </Link>
-                      </h3>
-
-                      {/* Tagline & Desc */}
-                      <p className="mt-4 font-mono text-xs font-semibold text-foreground/90">
-                        {cat.tagline}
-                      </p>
-                      <p className="mt-2 text-sm leading-relaxed text-muted">
-                        {cat.description}
-                      </p>
-
-                      {/* Featured Items List */}
-                      <div className="mt-6 border-t border-line/60 pt-4">
-                        <p className="label-mono text-[10px] text-faint">FEATURED IN THIS TIER:</p>
-                        <ul className="mt-2.5 space-y-1.5">
-                          {items.map((item) => (
-                            <li key={item.id} className="flex items-center gap-2 text-xs font-mono text-foreground/80">
-                              <span className={`h-1 w-1 rounded-full ${cat.accent === "signal" ? "bg-signal" : cat.accent === "research" ? "bg-research" : "bg-cyan-500"}`} />
-                              <span>{item.shortTitle}</span>
-                              <span className="ml-auto text-[10px] text-faint">[{item.status.split(" ")[0]}]</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* Bottom CTA Action */}
-                    <div className="mt-8 border-t border-line pt-5">
-                      <Link
-                        href={`/works/${cat.slug}`}
-                        className={`label-mono inline-flex items-center gap-2 text-xs font-bold transition-all duration-300 group-hover:translate-x-1 ${accentText}`}
-                      >
-                        <span>ENTER {cat.title}</span>
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    </div>
-                  </div>
-                </TiltCard>
+    <div aria-label="Works categories" className="divide-y divide-line">
+      {/* ==================== 01. PRODUCTS & PLATFORMS ==================== */}
+      <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-surface/20 py-20 md:py-28">
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+            {/* Visual Column */}
+            <div className="relative flex items-center justify-center">
+              <Reveal>
+                <div className="w-full max-w-[540px]">
+                  <BuildsVisual />
+                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
+                    PLATFORM INFRASTRUCTURE · ZERO-DEPENDENCY PIPELINES
+                  </p>
+                </div>
               </Reveal>
-            );
-          })}
+            </div>
+
+            {/* Copy Column */}
+            <div className="relative z-10">
+              <Reveal delay={80}>
+                <div className="flex items-center gap-3">
+                  <span className="num-mono text-3xl font-bold text-signal">{products.number}</span>
+                  <span className="label-mono text-faint">/</span>
+                  <p className="label-mono text-signal font-bold">{products.badge}</p>
+                </div>
+                <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
+                  <Link href={`/works/${products.slug}`} className="transition-colors hover:text-signal">
+                    {products.title}
+                  </Link>
+                </h2>
+                <p className="mt-5 font-mono text-base font-semibold text-foreground/90 md:text-lg">
+                  {products.tagline}
+                </p>
+                <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
+                  {products.description}
+                </p>
+
+                {/* Featured Products */}
+                <div className="mt-7 border-t border-line/60 pt-5">
+                  <p className="label-mono text-[10px] text-faint">SYSTEMS IN THIS CATALOGUE:</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {productItems.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/works/${item.id}`}
+                        className="font-mono text-xs border border-line bg-surface px-3 py-1.5 text-foreground hover:border-signal transition-colors flex items-center gap-2"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+                        <span>{item.shortTitle}</span>
+                        <span className="text-[9px] text-faint">[{item.status.split(" ")[0]}]</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-9">
+                  <Link
+                    href={`/works/${products.slug}`}
+                    className="corner-ticks group inline-flex items-center gap-4 border border-signal bg-signal/15 px-8 py-4 label-mono text-xs font-bold text-signal transition-colors hover:bg-signal hover:text-white"
+                  >
+                    <span>ENTER PRODUCTS &amp; PLATFORMS</span>
+                    <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* ==================== 02. PROJECTS ==================== */}
+      <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-background py-20 md:py-28">
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+            {/* Copy Column */}
+            <div className="relative z-10 lg:order-1">
+              <Reveal delay={80}>
+                <div className="flex items-center gap-3">
+                  <span className="num-mono text-3xl font-bold text-research">{projects.number}</span>
+                  <span className="label-mono text-faint">/</span>
+                  <p className="label-mono text-research font-bold">{projects.badge}</p>
+                </div>
+                <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
+                  <Link href={`/works/${projects.slug}`} className="transition-colors hover:text-research">
+                    {projects.title}
+                  </Link>
+                </h2>
+                <p className="mt-5 font-mono text-base font-semibold text-foreground/90 md:text-lg">
+                  {projects.tagline}
+                </p>
+                <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
+                  {projects.description}
+                </p>
+
+                {/* Featured Projects */}
+                <div className="mt-7 border-t border-line/60 pt-5">
+                  <p className="label-mono text-[10px] text-faint">SYSTEMS IN THIS CATALOGUE:</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {projectItems.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/works/${item.id}`}
+                        className="font-mono text-xs border border-line bg-surface px-3 py-1.5 text-foreground hover:border-research transition-colors flex items-center gap-2"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-research" />
+                        <span>{item.shortTitle}</span>
+                        <span className="text-[9px] text-faint">[{item.status.split(" ")[0]}]</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-9">
+                  <Link
+                    href={`/works/${projects.slug}`}
+                    className="corner-ticks group inline-flex items-center gap-4 border border-research bg-research/15 px-8 py-4 label-mono text-xs font-bold text-research transition-colors hover:bg-research hover:text-white"
+                  >
+                    <span>ENTER PROJECTS DESTINATION</span>
+                    <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Visual Column */}
+            <div className="relative flex items-center justify-center lg:order-2">
+              <Reveal>
+                <div className="w-full max-w-[540px]">
+                  <ResearchVisual />
+                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
+                    QUANTITATIVE MANIFOLD · DETERMINISTIC ALPHA &amp; BACKTEST EVIDENCE
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== 03. PERSONAL BUILDS ==================== */}
+      <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-surface/20 py-20 md:py-28">
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+            {/* Visual Column */}
+            <div className="relative flex items-center justify-center">
+              <Reveal>
+                <div className="w-full max-w-[540px]">
+                  <PersonalVisual />
+                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
+                    AUTONOMOUS WORKSPACE DAEMON · LIVE SENTIMENT STREAM
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Copy Column */}
+            <div className="relative z-10">
+              <Reveal delay={80}>
+                <div className="flex items-center gap-3">
+                  <span className="num-mono text-3xl font-bold text-cyan-500 dark:text-cyan-400">{personal.number}</span>
+                  <span className="label-mono text-faint">/</span>
+                  <p className="label-mono text-cyan-500 dark:text-cyan-400 font-bold">{personal.badge}</p>
+                </div>
+                <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
+                  <Link href={`/works/${personal.slug}`} className="transition-colors hover:text-cyan-500">
+                    {personal.title}
+                  </Link>
+                </h2>
+                <p className="mt-5 font-mono text-base font-semibold text-foreground/90 md:text-xl">
+                  {personal.tagline}
+                </p>
+                <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
+                  {personal.description}
+                </p>
+
+                {/* Featured Builds */}
+                <div className="mt-7 border-t border-line/60 pt-5">
+                  <p className="label-mono text-[10px] text-faint">SYSTEMS IN THIS CATALOGUE:</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {personalItems.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/works/${item.id}`}
+                        className="font-mono text-xs border border-line bg-surface px-3 py-1.5 text-foreground hover:border-cyan-500 transition-colors flex items-center gap-2"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
+                        <span>{item.shortTitle}</span>
+                        <span className="text-[9px] text-faint">[{item.status.split(" ")[0]}]</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-9">
+                  <Link
+                    href={`/works/${personal.slug}`}
+                    className="corner-ticks group inline-flex items-center gap-4 border border-cyan-500 bg-cyan-500/15 px-8 py-4 label-mono text-xs font-bold text-cyan-500 dark:text-cyan-400 transition-colors hover:bg-cyan-500 hover:text-black"
+                  >
+                    <span>ENTER PERSONAL BUILDS</span>
+                    <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
