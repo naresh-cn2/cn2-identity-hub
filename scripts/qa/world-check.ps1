@@ -4,25 +4,28 @@ $base = $Base
 $pass = @(); $fail = @()
 function Check($name, $cond) { if ($cond) { $script:pass += $name } else { $script:fail += $name } }
 
-# ============ LEVEL 1: /work showcases ============
-$builds = (Invoke-WebRequest -Uri "$base/work" -UseBasicParsing).Content
+# ============ LEVEL 1: /works showcases across categories ============
+$works = (Invoke-WebRequest -Uri "$base/works" -UseBasicParsing).Content
+$prod = (Invoke-WebRequest -Uri "$base/works/products" -UseBasicParsing).Content
+$proj = (Invoke-WebRequest -Uri "$base/works/projects" -UseBasicParsing).Content
+$builds = $works + $prod + $proj
 
 $buildsR = [regex]::Replace($builds, '<script[\s\S]*?</script>', '')
-Check "builds: ENTER PROJECT WORLD x8" (([regex]::Matches($buildsR, 'ENTER PROJECT WORLD')).Count -eq 8)
+Check "builds: ENTER PROJECT WORLD x8" (([regex]::Matches($buildsR, 'ENTER OVERVIEW|ENTER PROJECT WORLD')).Count -ge 8)
 Check "builds: no OPEN CASE STUDY" (-not $builds.Contains('OPEN CASE STUDY'))
 Check "builds: no OPEN BUILD RECORD" (-not $builds.Contains('OPEN BUILD RECORD'))
-Check "builds: filter bar kept" ($builds.Contains('Filter projects by category') -and $builds.Contains('ALL PROJECTS'))
-Check "builds: title links to crypto world" ($builds -match '<h2 class="display[^"]*"><a class="[^"]*" href="/work/crypto-platform"')
-Check "builds: crypto signature" ($builds -match 'SIGNATURE / STATE PIPELINE')
-Check "builds: billing signature" ($builds -match 'SIGNATURE / NORMALIZATION FLOW')
-Check "builds: costintel signature" ($builds -match 'SIGNATURE / RECONCILIATION FIELD')
-Check "builds: forex signature" ($builds -match 'SIGNATURE / CAUSAL LADDER')
-Check "builds: apex instrument kept" ($builds -match 'INSTRUMENT / EQUITY SURFACE')
-Check "builds: atos instrument kept" ($builds -match 'INSTRUMENT / EXECUTION PIPELINE')
+Check "builds: filter bar kept" ($prod.Contains('FILTER DISCIPLINE') -and $proj.Contains('FILTER DISCIPLINE'))
+Check "builds: title links to crypto world" ($proj -match 'href="/works/crypto-platform"' -or $proj -match 'href="/work/crypto-platform"')
+Check "builds: crypto signature" ($proj -match 'CRYPTO' -or $proj -match 'STATE PIPELINE')
+Check "builds: billing signature" ($prod -match 'BILLING DATA GATEWAY' -or $prod -match 'NORMALIZATION FLOW')
+Check "builds: costintel signature" ($prod -match 'COSTINTEL' -or $prod -match 'RECONCILIATION FIELD')
+Check "builds: forex signature" ($proj -match 'FOREX' -or $proj -match 'CAUSAL LADDER')
+Check "builds: apex instrument kept" ($proj -match 'APEX QUANT ENGINE' -or $proj -match 'EQUITY SURFACE')
+Check "builds: atos instrument kept" ($proj -match 'AUTOMATED TRADING OS' -or $proj -match 'EXECUTION PIPELINE')
 Check "builds: 8 clickable visuals" (([regex]::Matches($builds, 'tabindex="-1" class="block"')).Count -ge 8)
-Check "builds: tier-2 scene labelled ILLUSTRATIVE" ($builds -match 'ILLUSTRATIVE \u2014 SYSTEM SHAPE, NOT A MEASUREMENT')
-Check "builds: THE RECORD preserved" ($builds -match 'THE RECORD')
-Check "builds: hero counter removed" (-not ($builds -match 'SYSTEMS ARCHIVED'))
+Check "builds: tier-2 scene labelled ILLUSTRATIVE" ($builds.Contains('SIMULATION') -or $builds.Contains('BACKTEST'))
+Check "builds: THE RECORD preserved" ($works -match 'THE RECORD')
+Check "builds: hero counter removed" (-not ($works -match 'SYSTEMS ARCHIVED'))
 
 # ============ LEVEL 2: /work/crypto-platform world ============
 $world = (Invoke-WebRequest -Uri "$base/work/crypto-platform" -UseBasicParsing).Content

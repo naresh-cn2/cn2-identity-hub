@@ -25,9 +25,6 @@ export default function CategoryDoors() {
               <Reveal>
                 <div className="w-full max-w-[540px]">
                   <BuildsVisual />
-                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                    PLATFORM INFRASTRUCTURE · ZERO-DEPENDENCY PIPELINES
-                  </p>
                 </div>
               </Reveal>
             </div>
@@ -148,9 +145,6 @@ export default function CategoryDoors() {
               <Reveal>
                 <div className="w-full max-w-[540px]">
                   <ResearchVisual />
-                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                    QUANTITATIVE MANIFOLD · DETERMINISTIC ALPHA &amp; BACKTEST EVIDENCE
-                  </p>
                 </div>
               </Reveal>
             </div>
@@ -167,9 +161,6 @@ export default function CategoryDoors() {
               <Reveal>
                 <div className="w-full max-w-[540px]">
                   <PersonalVisual />
-                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                    AUTONOMOUS WORKSPACE DAEMON · LIVE SENTIMENT STREAM
-                  </p>
                 </div>
               </Reveal>
             </div>

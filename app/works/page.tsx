@@ -3,10 +3,8 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from "@/components/ui/page-atmosphere";
-import BuildsArchive from "@/components/work/work-archive";
 import MarketDepth from "@/components/visuals/market-depth";
 import CategoryDoors from "@/components/work/category-doors";
-import { archiveProjects } from "@/data/archive";
 import { career } from "@/data/career";
 import { site } from "@/data/site";
 
@@ -24,8 +22,6 @@ export const metadata: Metadata = {
 };
 
 export default function WorksPage() {
-  const flagshipCount = archiveProjects.filter((p) => p.tier === 1).length;
-
   return (
     <>
       <header className="relative overflow-hidden border-b border-line">
@@ -35,11 +31,11 @@ export default function WorksPage() {
         <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 01 — WORKS
+              <p className="label-mono text-signal">
+                WORKS DIRECTORY
               </p>
               <p className="label-mono text-faint">
-                {archiveProjects.length} SYSTEMS · 3 CORE TIERS · {flagshipCount} FLAGSHIP
+                3 CORE DISCIPLINES · VERIFIED SYSTEMS &amp; PLATFORMS
               </p>
             </div>
           </Reveal>
@@ -139,19 +135,7 @@ export default function WorksPage() {
         </div>
       </section>
 
-      {/* ---- Unified Catalogue of all Works ---- */}
-      <section aria-label="Works archive" className="py-16 md:py-24">
-        <div className="mx-auto max-w-[1440px] px-5 pb-8 sm:px-8">
-          <Reveal>
-            <p className="label-mono text-signal">MASTER REPOSITORY</p>
-            <h2 className="display mt-2 text-3xl md:text-5xl">ALL WORKS &amp; SYSTEMS</h2>
-            <p className="mt-3 max-w-2xl text-base text-muted">
-              Browse the complete indexed collection of software products, research engines, and personal builds.
-            </p>
-          </Reveal>
-        </div>
-        <BuildsArchive projects={archiveProjects} />
-      </section>
+
 
       {/* ---- the record ---- */}
       <section aria-label="The record" className="border-t border-line">

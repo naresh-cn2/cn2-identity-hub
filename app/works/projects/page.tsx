@@ -40,7 +40,7 @@ export default function ProjectsCategoryPage() {
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-research font-bold">
-                    DESTINATION / TIER {category.number}
+                    02 / QUANTITATIVE &amp; ENGINEERING PROJECTS
                   </p>
                 </div>
               </Reveal>
@@ -86,9 +86,6 @@ export default function ProjectsCategoryPage() {
               <Reveal delay={120}>
                 <div className="w-full max-w-[560px]">
                   <ResearchVisual />
-                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                    ILLUSTRATIVE — QUANTITATIVE RESEARCH &amp; EVIDENCE CHAIN
-                  </p>
                 </div>
               </Reveal>
             </div>

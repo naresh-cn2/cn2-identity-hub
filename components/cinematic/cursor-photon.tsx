@@ -20,7 +20,7 @@ export default function CursorPhoton() {
 
     if (!isFinePointer || prefersReducedMotion) return;
 
-    // Tags and selectors whose characters should react individually
+    // Tags and selectors whose characters should react individually (headings & display copy only, never buttons/CTAs)
     const eligibleSelectors = [
       "h1",
       "h2",
@@ -30,12 +30,7 @@ export default function CursorPhoton() {
       "h6",
       ".display",
       ".display-condensed",
-      ".label-mono",
-      ".num-mono",
       ".kt-inner",
-      "nav a",
-      "header a",
-      ".hub-dest-title",
       "[data-char-split]",
     ];
 
@@ -62,9 +57,22 @@ export default function CursorPhoton() {
       if (el.hasAttribute("data-chars-processed")) return;
       el.setAttribute("data-chars-processed", "true");
 
-      // Don't split inside inputs, scripts, or svgs
+      // Don't split inside inputs, buttons, interactive CTAs, scripts, or svgs
       const tag = el.tagName.toLowerCase();
-      if (tag === "input" || tag === "textarea" || tag === "select" || tag === "svg" || tag === "script" || tag === "style") {
+      if (
+        tag === "button" ||
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        tag === "svg" ||
+        tag === "script" ||
+        tag === "style" ||
+        el.classList.contains("corner-ticks") ||
+        el.closest("button") ||
+        el.closest("a.corner-ticks") ||
+        el.closest('[role="button"]') ||
+        el.hasAttribute("data-no-char-split")
+      ) {
         return;
       }
 

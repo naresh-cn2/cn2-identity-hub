@@ -40,7 +40,7 @@ export default function ProductsPage() {
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-signal font-bold">
-                    DESTINATION / TIER {category.number}
+                    01 / COMMERCIAL PLATFORMS &amp; SYSTEMS
                   </p>
                 </div>
               </Reveal>
@@ -86,9 +86,6 @@ export default function ProductsPage() {
               <Reveal delay={120}>
                 <div className="w-full max-w-[560px]">
                   <BuildsVisual />
-                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                    ILLUSTRATIVE — DISTRIBUTED PLATFORM TOPOLOGY
-                  </p>
                 </div>
               </Reveal>
             </div>

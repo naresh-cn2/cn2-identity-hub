@@ -40,7 +40,7 @@ export default function PersonalBuildsCategoryPage() {
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-cyan-500 dark:text-cyan-400 font-bold">
-                    DESTINATION / TIER {category.number}
+                    03 / INDEPENDENT &amp; AI BUILDS
                   </p>
                 </div>
               </Reveal>
@@ -86,9 +86,6 @@ export default function PersonalBuildsCategoryPage() {
               <Reveal delay={120}>
                 <div className="w-full max-w-[560px]">
                   <PersonalVisual />
-                  <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                    ILLUSTRATIVE — AUTONOMOUS AGENT TOPOLOGY &amp; WORKSPACE DAEMON
-                  </p>
                 </div>
               </Reveal>
             </div>

@@ -53,15 +53,14 @@ export interface NavItem extends NavLeaf {
  */
 export const primaryNav: NavItem[] = [
   {
-    label: "WORK",
-    href: "/work",
+    label: "WORKS",
+    href: "/works",
     code: "01",
     children: [
-      { label: "WORKS", href: "/works", code: "01" },
+      { label: "WORKS DIRECTORY", href: "/works", code: "01" },
       { label: "PRODUCTS & PLATFORMS", href: "/works/products", code: "01A" },
       { label: "PROJECTS", href: "/works/projects", code: "01B" },
       { label: "PERSONAL BUILDS", href: "/works/personal-builds", code: "01C" },
-      { label: "WORK", href: "/work", code: "01" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
       { label: "CAPABILITIES", href: "/capabilities", code: "03" },
       { label: "PROOF", href: "/proof", code: "09" },
@@ -122,6 +121,7 @@ export const allRoutes: NavLeaf[] = [
     item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
   ),
   { label: workRoute.label, href: workRoute.href, code: workRoute.code },
+  { label: "WORK", href: "/work", code: "01" },
 ];
 
 /** Deduplicated route index (a group landing href can repeat as a child). */

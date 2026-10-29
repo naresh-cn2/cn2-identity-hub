@@ -42,8 +42,8 @@ export default function DestinationSection({ destination, contentSide, ambient, 
           <div className={`relative ${contentFirst ? "" : "lg:order-2"}`}>
             <div className="relative z-10">
               <Reveal>
-                <p className="label-mono text-muted">
-                  <span className="text-signal">DESTINATION</span> {destination.href}
+                <p className="label-mono text-signal">
+                  {destination.caption}
                 </p>
               </Reveal>
 
@@ -65,9 +65,9 @@ export default function DestinationSection({ destination, contentSide, ambient, 
               <Reveal delay={240}>
                 <Link
                   href={destination.href}
-                  className="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal/70 bg-signal/10 px-8 py-4 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
+                  className="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal/80 bg-signal/15 px-8 py-4 label-mono font-semibold text-signal transition-all duration-200 hover:bg-signal hover:text-white"
                 >
-                  {destination.action}
+                  <span>{destination.action}</span>
                   <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
@@ -81,19 +81,13 @@ export default function DestinationSection({ destination, contentSide, ambient, 
             <Reveal delay={140}>
               <div className="dest-recede">{visual}</div>
             </Reveal>
-            <Reveal delay={220}>
-              <p className="mt-4 label-mono text-faint md:text-right">
-                {destination.interactive ? (
-                  <>
-                    REAL CHANNELS <span className="text-signal">—</span> SELECT A NODE TO OPEN
-                  </>
-                ) : (
-                  <>
-                    ILLUSTRATIVE <span className="text-signal">—</span> {destination.caption}
-                  </>
-                )}
-              </p>
-            </Reveal>
+            {destination.interactive && (
+              <Reveal delay={220}>
+                <p className="mt-4 label-mono text-faint md:text-right">
+                  REAL CHANNELS <span className="text-signal">—</span> SELECT A NODE TO OPEN
+                </p>
+              </Reveal>
+            )}
           </div>
         </div>
 

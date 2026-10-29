@@ -38,12 +38,12 @@ export interface HubDestination {
 export const hubDestinations: HubDestination[] = [
   {
     code: "01",
-    label: "WORK",
-    href: "/work",
+    label: "WORKS",
+    href: "/works",
     blurb:
-      "Explore the quantitative systems, market-data infrastructure, and research tooling I build — each documented from problem through architecture to current status.",
-    action: "ENTER WORK",
-    caption: "ARCHITECTURE",
+      "Explore the quantitative systems, commercial products, engineering projects, and personal builds I develop — each documented from problem through architecture to verifiable evidence.",
+    action: "ENTER WORKS",
+    caption: "PLATFORMS & SYSTEMS",
   },
   {
     code: "02",

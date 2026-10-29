@@ -52,7 +52,7 @@ const commands: Command[] = [
   },
   {
     id: "nav-works-main",
-    label: "WORKS (ALL TIERS)",
+    label: "WORKS DIRECTORY",
     group: "NAVIGATION",
     hint: "WORKS",
     keywords: "works directory portfolio products projects personal builds systems",
@@ -93,7 +93,7 @@ const commands: Command[] = [
     hint: p.categoryLabel,
     keywords: `${p.shortTitle} ${p.title} ${p.categoryLabel} ${p.tags.join(" ")} ${p.thesis} ${p.summary} project build work`,
     action: "route" as const,
-    target: `/work/${p.id}`,
+    target: `/works/${p.id}`,
   })),
   ...researchEntries.map((e) => ({
     id: `research-${e.id}`,

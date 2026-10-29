@@ -115,7 +115,7 @@ export default function CategoryShowcaseList({ items, categoryTitle }: Props) {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   href={`/works/${item.id}`}
-                  className="corner-ticks group inline-flex items-center gap-3 border border-signal bg-signal/10 px-6 py-3.5 label-mono text-xs text-signal transition-colors hover:bg-signal hover:text-background"
+                  className="corner-ticks group inline-flex items-center gap-3 border border-signal bg-signal/15 px-6 py-3.5 label-mono text-xs font-semibold text-signal transition-colors hover:bg-signal hover:text-white"
                 >
                   <span>ENTER OVERVIEW &amp; CASE STUDY</span>
                   <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
@@ -168,3 +168,4 @@ export default function CategoryShowcaseList({ items, categoryTitle }: Props) {
     </div>
   );
 }
+

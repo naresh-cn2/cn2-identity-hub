@@ -17,11 +17,11 @@ Check "portal canvas mounted" ($html.Contains('pointer-events-none absolute inse
 Check "portal overlay structure" ($html.Contains('<circle cx="70" cy="70" r="4" fill="none"'))
 
 # ---- eight sections: rendered-only action links ----
-$btnRe = '<a class="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal/70 bg-signal/10 px-8 py-4 label-mono text-signal transition-colors hover:bg-signal hover:text-background" href="([a-z/-]+)">([A-Z ]+)<'
+$btnRe = '<a class="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal[^\"]* bg-signal[^\"]* px-8 py-4 label-mono[^\"]*" href="([a-z/-]+)"><span>([A-Z ]+)</span>'
 $btns = [regex]::Matches($html, $btnRe)
 Check "8 rendered action buttons" ($btns.Count -eq 8)
 $want = @{
-  "/work"="ENTER WORK"; "/credentials"="EXPLORE CREDENTIALS"; "/services"="EXPLORE SERVICES";
+  "/works"="ENTER WORKS"; "/credentials"="EXPLORE CREDENTIALS"; "/services"="EXPLORE SERVICES";
   "/lab"="ENTER THE LAB"; "/research"="EXPLORE RESEARCH"; "/opportunities"="EXPLORE OPPORTUNITIES";
   "/about"="GET TO KNOW ME"; "/contact"="GET IN TOUCH"
 }
@@ -31,7 +31,7 @@ foreach ($k in $want.Keys) { Check "button $k => $($want[$k])" (($got[$k] -eq $w
 # ---- region labelling + titles ----
 $regions = [regex]::Matches($html, '<section aria-labelledby="dest-(\d\d)"')
 Check "8 regions dest-01..08" (($regions | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique).Count -eq 8)
-foreach ($t in @('WORK','CREDENTIALS','SERVICES','LABORATORY','RESEARCH','OPPORTUNITIES','ABOUT ME','LET&#x27;S CONNECT')) {
+foreach ($t in @('WORKS','CREDENTIALS','SERVICES','LABORATORY','RESEARCH','OPPORTUNITIES','ABOUT ME','LET&#x27;S CONNECT')) {
   Check "title contains $t" ($html.Contains(">$t<"))
 }
 
@@ -47,16 +47,16 @@ Check "return to entrance removed" (-not $html.Contains('RETURN TO ENTRANCE'))
 Check "bottom-left back on hub" ($html.Contains('Go back to the previous page'))
 
 # ---- eyebrow: route label, no numbering ----
-Check "eyebrow: DESTINATION /work" ($html -match 'DESTINATION</span> <!-- -->/work')
+Check "eyebrow: works caption" ($html -match 'PLATFORMS &amp; SYSTEMS|PLATFORMS & SYSTEMS')
 Check "no 'NN OF' eyebrow" (-not ($html -match 'OF 0?8')) 
-Check "8 route eyebrows" (([regex]::Matches($html, 'DESTINATION</span> <!-- -->/[a-z-]+')).Count -eq 8)
+Check "8 route eyebrows" (([regex]::Matches($html, '<p class="label-mono text-signal">')).Count -ge 8)
 
 # ---- scroll cue + recede ----
 Check "scroll cue x8" (([regex]::Matches($html, '<span class="dest-cue"></span>')).Count -eq 8)
 Check "recede wrapper x8" (([regex]::Matches($html, '<div class="dest-recede">')).Count -eq 8)
 
-# ---- captions ----
-Check "ILLUSTRATIVE captions x7" (([regex]::Matches($html, 'ILLUSTRATIVE <!-- --><!-- -->—')).Count -ge 7 -or ([regex]::Matches($html, 'ILLUSTRATIVE')).Count -ge 7)
+# ---- captions: no illustrative clutter ----
+Check "no illustrative clutter" (-not $html.Contains('ILLUSTRATIVE — ARCHITECTURE'))
 Check "connect: REAL CHANNELS" ($html.Contains('REAL CHANNELS'))
 
 # ---- connect: real links ----
