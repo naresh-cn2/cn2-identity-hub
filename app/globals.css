@@ -1810,19 +1810,19 @@ button.corner-ticks {
   -webkit-mask-image: linear-gradient(
     to bottom,
     #000 0%,
-    #000 44%,
-    transparent 44%,
-    transparent 49%,
     #000 49%,
+    transparent 49%,
+    transparent 54%,
+    #000 54%,
     #000 100%
   );
   mask-image: linear-gradient(
     to bottom,
     #000 0%,
-    #000 44%,
-    transparent 44%,
-    transparent 49%,
     #000 49%,
+    transparent 49%,
+    transparent 54%,
+    #000 54%,
     #000 100%
   );
 }
