@@ -37,7 +37,7 @@ const commands: Command[] = [
     label: r.label,
     group: "NAVIGATION" as const,
     hint: r.code,
-    keywords: `${r.label} ${r.href} navigation go`,
+    keywords: `${r.label} ${r.href} navigation go ${r.label === "WORK" ? "projects builds engineering portfolio" : ""} ${r.label === "SERVICES" ? "freelance hire contract offerings" : ""} ${r.label === "CREDENTIALS" ? "certificates cs50 harvard education verified" : ""} ${r.label === "CAPABILITIES" ? "skills tech stack tools tooling" : ""} ${r.label === "CV" ? "resume curriculum vitae experience" : ""}`,
     action: "route" as const,
     target: r.href,
   })),
@@ -109,9 +109,9 @@ const commands: Command[] = [
     label: c.program,
     group: "CREDENTIALS" as const,
     hint: c.provider,
-    keywords: `${c.program} ${c.provider} ${c.state} credential certification study`,
+    keywords: `${c.program} ${c.provider} ${c.state} ${c.credentialId || ""} CS50 CS50x Harvard certificate computer science credential study verified`,
     action: "route" as const,
-    target: "/credentials",
+    target: `/credentials#${c.id}`,
   })),
   {
     id: "action-theme",
@@ -167,7 +167,11 @@ export default function CommandPalette() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return commands;
-    return commands.filter((c) => c.keywords.toLowerCase().includes(q));
+    const tokens = q.split(/\s+/).filter(Boolean);
+    return commands.filter((c) => {
+      const haystack = `${c.label} ${c.hint || ""} ${c.keywords}`.toLowerCase();
+      return tokens.every((token) => haystack.includes(token));
+    });
   }, [query]);
 
   const grouped = useMemo(() => {

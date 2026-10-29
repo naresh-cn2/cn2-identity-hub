@@ -57,7 +57,7 @@ export const primaryNav: NavItem[] = [
     href: "/work",
     code: "01",
     children: [
-      { label: "PROJECTS", href: "/work", code: "01" },
+      { label: "WORK", href: "/work", code: "01" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
       { label: "CAPABILITIES", href: "/capabilities", code: "03" },
       { label: "PROOF", href: "/proof", code: "09" },
@@ -110,7 +110,7 @@ export const workRoute = { label: "WORK WITH ME", href: "/work-with-me", code: "
  */
 export const allRoutes: NavLeaf[] = [
   { label: "HOME", href: "/", code: "00" },
-  { label: "HEADQUARTERS", href: "/hub", code: "HQ" },
+  { label: "UNIVERSE HUB", href: "/hub", code: "HUB" },
   ...primaryNav.flatMap((item) =>
     item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
   ),

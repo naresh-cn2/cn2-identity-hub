@@ -185,19 +185,26 @@ export default function QuantitativeUniverse() {
       if (!isTabVisible) return;
 
       const elapsed = (now - startTime) * 0.001;
+      const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
 
       // Smooth camera interpolation
       rotX += (targetRotX - rotX) * 0.05;
       rotY += (targetRotY - rotY) * 0.05;
 
-      // Clear with dark transparent depth
+      // Clear with theme depth
       ctx.clearRect(0, 0, width, height);
 
-      // Center offset: Place surface slightly right & center-down to leave hero typography breathing room
+      // Center offset & responsive scale: Place surface slightly right & center-down to leave hero typography breathing room
       const isMobile = width < 768;
       const isTablet = width < 1024;
       const centerOffsetX = isMobile ? width * 0.5 : isTablet ? width * 0.62 : width * 0.66;
       const centerOffsetY = isMobile ? height * 0.58 : height * 0.52;
+
+      // Scale surface dynamically for responsive elegance across mobile (320-390px), laptops, and 4K displays
+      const scaleMultiplier = Math.min(1.35, Math.max(0.68, width / 1280));
+      const currentScaleX = surfaceScaleX * scaleMultiplier;
+      const currentScaleZ = surfaceScaleZ * scaleMultiplier;
+      const currentAmp = surfaceAmplitude * scaleMultiplier;
 
       // -------------------------------------------------------------
       // 1. Atmospheric Ambient Radial Glow (Behind the Math Surface)
@@ -210,10 +217,17 @@ export default function QuantitativeUniverse() {
         centerOffsetY - 30,
         Math.max(width, height) * 0.55
       );
-      glowGrad.addColorStop(0, "rgba(0, 240, 255, 0.16)");
-      glowGrad.addColorStop(0.25, "rgba(14, 116, 244, 0.09)");
-      glowGrad.addColorStop(0.6, "rgba(255, 42, 31, 0.025)");
-      glowGrad.addColorStop(1, "rgba(3, 7, 18, 0)");
+      if (isDark) {
+        glowGrad.addColorStop(0, "rgba(0, 240, 255, 0.16)");
+        glowGrad.addColorStop(0.25, "rgba(14, 116, 244, 0.09)");
+        glowGrad.addColorStop(0.6, "rgba(255, 42, 31, 0.025)");
+        glowGrad.addColorStop(1, "rgba(3, 7, 18, 0)");
+      } else {
+        glowGrad.addColorStop(0, "rgba(11, 87, 208, 0.12)");
+        glowGrad.addColorStop(0.25, "rgba(8, 145, 178, 0.07)");
+        glowGrad.addColorStop(0.6, "rgba(200, 36, 24, 0.02)");
+        glowGrad.addColorStop(1, "rgba(238, 242, 249, 0)");
+      }
 
       ctx.fillStyle = glowGrad;
       ctx.fillRect(0, 0, width, height);
@@ -226,7 +240,7 @@ export default function QuantitativeUniverse() {
       const floorSteps = 16;
 
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(56, 189, 248, 0.065)";
+      ctx.strokeStyle = isDark ? "rgba(56, 189, 248, 0.065)" : "rgba(24, 44, 92, 0.09)";
 
       // Longitudinal lines
       for (let i = -floorSteps / 2; i <= floorSteps / 2; i++) {
@@ -273,19 +287,19 @@ export default function QuantitativeUniverse() {
       for (let i = 0; i < gridResU; i++) {
         gridPoints[i] = [];
         const u = (i / (gridResU - 1) - 0.5) * 2; // -1 to 1
-        const x = u * surfaceScaleX;
+        const x = u * currentScaleX;
 
         for (let j = 0; j < gridResV; j++) {
           const v = (j / (gridResV - 1) - 0.5) * 2; // -1 to 1
-          const z = v * surfaceScaleZ;
-          const y = getSurfaceHeight(u, v, elapsed);
+          const z = v * currentScaleZ;
+          const y = getSurfaceHeight(u, v, elapsed) * (currentAmp / surfaceAmplitude);
 
           const proj = project(x, y, z, centerOffsetX, centerOffsetY);
           if (proj) {
             gridPoints[i][j] = {
               px: proj.px,
               py: proj.py,
-              heightRatio: y / surfaceAmplitude,
+              heightRatio: y / currentAmp,
               depth: proj.depth,
             };
           } else {
@@ -482,7 +496,7 @@ export default function QuantitativeUniverse() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#030712]"
+      className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-transparent"
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="block w-full h-full" />

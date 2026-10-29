@@ -46,13 +46,13 @@ export default function Navbar() {
         <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 print:hidden sm:px-6 sm:pt-5 lg:px-10">
           <div className="mx-auto flex max-w-[1420px] items-center gap-3">
             {/* long rounded panel: thin border, translucent dark, wide padding */}
-            <div className="flex min-w-0 flex-1 items-center justify-between gap-3 rounded-[26px] border border-white/15 bg-black/45 px-4 py-2.5 backdrop-blur-xl sm:gap-6 sm:px-7 sm:py-3">
+            <div className="flex min-w-0 flex-1 items-center justify-between gap-3 rounded-[26px] border border-line dark:border-white/15 bg-surface/80 dark:bg-black/45 px-4 py-2.5 backdrop-blur-xl sm:gap-6 sm:px-7 sm:py-3 transition-colors duration-400">
               {/* LEFT: brand lockup → signed identity portrait */}
               <Link
                 href="/identity"
                 className="group flex min-w-0 shrink-0 cursor-pointer flex-col items-start leading-none"
               >
-                <span className="display text-[0.95rem] font-bold tracking-tight text-white transition-opacity duration-200 group-hover:opacity-80 md:text-base">
+                <span className="display text-[0.95rem] font-bold tracking-tight text-foreground dark:text-white transition-opacity duration-200 group-hover:opacity-80 md:text-base">
                   {site.name}
                 </span>
                 <span className="label-mono mt-1 text-[9px] tracking-[0.2em] text-[#ff2a1f] md:text-[10px]">
@@ -74,7 +74,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/about"
-                  className="label-mono text-[10px] tracking-[0.18em] text-white/55 transition-colors duration-200 hover:text-white/90"
+                  className="label-mono text-[10px] tracking-[0.18em] text-muted dark:text-white/55 transition-colors duration-200 hover:text-foreground dark:hover:text-white/90"
                 >
                   ABOUT
                 </Link>
@@ -83,10 +83,10 @@ export default function Navbar() {
               {/* RIGHT inside panel: CONTACT pill with circular arrow */}
               <Link
                 href="/contact"
-                className="group hidden shrink-0 items-center gap-3 rounded-full border border-white/20 bg-white/[0.06] py-1.5 pl-5 pr-1.5 transition-colors duration-200 hover:border-white/35 hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2a1f] focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex"
+                className="group hidden shrink-0 items-center gap-3 rounded-full border border-line dark:border-white/20 bg-foreground/[0.05] dark:bg-white/[0.06] py-1.5 pl-5 pr-1.5 transition-colors duration-200 hover:border-line-strong dark:hover:border-white/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2a1f] focus-visible:ring-offset-2 focus-visible:ring-offset-background md:inline-flex"
                 aria-label="Contact — open the contact page"
               >
-                <span className="label-mono text-[10px] tracking-[0.18em] text-white/85">
+                <span className="label-mono text-[10px] tracking-[0.18em] text-foreground dark:text-white/85">
                   CONTACT
                 </span>
                 <span
@@ -110,14 +110,22 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Search — home page is dark-only, so no theme toggle here */}
-            <div className="flex shrink-0 items-center gap-2.5">
+            {/* Search & Theme Toggle */}
+            <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={openPalette}
-                className="relative grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-black/45 backdrop-blur-xl transition-all duration-300 hover:border-[#ff2a1f]/60 hover:bg-black/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2a1f] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="relative grid h-10 w-10 place-items-center rounded-full border border-line dark:border-white/15 bg-surface/80 dark:bg-black/45 backdrop-blur-xl transition-all duration-300 hover:border-[#ff2a1f]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2a1f] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 aria-label="Open search"
               >
-                <Search className="h-4 w-4 text-white/75 transition-colors hover:text-white" />
+                <Search className="h-4 w-4 text-foreground/75 dark:text-white/75 transition-colors hover:text-foreground dark:hover:text-white" />
+              </button>
+              <button
+                onClick={toggle}
+                className="relative grid h-10 w-10 place-items-center rounded-full border border-line dark:border-white/15 bg-surface/80 dark:bg-black/45 backdrop-blur-xl transition-all duration-300 hover:border-[#ff2a1f]/60 text-foreground dark:text-white/75 hover:text-foreground dark:hover:text-white"
+                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                aria-pressed={theme === "dark" ? "false" : "true"}
+              >
+                {theme === "dark" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
               </button>
             </div>
           </div>

@@ -173,7 +173,7 @@ export default function PageAtmosphere({
 
         const mode: Mode = theme === "light" ? "light" : "dark";
         const pal = PALETTES[mode];
-        const dim = (mode === "light" ? 0.72 : 1.3) * intensity; // light mode reads calmer on white surfaces; dark mode lifted for visible holographic depth
+        const dim = (mode === "light" ? 1.15 : 2.35) * intensity; // enriched for vivid cinematic holographic depth // light mode reads calmer on white surfaces; dark mode lifted for visible holographic depth
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const small = window.innerWidth < 768;
 

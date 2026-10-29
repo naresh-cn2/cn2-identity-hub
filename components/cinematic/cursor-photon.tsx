@@ -1,131 +1,124 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 /**
- * CursorPhoton — Subtle, hardware-accelerated ambient cursor illumination for desktop.
+ * CharacterInteractionTracker (formerly CursorPhoton) — Precise Character-Level Hover Interaction.
  *
- * Implements a restrained, quantitative lighting halo:
- * - Low-intensity cyan radiance (rgba(0, 240, 255, 0.04)) with smooth physics interpolation.
- * - Idles automatically when the pointer is stationary, consuming 0% idle CPU.
- * - Strictly pointer-events-none with zero impact on text selection, clicks, or forms.
- * - Completely inactive on touch/coarse devices and respects prefers-reduced-motion.
- * - Updates CSS transform / custom properties directly, avoiding React state re-renders.
+ * User Requirement:
+ * - When the pointer moves over text (e.g. CREDENTIALS, QUANTITATIVE DEVELOPER, navigation labels, card titles):
+ *   ONLY the individual character under the pointer receives the visual effect (cyan/electric blue pixel glow).
+ *   The other characters in the sentence/word remain unaffected.
+ * - When the pointer moves to the next letter, the effect transfers to that character only.
+ * - Completely zero mouse-following white/cyan trailing halo.
+ * - Full accessibility, text selection, and click functionality preserved.
  */
 export default function CursorPhoton() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    // Only mount on desktop fine-pointer devices with motion enabled
     const isFinePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (!isFinePointer || prefersReducedMotion) return;
 
-    const glow = glowRef.current;
-    const container = containerRef.current;
-    if (!glow || !container) return;
+    // Tags and selectors whose characters should react individually
+    const eligibleSelectors = [
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      ".display",
+      ".display-condensed",
+      ".label-mono",
+      ".num-mono",
+      ".kt-inner",
+      "nav a",
+      "header a",
+      ".hub-dest-title",
+      "[data-char-split]",
+    ];
 
-    let targetX = -500;
-    let targetY = -500;
-    let currentX = -500;
-    let currentY = -500;
-    let isMoving = false;
-    let isVisible = false;
-    let animId: number | null = null;
-    let idleTimeout: NodeJS.Timeout | null = null;
+    const splitTextNodeIntoChars = (textNode: Text) => {
+      const text = textNode.textContent;
+      if (!text || text.trim() === "") return;
 
-    const render = () => {
-      const dx = targetX - currentX;
-      const dy = targetY - currentY;
-
-      // Smooth lerp interpolation
-      currentX += dx * 0.14;
-      currentY += dy * 0.14;
-
-      glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-
-      // If close enough to target, halt render loop to save battery
-      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-        animId = requestAnimationFrame(render);
-      } else {
-        isMoving = false;
-        animId = null;
-      }
-    };
-
-    const startLoop = () => {
-      if (!isMoving) {
-        isMoving = true;
-        animId = requestAnimationFrame(render);
-      }
-    };
-
-    const handlePointerMove = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
-
-      targetX = e.clientX;
-      targetY = e.clientY;
-
-      if (!isVisible) {
-        isVisible = true;
-        glow.style.opacity = "1";
-        // Immediate jump on first entry to avoid gliding from off-screen
-        if (currentX === -500) {
-          currentX = targetX;
-          currentY = targetY;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (char === " ") {
+          frag.appendChild(document.createTextNode(" "));
+        } else {
+          const span = document.createElement("span");
+          span.className = "char-cell";
+          span.textContent = char;
+          frag.appendChild(span);
         }
       }
-
-      startLoop();
-
-      if (idleTimeout) clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => {
-        // Softly dim after 3 seconds of stillness
-        if (glow) glow.style.opacity = "0.45";
-      }, 3000);
+      textNode.parentNode?.replaceChild(frag, textNode);
     };
 
-    const handlePointerLeave = () => {
-      isVisible = false;
-      if (glow) glow.style.opacity = "0";
-      if (idleTimeout) clearTimeout(idleTimeout);
+    const processElement = (el: HTMLElement) => {
+      if (el.hasAttribute("data-chars-processed")) return;
+      el.setAttribute("data-chars-processed", "true");
+
+      // Don't split inside inputs, scripts, or svgs
+      const tag = el.tagName.toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select" || tag === "svg" || tag === "script" || tag === "style") {
+        return;
+      }
+
+      // Collect only direct text node children
+      const childNodes = Array.from(el.childNodes);
+      for (const node of childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          splitTextNodeIntoChars(node as Text);
+        }
+      }
     };
 
-    const handlePointerEnter = () => {
-      isVisible = true;
-      if (glow) glow.style.opacity = "1";
+    // Process initial headings and interactive elements
+    const initialProcess = () => {
+      try {
+        const selector = eligibleSelectors.join(", ");
+        const elements = document.querySelectorAll<HTMLElement>(selector);
+        elements.forEach(processElement);
+      } catch {}
     };
 
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    document.addEventListener("mouseleave", handlePointerLeave);
-    document.addEventListener("mouseenter", handlePointerEnter);
+    initialProcess();
+
+    // On pointerover, if the target is inside an eligible heading or interactive element that isn't split yet, split it on the fly
+    const handlePointerOver = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      // If it's already a char-cell, native CSS hover handles it
+      if (target.classList.contains("char-cell")) return;
+
+      // Check if target or an ancestor matches eligible selectors
+      let el: HTMLElement | null = target;
+      while (el && el !== document.body) {
+        for (const sel of eligibleSelectors) {
+          if (el.matches && el.matches(sel)) {
+            processElement(el);
+            return;
+          }
+        }
+        el = el.parentElement;
+      }
+    };
+
+    document.addEventListener("pointerover", handlePointerOver, { passive: true });
+
+    // Re-check periodically when route changes
+    const timer = setInterval(initialProcess, 1500);
 
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      document.removeEventListener("mouseleave", handlePointerLeave);
-      document.removeEventListener("mouseenter", handlePointerEnter);
-      if (animId) cancelAnimationFrame(animId);
-      if (idleTimeout) clearTimeout(idleTimeout);
+      document.removeEventListener("pointerover", handlePointerOver);
+      clearInterval(timer);
     };
   }, []);
 
-  return (
-    <div
-      ref={containerRef}
-      className="cursor-photon-layer pointer-events-none fixed inset-0 z-30 overflow-hidden"
-      aria-hidden="true"
-    >
-      <div
-        ref={glowRef}
-        className="pointer-events-none absolute -left-48 -top-48 h-96 w-96 rounded-full opacity-0 transition-opacity duration-500 will-change-transform"
-        style={{
-          background:
-            "radial-gradient(circle at center, rgba(0, 240, 255, 0.045) 0%, rgba(14, 116, 244, 0.02) 42%, transparent 72%)",
-        }}
-      />
-    </div>
-  );
+  return null;
 }
-

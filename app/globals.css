@@ -68,7 +68,7 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: transparent; /* ambient layer visible behind */
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
@@ -1774,5 +1774,81 @@ button.corner-ticks {
 
   35% {
     transform: scale(1.25) rotate(-6deg);
+  }
+}
+
+
+/* ---------------- Interactive Text Pixel Response (Site-Wide) ---------------- */
+[data-pixel-glow="true"] {
+  color: #67e8f9 !important;
+  text-shadow: 0 0 10px rgba(103, 232, 249, 0.7), 0 0 22px rgba(22, 119, 255, 0.35);
+  transition: color 0.18s ease, text-shadow 0.22s ease;
+}
+
+.dark [data-pixel-glow="true"] {
+  color: #67e8f9 !important;
+  text-shadow: 0 0 10px rgba(103, 232, 249, 0.8), 0 0 24px rgba(22, 119, 255, 0.45);
+}
+
+:root:not(.dark) [data-pixel-glow="true"] {
+  color: #0b57d0 !important;
+  text-shadow: 0 0 8px rgba(11, 87, 208, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-pixel-glow="true"] {
+    text-shadow: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* ---------------- Sliced Stencil Brand Wordmark ---------------- */
+.cn2-sliced-wordmark {
+  display: inline-block;
+  position: relative;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 44%,
+    transparent 44%,
+    transparent 49%,
+    #000 49%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 44%,
+    transparent 44%,
+    transparent 49%,
+    #000 49%,
+    #000 100%
+  );
+}
+
+/* ---------------- Character-Level Interactive Response ---------------- */
+.char-cell {
+  display: inline;
+  position: relative;
+  transition: color 0.12s ease, text-shadow 0.15s ease, transform 0.12s ease;
+}
+
+.char-cell:hover,
+.char-cell[data-char-hover="true"] {
+  color: #67e8f9 !important;
+  text-shadow: 0 0 8px rgba(103, 232, 249, 0.95), 0 0 16px rgba(22, 119, 255, 0.6);
+}
+
+:root:not(.dark) .char-cell:hover,
+:root:not(.dark) .char-cell[data-char-hover="true"] {
+  color: #0b57d0 !important;
+  text-shadow: 0 0 6px rgba(11, 87, 208, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .char-cell:hover,
+  .char-cell[data-char-hover="true"] {
+    text-shadow: none !important;
   }
 }

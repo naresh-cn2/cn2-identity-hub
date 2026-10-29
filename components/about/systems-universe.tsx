@@ -147,11 +147,25 @@ export default function SystemsUniverse() {
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
 
+    let scrollOffset = 0;
+    const onScroll = () => {
+      if (!reducedMotion) {
+        scrollOffset = window.scrollY;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     let animId: number;
 
     const render = () => {
-      rotX += (targetRotX - rotX) * 0.05;
-      rotY += (targetRotY - rotY) * 0.05;
+      // Scroll-driven camera parallax: as the user scrolls, the network gracefully orbits & breathes
+      const maxScroll = Math.max(1, (document.documentElement.scrollHeight || 1000) - window.innerHeight);
+      const scrollRatio = Math.min(scrollOffset / maxScroll, 1);
+      const scrollTilt = scrollRatio * 0.42;
+      const scrollYaw = scrollRatio * 0.55;
+
+      rotX += (targetRotX + scrollTilt - rotX) * 0.05;
+      rotY += (targetRotY + scrollYaw - rotY) * 0.05;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -160,12 +174,20 @@ export default function SystemsUniverse() {
       const cx = isDesktop ? width * 0.68 : width * 0.5;
       const cy = height * 0.48;
 
+      const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
       // Radial background aura
       const grad = ctx.createRadialGradient(cx, cy, 20, cx, cy, Math.max(width, height) * 0.5);
-      grad.addColorStop(0, "rgba(0, 240, 255, 0.12)");
-      grad.addColorStop(0.35, "rgba(14, 116, 244, 0.07)");
-      grad.addColorStop(0.7, "rgba(255, 48, 48, 0.02)");
-      grad.addColorStop(1, "rgba(3, 4, 8, 0)");
+      if (isDark) {
+        grad.addColorStop(0, "rgba(0, 240, 255, 0.12)");
+        grad.addColorStop(0.35, "rgba(14, 116, 244, 0.07)");
+        grad.addColorStop(0.7, "rgba(255, 48, 48, 0.02)");
+        grad.addColorStop(1, "rgba(3, 4, 8, 0)");
+      } else {
+        grad.addColorStop(0, "rgba(11, 87, 208, 0.09)");
+        grad.addColorStop(0.35, "rgba(8, 145, 178, 0.05)");
+        grad.addColorStop(0.7, "rgba(200, 36, 24, 0.02)");
+        grad.addColorStop(1, "rgba(238, 242, 249, 0)");
+      }
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -275,6 +297,7 @@ export default function SystemsUniverse() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
       ro.disconnect();
     };
   }, []);
@@ -282,7 +305,7 @@ export default function SystemsUniverse() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#030408]"
+      className="w-full h-full pointer-events-none overflow-hidden bg-transparent"
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
