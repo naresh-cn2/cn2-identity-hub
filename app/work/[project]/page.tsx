@@ -3,15 +3,17 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ProjectOverview from "@/components/work/project-overview";
 import TierTwoCaseStudy from "@/components/work/tier-two-case-study";
+import ComprehensiveCaseStudy from "@/components/work/comprehensive-case-study";
 import ProjectWorld from "@/components/projects/project-world";
 import Reveal from "@/components/ui/reveal";
-import { archiveProjects, getArchiveProject, getFlagship } from "@/data/archive";
+import { allArchiveProjects, getArchiveProject, getFlagship } from "@/data/archive";
+import { getWorkItem } from "@/data/works";
 import { getProjectWorld } from "@/data/project-worlds";
 import { researchEntries } from "@/data/research";
 import { site } from "@/data/site";
 
 export function generateStaticParams() {
-  return archiveProjects.map((p) => ({ project: p.id }));
+  return allArchiveProjects.map((p) => ({ project: p.id }));
 }
 
 export async function generateMetadata({
@@ -43,6 +45,7 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
 
   const flagship = record.tier === 1 ? getFlagship(record.id) : undefined;
   const world = getProjectWorld(record.id);
+  const workItem = getWorkItem(record.id);
   const relatedResearch = researchEntries.filter((r) => r.relatedProject === record.id);
 
   return (
@@ -55,8 +58,8 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
               HOME
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href="/work" className="transition-colors hover:text-foreground">
-              WORK
+            <Link href="/works" className="transition-colors hover:text-foreground">
+              WORKS
             </Link>
             <span aria-hidden="true">/</span>
             <span className="text-foreground">{record.shortTitle}</span>
@@ -69,79 +72,81 @@ export default async function BuildPage({ params }: { params: Promise<{ project:
         <ProjectWorld project={record} />
       ) : (
         <>
-      {flagship ? (
-        <ProjectOverview project={flagship} />
-      ) : (
-        <TierTwoCaseStudy project={record} />
-      )}
+          {flagship ? (
+            <ProjectOverview project={flagship} />
+          ) : workItem && (record.id === "strata-engine" || record.id === "systems-kernel" || record.id === "sentiment-stream") ? (
+            <ComprehensiveCaseStudy item={workItem} />
+          ) : (
+            <TierTwoCaseStudy project={record} />
+          )}
 
-      {/* related research */}
-      {relatedResearch.length > 0 && (
-        <section aria-label="Related research" className="border-t border-line">
-          <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
-            <Reveal>
-              <p className="label-mono text-research">RESEARCH THIS BUILD PRODUCED</p>
-            </Reveal>
-            <div className="mt-8 grid gap-px bg-line md:grid-cols-2">
-              {relatedResearch.map((r, i) => (
-                <Reveal key={r.id} delay={i * 80}>
-                  <Link
-                    href={`/research/${r.id}`}
-                    className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface md:p-8"
-                  >
-                    <p className="label-mono text-faint">{r.category}</p>
-                    <h3 className="display mt-3 text-xl md:text-2xl">{r.title}</h3>
-                    <p className="mt-4 text-sm leading-relaxed text-muted">{r.result}</p>
-                    <span className="label-mono mt-auto pt-6 text-research transition-transform duration-300 group-hover:translate-x-1">
-                      READ THE ENTRY →
-                    </span>
-                  </Link>
+          {/* related research */}
+          {relatedResearch.length > 0 && (
+            <section aria-label="Related research" className="border-t border-line">
+              <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+                <Reveal>
+                  <p className="label-mono text-research">RESEARCH THIS BUILD PRODUCED</p>
                 </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+                <div className="mt-8 grid gap-px bg-line md:grid-cols-2">
+                  {relatedResearch.map((r, i) => (
+                    <Reveal key={r.id} delay={i * 80}>
+                      <Link
+                        href={`/research/${r.id}`}
+                        className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface md:p-8"
+                      >
+                        <p className="label-mono text-faint">{r.category}</p>
+                        <h3 className="display mt-3 text-xl md:text-2xl">{r.title}</h3>
+                        <p className="mt-4 text-sm leading-relaxed text-muted">{r.result}</p>
+                        <span className="label-mono mt-auto pt-6 text-research transition-transform duration-300 group-hover:translate-x-1">
+                          READ THE ENTRY →
+                        </span>
+                      </Link>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
-      {/* navigation between builds */}
-      <section aria-label="Archive navigation" className="border-t border-line">
-        <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-6">
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="/work"
-                className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
-              >
-                ← ALL PROJECTS
-              </Link>
-              {flagship && (
-                <Link
-                  href={`/case-studies/${flagship.id}`}
-                  className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-signal hover:text-signal"
-                >
-                  CASE STUDY →
-                </Link>
-              )}
+          {/* navigation between builds */}
+          <section aria-label="Archive navigation" className="border-t border-line">
+            <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8">
+              <div className="flex flex-wrap items-center justify-between gap-6">
+                <div className="flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/works"
+                    className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+                  >
+                    ← ALL PROJECTS
+                  </Link>
+                  {flagship && (
+                    <Link
+                      href={`/case-studies/${flagship.id}`}
+                      className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-signal hover:text-signal"
+                    >
+                      CASE STUDY →
+                    </Link>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-6">
+                  <Link href="/research" className="link-line label-mono text-xs text-muted hover:text-research">
+                    RESEARCH →
+                  </Link>
+                  <Link href="/lab" className="link-line label-mono text-xs text-muted hover:text-signal">
+                    LAB →
+                  </Link>
+                  <a
+                    href={site.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-line label-mono text-xs text-muted hover:text-signal"
+                  >
+                    GITHUB →
+                  </a>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-6">
-              <Link href="/research" className="link-line label-mono text-xs text-muted hover:text-research">
-                RESEARCH →
-              </Link>
-              <Link href="/lab" className="link-line label-mono text-xs text-muted hover:text-signal">
-                LAB →
-              </Link>
-              <a
-                href={site.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-line label-mono text-xs text-muted hover:text-signal"
-              >
-                GITHUB →
-              </a>
-            </div>
-          </div>
-        </div>
-        </section>
+          </section>
         </>
       )}
     </>

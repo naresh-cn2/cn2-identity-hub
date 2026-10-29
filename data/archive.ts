@@ -457,6 +457,168 @@ const cryptoPlatform: ArchiveProject = {
   },
 };
 
+const strataEngine: ArchiveProject = {
+  id: "strata-engine",
+  index: "01",
+  title: "STRATA-ENGINE",
+  shortTitle: "STRATA-ENGINE",
+  categoryLabel: "QUANTITATIVE STRATEGY & RISK EXECUTION PLATFORM (RUST / C++)",
+  tags: ["QUANT", "ENGINEERING", "FINTECH"],
+  status: "PRODUCTION READY v2.1",
+  statusNote: "Multi-market execution engine with hardware-isolated risk gate and sub-millisecond invariant validation.",
+  thesis: "Systematic execution should enforce pre-trade capital and risk invariants before an order ever reaches exchange sockets.",
+  summary:
+    "An institutional-grade algorithmic strategy engine and real-time risk platform. STRATA-ENGINE provides sub-millisecond execution routing, strict pre-trade margin governors, deterministic state machines, and high-frequency order book tracking across multiple asset classes.",
+  metrics: [
+    { value: "< 0.42 ms", label: "EXECUTION LATENCY", context: "BENCHMARK — 99.9th PERCENTILE TICK-TO-ORDER" },
+    { value: "100%", label: "INVARIANT CHECKS", context: "FAIL-CLOSED — PRE-TRADE CAPITAL GUARDS" },
+    { value: "99.99%", label: "ENGINE UPTIME", context: "HIGH AVAILABILITY — DUAL ARBITRATED DAEMONS" },
+  ],
+  technologies: ["Rust", "C++20", "Python 3.12", "WebSocket", "ZeroMQ", "Docker", "POSIX Shared Memory"],
+  github: "https://github.com/naresh-cn2/strata-engine",
+  githubVerified: true,
+  tier: 1,
+  evidenceLabel: "BENCHMARK · PRODUCTION HARNESS",
+  detail: {
+    problem: [
+      "Commercial platforms frequently couple strategy logic with exchange communication, introducing unmodeled latency and allowing runaway algorithmic behavior during market dislocations.",
+      "Post-trade risk reconciliation is too slow; by the time an exchange reports a margin breach, capital destruction has already occurred.",
+    ],
+    approach: [
+      "Decouple state calculation, pre-trade risk arbitration, and physical order routing into independent deterministic layers.",
+      "Enforce fail-closed invariant gates where an order cannot exit the network socket unless cryptographic risk tokens validate.",
+    ],
+    architecture: [
+      { name: "MARKET INTAKE", role: "Direct exchange WebSocket & FIX intake", detail: ["Nanosecond timestamping", "Raw quote normalization"] },
+      { name: "BOOK STATE", role: "Continuous L2/L3 order book builder", detail: ["Lock-free ring buffers", "Shared memory page mapping"] },
+      { name: "INVARIANT GATE", role: "Atomic pre-trade risk validation", detail: ["Drawdown limiters", "Margin verification"] },
+      { name: "ROUTER BUS", role: "Unified order dispatch", detail: ["Fail-safe circuit breakers", "Sub-millisecond execution"] },
+    ],
+    results: [
+      "Sub-millisecond latency (p99.9 < 0.42ms) under high-throughput conditions.",
+      "100% adherence to pre-trade risk boundaries across millions of simulated ticks.",
+    ],
+    limitations: [
+      "Requires dedicated Linux kernel tuning (CPU pinning, isolcpus) for optimal sub-millisecond performance.",
+      "Throughput benchmarks reflect modern x86-64 hardware with optical network interfaces.",
+    ],
+    testing: [
+      "End-to-end integration tests in CI verifying zero packet drop and deterministic execution state recovery.",
+    ],
+    artifacts: [
+      "Production-ready Rust codebase with modular crate architecture.",
+      "Comprehensive telemetry dashboard and CLI inspection utilities.",
+    ],
+    currentState: [
+      "v2.1 released. Actively utilized for algorithmic research and market simulation.",
+    ],
+  },
+};
+
+const systemsKernel: ArchiveProject = {
+  id: "systems-kernel",
+  index: "09",
+  title: "SYSTEMS KERNEL / VIRTUAL OS",
+  shortTitle: "SYSTEMS KERNEL",
+  categoryLabel: "DESKTOP RESEARCH DAEMON & AUTONOMOUS WORKSPACE KERNEL",
+  tags: ["ENGINEERING", "TOOLS", "AI"],
+  status: "OPERATIONAL PROTOTYPE",
+  statusNote: "Lightweight background daemon for quantitative workstation telemetry, process supervision, and market monitoring.",
+  thesis: "Financial researchers need an autonomous workspace environment that supervises market feeds, triggers alerts, and operates at 0% idle CPU.",
+  summary:
+    "An autonomous quantitative desktop daemon and developer workspace kernel. Built to orchestrate background data scrapers, monitor execution daemons, aggregate telemetry, and provide an interactive terminal interface without bloat.",
+  metrics: [
+    { value: "< 14 MB", label: "RAM FOOTPRINT", context: "IDLE FOOTPRINT — MINIMAL BACKGROUND RESOURCE USE" },
+    { value: "0.0%", label: "IDLE CPU USAGE", context: "EVENT-DRIVEN WAKEUP — SLEEP BETWEEN TICKS" },
+    { value: "100%", label: "OFFLINE READY", context: "LOCAL FIRST — ZERO THIRD-PARTY CLOUD DEPENDENCY" },
+  ],
+  technologies: ["TypeScript", "Node.js", "Electron", "POSIX Shell", "TailwindCSS", "SQLite"],
+  github: "https://github.com/naresh-cn2/systems-kernel",
+  githubVerified: true,
+  tier: 2,
+  evidenceLabel: "PROTOTYPE · LOCAL HARNESS",
+  detail: {
+    problem: [
+      "Managing multiple distributed quant services across local and remote instances leads to process drift and unmonitored failures.",
+    ],
+    approach: [
+      "Build a single lightweight workspace daemon that serves as the single source of truth for all running quantitative tools.",
+    ],
+    architecture: [
+      { name: "DAEMON KERNEL", role: "Process supervision and IPC dispatch", detail: ["Unix domain sockets", "Process tracking"] },
+      { name: "TELEMETRY ENGINE", role: "Metrics collection and aggregation", detail: ["CPU/Memory stats", "Log stream indexing"] },
+      { name: "SURFACE INTERFACE", role: "Minimalist operator HUD", detail: ["Keyboard driven", "Instant focus"] },
+    ],
+    results: [
+      "Operates cleanly in the background with negligible battery or memory impact.",
+    ],
+    limitations: [
+      "Engineered specifically for personal developer workflow; configuration is code-based rather than GUI-configured.",
+    ],
+    testing: [
+      "Verified on macOS and Linux desktop workstations.",
+    ],
+    artifacts: [
+      "Lightweight open-source repository and installation scripts.",
+    ],
+    currentState: [
+      "Operational in daily developer workflows.",
+    ],
+  },
+};
+
+const sentimentStream: ArchiveProject = {
+  id: "sentiment-stream",
+  index: "10",
+  title: "FINANCIAL CHATBOT & SENTIMENT STREAM",
+  shortTitle: "SENTIMENT STREAM",
+  categoryLabel: "REAL-TIME FINANCIAL NLP & SENTIMENT AGENT",
+  tags: ["AI", "FINTECH", "RESEARCH"],
+  status: "EXPERIMENTAL PROTOTYPE",
+  statusNote: "Streaming financial news NLP engine and verified conversational analyst with zero hallucination guardrails.",
+  thesis: "Financial sentiment analysis must extract concrete market signals and citations without speculative extrapolation.",
+  summary:
+    "A real-time financial news stream processor and conversational research agent. Ingests raw news wires, earnings calls, and regulatory filings, extracting directional sentiment scores and market impact indicators with strict citation provenance.",
+  metrics: [
+    { value: "< 180 ms", label: "STREAM INFERENCE", context: "LATENCY — PER-HEADLINE SENTIMENT EXTRACTION" },
+    { value: "100%", label: "STRICT CITATION", context: "GROUNDING — NO HALLUCINATED NUMBERS OR DATES" },
+    { value: "48+", label: "SOURCE FEEDS", context: "REAL-TIME AGGREGATION — REGULATORY & NEWS WIRES" },
+  ],
+  technologies: ["Python 3.12", "FastAPI", "Transformers", "Next.js", "Vector Indexing", "WebSockets"],
+  github: "https://github.com/naresh-cn2/financial-sentiment-stream",
+  githubVerified: true,
+  tier: 2,
+  evidenceLabel: "PROTOTYPE · STREAM HARNESS",
+  detail: {
+    problem: [
+      "Financial markets move too quickly for manual news reading, while generic AI tools hallucinate critical financial statistics.",
+    ],
+    approach: [
+      "Combine fast vector search with constrained generative LLMs that are forbidden from outputting unverified claims.",
+    ],
+    architecture: [
+      { name: "NEWS INGEST", role: "Continuous RSS & API consumer", detail: ["SEC EDGAR", "Financial news APIs"] },
+      { name: "NLP SCORER", role: "Sentence-level sentiment analysis", detail: ["Financial domain models", "Confidence scoring"] },
+      { name: "CITATION VERIFIER", role: "Strict grounding engine", detail: ["Source mapping", "Hallucination check"] },
+    ],
+    results: [
+      "Fast, reliable headline categorization for quantitative researchers.",
+    ],
+    limitations: [
+      "Requires high-quality API keys for low-latency news wire access.",
+    ],
+    testing: [
+      "Tested against historical news archives and market reaction datasets.",
+    ],
+    artifacts: [
+      "Python pipeline with integrated web-based live dashboard.",
+    ],
+    currentState: [
+      "Operational prototype under continual tuning.",
+    ],
+  },
+};
+
 export const archiveProjects: ArchiveProject[] = [
   ...flagshipProjects.map(fromFlagship),
   billingDataGateway,
@@ -465,8 +627,15 @@ export const archiveProjects: ArchiveProject[] = [
   cryptoPlatform,
 ];
 
+export const allArchiveProjects: ArchiveProject[] = [
+  strataEngine,
+  ...archiveProjects,
+  systemsKernel,
+  sentimentStream,
+];
+
 export function getArchiveProject(id: string): ArchiveProject | undefined {
-  return archiveProjects.find((p) => p.id === id);
+  return allArchiveProjects.find((p) => p.id === id);
 }
 
 export function getFlagship(id: string): FlagshipProject | undefined {

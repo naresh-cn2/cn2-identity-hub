@@ -16,7 +16,7 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | --- | --- |
 | `/` | Entrance — code-generated mathematical identity with real-time 3D Parametric Implied Volatility Surface |
 | `/hub` | Headquarters — the master index with central 3D Holographic Data Gate & 8 animated destination scenes |
-| `/work` | WORK — the project catalogue; 3D Isometric Order-Book Depth Mountain & interactive project worlds (`/work/<project>`) |
+| `/works` (or `/work`) | WORKS — 3-tier directory: **01. Products & Platforms** (`/works/products`), **02. Projects** (`/works/projects`), and **03. Personal Builds** (`/works/personal-builds`), each item with a 12-section comprehensive engineering case study (`/works/<project>`) |
 | `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
 | `/research` | Research entries with stated method, findings, and 3D Gaussian Probability Density Manifold |
 | `/articles` | Engineering articles & methodologies |

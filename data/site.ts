@@ -57,6 +57,10 @@ export const primaryNav: NavItem[] = [
     href: "/work",
     code: "01",
     children: [
+      { label: "WORKS", href: "/works", code: "01" },
+      { label: "PRODUCTS & PLATFORMS", href: "/works/products", code: "01A" },
+      { label: "PROJECTS", href: "/works/projects", code: "01B" },
+      { label: "PERSONAL BUILDS", href: "/works/personal-builds", code: "01C" },
       { label: "WORK", href: "/work", code: "01" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
       { label: "CAPABILITIES", href: "/capabilities", code: "03" },

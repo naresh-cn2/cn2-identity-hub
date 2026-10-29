@@ -22,11 +22,12 @@ const BOX_H = 64;
 const ABOVE_Y = 316; // box top for stubs rising above the bus
 const BELOW_Y = 520; // box top for stubs dropping below the bus
 
-/** Deterministic node positions — evenly spaced, centred on the bus. */
+/** Deterministic node positions — anchored to the right half to prevent any collision with text. */
 function layout(count: number) {
-  const step = Math.min(300, (W - 300) / Math.max(1, count - 1));
-  const total = step * (count - 1);
-  const startX = (W - total) / 2;
+  const rightStart = 720;
+  const availW = W - rightStart - 60;
+  const step = Math.min(190, (availW - BOX_W) / Math.max(1, count - 1));
+  const startX = rightStart;
   return { step, startX };
 }
 
@@ -208,9 +209,9 @@ export default function HeroTopology({ projects }: { projects: ArchiveProject[] 
         </text>
       </svg>
 
-      {/* ---- readability scrims: the title above always wins ---- */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background from-35% via-background/65 via-60% to-transparent to-85%" />
-      <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-background/75 via-background/25 to-transparent" />
+      {/* ---- readability scrims: the title and buttons above always stay 100% clear ---- */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background from-45% via-background/70 via-65% to-transparent to-90%" />
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-background/90 via-background/40 to-transparent" />
     </div>
   );
 }

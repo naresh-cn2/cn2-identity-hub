@@ -20,11 +20,13 @@ export default function KineticText({
   accent,
   className = "",
   stagger = 60,
+  ariaLabel,
 }: {
   children: ReactNode;
   accent?: ReactNode;
   className?: string;
   stagger?: number;
+  ariaLabel?: string;
 }) {
   const ref = useRef<HTMLHeadingElement>(null);
   const primary = normalize(children);
@@ -37,7 +39,7 @@ export default function KineticText({
     return node.trim().replace(/\s+/g, " ");
   }
 
-  const label = secondary ? `${primary} ${secondary}` : primary;
+  const label = ariaLabel ?? (secondary ? `${primary} ${secondary}` : primary);
 
   useEffect(() => {
     const el = ref.current;
