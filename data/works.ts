@@ -228,7 +228,7 @@ export const systemsKernelItem: ComprehensiveWorkItem = {
   githubVerified: true,
   tier: 2,
   evidenceLabel: "PROTOTYPE · LOCAL HARNESS",
-  workCategory: "personal",
+  workCategory: "products",
   whyIBuiltIt: [
     "Modern quantitative research involves orchestrating dozens of background processes, terminals, and live market feeds, which quickly clutters desktops and wastes system memory.",
     "I created Systems Kernel as a dedicated personal operating layer that keeps background trading tasks orderly, responsive, and completely resource-conscious.",
@@ -317,7 +317,7 @@ export const sentimentStreamItem: ComprehensiveWorkItem = {
   githubVerified: true,
   tier: 2,
   evidenceLabel: "PROTOTYPE · STREAM HARNESS",
-  workCategory: "personal",
+  workCategory: "products",
   whyIBuiltIt: [
     "Traditional LLM chatbots hallucinate numbers and cite outdated quarterly figures when asked about financial events.",
     "I built Sentiment Stream to create a grounded, cited NLP tool specifically for market research that ties every claim to verified news text.",
@@ -963,16 +963,23 @@ export const hydraCoreItem: ComprehensiveWorkItem = {
 };
 function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
   let workCategory: WorkCategoryType = "projects";
-  // Products & Platforms: quant engines, data infrastructure, FinOps systems
+  // Products & Platforms: quant engines, data infrastructure, FinOps systems,
+  // systems software, forex/crypto platforms
   if (
     p.id === "billing-data-gateway" ||
     p.id === "ifm-costintel" ||
     p.id === "apex-quant-engine" ||
     p.id === "automated-trading-os" ||
     p.id === "market-data-replay" ||
-    p.id === "qrsip" // stratlab = QRSIP, CS50 final project, classified as product
+    p.id === "systems-kernel" ||
+    p.id === "sentiment-stream" ||
+    p.id === "forex-platform" ||
+    p.id === "crypto-platform"
   ) {
     workCategory = "products";
+  } else if (p.id === "qrsip") {
+    // stratlab = QRSIP, CS50 final project — classified as Project, not Product
+    workCategory = "projects";
   } else {
     workCategory = "projects";
   }
