@@ -30,7 +30,7 @@ export default function FreelancePage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                PATH <span className="text-signal">/</span> 02 — FREELANCE & CONTRACTS
+                PATH <span className="text-signal">/</span> FREELANCE & CONTRACTS
               </p>
               <p className="label-mono text-faint">TECHNICAL PROJECTS & RESEARCH PROTOTYPES</p>
             </div>
@@ -130,7 +130,6 @@ export default function FreelancePage() {
             {engagementAreas.map((area, i) => (
               <Reveal key={area.title} delay={Math.min(i, 3) * 80}>
                 <div className="corner-ticks h-full bg-background p-6 md:p-8">
-                  <span className="num-mono text-xs text-signal">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="display mt-4 text-xl md:text-2xl">{area.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{area.body}</p>
                 </div>

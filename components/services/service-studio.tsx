@@ -69,7 +69,7 @@ function ServiceDetail({ bundle }: { bundle: ServiceBundle }) {
         <div className="bg-background p-5 md:p-6">
           <p className="label-mono text-faint">SCHEMATIC · {category.label}</p>
           <div className="viz-frame mt-4 max-w-[520px] p-3">
-            <ServiceSchematic schematic={category.schematic} illustrative={category.illustrative} />
+            <ServiceSchematic schematic={category.schematic} />
           </div>
           <p className="label-mono mt-5 text-faint">METHODS</p>
           <p className="mt-2 text-sm leading-relaxed text-foreground">
@@ -124,7 +124,7 @@ function ServiceDetail({ bundle }: { bundle: ServiceBundle }) {
                     className="card-depth group flex h-full flex-col justify-between border border-line bg-background p-4"
                   >
                     <span className="flex items-baseline justify-between gap-3">
-                      <span className="label-mono text-faint">BUILD / {p.index}</span>
+                      <span className="label-mono text-faint">BUILD</span>
                       <span className="label-mono text-foreground">{p.status}</span>
                     </span>
                     <span className="display mt-3 block text-lg md:text-xl">{p.title}</span>

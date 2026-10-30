@@ -120,7 +120,7 @@ export default function OpportunitiesPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 13 — OPPORTUNITIES
+                SECTION <span className="text-signal">/</span> OPPORTUNITIES
               </p>
               <p className="label-mono text-faint">{site.status}</p>
             </div>
@@ -164,7 +164,7 @@ export default function OpportunitiesPage() {
               <Reveal key={p.code} delay={i * 80}>
                 <article className="card-depth group flex h-full flex-col border border-line bg-background p-6 md:p-8">
                   <div className="flex items-baseline justify-between">
-                    <span className="label-mono text-faint">PATH / {p.code}</span>
+                    <span className="label-mono text-faint">PATH</span>
                     <span className="label-mono flex items-center gap-2 text-foreground">
                       <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
                       {p.status}

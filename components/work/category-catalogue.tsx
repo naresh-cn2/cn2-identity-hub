@@ -54,7 +54,7 @@ export default function CategoryCatalogue({ category, items }: Props) {
               </Link>
               <span className="label-mono text-faint" aria-hidden="true">/</span>
               <p className={`label-mono font-bold ${accentColor}`}>
-                TIER {category.number} — {category.title}
+                {category.title}
               </p>
             </div>
           </Reveal>

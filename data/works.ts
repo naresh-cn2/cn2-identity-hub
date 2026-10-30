@@ -14,7 +14,6 @@ export type WorkCategoryType = "products" | "projects" | "personal";
 
 export interface CategoryMeta {
   id: WorkCategoryType;
-  number: string;
   title: string;
   slug: string;
   badge: string;
@@ -26,7 +25,6 @@ export interface CategoryMeta {
 export const WORK_CATEGORIES: Record<WorkCategoryType, CategoryMeta> = {
   products: {
     id: "products",
-    number: "01",
     title: "PRODUCTS & PLATFORMS",
     slug: "products",
     badge: "COMMERCIAL & PLATFORM SYSTEMS",
@@ -37,7 +35,6 @@ export const WORK_CATEGORIES: Record<WorkCategoryType, CategoryMeta> = {
   },
   projects: {
     id: "projects",
-    number: "02",
     title: "PROJECTS",
     slug: "projects",
     badge: "ENGINEERING & QUANTITATIVE PROOF",
@@ -48,7 +45,6 @@ export const WORK_CATEGORIES: Record<WorkCategoryType, CategoryMeta> = {
   },
   personal: {
     id: "personal",
-    number: "03",
     title: "PERSONAL BUILDS",
     slug: "personal-builds",
     badge: "INDEPENDENT SYSTEMS & AI AGENTS",

@@ -40,7 +40,7 @@ export default function ProjectsCategoryPage() {
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-research font-bold">
-                    02 / QUANTITATIVE &amp; ENGINEERING PROJECTS
+                    QUANTITATIVE &amp; ENGINEERING PROJECTS
                   </p>
                 </div>
               </Reveal>

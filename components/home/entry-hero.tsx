@@ -147,7 +147,7 @@ export default function EntryHero() {
         <div className="w-px h-16 bg-gradient-to-b from-[#ff2a1f] via-foreground/20 to-transparent" />
 
         <div className="[writing-mode:vertical-rl] tracking-[0.25em] text-[9px] uppercase text-cyan-600 dark:text-cyan-400">
-          SYSTEMS / 3D VOL-SURFACE
+          SYSTEMS / VOL-SURFACE
         </div>
 
         <div className="w-px h-12 bg-line" />
@@ -176,7 +176,7 @@ export default function EntryHero() {
         <div className="flex items-center gap-4">
           <span>LATENCY: 4.2μs</span>
           <span className="text-line">|</span>
-          <span>GRID: 3D PARAMETRIC</span>
+          <span>GRID: PARAMETRIC</span>
           <span className="text-line">|</span>
           <span className="text-[#ff2a1f]">STOCHASTIC FLOW: ACTIVE</span>
         </div>

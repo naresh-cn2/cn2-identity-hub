@@ -37,7 +37,7 @@ export const labModules = [
     code: "SURF-01",
     name: "RISK / RETURN SURFACE",
     description:
-      "An interactive computational surface — X: volatility, Y: R:R, Z: performance — rendered with a projected-3D wireframe you can rotate and inspect.",
+      "An interactive computational surface — X: volatility, Y: R:R, Z: performance — that you can rotate and inspect.",
     href: "/lab#surface",
     inputs: ["ROTATE", "ZOOM", "HOVER"],
     outputs: ["SURFACE VALUE", "COORDINATE READOUT"],

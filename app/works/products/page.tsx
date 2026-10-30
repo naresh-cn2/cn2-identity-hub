@@ -40,7 +40,7 @@ export default function ProductsPage() {
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-signal font-bold">
-                    01 / COMMERCIAL PLATFORMS &amp; SYSTEMS
+                    COMMERCIAL PLATFORMS &amp; SYSTEMS
                   </p>
                 </div>
               </Reveal>

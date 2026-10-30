@@ -187,13 +187,12 @@ export default async function ResearchEntryPage({
 
             <Reveal delay={140}>
               <div className="border border-line bg-surface p-5">
-                <p className="label-mono mb-4 text-research">GENERATIVE ARTIFACT</p>
                 <div className="h-56 w-full border border-line bg-background/50">
                   <ResearchArtifact category={entry.category} seed={index + 100} />
                 </div>
                 <p className="label-mono mt-3 text-[10px] leading-relaxed text-faint">
-                  ILLUSTRATIVE — A DETERMINISTIC DIAGRAM OF THE {entry.category} CATEGORY, CARRYING
-                  NO MEASUREMENT DATA.
+                  DETERMINISTIC DIAGRAM OF THE {entry.category} CATEGORY — CARRYING NO MEASUREMENT
+                  DATA.
                 </p>
               </div>
             </Reveal>

@@ -94,7 +94,7 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                BUILD RECORD <span className="text-signal">/</span> {project.index}
+                BUILD RECORD
               </p>
               <p className="label-mono text-faint">
                 TIER 2 · {project.tags.join(" / ")}
@@ -130,7 +130,7 @@ export default function TierTwoCaseStudy({ project }: { project: ArchiveProject 
           </Reveal>
           <Reveal delay={450}>
             <p className="label-mono mt-3 max-w-3xl text-[10px] leading-relaxed text-faint">
-              DIAGRAM ABOVE IS ILLUSTRATIVE — IT DEPICTS THE SYSTEM SHAPE, NOT A MEASUREMENT.
+              THE DIAGRAM DEPICTS THE SYSTEM SHAPE, NOT A MEASUREMENT.
             </p>
           </Reveal>
         </div>

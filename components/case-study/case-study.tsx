@@ -94,7 +94,7 @@ export default function CaseStudy({
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                CASE STUDY <span className="text-signal">/</span> {project.index}
+                CASE STUDY
               </p>
               <p className="label-mono text-faint">{project.category}</p>
             </div>

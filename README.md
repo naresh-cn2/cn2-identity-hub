@@ -14,17 +14,17 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 
 | Destination | What it is |
 | --- | --- |
-| `/` | Entrance — code-generated mathematical identity with real-time 3D Parametric Implied Volatility Surface |
-| `/hub` | Headquarters — the master index with central 3D Holographic Data Gate & 8 animated destination scenes |
-| `/works` (or `/work`) | WORKS — 3-tier directory: **01. Products & Platforms** (`/works/products`), **02. Projects** (`/works/projects`), and **03. Personal Builds** (`/works/personal-builds`), each item with a 12-section comprehensive engineering case study (`/works/<project>`) |
+| `/` | Entrance — code-generated mathematical identity |
+| `/hub` | Headquarters — the master index with central Holographic Data Gate & 8 animated destination scenes |
+| `/works` (or `/work`) | WORKS — 3-tier directory: Products & Platforms (`/works/products`), Projects (`/works/projects`), and Personal Builds (`/works/personal-builds`), each item with a 12-section comprehensive engineering case study (`/works/<project>`) |
 | `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
-| `/research` | Research entries with stated method, findings, and 3D Gaussian Probability Density Manifold |
+| `/research` | Research entries with stated method, findings, and Gaussian Probability Density Manifold |
 | `/articles` | Engineering articles & methodologies |
-| `/capabilities` | 12 core capability domains & searchable 72+ item **Tech Stack & Tooling Architecture** |
+| `/capabilities` | 12 core capability domains & searchable 72+ item Tech Stack & Tooling Architecture |
 | `/services` | Service offerings anchored to capabilities and proven by projects |
-| `/lab` | Interactive instruments — 3D risk/return surface, strategy viewer, market replay, experiments |
+| `/lab` | Interactive instruments — risk/return surface, strategy viewer, market replay, experiments |
 | `/intelligence` | Knowledge graph connecting projects, research and capabilities |
-| `/credentials` | Issued certificates (including **CS50x Harvard**, WorldQuant, NSDC) with verification URLs and PDF viewer |
+| `/credentials` | Issued certificates (including CS50x Harvard, WorldQuant, NSDC) with verification URLs and PDF viewer |
 | `/opportunities` | Career, freelance, collaboration and partnership pathways |
 | `/testimonials` | Reviews & testimonials — consented feedback with per-review ratings |
 | `/how-i-work` | How engagements actually run — six steps from brief to handover |
@@ -45,7 +45,7 @@ The top bar is deliberately minimal — brand, search and the light/dark toggle.
 | **Databases & Storage** | PostgreSQL, SQLite (WAL), MySQL, Microsoft SQL Server, Amazon DynamoDB |
 | **Cloud & Infrastructure** | AWS, Azure, Google Cloud Platform, Cloudflare, DigitalOcean, Firebase, Heroku, Linode, Netlify, Oracle Cloud, OpenStack |
 | **DevOps & Tooling** | Docker, Kubernetes, Git, GitHub Actions, GitLab CI, Forgejo, Playwright, Jira, Notion |
-| **Visual & 3D Systems** | Pure CSS, SVG, and Canvas 2D/WebGL mathematical surfaces (implied volatility manifold, Gaussian bell density, order-book depth mountain); Blender, Canva, Adobe Creative Cloud |
+| **Visual Systems** | Pure CSS, SVG, and Canvas 2D/WebGL mathematical surfaces (implied volatility manifold, Gaussian bell density, order-book depth mountain); Blender, Canva, Adobe Creative Cloud |
 | **Deployment** | Vercel — every push to `main` deploys production |
 
 ---
@@ -65,18 +65,18 @@ npm run dev        # development server → http://localhost:3000
 | --- | --- |
 | `npm run dev` | Development server with hot reload |
 | `npm run lint` | ESLint across the codebase |
-| `npm run build` | Type-check + production build (all 76 routes static-prerendered) |
+| `npm run build` | Type-check + production build (all 95 routes static-prerendered) |
 | `npm start` | Serve the production build locally |
 
 ---
 
 ## Quality standards & Automated QA
 
-- **Editorial honesty** — real evidence only; synthetic visuals are labeled `SIMULATED` or `ILLUSTRATIVE`; testimonials appear only with the writer's consent and their own rating.
-- **Cinematic mathematical atmosphere** — living 3D quantitative geometry (implied volatility surfaces, Gaussian probability manifolds, isometric depth mountains), photon cursor ambient lighting, and dual cyan/crimson signal route transitions.
+- **Editorial honesty** — real evidence only; synthetic visuals say so beside them; simulated figures carry `SIMULATED` or `BACKTEST` provenance; testimonials appear only with the writer's consent and their own rating.
+- **Cinematic mathematical atmosphere** — living quantitative geometry (implied volatility surfaces, Gaussian probability manifolds, isometric depth mountains), cursor ambient lighting, and dual cyan/crimson signal route transitions.
 - **Responsive** — verified with rendered overflow sweeps from 320 px to 2560 px on every route; touch devices receive enlarged hit areas for compact controls while desktop sizing stays untouched.
 - **Accessible** — keyboard-completable interactions, focus-visible states, reduced-motion freezes every animation at its neutral rest state.
-- **Performance-conscious** — static generation for all 76 content routes; canvases are DPR-capped, pause when the tab is hidden or scrolled out of view, and run at 0% CPU at idle.
+- **Performance-conscious** — static generation for all 95 content routes; canvases are DPR-capped, pause when the tab is hidden or scrolled out of view, and run at 0% CPU at idle.
 - **SEO & Identity** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs, a site-wide Open Graph share card (`next/og`), icons + web manifest, and JSON-LD (`Person` + `WebSite`).
 
 ### Automated Test Suites
@@ -97,6 +97,15 @@ npm run build; npm start          # serve the production build on :3000
 .\scripts\qa\token-check.ps1      # static — runs without a server
 .\scripts\qa\live-check.ps1       # runs full live suite
 ```
+
+---
+
+## Design-system refinements
+
+- Removed all decorative numbering (`DOMAIN / 02 — RESEARCH`, `SECTION / 03 — LAB`, `01 / COMMERCIAL & PLATFORM SYSTEMS`, big `01/02/03` category doors, `NN —` eyebrow numbers); numbering is kept only for genuinely ordered sequences (research methodology spine, chapter navigation, career timeline).
+- Removed redundant `ILLUSTRATIVE` artwork captions and corner badges; synthetic visuals carry plain disclosure text beside them (`SYNTHETIC SERIES`, `NOT A MEASUREMENT`, `DETERMINISTIC DIAGRAM`).
+- Removed self-referential design commentary (descriptions of the site's own 3D/cinematic/visual design); the cinematic backgrounds, grids, 3D/particle/SVG visuals, accents, typography, animations, and per-page compositions are unchanged.
+- Preserved all meaningful technical/scientific disclosures: chart axis/legend/unit info, data sources and limitations, backtest/simulation/paper-trading classifications, synthetic dataset disclosures.
 
 ---
 

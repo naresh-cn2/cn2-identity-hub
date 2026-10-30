@@ -8,8 +8,8 @@ import { drawdownSeries, equitySeries } from "@/lib/series";
  *
  * Each flagship build gets a different instrument here, so the four case
  * studies are not the same page with different copy. Instruments that render
- * deterministic synthetic data are labelled ILLUSTRATIVE on the page — the
- * measured figure always appears separately as text with its provenance.
+ * deterministic synthetic data say so beside the chart — the measured figure
+ * always appears separately as text with its provenance.
  */
 
 const ATOS_STAGES: Array<{
@@ -83,7 +83,7 @@ export default function FlagshipInstrument({ project }: { project: FlagshipProje
       return (
         <Frame
           label="INSTRUMENT / EQUITY SURFACE"
-          note="ILLUSTRATIVE — SEEDED DETERMINISTIC SHAPE, NOT THE BACKTEST ARTIFACT"
+          note="SEEDED DETERMINISTIC SHAPE — NOT THE BACKTEST ARTIFACT"
         >
           <EquitySurface
             series={equity}
@@ -92,7 +92,7 @@ export default function FlagshipInstrument({ project }: { project: FlagshipProje
             height={440}
             interactive
             showDrawdown
-            summary="Illustrative equity surface with normalized drawdown subplot. This is a seeded deterministic shape for instrument demonstration, not the master-fund backtest artifact. The measured backtest result is reported separately as text."
+            summary="Equity surface with normalized drawdown subplot. This is a seeded deterministic shape for instrument demonstration, not the master-fund backtest artifact. The measured backtest result is reported separately as text."
           />
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-muted">
             The surface demonstrates the shape of a multi-strategy equity trajectory with its

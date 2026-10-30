@@ -81,7 +81,7 @@ export default function WorkWithMePage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 08 — WORK WITH ME
+                SECTION <span className="text-signal">/</span> WORK WITH ME
               </p>
               <p className="label-mono text-faint">{site.status}</p>
             </div>
@@ -166,7 +166,6 @@ export default function WorkWithMePage() {
             {engagementAreas.map((area, i) => (
               <Reveal key={area.title} delay={Math.min(i, 3) * 80}>
                 <div className="corner-ticks h-full bg-background p-6 md:p-8">
-                  <span className="num-mono text-xs text-signal">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="display mt-4 text-xl md:text-2xl">{area.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{area.body}</p>
                 </div>

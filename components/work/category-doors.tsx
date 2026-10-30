@@ -3,16 +3,12 @@ import Reveal from "@/components/ui/reveal";
 import BuildsVisual from "@/components/hub/visuals/work-visual";
 import ResearchVisual from "@/components/hub/visuals/research-visual";
 import PersonalVisual from "@/components/hub/visuals/personal-visual";
-import { WORK_CATEGORIES, getWorksByCategory } from "@/data/works";
+import { WORK_CATEGORIES } from "@/data/works";
 
 export default function CategoryDoors() {
   const products = WORK_CATEGORIES.products;
   const projects = WORK_CATEGORIES.projects;
   const personal = WORK_CATEGORIES.personal;
-
-  const productItems = getWorksByCategory("products");
-  const projectItems = getWorksByCategory("projects");
-  const personalItems = getWorksByCategory("personal");
 
   return (
     <div aria-label="Works categories" className="divide-y divide-line">
@@ -32,11 +28,7 @@ export default function CategoryDoors() {
             {/* Copy Column */}
             <div className="relative z-10">
               <Reveal delay={80}>
-                <div className="flex items-center gap-3">
-                  <span className="num-mono text-3xl font-bold text-signal">{products.number}</span>
-                  <span className="label-mono text-faint">/</span>
-                  <p className="label-mono text-signal font-bold">{products.badge}</p>
-                </div>
+                <p className="label-mono text-signal font-bold">{products.badge}</p>
                 <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
                   <Link href={`/works/${products.slug}`} className="transition-colors hover:text-signal">
                     {products.title}
@@ -48,24 +40,6 @@ export default function CategoryDoors() {
                 <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
                   {products.description}
                 </p>
-
-                {/* Featured Products */}
-                <div className="mt-7 border-t border-line/60 pt-5">
-                  <p className="label-mono text-[10px] text-faint">SYSTEMS IN THIS CATALOGUE:</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {productItems.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/works/${item.id}`}
-                        className="font-mono text-xs border border-line bg-surface px-3 py-1.5 text-foreground hover:border-signal transition-colors flex items-center gap-2"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-signal" />
-                        <span>{item.shortTitle}</span>
-                        <span className="text-[9px] text-faint">[{item.status.split(" ")[0]}]</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
 
                 <div className="mt-9">
                   <Link
@@ -91,11 +65,7 @@ export default function CategoryDoors() {
             {/* Copy Column */}
             <div className="relative z-10 lg:order-1">
               <Reveal delay={80}>
-                <div className="flex items-center gap-3">
-                  <span className="num-mono text-3xl font-bold text-research">{projects.number}</span>
-                  <span className="label-mono text-faint">/</span>
-                  <p className="label-mono text-research font-bold">{projects.badge}</p>
-                </div>
+                <p className="label-mono text-research font-bold">{projects.badge}</p>
                 <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
                   <Link href={`/works/${projects.slug}`} className="transition-colors hover:text-research">
                     {projects.title}
@@ -107,24 +77,6 @@ export default function CategoryDoors() {
                 <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
                   {projects.description}
                 </p>
-
-                {/* Featured Projects */}
-                <div className="mt-7 border-t border-line/60 pt-5">
-                  <p className="label-mono text-[10px] text-faint">SYSTEMS IN THIS CATALOGUE:</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {projectItems.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/works/${item.id}`}
-                        className="font-mono text-xs border border-line bg-surface px-3 py-1.5 text-foreground hover:border-research transition-colors flex items-center gap-2"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-research" />
-                        <span>{item.shortTitle}</span>
-                        <span className="text-[9px] text-faint">[{item.status.split(" ")[0]}]</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
 
                 <div className="mt-9">
                   <Link
@@ -168,11 +120,7 @@ export default function CategoryDoors() {
             {/* Copy Column */}
             <div className="relative z-10">
               <Reveal delay={80}>
-                <div className="flex items-center gap-3">
-                  <span className="num-mono text-3xl font-bold text-cyan-500 dark:text-cyan-400">{personal.number}</span>
-                  <span className="label-mono text-faint">/</span>
-                  <p className="label-mono text-cyan-500 dark:text-cyan-400 font-bold">{personal.badge}</p>
-                </div>
+                <p className="label-mono text-cyan-500 dark:text-cyan-400 font-bold">{personal.badge}</p>
                 <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
                   <Link href={`/works/${personal.slug}`} className="transition-colors hover:text-cyan-500">
                     {personal.title}
@@ -184,24 +132,6 @@ export default function CategoryDoors() {
                 <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
                   {personal.description}
                 </p>
-
-                {/* Featured Builds */}
-                <div className="mt-7 border-t border-line/60 pt-5">
-                  <p className="label-mono text-[10px] text-faint">SYSTEMS IN THIS CATALOGUE:</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {personalItems.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/works/${item.id}`}
-                        className="font-mono text-xs border border-line bg-surface px-3 py-1.5 text-foreground hover:border-cyan-500 transition-colors flex items-center gap-2"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
-                        <span>{item.shortTitle}</span>
-                        <span className="text-[9px] text-faint">[{item.status.split(" ")[0]}]</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
 
                 <div className="mt-9">
                   <Link

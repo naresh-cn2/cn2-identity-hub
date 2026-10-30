@@ -40,7 +40,7 @@ export default function ProofPage() {
                     <Reveal>
                         <div className="flex flex-wrap items-baseline justify-between gap-4">
                             <p className="label-mono text-muted">
-                                SECTION <span className="text-signal">/</span> 09 — PROOF
+                                SECTION <span className="text-signal">/</span> PROOF
                             </p>
                             <p className="label-mono text-faint">
                                 {repos.length} REPOSITORIES · {verifiedResearch.length} VERIFIED ENTRIES
@@ -94,7 +94,7 @@ export default function ProofPage() {
             <section aria-label="Repositories" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
-                        <p className="label-mono text-signal">01 — INSPECTABLE SOURCE</p>
+                        <p className="label-mono text-signal">INSPECTABLE SOURCE</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">PUBLIC REPOSITORIES</h2>
                         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
                             The code is the final authority on every claim. A verified repository is a
@@ -136,7 +136,7 @@ export default function ProofPage() {
             <section aria-label="Verified research" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
-                        <p className="label-mono text-research">02 — REPRODUCIBLE RESEARCH</p>
+                        <p className="label-mono text-research">REPRODUCIBLE RESEARCH</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">VERIFIED ENTRIES</h2>
                         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
                             VERIFIED means the result was reproduced against its artifact — not that it is
@@ -171,7 +171,7 @@ export default function ProofPage() {
             <section aria-label="Measured figures" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
-                        <p className="label-mono text-signal">03 — LABELLED FIGURES</p>
+                        <p className="label-mono text-signal">LABELLED FIGURES</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">MEASURED RESULTS</h2>
                         <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted">
                             Every number below carries the label that says what it is — a backtest, a
@@ -200,7 +200,7 @@ export default function ProofPage() {
             <section aria-label="Testimonials" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
-                        <p className="label-mono text-signal">04 — TESTIMONIALS</p>
+                        <p className="label-mono text-signal">TESTIMONIALS</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">IN OTHER PEOPLE&apos;S WORDS</h2>
                     </Reveal>
                     <Reveal delay={80}>
@@ -252,7 +252,7 @@ export default function ProofPage() {
             <section aria-label="Credentials" className="border-b border-line">
                 <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
                     <Reveal>
-                        <p className="label-mono text-signal">05 — CREDENTIALS</p>
+                        <p className="label-mono text-signal">CREDENTIALS</p>
                         <h2 className="display mt-4 text-2xl md:text-4xl">CREDENTIALS ON FILE</h2>
                     </Reveal>
                     <Reveal delay={80}>

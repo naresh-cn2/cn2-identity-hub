@@ -65,7 +65,7 @@ export default function ArticlesPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                DOMAIN <span className="text-signal">/</span> 04 — ARTICLES
+                DOMAIN <span className="text-signal">/</span> ARTICLES
               </p>
               <p className="label-mono text-faint">{publishedArticles.length} PUBLISHED NOTES</p>
             </div>
@@ -101,9 +101,6 @@ export default function ArticlesPage() {
                   <p className="label-mono text-faint">
                     {lead.category} · {formatArticleDate(lead.published)} · {lead.readingTime}
                   </p>
-                  <p className="num-mono mt-6 text-6xl font-semibold text-line-strong md:text-8xl">
-                    {lead.index}
-                  </p>
                 </div>
                 <div>
                   <h2 className="display text-3xl transition-colors group-hover:text-signal md:text-5xl">
@@ -134,9 +131,6 @@ export default function ArticlesPage() {
                   href={`/articles/${a.id}`}
                   className="group grid gap-4 bg-background p-6 transition-colors hover:bg-surface md:grid-cols-[5rem_1fr_auto] md:items-baseline md:gap-10 md:p-8"
                 >
-                  <span className="num-mono text-2xl text-line-strong transition-colors group-hover:text-signal md:text-3xl">
-                    {a.index}
-                  </span>
                   <span className="min-w-0">
                     <span className="label-mono flex flex-wrap items-center gap-x-3 gap-y-1 text-faint">
                       <span className="text-research">{a.category}</span>

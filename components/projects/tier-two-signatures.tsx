@@ -18,18 +18,15 @@ import type { ArchiveProject } from "@/data/archive";
 
 function Frame({
   label,
-  note,
   children,
 }: {
   label: string;
-  note: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="viz-frame p-4 md:p-6">
       <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3">
         <p className="label-mono text-research">{label}</p>
-        <p className="label-mono text-faint">{note}</p>
       </div>
       {children}
     </div>
@@ -474,25 +471,25 @@ export default function TierTwoSignature({ project }: { project: ArchiveProject 
   switch (project.id) {
     case "crypto-platform":
       return (
-        <Frame label="SIGNATURE / STATE PIPELINE" note="ILLUSTRATIVE — SYSTEM SHAPE, NOT A MEASUREMENT">
+        <Frame label="SIGNATURE / STATE PIPELINE">
           <CryptoScene />
         </Frame>
       );
     case "billing-data-gateway":
       return (
-        <Frame label="SIGNATURE / NORMALIZATION FLOW" note="ILLUSTRATIVE — PIPELINE DIAGRAM">
+        <Frame label="SIGNATURE / NORMALIZATION FLOW">
           <BillingScene />
         </Frame>
       );
     case "ifm-costintel":
       return (
-        <Frame label="SIGNATURE / RECONCILIATION FIELD" note="ILLUSTRATIVE — DIAGRAM, NOT MEASURED DATA">
+        <Frame label="SIGNATURE / RECONCILIATION FIELD">
           <CostintelScene />
         </Frame>
       );
     case "forex-platform":
       return (
-        <Frame label="SIGNATURE / CAUSAL LADDER" note="ILLUSTRATIVE — DESIGN DIAGRAM, NOT RESULTS">
+        <Frame label="SIGNATURE / CAUSAL LADDER">
           <ForexScene />
         </Frame>
       );

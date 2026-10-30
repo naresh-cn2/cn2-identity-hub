@@ -177,7 +177,6 @@ function ChannelPanel({ channel }: { channel: Channel }) {
       className="card-depth group flex h-full flex-col border border-line bg-background p-6 md:p-8"
     >
       <span className="flex items-start justify-between gap-4">
-        <span className="num-mono text-xs text-faint">{channel.index}</span>
         <span className="text-muted transition-all duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:text-signal group-focus-visible:text-signal">
           {channel.icon}
         </span>

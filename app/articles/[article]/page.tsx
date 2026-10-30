@@ -86,7 +86,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ articl
                 <span className="label-mono text-faint" aria-hidden="true">
                   ·
                 </span>
-                <span className="label-mono text-faint">NOTE {article.index}</span>
+                <span className="label-mono text-faint">NOTE</span>
               </div>
             </Reveal>
             <Reveal delay={100}>

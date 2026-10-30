@@ -94,7 +94,7 @@ export default function TestimonialsPage() {
                     <Reveal>
                         <div className='flex flex-wrap items-baseline justify-between gap-4'>
                             <p className='label-mono text-muted'>
-                                SECTION <span className='text-signal'>/</span> 18 — TESTIMONIALS
+                                SECTION <span className='text-signal'>/</span> TESTIMONIALS
                             </p>
                             <p className='label-mono text-faint'>FROM PEOPLE I&apos;VE WORKED WITH</p>
                         </div>

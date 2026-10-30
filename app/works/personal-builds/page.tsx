@@ -40,7 +40,7 @@ export default function PersonalBuildsCategoryPage() {
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-cyan-500 dark:text-cyan-400 font-bold">
-                    03 / INDEPENDENT &amp; AI BUILDS
+                    INDEPENDENT &amp; AI BUILDS
                   </p>
                 </div>
               </Reveal>

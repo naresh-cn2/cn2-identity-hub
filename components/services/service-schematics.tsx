@@ -9,8 +9,8 @@ import type { ServiceCategoryMeta } from "@/data/services";
  *    written report. It supports the headline; it never carries content the
  *    page does not also say in words.
  *  - `ServiceSchematic` — one restrained diagram per service category, shown
- *    in the selector panel. Where a drawing could be mistaken for measured
- *    results it is tagged ILLUSTRATIVE in the corner (research family).
+ *    in the selector panel. Each carries a screen-reader description; none
+ *    presents measured results.
  *
  * All motion comes from the shared ambient helpers (.dash-march, .anim-blink),
  * which the global reduced-motion rule freezes. No SMIL, no JS.
@@ -101,14 +101,6 @@ function Box({
   );
 }
 
-function IllustrativeTag({ x, y }: { x: number; y: number }) {
-  return (
-    <text x={x} y={y} textAnchor="end" className="font-mono text-[9px] uppercase tracking-[0.2em] fill-faint">
-      ILLUSTRATIVE
-    </text>
-  );
-}
-
 /* ---------------- category schematics ---------------- */
 
 function StrategyEval() {
@@ -116,7 +108,6 @@ function StrategyEval() {
   return (
     <>
       <ArrowDefs id={id} />
-      <IllustrativeTag x={424} y={18} />
 
       <Box x={14} y={66} w={104} h={44} label="HYPOTHESIS" lines={["REGISTERED"]} />
 
@@ -395,11 +386,9 @@ function Flow() {
 /** One restrained diagram per service category. Informative → labelled for AT. */
 export function ServiceSchematic({
   schematic,
-  illustrative = false,
   className = "",
 }: {
   schematic: SchematicKey;
-  illustrative?: boolean;
   className?: string;
 }) {
   return (
@@ -414,7 +403,6 @@ export function ServiceSchematic({
       {schematic === "pipeline" && <Pipeline />}
       {schematic === "architecture" && <Architecture />}
       {schematic === "flow" && <Flow />}
-      {illustrative && schematic !== "strategy-eval" && <IllustrativeTag x={424} y={18} />}
     </svg>
   );
 }

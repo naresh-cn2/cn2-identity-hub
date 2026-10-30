@@ -23,15 +23,15 @@ Check "builds: forex signature" ($proj -match 'FOREX' -or $proj -match 'CAUSAL L
 Check "builds: apex instrument kept" ($proj -match 'APEX QUANT ENGINE' -or $proj -match 'EQUITY SURFACE')
 Check "builds: atos instrument kept" ($proj -match 'AUTOMATED TRADING OS' -or $proj -match 'EXECUTION PIPELINE')
 Check "builds: 8 clickable visuals" (([regex]::Matches($builds, 'tabindex="-1" class="block"')).Count -ge 8)
-Check "builds: tier-2 scene labelled ILLUSTRATIVE" ($builds.Contains('SIMULATION') -or $builds.Contains('BACKTEST'))
+Check "builds: tier-2 scene labelled SIMULATION or BACKTEST" ($builds.Contains('SIMULATION') -or $builds.Contains('BACKTEST'))
 Check "builds: THE RECORD preserved" ($works -match 'THE RECORD')
 Check "builds: hero counter removed" (-not ($works -match 'SYSTEMS ARCHIVED'))
 
 # ============ LEVEL 2: /work/crypto-platform world ============
 $world = (Invoke-WebRequest -Uri "$base/work/crypto-platform" -UseBasicParsing).Content
 
-Check "world: PROJECT WORLD eyebrow" ($world -match 'PROJECT WORLD[\s\S]{0,60}text-signal">/</span>')
-Check "world: index 08" ($world -match 'text-signal">/</span>[\s\S]{0,40}08')
+Check "world: PROJECT WORLD eyebrow" ($world -match 'PROJECT WORLD')
+Check "world: no numbered project eyebrow" (-not ($world -match 'PROJECT WORLD[\s\S]{0,60}\d\d'))
 Check "world: h1 CRYPTO PLATFORM" ($world -match '<h1 class="display[^"]*">CRYPTO PLATFORM</h1>')
 Check "world: CTA explore architecture" ($world -match 'href="#architecture"[^>]*>EXPLORE ARCHITECTURE')
 Check "world: CTA view evidence" ($world -match 'href="#evidence"[^>]*>VIEW EVIDENCE')

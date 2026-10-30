@@ -68,19 +68,19 @@ export default function WorksPage() {
                 href="/works/products"
                 className="label-mono border border-signal bg-signal/10 px-6 py-3 text-signal transition-colors hover:bg-signal hover:text-white"
               >
-                01. PRODUCTS &amp; PLATFORMS →
+                PRODUCTS &amp; PLATFORMS →
               </Link>
               <Link
                 href="/works/projects"
                 className="label-mono border border-research bg-research/10 px-6 py-3 text-research transition-colors hover:bg-research hover:text-white"
               >
-                02. PROJECTS →
+                PROJECTS →
               </Link>
               <Link
                 href="/works/personal-builds"
                 className="label-mono border border-cyan-500/40 bg-cyan-500/10 px-6 py-3 text-cyan-500 dark:text-cyan-400 transition-colors hover:bg-cyan-500 hover:text-black"
               >
-                03. PERSONAL BUILDS →
+                PERSONAL BUILDS →
               </Link>
             </div>
           </Reveal>
@@ -119,9 +119,8 @@ export default function WorksPage() {
                   Results are labelled by how they were produced —{" "}
                   <span className="text-foreground">BACKTEST</span>,{" "}
                   <span className="text-foreground">SIMULATION</span>,{" "}
-                  <span className="text-foreground">SELF-BENCHMARK</span>,{" "}
-                  <span className="text-foreground">TEST SUITE</span> or{" "}
-                  <span className="text-foreground">ILLUSTRATIVE</span>, so a simulated figure is
+                  <span className="text-foreground">SELF-BENCHMARK</span> or{" "}
+                  <span className="text-foreground">TEST SUITE</span> — so a simulated figure is
                   never read as live trading.
                 </p>
                 <p className="text-base leading-relaxed text-muted">

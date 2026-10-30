@@ -43,7 +43,7 @@ export default function Footer() {
                     href={route.href}
                     className="label-mono footer-hit text-xs text-muted transition-colors hover:text-signal"
                   >
-                    {route.code} — {route.label}
+                    {route.label}
                   </Link>
                 </li>
               ))}

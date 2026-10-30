@@ -107,9 +107,6 @@ export default function ResearchArchive({ entries }: { entries: ResearchEntry[] 
             <Reveal key={entry.id} delay={Math.min(i, 3) * 60}>
               <details className="group bg-background">
                 <summary className="flex cursor-pointer list-none flex-wrap items-baseline gap-x-6 gap-y-2 p-5 transition-colors hover:bg-surface md:p-7 [&::-webkit-details-marker]:hidden">
-                  <span className="num-mono text-xs text-faint">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <span className="display min-w-0 flex-1 text-lg md:text-2xl">{entry.title}</span>
                   <span className="label-mono text-research">{entry.category}</span>
                   <span className={`label-mono border px-2 py-1 ${STATUS_STYLE[entry.status]}`}>
@@ -152,7 +149,7 @@ export default function ResearchArchive({ entries }: { entries: ResearchEntry[] 
                         <ResearchArtifact category={entry.category} seed={i + 100} />
                       </div>
                       <p className="label-mono mt-2 text-[10px] text-faint">
-                        ILLUSTRATIVE — GENERATIVE DIAGRAM FOR {entry.category}. NOT A MEASUREMENT.
+                        GENERATIVE DIAGRAM FOR {entry.category}.
                       </p>
                     </div>
 

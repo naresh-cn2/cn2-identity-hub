@@ -104,7 +104,7 @@ export default function LabPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 03 — LAB
+                SECTION <span className="text-signal">/</span> LAB
               </p>
               <p className="label-mono text-faint">
                 {labModules.length} INSTRUMENTS ·{" "}
@@ -178,12 +178,6 @@ export default function LabPage() {
               ))}
           </div>
 
-          <Reveal delay={80}>
-            <p className="label-mono mt-4 text-[10px] text-faint">
-              PANEL ART IS SCHEMATIC REPRESENTATION — EACH CARD OPENS THE REAL INSTRUMENT.
-            </p>
-          </Reveal>
-
           <Reveal delay={120}>
             <div className="mt-10 border border-line bg-surface p-6">
               <p className="label-mono text-faint">BACKTEST EXPLORER</p>
@@ -209,11 +203,11 @@ export default function LabPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 className="display text-3xl md:text-5xl">RISK / RETURN SURFACE</h2>
-              <p className="label-mono text-faint">LAB / SURF-01 — PROJECTED 3D, 2D FALLBACK BUILT-IN</p>
+              <p className="label-mono text-faint">LAB / SURF-01</p>
             </div>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
-              A projected 3D wireframe of the risk / return surface, rendered in pure SVG so it runs
-              anywhere. Drag to rotate; hover for a coordinate readout.
+              The risk / return surface, explorable in place. Drag to rotate; hover for a
+              coordinate readout.
             </p>
           </Reveal>
           <Reveal delay={120}>

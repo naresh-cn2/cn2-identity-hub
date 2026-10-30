@@ -173,7 +173,7 @@ export const capabilities: Capability[] = [
     research: [],
     technologies: ["TypeScript", "Next.js", "React", "FastAPI", "Tailwind CSS", "Canvas / WebGL", "WebSockets"],
     evidence:
-      "Evidenced by CN2.DEV's interactive quantitative universe, real-time 3D risk manifolds, replay terminals, and research tooling.",
+      "Evidenced by CN2.DEV's interactive quantitative universe, real-time risk manifolds, replay terminals, and research tooling.",
   },
 ];
 

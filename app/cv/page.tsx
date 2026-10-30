@@ -73,7 +73,7 @@ export default function CvPage() {
         <div className="relative mx-auto max-w-[1440px] px-5 pb-12 pt-32 sm:px-8 md:pb-16 md:pt-40 print:pb-6 print:pt-8">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <p className="label-mono text-muted">
-              CV <span className="text-signal">/</span> 01 — HEADER
+              CV <span className="text-signal">/</span> HEADER
             </p>
             <p className="label-mono text-faint print:hidden">CTRL/CMD + P — PRINT OR SAVE AS PDF</p>
           </div>

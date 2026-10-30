@@ -34,7 +34,7 @@ export default function IdentityPage() {
       <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-40">
         <Reveal>
           <p className="label-mono text-muted">
-            SECTION <span className="text-signal">/</span> 10 — IDENTITY
+            SECTION <span className="text-signal">/</span> IDENTITY
           </p>
         </Reveal>
 

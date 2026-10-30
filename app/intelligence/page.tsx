@@ -43,7 +43,7 @@ export default function IntelligencePage() {
                     <Reveal>
                         <div className="flex flex-wrap items-baseline justify-between gap-4">
                             <p className="label-mono text-muted">
-                                DOMAIN <span className="text-research">/</span> 06 — INTELLIGENCE
+                                DOMAIN <span className="text-research">/</span> INTELLIGENCE
                             </p>
                             <p className="label-mono text-faint">
                                 {knowledgeNodes.length} NODES · {knowledgeEdges.length} RELATIONS
@@ -138,7 +138,6 @@ export default function IntelligencePage() {
                                     href={`/work/${p.id}`}
                                     className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
                                 >
-                                    <span className="num-mono text-xs text-faint">{p.index}</span>
                                     <span className="display mt-3 text-lg">{p.shortTitle}</span>
                                     <span className="mt-3 text-sm leading-relaxed text-muted">{p.thesis}</span>
                                     <span className="label-mono mt-auto pt-6 text-research transition-transform duration-300 group-hover:translate-x-1">

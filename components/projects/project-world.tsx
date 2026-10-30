@@ -100,7 +100,7 @@ export default function ProjectWorld({ project }: { project: ArchiveProject }) {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                PROJECT WORLD <span className="text-signal">/</span> {project.index}
+                PROJECT WORLD
               </p>
               <p className="label-mono text-faint">{project.tags.join(" / ")}</p>
             </div>

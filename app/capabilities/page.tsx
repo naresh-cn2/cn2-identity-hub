@@ -38,7 +38,7 @@ export default function CapabilitiesPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 06 — CAPABILITIES
+                SECTION <span className="text-signal">/</span> CAPABILITIES
               </p>
               <p className="label-mono text-faint">DOMAINS · TECHNOLOGIES · EVIDENCE</p>
             </div>

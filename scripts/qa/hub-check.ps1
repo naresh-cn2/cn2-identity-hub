@@ -56,7 +56,7 @@ Check "scroll cue x8" (([regex]::Matches($html, '<span class="dest-cue"></span>'
 Check "recede wrapper x8" (([regex]::Matches($html, '<div class="dest-recede">')).Count -eq 8)
 
 # ---- captions: no illustrative clutter ----
-Check "no illustrative clutter" (-not $html.Contains('ILLUSTRATIVE — ARCHITECTURE'))
+Check "no illustrative captions" (-not $html.Contains('ILLUSTRATIVE'))
 Check "connect: REAL CHANNELS" ($html.Contains('REAL CHANNELS'))
 
 # ---- connect: real links ----

@@ -91,7 +91,7 @@ export default function ResearchPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                DOMAIN <span className="text-research">/</span> 02 — RESEARCH
+                DOMAIN <span className="text-research">/</span> RESEARCH
               </p>
               <p className="label-mono text-faint">
                 {researchEntries.length} ENTRIES · {verified} VERIFIED · {ongoing} ONGOING
@@ -117,7 +117,7 @@ export default function ResearchPage() {
               <div className="viz-frame p-4">
                 <GaussianManifold />
                 <p className="label-mono mt-3 text-center text-[10px] text-faint">
-                  GAUSSIAN PROBABILITY MANIFOLD · 3D DENSITY DISTRIBUTION
+                  GAUSSIAN PROBABILITY MANIFOLD · DENSITY DISTRIBUTION
                 </p>
               </div>
             </Reveal>
@@ -222,8 +222,7 @@ export default function ResearchPage() {
                 <p className="text-base leading-relaxed text-muted">
                   Every entry states its question, method, evidence, result and limitation —
                   including entries still in progress, which are marked as such and published
-                  alongside completed work. The visual beside each entry is a generative diagram of
-                  its category, labelled illustrative.
+                  alongside completed work.
                 </p>
               </div>
             </Reveal>

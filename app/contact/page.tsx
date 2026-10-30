@@ -59,7 +59,7 @@ export default function ContactPage() {
                 <div className="relative mx-auto max-w-[1440px] px-5 pb-20 pt-32 text-center sm:px-8 md:pb-28 md:pt-44">
                     <Reveal>
                         <p className="label-mono text-muted">
-                            SECTION <span className="text-signal">/</span> 12 — CONTACT
+                            SECTION <span className="text-signal">/</span> CONTACT
                         </p>
                     </Reveal>
                     <Reveal delay={100}>

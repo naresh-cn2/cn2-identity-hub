@@ -46,7 +46,7 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                     <Reveal>
                         <div className="flex flex-wrap items-baseline justify-between gap-4">
                             <p className="label-mono text-muted">
-                                BUILD <span className="text-signal">/</span> {project.index} — PRODUCT OVERVIEW
+                                BUILD <span className="text-signal">/</span> PRODUCT OVERVIEW
                             </p>
                             <p className="label-mono text-faint">{project.category}</p>
                         </div>

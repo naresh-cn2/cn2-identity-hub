@@ -20,8 +20,6 @@ export interface ServiceCategoryMeta {
   label: string;
   /** Which schematic drawing illustrates this family. */
   schematic: "strategy-eval" | "pipeline" | "architecture" | "flow";
-  /** True when the drawing could be mistaken for measured results. */
-  illustrative: boolean;
 }
 
 export const serviceCategories: Record<ServiceCategory, ServiceCategoryMeta> = {
@@ -29,16 +27,14 @@ export const serviceCategories: Record<ServiceCategory, ServiceCategoryMeta> = {
     id: "research",
     label: "QUANTITATIVE RESEARCH",
     schematic: "strategy-eval",
-    illustrative: true,
   },
-  data: { id: "data", label: "DATA ENGINEERING", schematic: "pipeline", illustrative: false },
+  data: { id: "data", label: "DATA ENGINEERING", schematic: "pipeline" },
   systems: {
     id: "systems",
     label: "SOFTWARE DEVELOPMENT",
     schematic: "architecture",
-    illustrative: false,
   },
-  ai: { id: "ai", label: "AI-ASSISTED AUTOMATION", schematic: "flow", illustrative: false },
+  ai: { id: "ai", label: "AI-ASSISTED AUTOMATION", schematic: "flow" },
 };
 
 export interface ServiceOffering {

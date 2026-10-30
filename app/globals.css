@@ -1827,28 +1827,4 @@ button.corner-ticks {
   );
 }
 
-/* ---------------- Character-Level Interactive Response ---------------- */
-.char-cell {
-  display: inline;
-  position: relative;
-  transition: color 0.12s ease, text-shadow 0.15s ease, transform 0.12s ease;
-}
 
-.char-cell:hover,
-.char-cell[data-char-hover="true"] {
-  color: #67e8f9 !important;
-  text-shadow: 0 0 8px rgba(103, 232, 249, 0.95), 0 0 16px rgba(22, 119, 255, 0.6);
-}
-
-:root:not(.dark) .char-cell:hover,
-:root:not(.dark) .char-cell[data-char-hover="true"] {
-  color: #0b57d0 !important;
-  text-shadow: 0 0 6px rgba(11, 87, 208, 0.4);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .char-cell:hover,
-  .char-cell[data-char-hover="true"] {
-    text-shadow: none !important;
-  }
-}

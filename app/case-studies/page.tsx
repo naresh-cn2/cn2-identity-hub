@@ -34,7 +34,7 @@ export default function CaseStudiesPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> 02 — CASE STUDIES
+                SECTION <span className="text-signal">/</span> CASE STUDIES
               </p>
               <p className="label-mono text-faint">
                 {caseStudies.length} DEEP-DIVE STUDIES
@@ -82,9 +82,8 @@ export default function CaseStudiesPage() {
                   Results are labelled by how they were produced —{" "}
                   <span className="text-foreground">BACKTEST</span>,{" "}
                   <span className="text-foreground">SIMULATION</span>,{" "}
-                  <span className="text-foreground">SELF-BENCHMARK</span>,{" "}
-                  <span className="text-foreground">TEST SUITE</span> or{" "}
-                  <span className="text-foreground">ILLUSTRATIVE</span>, so a simulated figure is
+                  <span className="text-foreground">SELF-BENCHMARK</span> or{" "}
+                  <span className="text-foreground">TEST SUITE</span> — so a simulated figure is
                   never read as live trading.
                 </p>
                 <p className="text-base leading-relaxed text-muted">
@@ -114,7 +113,7 @@ export default function CaseStudiesPage() {
                   className="card-depth group flex h-full flex-col border border-transparent bg-background p-6 transition-colors hover:bg-surface md:p-8"
                 >
                   <div className="flex items-baseline justify-between">
-                    <span className="label-mono text-faint">STUDY / {study.index}</span>
+                    <span className="label-mono text-faint">STUDY</span>
                     <span className="label-mono flex items-center gap-2 text-foreground">
                       <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
                       {study.status}

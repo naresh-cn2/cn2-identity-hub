@@ -37,8 +37,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           </Reveal>
 
           <Reveal delay={80}>
-            <div className="mt-8 flex flex-wrap items-baseline gap-4">
-              <span className="num-mono text-3xl font-bold text-signal">{item.index}</span>
+            <div className="mt-8">
               <p className="label-mono text-faint">{item.categoryLabel}</p>
             </div>
             <h1 className="display mt-4 text-[clamp(2.5rem,7vw,5.5rem)] text-foreground">
@@ -104,7 +103,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-signal" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">02 / THE PROBLEM</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">THE PROBLEM</h2>
             </div>
           </Reveal>
           <div className="mt-8 grid gap-8 md:grid-cols-2">
@@ -112,7 +111,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
               item.detail.problem.map((prob, i) => (
                 <Reveal key={i} delay={i * 80}>
                   <div className="border border-line bg-surface p-6">
-                    <span className="label-mono text-signal text-xs">PROBLEM STATEMENT 0{i + 1}</span>
+                    <span className="label-mono text-signal text-xs">PROBLEM STATEMENT</span>
                     <p className="mt-3 text-base leading-relaxed text-muted">{prob}</p>
                   </div>
                 </Reveal>
@@ -132,7 +131,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-research" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">03 / WHY I BUILT IT</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">WHY I BUILT IT</h2>
             </div>
             <p className="label-mono mt-2 text-faint">ENGINEERING MOTIVATION &amp; OBJECTIVES</p>
           </Reveal>
@@ -152,7 +151,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-cyan-500" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">04 / ARCHITECTURE</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">ARCHITECTURE</h2>
             </div>
             <p className="label-mono mt-2 text-faint">MODULAR STATE MACHINE &amp; PIPELINE FLOW</p>
           </Reveal>
@@ -173,7 +172,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             {item.detail?.architecture?.map((layer, i) => (
               <Reveal key={layer.name} delay={i * 60}>
                 <div className="border border-line bg-surface p-5">
-                  <span className="num-mono text-xs text-signal">LAYER 0{i + 1}</span>
+                  <span className="num-mono text-xs text-signal">LAYER</span>
                   <h3 className="font-mono text-sm font-bold text-foreground mt-2">{layer.name}</h3>
                   <p className="mt-2 text-xs leading-relaxed text-muted">{layer.role}</p>
                   {layer.detail && (
@@ -197,7 +196,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-signal" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">05 / KEY CAPABILITIES</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">KEY CAPABILITIES</h2>
             </div>
             <p className="label-mono mt-2 text-faint">CORE ENGINES &amp; SYSTEM MODULES</p>
           </Reveal>
@@ -221,7 +220,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-research" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">06 / TECHNOLOGY STACK</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">TECHNOLOGY STACK</h2>
             </div>
             <p className="label-mono mt-2 text-faint">LANGUAGES, PROTOCOLS &amp; RUNTIME INFRASTRUCTURE</p>
           </Reveal>
@@ -242,7 +241,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-signal" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">07 / ENGINEERING CHALLENGES</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">ENGINEERING CHALLENGES</h2>
             </div>
             <p className="label-mono mt-2 text-faint">BOTTLENECK INVESTIGATION &amp; RESOLUTION</p>
           </Reveal>
@@ -251,7 +250,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
               <Reveal key={i} delay={i * 80}>
                 <div className="border border-line bg-surface p-6 space-y-4">
                   <div>
-                    <span className="label-mono text-xs text-signal">CHALLENGE 0{i + 1}</span>
+                    <span className="label-mono text-xs text-signal">CHALLENGE</span>
                     <p className="mt-2 text-sm leading-relaxed text-foreground font-semibold">
                       {ch.challenge}
                     </p>
@@ -271,7 +270,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-cyan-500" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">08 / DEVELOPMENT JOURNEY</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">DEVELOPMENT JOURNEY</h2>
             </div>
             <p className="label-mono mt-2 text-faint">EVOLUTIONARY PHASES &amp; MILESTONES</p>
           </Reveal>
@@ -292,14 +291,14 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             <Reveal>
               <div className="flex items-center gap-3">
                 <span className="h-2 w-2 rounded-full bg-signal" />
-                <h2 className="display text-2xl md:text-4xl text-foreground">09 / CASE STUDIES</h2>
+                <h2 className="display text-2xl md:text-4xl text-foreground">CASE STUDIES</h2>
               </div>
               <p className="label-mono mt-2 text-faint">EMPIRICAL SCENARIO INVESTIGATIONS</p>
             </Reveal>
             <div className="mt-8 grid gap-6">
-              {item.caseStudiesList.map((cs, i) => (
+              {item.caseStudiesList.map((cs) => (
                 <div key={cs.title} className="border border-line bg-surface p-6 md:p-8">
-                  <span className="num-mono text-xs text-signal">CASE 0{i + 1}</span>
+                  <span className="num-mono text-xs text-signal">CASE</span>
                   <h3 className="display text-xl md:text-2xl mt-2">{cs.title}</h3>
                   <p className="mt-3 text-base leading-relaxed text-muted">{cs.summary}</p>
                   <div className="mt-5 border-t border-line pt-4">
@@ -317,7 +316,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-research" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">10 / EVIDENCE &amp; RESULTS</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">EVIDENCE &amp; RESULTS</h2>
             </div>
             <p className="label-mono mt-2 text-faint">VERIFIED TEST SUITES, BENCHMARKS &amp; HONEST LIMITATIONS</p>
           </Reveal>
@@ -359,7 +358,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-cyan-500" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">11 / SCREENSHOTS &amp; VISUALISATIONS</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">SCREENSHOTS &amp; VISUALISATIONS</h2>
             </div>
             <p className="label-mono mt-2 text-faint">SYSTEM TOPOLOGY &amp; INSTRUMENTATION SCHEMATICS</p>
           </Reveal>
@@ -386,7 +385,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           <Reveal>
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-signal" />
-              <h2 className="display text-2xl md:text-4xl text-foreground">12 / LINKS &amp; RESOURCES</h2>
+              <h2 className="display text-2xl md:text-4xl text-foreground">LINKS &amp; RESOURCES</h2>
             </div>
             <p className="label-mono mt-2 text-faint">REPOSITORIES, PROOFS &amp; DOCUMENTATION</p>
           </Reveal>

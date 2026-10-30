@@ -157,7 +157,7 @@ export default function PersonalVisual() {
         })}
 
         <text x={280} y={390} textAnchor="middle" className="label-mono text-[9px]" fill="var(--faint)">
-          ILLUSTRATIVE — AUTONOMOUS AGENT TOPOLOGY
+          AUTONOMOUS AGENT TOPOLOGY
         </text>
       </svg>
     </div>

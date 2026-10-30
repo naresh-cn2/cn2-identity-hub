@@ -156,10 +156,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               <div className="viz-frame corner-ticks max-w-[520px] p-6 md:p-8">
                 <p className="label-mono text-faint">SCHEMATIC · {category.label}</p>
                 <div className="mt-4">
-                  <ServiceSchematic
-                    schematic={category.schematic}
-                    illustrative={category.illustrative}
-                  />
+                  <ServiceSchematic schematic={category.schematic} />
                 </div>
               </div>
               <div className="corner-ticks border border-line bg-surface p-6 md:p-8">
@@ -202,7 +199,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                     className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface md:p-8"
                   >
                     <div className="flex items-baseline justify-between">
-                      <span className="label-mono text-faint">BUILD / {p.index}</span>
+                      <span className="label-mono text-faint">BUILD</span>
                       <span className="label-mono text-foreground">{p.status}</span>
                     </div>
                     <span className="display mt-4 block text-xl md:text-2xl">{p.title}</span>

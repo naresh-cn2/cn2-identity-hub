@@ -60,7 +60,7 @@ export default function PartnershipsPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                PATH <span className="text-signal">/</span> 04 — BUSINESS & PARTNERSHIPS
+                PATH <span className="text-signal">/</span> BUSINESS &amp; PARTNERSHIPS
               </p>
               <p className="label-mono text-faint">TECHNICAL PARTNERSHIPS & PRODUCT OPPORTUNITIES</p>
             </div>
@@ -103,7 +103,6 @@ export default function PartnershipsPage() {
             {PARTNERSHIP_TYPES.map((p, i) => (
               <Reveal key={p.code} delay={i * 80}>
                 <div className="corner-ticks h-full bg-background p-6 md:p-8">
-                  <span className="num-mono text-xs text-signal">{p.code}</span>
                   <h3 className="display mt-4 text-xl md:text-2xl">{p.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{p.focus}</p>
                   <div className="mt-6 flex flex-wrap gap-2">

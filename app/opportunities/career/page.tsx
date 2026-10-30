@@ -30,7 +30,7 @@ export default function CareerPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                PATH <span className="text-signal">/</span> 01 — EMPLOYMENT
+                PATH <span className="text-signal">/</span> EMPLOYMENT
               </p>
               <p className="label-mono text-faint">QUANTITATIVE DEVELOPMENT & RESEARCH ROLES</p>
             </div>
@@ -75,7 +75,6 @@ export default function CareerPage() {
               <Reveal key={track.id} delay={i * 80}>
                 <div className="grid gap-6 md:grid-cols-[1fr_2fr] md:items-start md:gap-10">
                   <div className="flex flex-col items-center md:items-start">
-                    <span className="num-mono text-3xl font-semibold text-line-strong">{track.index}</span>
                     <span className="label-mono mt-2 text-[10px] text-faint">{track.state}</span>
                   </div>
                   <div>

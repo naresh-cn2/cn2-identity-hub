@@ -38,7 +38,7 @@ export default function ServicesPage() {
           <Reveal>
             <div className='flex flex-wrap items-baseline justify-between gap-4'>
               <p className='label-mono text-muted'>
-                SECTION <span className='text-signal'>/</span> 16 — SERVICES
+                SECTION <span className='text-signal'>/</span> SERVICES
               </p>
               <p className='label-mono text-faint'>CLIENT-FACING OFFERINGS
               </p>

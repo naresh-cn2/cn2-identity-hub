@@ -73,7 +73,7 @@ export default function CollaboratePage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                PATH <span className="text-signal">/</span> 03 — RESEARCH COLLABORATION
+                PATH <span className="text-signal">/</span> RESEARCH COLLABORATION
               </p>
               <p className="label-mono text-faint">JOINT EXPERIMENTS & OPEN RESEARCH</p>
             </div>
@@ -116,7 +116,6 @@ export default function CollaboratePage() {
             {COLLAB_THEMES.map((theme, i) => (
               <Reveal key={theme.title} delay={Math.min(i, 3) * 80}>
                 <div className="card-depth corner-ticks h-full border border-line bg-background p-6 md:p-8">
-                  <span className="num-mono text-xs text-research">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="display mt-4 text-xl md:text-2xl">{theme.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted md:text-base">{theme.focus}</p>
                   <div className="mt-6 flex flex-wrap gap-2">

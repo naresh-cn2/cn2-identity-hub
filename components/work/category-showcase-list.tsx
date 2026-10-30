@@ -63,10 +63,7 @@ export default function CategoryShowcaseList({ items, categoryTitle }: Props) {
 
           const copy = (
             <div className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
-              <div className="flex items-baseline justify-between gap-4">
-                <span className="num-mono text-3xl font-semibold text-line-strong md:text-4xl">
-                  {item.index}
-                </span>
+              <div className="flex flex-wrap items-baseline justify-between gap-4">
                 <div className="flex flex-wrap justify-end gap-1.5">
                   {item.tags.map((t) => (
                     <span

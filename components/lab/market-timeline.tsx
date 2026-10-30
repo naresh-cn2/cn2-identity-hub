@@ -63,7 +63,7 @@ const CLOSES = BARS.map((b, i) => `${x(i).toFixed(1)},${y(b.c).toFixed(1)}`).joi
 /** Event markers sit on local extremes of the deterministic series. */
 const MARKERS = [10, 26, 41];
 
-/** The lab's market-data timeline instrument — schematic, labelled, illustrative. */
+/** The lab's market-data timeline instrument — schematic, labelled. */
 export default function MarketTimeline() {
   return (
     <div className="viz-frame p-3 md:p-5">
@@ -72,10 +72,6 @@ export default function MarketTimeline() {
           <p className="label-mono text-faint">
             MARKET-DATA TIMELINE <span className="text-signal">/</span> SYNTHETIC SERIES
           </p>
-          <p className="label-mono flex items-center gap-2 text-muted">
-            <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-signal" aria-hidden="true" />
-            ILLUSTRATIVE
-          </p>
         </div>
 
         <div className="relative">
@@ -83,9 +79,9 @@ export default function MarketTimeline() {
             viewBox={`0 0 ${W} ${H}`}
             className="h-auto w-full"
             role="img"
-            aria-label="Schematic market-data timeline: a synthetic price series with volume bars, a NOW boundary and a time ruler carrying travelling signals. Illustrative — not measured market data."
+            aria-label="Schematic market-data timeline: a synthetic price series with volume bars, a NOW boundary and a time ruler carrying travelling signals. Not measured market data."
           >
-            <title>Market-data timeline — illustrative synthetic series</title>
+            <title>Market-data timeline — synthetic series</title>
 
             {/* price panel grid */}
             <g stroke="var(--grid-line)" strokeWidth="1">
@@ -200,7 +196,7 @@ export default function MarketTimeline() {
         </div>
 
         <p className="label-mono mt-3 border-t border-line pt-3 text-[10px] text-faint">
-          ILLUSTRATIVE — DETERMINISTIC SYNTHETIC SERIES FOR INSTRUMENT CONTEXT, NOT MEASURED MARKET DATA. THE REPLAY INSTRUMENT DEMONSTRATES THE INFORMATION BOUNDARY INTERACTIVELY.
+          DETERMINISTIC SYNTHETIC SERIES FOR INSTRUMENT CONTEXT, NOT MEASURED MARKET DATA. THE REPLAY INSTRUMENT DEMONSTRATES THE INFORMATION BOUNDARY INTERACTIVELY.
         </p>
       </div>
     </div>
