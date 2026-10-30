@@ -11,14 +11,7 @@ import { flagshipProjects, type FlagshipProject } from "./projects";
  * provenance label. Nothing in this file introduces a new number.
  */
 
-export type ArchiveCategory =
-  | "QUANT"
-  | "DATA"
-  | "AI"
-  | "ENGINEERING"
-  | "FINTECH"
-  | "RESEARCH"
-  | "TOOLS";
+export type ArchiveCategory = string;
 
 export const archiveCategories: ArchiveCategory[] = [
   "QUANT",
@@ -28,6 +21,33 @@ export const archiveCategories: ArchiveCategory[] = [
   "FINTECH",
   "RESEARCH",
   "TOOLS",
+  "PYTHON",
+  "C",
+  "SYSTEMS",
+  "IPC",
+  "SHARED MEMORY",
+  "LOW LATENCY",
+  "TASK ORCHESTRATION",
+  "HTTP",
+  "DIAGNOSTICS",
+  "PROTOCOL",
+  "RELEASE",
+  "OTHER",
+  "CORE",
+  "NEXT.JS",
+  "TYPESCRIPT",
+  "REACT",
+  "PORTFOLIO",
+  "PERSONAL",
+  "WORKSPACE",
+  "RECONCILIATION",
+  "LEDGER",
+  "FINOPS",
+  "SCRAPING",
+  "APIFY",
+  "DATA INGESTION",
+  "MMAP",
+  "HIGH PERFORMANCE",
 ];
 
 export interface ArchiveMetric {
@@ -56,7 +76,8 @@ export interface TierTwoDetail {
 
 export interface ArchiveProject {
   id: string;
-  index: string;
+  /** Optional display index — defaults are generated for ad-hoc catalogue entries. */
+  index?: string;
   title: string;
   shortTitle: string;
   categoryLabel: string;
