@@ -110,6 +110,7 @@ export const credentials: CredentialRecord[] = [
     state: "VERIFIED",
     date: "2026-10-11",
     credentialId: "DT1174",
+    certificateUrl: "https://datateach.ai/certificate/DT1174",
     topics: ["Generative AI — internship programme"],
     skills: ["Generative AI applied in an internship setting"],
     learned:
@@ -122,6 +123,7 @@ export const credentials: CredentialRecord[] = [
     program: "US Equities 101 Boot Camp for Algorithmic Trading",
     state: "VERIFIED",
     date: "2026-09-21",
+    certificateUrl: "https://www.quantconnect.com/learning",
     topics: ["US equities fundamentals (US Equities 101)", "Algorithmic trading boot camp track"],
     skills: ["Algorithmic trading concepts applied to US equities"],
     learned:
