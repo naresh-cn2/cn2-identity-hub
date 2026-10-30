@@ -434,6 +434,56 @@ export const settleIqItem: ComprehensiveWorkItem = {
   },
 };
 
+export const stratlabItem: ComprehensiveWorkItem = {
+  id: "stratlab",
+  title: "STRATLAB",
+  shortTitle: "STRATLAB",
+  categoryLabel: "Quantitative Strategy Backtesting & Analytics Platform (CS50x Final Project)",
+  tags: ["HTML", "PYTHON", "FLASK", "FLASK", "BOOTSTRAP", "FINTECH"],
+  status: "PRODUCTION",
+  statusNote: "CS50x Final Project — Harvard University. Quantitative strategy backtesting and analytics platform.",
+  thesis: "A research idea becomes knowledge only when its evidence is complete, reproducible and gated.",
+  summary:
+    "StratLab is a quantitative strategy backtesting and analytics platform — Harvard CS50x Final Capstone Project (2026 Edition). It provides deterministic backtesting, strategy analytics, and quantitative research tooling with verified CS50 credentials.",
+  metrics: [],
+  technologies: ["HTML", "Python 3.10+", "Flask", "Bootstrap 5.3", "Chart.js 4.x", "SQLite", "MIT License"],
+  github: "https://github.com/naresh-cn2/stratlab",
+  githubVerified: true,
+  tier: 1,
+  evidenceLabel: "CS50x FINAL PROJECT · VERIFIED",
+  workCategory: "products",
+  whyIBuiltIt: [
+    "Harvard CS50x requires a final capstone project demonstrating full-stack development skills.",
+    "StratLab applies quantitative backtesting and analytics to the capstone, producing verifiable evidence of strategy performance.",
+  ],
+  keyCapabilities: [
+    { title: "Algorithmic Backtesting", desc: "Quantitative strategy backtesting with verifiable results." },
+    { title: "Analytics Platform", desc: "Strategy analytics and performance visualization." },
+    { title: "CS50 Credentials", desc: "Verified CS50x final capstone project with Harvard-issued certificate." },
+  ],
+  engineeringChallenges: [],
+  developmentJourney: [
+    { phase: "v1.0", title: "CS50x Final Project", detail: "StratLab algorithmic backtesting and analytics platform." },
+  ],
+  caseStudiesList: [],
+  evidenceAndResults: ["CS50x Final Capstone Project — verified by Harvard Online."],
+  screenshotsAndVisuals: [],
+  linksList: [
+    { label: "GITHUB REPOSITORY", href: "https://github.com/naresh-cn2/stratlab", type: "github" },
+    { label: "LIVE DEMO", href: "https://youtu.be/IQNH95VY4DI", type: "live" },
+  ],
+  detail: {
+    problem: ["Quantitative research needs reproducible backtesting and verifiable strategy analytics."],
+    approach: ["Build a full-stack backtesting platform as the CS50x final capstone project."],
+    architecture: [],
+    results: ["CS50x final project completed with verified credentials."],
+    limitations: [],
+    testing: [],
+    artifacts: [],
+    currentState: ["CS50x Final Project — Production."],
+  },
+};
+
 export const axiomJsonItem: ComprehensiveWorkItem = {
   id: "axiom-json",
   title: "AXIOM-JSON",
@@ -971,7 +1021,7 @@ function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
     p.id === "apex-quant-engine" ||
     p.id === "automated-trading-os" ||
     p.id === "market-data-replay" ||
-    p.id === "qrsip" || // stratlab = QRSIP, CS50 final project — classified as product
+    p.id === "qrsip" || // stratlab = QRSIP? NO — qrsip is quant-research-strategy-intelligence-platform, a product
     p.id === "systems-kernel" ||
     p.id === "sentiment-stream" ||
     p.id === "forex-platform" ||
@@ -1140,6 +1190,7 @@ export const ALL_WORKS: ComprehensiveWorkItem[] = [
   cn2IdentityHubItem,
   openVerseItem,
   settleIqItem,
+  stratlabItem,
   axiomJsonItem,
   omniLedgerEngineItem,
   cloudCostEngineItem,
