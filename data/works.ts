@@ -451,7 +451,7 @@ export const stratlabItem: ComprehensiveWorkItem = {
   githubVerified: true,
   tier: 1,
   evidenceLabel: "CS50x FINAL PROJECT · VERIFIED",
-  workCategory: "products",
+  workCategory: "projects",
   whyIBuiltIt: [
     "Harvard CS50x requires a final capstone project demonstrating full-stack development skills.",
     "StratLab applies quantitative backtesting and analytics to the capstone, producing verifiable evidence of strategy performance.",
@@ -1015,13 +1015,14 @@ function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
   let workCategory: WorkCategoryType = "projects";
   // Products & Platforms: quant engines, data infrastructure, FinOps systems,
   // systems software, forex/crypto platforms
+  // stratlab is classified as Projects (standalone project), NOT Products
   if (
     p.id === "billing-data-gateway" ||
     p.id === "ifm-costintel" ||
     p.id === "apex-quant-engine" ||
     p.id === "automated-trading-os" ||
     p.id === "market-data-replay" ||
-    p.id === "qrsip" || // stratlab = QRSIP? NO — qrsip is quant-research-strategy-intelligence-platform, a product
+    p.id === "qrsip" || // qrsip = quant-research-strategy-intelligence-platform, a product
     p.id === "systems-kernel" ||
     p.id === "sentiment-stream" ||
     p.id === "forex-platform" ||
