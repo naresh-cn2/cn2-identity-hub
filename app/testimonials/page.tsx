@@ -193,7 +193,7 @@ export default function TestimonialsPage() {
                                 </p>
                                 <a
                                     href='#share'
-                                    className='corner-ticks group mt-10 inline-flex items-center gap-3 border border-signal px-8 py-4 text-[11px] tracking-[0.2em] text-signal transition-colors hover:bg-signal hover:text-background'
+                                    className='corner-ticks group mt-10 inline-flex items-center gap-3 border border-signal px-8 py-4 text-[11px] tracking-[0.2em] text-signal transition-colors hover:bg-signal hover:text-white'
                                 >
                                     SHARE YOUR EXPERIENCE
                                     <span className='arr-live' aria-hidden='true'>

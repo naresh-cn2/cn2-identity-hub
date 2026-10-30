@@ -48,7 +48,7 @@ export default function TestimonialGrid({ items }: { items: TestimonialView[] })
                             onClick={() => setActive(f)}
                             className={`label-mono chip-hit border px-3.5 py-2 text-[10px] transition-colors duration-200 ${
                                 active === f
-                                    ? "border-signal bg-signal text-background"
+                                    ? "border-signal bg-signal text-white"
                                     : "border-line text-muted hover:border-line-strong hover:text-foreground"
                             }`}
                         >

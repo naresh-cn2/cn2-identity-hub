@@ -142,7 +142,7 @@ export default function ProjectWorld({ project }: { project: ArchiveProject }) {
                 <div className="mt-9 flex flex-wrap gap-4">
                   <a
                     href="#architecture"
-                    className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
+                    className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-white"
                   >
                     EXPLORE ARCHITECTURE
                     <span aria-hidden="true" className="arr-down transition-transform duration-300 group-hover:translate-y-1">↓</span>

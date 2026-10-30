@@ -111,7 +111,7 @@ export default function AboutPage() {
               <div className="mt-10 flex flex-wrap gap-3">
                 <a
                   href="#capabilities"
-                  className="label-mono border border-signal/70 bg-signal/10 px-4 py-2.5 text-[10px] text-white transition-colors duration-300 hover:bg-signal hover:text-background"
+                  className="label-mono border border-signal/70 bg-signal/10 px-4 py-2.5 text-[10px] text-white transition-colors duration-300 hover:bg-signal hover:text-white"
                 >
                   EXPLORE MY CAPABILITIES
                 </a>

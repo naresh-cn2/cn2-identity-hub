@@ -42,7 +42,7 @@ export default function CategoryShowcaseList({ items, categoryTitle }: Props) {
                 onClick={() => setActiveTag(tag)}
                 className={`label-mono border px-3 py-1 text-[10px] transition-colors ${
                   active
-                    ? "border-signal bg-signal text-background font-bold"
+                    ? "border-signal bg-signal text-white font-bold"
                     : "border-line bg-surface text-muted hover:border-line-strong hover:text-foreground"
                 }`}
               >

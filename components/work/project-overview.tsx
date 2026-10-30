@@ -87,7 +87,7 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                         <div className="mt-10 flex flex-wrap gap-4">
                             <Link
                                 href={`/case-studies/${project.id}`}
-                                className="label-mono border border-signal bg-signal px-6 py-3 text-background transition-colors hover:bg-transparent hover:text-signal"
+                                className="label-mono border border-signal bg-signal px-6 py-3 text-white transition-colors hover:bg-transparent hover:text-signal"
                             >
                                 READ CASE STUDY →
                             </Link>
@@ -280,7 +280,7 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                             <div className="flex flex-col gap-4 md:items-end">
                                 <Link
                                     href={`/case-studies/${project.id}`}
-                                    className="label-mono border border-signal bg-signal px-8 py-4 text-background transition-colors hover:bg-transparent hover:text-signal"
+                                    className="label-mono border border-signal bg-signal px-8 py-4 text-white transition-colors hover:bg-transparent hover:text-signal"
                                 >
                                     READ CASE STUDY →
                                 </Link>

@@ -64,12 +64,12 @@ export default function ResearchArchive({ entries }: { entries: ResearchEntry[] 
                   aria-pressed={isActive}
                   className={`label-mono border px-3 py-1.5 text-[10px] transition-colors duration-200 ${
                     isActive
-                      ? "border-research bg-research text-background"
+                      ? "border-research bg-research text-white"
                       : "border-line text-muted hover:border-line-strong hover:text-foreground"
                   }`}
                 >
                   {c}
-                  <span className={`ml-2 num-mono ${isActive ? "text-background/70" : "text-faint"}`}>
+                  <span className={`ml-2 num-mono ${isActive ? "text-white/70" : "text-faint"}`}>
                     {String(counts.get(c) ?? 0).padStart(2, "0")}
                   </span>
                 </button>

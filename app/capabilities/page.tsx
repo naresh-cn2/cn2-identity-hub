@@ -190,7 +190,7 @@ export default function CapabilitiesPage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/about"
-              className="label-mono bg-signal px-6 py-3 text-background transition-colors hover:bg-foreground hover:text-background"
+              className="label-mono bg-signal px-6 py-3 text-white transition-colors hover:bg-foreground hover:text-signal"
             >
               BACKGROUND & CONTEXT
             </Link>

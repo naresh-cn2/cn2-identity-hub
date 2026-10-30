@@ -126,7 +126,7 @@ export default function CapabilityMap({ capabilities, researchTitles }: Capabili
               aria-pressed={isActive}
               onClick={() => setFilter(domain)}
               className={`label-mono border px-3 py-2 transition-colors ${isActive
-                  ? "border-transparent bg-signal text-background"
+                  ? "border-transparent bg-signal text-white"
                   : "border-line text-muted hover:border-line-strong hover:text-foreground"
                 }`}
             >

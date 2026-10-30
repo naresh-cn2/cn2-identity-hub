@@ -67,7 +67,7 @@ export default function UniverseIntro() {
           <Reveal delay={430}>
             <Link
               href="#destinations"
-              className="corner-ticks group mt-10 inline-flex items-center gap-4 border border-signal/70 bg-signal/10 px-8 py-4 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
+              className="corner-ticks group mt-10 inline-flex items-center gap-4 border border-signal/70 bg-signal/10 px-8 py-4 label-mono text-signal transition-colors hover:bg-signal hover:text-white"
             >
               EXPLORE THE UNIVERSE
               <span aria-hidden="true" className="arr-down transition-transform duration-300 group-hover:translate-y-1">

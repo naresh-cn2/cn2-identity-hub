@@ -69,7 +69,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
         <Link
           href={`/work/${project.id}`}
-          className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-background"
+          className="corner-ticks group inline-flex items-center gap-3 border border-signal/70 bg-signal/10 px-7 py-3.5 label-mono text-signal transition-colors hover:bg-signal hover:text-white"
         >
           ENTER PROJECT WORLD
           <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
@@ -148,12 +148,12 @@ export default function BuildsArchive({ projects }: { projects: ArchiveProject[]
                 aria-pressed={isActive}
                 className={`label-mono chip-hit border px-3 py-1.5 text-[10px] transition-colors duration-200 ${
                   isActive
-                    ? "border-signal bg-signal text-background"
+                    ? "border-signal bg-signal text-white"
                     : "border-line text-muted hover:border-line-strong hover:text-foreground"
                 }`}
               >
                 {c}
-                <span className={`ml-2 num-mono ${isActive ? "text-background/70" : "text-faint"}`}>
+                <span className={`ml-2 num-mono ${isActive ? "text-white/70" : "text-faint"}`}>
                   {String(counts.get(c) ?? 0).padStart(2, "0")}
                 </span>
               </button>

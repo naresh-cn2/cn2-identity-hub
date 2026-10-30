@@ -67,7 +67,7 @@ export default function ProcessChain({ stages, accent = "signal" }: Props) {
                 <span
                   className={`label-mono flex h-9 w-9 items-center justify-center rounded-full border text-[9px] transition-colors duration-300 ${
                     i <= sel
-                      ? `${accentBorder} ${i === sel ? `${accentBg} text-background` : "bg-surface text-foreground"}`
+                      ? `${accentBorder} ${i === sel ? `${accentBg} text-white` : "bg-surface text-foreground"}`
                       : "border-line bg-surface text-faint group-hover:border-line-strong group-hover:text-muted"
                   }`}
                 >

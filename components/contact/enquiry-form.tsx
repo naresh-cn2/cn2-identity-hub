@@ -306,7 +306,7 @@ export default function EnquiryForm() {
                 <button
                     type="submit"
                     disabled={sending}
-                    className="corner-ticks group inline-flex min-h-12 items-center gap-3 border border-signal px-8 py-4 text-[11px] tracking-[0.2em] text-signal transition-colors hover:bg-signal hover:text-background disabled:opacity-50"
+                    className="corner-ticks group inline-flex min-h-12 items-center gap-3 border border-signal px-8 py-4 text-[11px] tracking-[0.2em] text-signal transition-colors hover:bg-signal hover:text-white disabled:opacity-50"
                 >
                     {sending ? "SENDING" : "SEND ENQUIRY"}
                     <span className={`transition-transform ${sending ? "" : "arr-live"}`} aria-hidden="true">

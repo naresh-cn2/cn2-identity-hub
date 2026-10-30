@@ -66,7 +66,7 @@ export default function MindsetDiagram() {
               style={{ left: `${p.x}%`, top: `${p.y}%` }}
               className={`label-mono absolute -translate-x-1/2 -translate-y-1/2 border px-3.5 py-2 text-[10px] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${
                 i === sel
-                  ? "border-signal bg-signal text-background"
+                  ? "border-signal bg-signal text-white"
                   : "border-line-strong bg-surface text-muted hover:border-signal/60 hover:text-foreground"
               }`}
             >
@@ -86,7 +86,7 @@ export default function MindsetDiagram() {
             onClick={() => setSel(i)}
             className={`label-mono border px-4 py-3 text-left text-[10px] transition-colors ${
               i === sel
-                ? "border-signal bg-signal text-background"
+                ? "border-signal bg-signal text-white"
                 : "border-line-strong bg-surface text-muted"
             }`}
           >
