@@ -971,15 +971,13 @@ function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
     p.id === "apex-quant-engine" ||
     p.id === "automated-trading-os" ||
     p.id === "market-data-replay" ||
+    p.id === "qrsip" || // stratlab = QRSIP, CS50 final project — classified as product
     p.id === "systems-kernel" ||
     p.id === "sentiment-stream" ||
     p.id === "forex-platform" ||
     p.id === "crypto-platform"
   ) {
     workCategory = "products";
-  } else if (p.id === "qrsip") {
-    // stratlab = QRSIP, CS50 final project — classified as Project, not Product
-    workCategory = "projects";
   } else {
     workCategory = "projects";
   }
