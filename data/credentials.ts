@@ -31,6 +31,8 @@ export interface CredentialRecord {
   assessment: string;
   certificateUrl?: string;
   verificationUrl?: string;
+  /** Local certificate image for internal viewer (no external redirect). */
+  certificateImage?: string;
   /** The provider's own identifier printed on the certificate, if any. */
   credentialId?: string;
   /** Additional printed details, such as a QR target or issuer context. */
@@ -110,7 +112,7 @@ export const credentials: CredentialRecord[] = [
     state: "VERIFIED",
     date: "2026-10-11",
     credentialId: "DT1174",
-    certificateUrl: "https://datateach.ai/certificate/DT1174",
+    certificateImage: "/certificates/datateach-genai-internship-certificate.png",
     topics: ["Generative AI — internship programme"],
     skills: ["Generative AI applied in an internship setting"],
     learned:
@@ -123,7 +125,7 @@ export const credentials: CredentialRecord[] = [
     program: "US Equities 101 Boot Camp for Algorithmic Trading",
     state: "VERIFIED",
     date: "2026-09-21",
-    certificateUrl: "https://www.quantconnect.com/learning",
+    certificateImage: "/certificates/quantconnect-us-equities-101-certificate.png",
     topics: ["US equities fundamentals (US Equities 101)", "Algorithmic trading boot camp track"],
     skills: ["Algorithmic trading concepts applied to US equities"],
     learned:
@@ -205,6 +207,7 @@ export const credentials: CredentialRecord[] = [
     provider: "Unstop",
     program: "Python DSA",
     state: "COMPLETED",
+    certificateImage: "/certificates/unstop-python-dsa-certificate.png",
     topics: ["Python", "Data structures and algorithms"],
     skills: ["Data structures and algorithms implemented in Python"],
     learned:

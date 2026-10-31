@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
@@ -8,6 +7,7 @@ import LearningNetwork from "@/components/credentials/learning-network";
 import NeuralFigure from "@/components/visuals/neural-figure";
 import CredentialTimeline from "@/components/credentials/credential-timeline";
 import LearningMap from "@/components/credentials/learning-map";
+import CredentialBadgeList from "@/components/credentials/certificate-badge-list";
 import {
   credentialBadges,
   credentialStates,
@@ -133,9 +133,8 @@ export default function CredentialsPage() {
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
               My learning journey spans quantitative finance, algorithmic trading, data,
               software engineering, and generative AI. Here, I document the programmes I have
-              completed, the
-              skills I am developing, and the knowledge I put into practice through technical
-              projects.
+              completed, the skills I am developing, and the knowledge I put into practice through
+              technical projects.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -158,9 +157,9 @@ export default function CredentialsPage() {
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
                   A record of the internships, courses, and training programmes I have completed —
-                  each shown with the date printed on its certificate — followed by the
-                  self-directed tracks I study in parallel, including the knowledge and practical
-                  experience gained through each.
+                  each shown with the date printed on its certificate — followed by the self-directed
+                  tracks I study in parallel, including the knowledge and practical experience gained
+                  through each.
                 </p>
               </div>
               <p className="label-mono text-faint">EXPAND ANY RECORD FOR THE FULL DETAIL</p>
@@ -201,61 +200,16 @@ export default function CredentialsPage() {
                   DIGITAL BADGES I&apos;VE EARNED
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
-                  A digital badge is the compact form of a completed course — issued by the
-                  programme itself and easy to spot at a glance. Every badge here links straight
-                  to the full certificate behind it, so anyone reviewing my work can open the
-                  original and verify every detail for themselves.
+                  A digital badge is the compact form of a completed course — issued by the programme
+                  itself and easy to spot at a glance. Every badge here links straight to the full
+                  certificate behind it, so anyone reviewing my work can open the original and verify
+                  every detail for themselves.
                 </p>
               </div>
               <p className="label-mono text-faint">{credentialBadges.length} EARNED</p>
             </div>
           </Reveal>
-
-          <div
-            className={`mt-10 grid gap-px ${
-              credentialBadges.length > 1
-                ? "bg-line sm:grid-cols-2 lg:grid-cols-3"
-                : "max-w-md sm:max-w-lg"
-            }`}
-          >
-            {credentialBadges.map((b, i) => {
-              const record = credentials.find((c) => c.id === b.credentialId);
-              return (
-                <Reveal key={b.id} delay={i * 70}>
-                  <div className="flex h-full flex-col items-center bg-background p-8 text-center">
-                    <Image
-                      src={b.image}
-                      alt={b.imageAlt}
-                      width={168}
-                      height={168}
-                      className="h-40 w-40"
-                    />
-                    <p className="label-mono mt-7 text-faint">{b.provider}</p>
-                    <p className="display mt-3 text-xl">{b.label}</p>
-                    <p className="label-mono mt-3 text-signal">{b.status}</p>
-                    {record && (
-                      <div className="mt-6 border-t border-line pt-5">
-                        <p className="label-mono text-[10px] text-faint">EARNED WITH</p>
-                        <p className="mt-2 text-sm leading-snug text-muted">{record.program}</p>
-                        {record.certificateUrl && (
-                          <a
-                            href={record.certificateUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group/link mt-4 inline-block"
-                          >
-                            <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
-                              VIEW CERTIFICATE →
-                            </span>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
+          <CredentialBadgeList />
         </div>
       </section>
 

@@ -49,7 +49,7 @@ export default function PrivacyPage() {
                 <div className="relative mx-auto max-w-[1440px] px-5 pb-16 pt-32 sm:px-8 md:pb-24 md:pt-44">
                     <Reveal>
                         <p className="label-mono text-muted">
-                            SECTION <span className="text-signal">/</span> LEGAL — PRIVACY
+                            LEGAL — PRIVACY
                         </p>
                     </Reveal>
                     <Reveal delay={100}>

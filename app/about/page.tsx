@@ -36,14 +36,12 @@ export const metadata: Metadata = {
   },
 };
 
-/* Section shell shared by chapters 02-08. */
+/* Section shell shared by chapters — no decorative numbering. */
 function ChapterHead({
-  index,
   eyebrow,
   lines,
   support,
 }: {
-  index: string;
   eyebrow: string;
   lines: string[];
   support: string;
@@ -51,7 +49,6 @@ function ChapterHead({
   return (
     <Reveal>
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="num-mono text-xs text-signal">SECTION / {index}</span>
         <span className="label-mono text-faint">{eyebrow}</span>
       </div>
       <h2 className="display mt-7 max-w-4xl text-3xl leading-[1.06] md:text-5xl">
@@ -67,17 +64,26 @@ function ChapterHead({
 }
 
 /* The about page: a cinematic identity opening with 100% coded computational
-   systems universe, followed by seven editorial chapters with real, interactive diagrams.
-   The 3D systems universe persists seamlessly throughout all sections as you scroll. */
+   systems universe, followed by editorial chapters with real, interactive diagrams.
+   The computational systems universe persists seamlessly throughout all sections. */
 export default function AboutPage() {
   return (
     <div className="relative min-h-screen w-full bg-background transition-colors duration-500">
-      {/* Continuous living 3D computational systems universe across all sections */}
+      {/* Continuous living computational systems universe across all sections */}
       <div
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
         aria-hidden="true"
       >
         <SystemsUniverse />
+      </div>
+
+      {/* Atmospheric grid overlay for depth and technical texture */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute inset-0" />
+        <div className="absolute inset-0" />
       </div>
 
       <div className="relative z-10">
@@ -98,7 +104,7 @@ export default function AboutPage() {
               editorial column over it on desktop */}
           <div className="relative z-20 px-6 pb-10 pt-28 md:absolute md:left-0 md:top-0 md:flex md:h-full md:w-[54%] md:items-center md:px-14 md:pb-0 md:pt-0 lg:px-20">
             <div className="max-w-[30rem]">
-              <p className="label-mono text-[10px] text-white/45">ABOUT / IDENTITY / 001</p>
+              <p className="label-mono text-[10px] text-white/45">ABOUT / IDENTITY</p>
               <h1 className="display mt-6 text-[2.4rem] leading-[1.04] text-white md:text-5xl lg:text-6xl">
                 <span className="block">I THINK IN</span>
                 <span className="block">SYSTEMS.</span>
@@ -147,7 +153,6 @@ export default function AboutPage() {
         <section id="mindset" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="002"
               eyebrow="THE WAY I THINK"
               lines={["I DON'T JUST LOOK AT THE PROBLEM.", "I LOOK AT THE SYSTEM BEHIND IT."]}
               support="I want to understand why something happens, which variables influence it, how its components interact, and what would make a solution reliable. Whether the subject is a market, a data problem, a piece of software, or an AI workflow — the underlying logic comes before the approach."
@@ -162,7 +167,6 @@ export default function AboutPage() {
         <section id="capabilities" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="003"
               eyebrow="CAPABILITY ARCHITECTURE"
               lines={["DIFFERENT DISCIPLINES.", "ONE CONNECTED DIRECTION."]}
               support="I work toward connecting financial understanding, quantitative reasoning, software, data, and intelligent automation. Select any discipline to see what it means, the problems it addresses, its status, and the work that supports it."
@@ -177,7 +181,6 @@ export default function AboutPage() {
         <section id="systems" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="004"
               eyebrow="FROM THINKING TO EXECUTION"
               lines={["IDEAS ARE THE BEGINNING.", "SYSTEMS MAKE THEM USEFUL."]}
               support="One process connects the disciplines: reasoning to implementation, implementation to evidence — follow it as you scroll, or select any stage directly."
@@ -192,7 +195,6 @@ export default function AboutPage() {
         <section id="ai" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="005"
               eyebrow="HUMAN DIRECTION · INTELLIGENT EXECUTION"
               lines={["I DEFINE THE DIRECTION.", "AI ACCELERATES THE EXECUTION."]}
               support="I see AI as a way to extend human capability — never a replacement for understanding the problem. The objective, the constraints, and the final decision stay human; verification determines whether the work earns trust."
@@ -207,7 +209,6 @@ export default function AboutPage() {
         <section id="principles" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="006"
               eyebrow="WORKING PRINCIPLES"
               lines={["BUILD WITH INTENT.", "MEASURE WITH EVIDENCE."]}
               support="The standards I want my work to reflect — not slogans, but the criteria results are held to."
@@ -220,7 +221,6 @@ export default function AboutPage() {
         <section id="vision" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="007"
               eyebrow="THE LONG-TERM DIRECTION"
               lines={["FROM INDIVIDUAL TOOLS", "TO INTEGRATED INTELLIGENT SYSTEMS."]}
               support="My long-term direction is to develop the knowledge and practical capability to build increasingly sophisticated systems that connect data, computation, decision-making, and automation — moving beyond isolated technologies toward complete, useful solutions."
@@ -235,7 +235,6 @@ export default function AboutPage() {
         <section id="collaborate" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="008"
               eyebrow="LET'S BUILD SOMETHING USEFUL"
               lines={[
                 "DIFFERENT PERSPECTIVES.",
@@ -252,7 +251,6 @@ export default function AboutPage() {
         <section id="capability-map" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="009"
               eyebrow="CAPABILITY MAP"
               lines={["DOMAINS, TECHNOLOGIES, AND EVIDENCE.", "EVERY CAPABILITY LINKS TO WORK YOU CAN OPEN."]}
               support="Each card names a domain, the technologies involved, and the concrete project or written entry you can open — including the entries that remain open questions rather than settled results."
@@ -267,7 +265,6 @@ export default function AboutPage() {
         <section id="tech-stack" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="010"
               eyebrow="TECH STACK & TOOLING"
               lines={["CATEGORIZED · PRODUCTION · SYSTEMS & RESEARCH."]}
               support="Languages, cloud platforms, computational libraries, databases, and DevOps tooling deployed across research engines, trading architectures, and evidence-driven software systems."
@@ -282,7 +279,6 @@ export default function AboutPage() {
         <section id="domain-map" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="011"
               eyebrow="DOMAIN MAP"
               lines={["HOVER A NODE TO ISOLATE ITS RELATIONSHIPS."]}
               support="The domains are not separate skills stacked on top of each other — research sits at the centre and every other domain is connected to it because that is how the work actually flows."
@@ -299,7 +295,6 @@ export default function AboutPage() {
         <section id="how-to-verify" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              index="012"
               eyebrow="HOW TO VERIFY"
               lines={["EACH CAPABILITY → ONE INSPECTABLE ARTIFACT."]}
               support="Every capability above maps to inspectable code or a written research entry. Don't take any of it on trust — read the entry, open the repository, or run the instrument and check the result yourself."
@@ -337,6 +332,28 @@ export default function AboutPage() {
             </Reveal>
           </div>
         </section>
+
+        {/* ---- IDENTITY FOOTER — TRUE END OF PAGE ----------------------- */}
+        <footer id="site-footer" className="relative z-10 mt-20 border-t border-line/60 bg-background/95 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:py-32 lg:px-20">
+            <div className="text-center">
+              <span className="label-mono text-[10px] text-signal/60">CN2.DEV</span>
+              <h2 className="display mt-3 text-[2.4rem] leading-[1.04] text-white md:text-4xl lg:text-5xl">
+                BUKYA NARESH
+              </h2>
+              <p className="label-mono mt-2 text-xs text-white/45">CN2.DEV · QUANTITATIVE DEVELOPER</p>
+              <a
+                href="/contact"
+                className="label-mono mt-8 inline-block border border-signal/70 bg-signal/10 px-4 py-2.5 text-[10px] text-white transition-colors duration-300 hover:bg-signal hover:text-white"
+              >
+                CONTACT ↗
+              </a>
+              <p className="label-mono mt-12 text-[10px] text-white/30">
+                c 2026 CN2.DEV — all systems self-engineered
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
