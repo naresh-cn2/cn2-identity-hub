@@ -93,7 +93,7 @@ export default function WorksPage() {
                 THE RESEARCH BEHIND THEM →
               </Link>
               <Link
-                href="/capabilities"
+                href="/about#capability-map"
                 className="label-mono border border-line-strong px-5 py-2.5 text-xs text-foreground transition-colors hover:border-signal hover:text-signal"
               >
                 WHAT I CAN CONTRIBUTE →

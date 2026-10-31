@@ -8,7 +8,13 @@ import ProcessChain from "@/components/about/process-chain";
 import PrinciplesEditorial from "@/components/about/principles-editorial";
 import VisionNetwork from "@/components/about/vision-network";
 import CollaborationPaths from "@/components/about/collaboration-paths";
+import CapabilityMap from "@/components/capabilities/capability-map";
+import TechStackMatrix from "@/components/capabilities/tech-stack-matrix";
+import KnowledgeGraph from "@/components/viz/knowledge-graph";
 import { aiStages, systemsStages } from "@/data/about";
+import { capabilities } from "@/data/capabilities";
+import { researchEntries } from "@/data/research";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -239,6 +245,96 @@ export default function AboutPage() {
               support="I am interested in opportunities to apply structured thinking, software, data, research, and intelligent automation to meaningful technical problems. Whatever the perspective, the first step is the same: understand the problem and determine whether there is a useful way to solve it."
             />
             <CollaborationPaths />
+          </div>
+        </section>
+
+        {/* ---- 09 · CAPABILITY MAP -------------------------------------- */}
+        <section id="capability-map" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              index="009"
+              eyebrow="CAPABILITY MAP"
+              lines={["DOMAINS, TECHNOLOGIES, AND EVIDENCE.", "EVERY CAPABILITY LINKS TO WORK YOU CAN OPEN."]}
+              support="Each card names a domain, the technologies involved, and the concrete project or written entry you can open — including the entries that remain open questions rather than settled results."
+            />
+            <Reveal className="mt-14">
+              <CapabilityMap capabilities={capabilities} researchTitles={Object.fromEntries(researchEntries.map((entry) => [entry.id, entry.title]))} />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---- 10 · TECH STACK & TOOLING -------------------------------- */}
+        <section id="tech-stack" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              index="010"
+              eyebrow="TECH STACK & TOOLING"
+              lines={["CATEGORIZED · PRODUCTION · SYSTEMS & RESEARCH."]}
+              support="Languages, cloud platforms, computational libraries, databases, and DevOps tooling deployed across research engines, trading architectures, and evidence-driven software systems."
+            />
+            <Reveal className="mt-14">
+              <TechStackMatrix />
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---- 11 · DOMAIN MAP ------------------------------------------ */}
+        <section id="domain-map" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              index="011"
+              eyebrow="DOMAIN MAP"
+              lines={["HOVER A NODE TO ISOLATE ITS RELATIONSHIPS."]}
+              support="The domains are not separate skills stacked on top of each other — research sits at the centre and every other domain is connected to it because that is how the work actually flows."
+            />
+            <Reveal className="mt-14">
+              <div className="mt-10">
+                <KnowledgeGraph />
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---- 12 · HOW TO VERIFY --------------------------------------- */}
+        <section id="how-to-verify" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              index="012"
+              eyebrow="HOW TO VERIFY"
+              lines={["EACH CAPABILITY → ONE INSPECTABLE ARTIFACT."]}
+              support="Every capability above maps to inspectable code or a written research entry. Don't take any of it on trust — read the entry, open the repository, or run the instrument and check the result yourself."
+            />
+            <div className="mt-12 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+              <Reveal key="works" delay={80} className="bg-background">
+                <Link href="/work" className="flex h-full items-baseline justify-between gap-4 p-6 transition-colors hover:bg-surface">
+                  <span className="label-mono text-xs text-foreground">WORK — ENGINEERING EVIDENCE</span>
+                  <span aria-hidden="true" className="label-mono text-signal">→</span>
+                </Link>
+              </Reveal>
+              <Reveal key="research" delay={160} className="bg-background">
+                <Link href="/research" className="flex h-full items-baseline justify-between gap-4 p-6 transition-colors hover:bg-surface">
+                  <span className="label-mono text-xs text-foreground">RESEARCH — WRITTEN ENTRIES</span>
+                  <span aria-hidden="true" className="label-mono text-signal">→</span>
+                </Link>
+              </Reveal>
+              <Reveal key="lab" delay={240} className="bg-background">
+                <Link href="/lab" className="flex h-full items-baseline justify-between gap-4 p-6 transition-colors hover:bg-surface">
+                  <span className="label-mono text-xs text-foreground">LAB — RUNNABLE INSTRUMENTS</span>
+                  <span aria-hidden="true" className="label-mono text-signal">→</span>
+                </Link>
+              </Reveal>
+              <Reveal key="github" delay={320} className="bg-background">
+                <a href={site.links.github} target="_blank" rel="noopener noreferrer" className="flex h-full items-baseline justify-between gap-4 p-6 transition-colors hover:bg-surface">
+                  <span className="label-mono text-xs text-foreground">GITHUB — ALL REPOSITORIES</span>
+                  <span aria-hidden="true" className="label-mono text-signal">↗</span>
+                </a>
+              </Reveal>
+            </div>
+            <Reveal delay={400}>
+              <p className="label-mono mt-8 text-[10px] leading-relaxed text-faint">
+                EVERY CAPABILITY ON THIS PAGE LINKS TO WORK YOU CAN OPEN, READ AND RUN.
+              </p>
+            </Reveal>
           </div>
         </section>
       </div>

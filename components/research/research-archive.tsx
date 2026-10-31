@@ -168,7 +168,7 @@ export default function ResearchArchive({ entries }: { entries: ResearchEntry[] 
                           {caps.map((cap, ci) => (
                             <span key={cap.id}>
                               {ci > 0 && <span className="text-faint"> · </span>}
-                              <Link href="/capabilities" className="link-line text-research">
+                              <Link href="/about#capability-map" className="link-line text-research">
                                 {cap.name}
                               </Link>
                             </span>

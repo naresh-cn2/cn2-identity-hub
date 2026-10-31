@@ -181,7 +181,7 @@ export default function CredentialsPage() {
               SEE THE PROJECTS →
             </Link>
             <Link
-              href="/capabilities"
+              href="/about#capability-map"
               className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
             >
               CAPABILITY MAP →
@@ -329,7 +329,7 @@ export default function CredentialsPage() {
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/capabilities"
+                  href="/about#capability-map"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   CAPABILITIES →

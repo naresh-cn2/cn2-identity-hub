@@ -296,7 +296,7 @@ export default function ResearchPage() {
                   ARTICLES →
                 </Link>
                 <Link
-                  href="/capabilities"
+                  href="/about#capability-map"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
                 >
                   CAPABILITIES →

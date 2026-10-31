@@ -35,7 +35,7 @@ const PATHWAYS = [
     status: "ACTIVE",
     evidence: [
       { label: "CV", href: "/cv" },
-      { label: "CAPABILITIES", href: "/capabilities" },
+      { label: "CAPABILITIES", href: "/about#capability-map" },
       { label: "WORK", href: "/work" },
     ] satisfies EvidenceLink[],
     icon: (
