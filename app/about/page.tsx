@@ -78,9 +78,14 @@ export default function AboutPage() {
       </div>
 
       {/* Atmospheric layer — technical grid, deep blue illumination,
-          restrained red horizon accent. Sits behind every section. */}
+          restrained red horizon accent. Sits behind every section.
+          Carries the motion-system depth: the layer drifts slowly against
+          the scroll and defocuses while the page is moving, so the whole
+          page reads as one deep, living space. */}
       <div
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden cn2-depth-layer cn2-diffuse"
+        data-cn2-depth=""
+        style={{ "--cn2-depth-k": 0.4 } as React.CSSProperties}
         aria-hidden="true"
       >
         <div className="absolute inset-0 grid-field opacity-70" />

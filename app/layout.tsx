@@ -8,6 +8,7 @@ import CommandPalette from "@/components/layout/command-palette";
 import PageTransition from "@/components/layout/page-transition";
 import SiteAmbience from "@/components/layout/site-ambience";
 import StageVFX from "@/components/cinematic/stage-vfx";
+import MotionEngine from "@/components/motion/motion-engine";
 import BackButton from "@/components/layout/back-button";
 import ScrollProgress from "@/components/layout/scroll-progress";
 import { site } from "@/data/site";
@@ -120,6 +121,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteAmbience />
           <StageVFX />
           <ScrollProgress />
+          <MotionEngine />
           <PageTransition>
             <main id="main">{children}</main>
           </PageTransition>

@@ -972,7 +972,7 @@ export default function StageVFX() {
     if (!motif) return null;
 
     return (
-        <div className="stage-layer" aria-hidden="true">
+        <div className="stage-layer cn2-diffuse" aria-hidden="true">
             <canvas ref={canvasRef} className="stage-canvas" />
         </div>
     );

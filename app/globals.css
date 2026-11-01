@@ -1653,7 +1653,9 @@ button.corner-ticks {
       transparent 36%,
       color-mix(in srgb, var(--electric) 14%, transparent) 68%,
       color-mix(in srgb, var(--holo) 8%, transparent) 86%);
-  animation: curtain-veil-fade 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation:
+    curtain-veil-fade 0.55s cubic-bezier(0.4, 0, 0.2, 1) both,
+    curtain-veil-defocus 0.62s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 /* kinetic headings — words rise out of a clipped mask, one after another */
@@ -1810,6 +1812,121 @@ button.corner-ticks {
   }
 }
 
+
+/* ---------------- CN2 motion system — depth, focus, storytelling ---------------- */
+
+/* Background parallax: the engine publishes --cn2-shift (px) on <html>;
+   each tagged layer scales it by its own --cn2-depth-k, so ambient
+   backgrounds drift slowly against the scrolling content — the distant,
+   blurred-feel depth of the about page, everywhere.
+   CONTRACT: decorative layers only — the transform makes this element the
+   containing block for position:fixed descendants. Never tag a wrapper
+   holding overlays or interactive chrome (fixed dialogs are portaled to
+   <body>, so they are unaffected). */
+[data-cn2-depth] {
+  transform: translate3d(0, calc(var(--cn2-shift, 0px) * var(--cn2-depth-k, 1)), 0);
+}
+
+/* Focus-blur: --cn2-v is the smoothed 0..1 scroll velocity. Tagged layers
+   defocus while the page is moving and settle sharp when it rests.
+   Background layers only — text and controls never blur. */
+[data-cn2-diffuse] {
+  filter: blur(calc(var(--cn2-v, 0) * 3.5px));
+}
+
+/* Oversize for the drifting root ambience layer: parallax travel never
+   exposes an edge, and its dissolve stays inside the viewport. Plain CSS
+   (unlayered) — deliberately overrides the Tailwind `inset-0` utilities. */
+.cn2-depth-layer {
+  top: -4vh;
+  bottom: -12vh;
+}
+
+/* Blur-to-sharp reveal — opt-in via <Reveal focus>. Enters defocused and
+   settles to `filter: none`, so no lingering containing block remains
+   (the certificate-lightbox lesson). */
+.reveal.reveal-focus {
+  filter: blur(7px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.reveal-focus.is-visible {
+  filter: none;
+}
+
+/* Route change: the defocus veil. The curtain-veil now also pulls the
+   outgoing frame out of focus and releases it as the new page lands, so
+   navigation reads as a focus pull rather than a cut. The veil is a fixed
+   leaf — nothing nested inside it, so backdrop-filter carries no
+   containing-block risk. */
+@keyframes curtain-veil-defocus {
+  from {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  to {
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Scroll storytelling — the sticky scene cross-fades between poses */
+.story-scene {
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.story-scene[data-live="false"] {
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.story-scene[data-live="true"] {
+  opacity: 1;
+  filter: none;
+}
+
+/* The system obeys its own accessibility rules: everything above is
+   neutralised under reduced motion and in print. */
+@media (prefers-reduced-motion: reduce) {
+  [data-cn2-depth] {
+    transform: none !important;
+  }
+
+  [data-cn2-diffuse] {
+    filter: none !important;
+  }
+
+  .reveal.reveal-focus {
+    filter: none;
+  }
+
+  .curtain-veil {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media print {
+  [data-cn2-depth] {
+    transform: none !important;
+  }
+
+  [data-cn2-diffuse] {
+    filter: none !important;
+  }
+
+  .reveal.reveal-focus {
+    filter: none !important;
+  }
+}
 
 /* ---------------- Sliced Stencil Brand Wordmark ---------------- */
 .cn2-sliced-wordmark {

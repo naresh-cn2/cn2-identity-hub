@@ -3,6 +3,7 @@ import KineticText from "@/components/ui/kinetic-text";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from '@/components/ui/page-atmosphere';
+import StorySteps from "@/components/motion/story-steps";
 import ResearchArchive from "@/components/research/research-archive";
 import GaussianManifold from "@/components/research/gaussian-manifold";
 import { MethodChainStrip } from "@/components/research/method-chain";
@@ -33,6 +34,109 @@ const METHOD = [
   "LIMITATION",
   "CONCLUSION",
 ] as const;
+
+const STEP_BODY: Record<(typeof METHOD)[number], string> = {
+  QUESTION:
+    "What edge, if any, can be reproduced from market structure rather than assumed? Every study here starts with a falsifiable question, not a preferred answer.",
+  HYPOTHESIS:
+    "A specific claim about how a variable behaves — stated before the data is touched, so it can fail honestly.",
+  METHOD:
+    "The dataset, the model, the controls — every step spelled out before seeing results, so nothing is tuned to the outcome.",
+  EVIDENCE:
+    "Reproduced artifacts, out-of-sample checks, and the numbers that back the claim — published alongside the work.",
+  RESULT:
+    "What the evidence actually showed, including findings that were null or contrary to the hypothesis.",
+  LIMITATION:
+    "Where the evidence stops and what it cannot say — stated first, not buried in a footnote.",
+  CONCLUSION:
+    "The takeaway, stated plainly, with its confidence and caveats, and a link to the system that produced it.",
+};
+
+/** Research story scene — one node per stage, the highlighted stage is lit. */
+function ResearchScene({ highlight }: { highlight: number }) {
+  return (
+    <svg
+      viewBox="0 0 700 320"
+      className="w-full max-w-[560px] mx-auto"
+      role="img"
+      aria-hidden="true"
+      style={{ opacity: 1 }}
+    >
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="var(--research)" />
+        </marker>
+      </defs>
+      {/* connecting spine fades with distance from active */}
+      <line
+        x1="120"
+        y1="160"
+        x2="580"
+        y2="160"
+        stroke="var(--line-strong)"
+        strokeWidth="1.5"
+        opacity="0.35"
+      />
+      {METHOD.map((step, i) => {
+        const x = 120 + (i * 460) / (METHOD.length - 1);
+        const isActive = i === highlight;
+        const isDone = i < highlight;
+        return (
+          <g key={step}>
+            <circle
+              cx={x}
+              cy="160"
+              r={isActive ? 11 : isDone ? 7 : 5}
+              fill={isActive ? "var(--signal)" : isDone ? "var(--research)" : "var(--muted)"}
+              opacity={isDone || isActive ? 1 : 0.45}
+              style={{ transition: "all 0.7s ease" }}
+            />
+            {i < METHOD.length - 1 && (
+              <line
+                x1={x + (isActive ? 11 : isDone ? 7 : 5)}
+                y1="160"
+                x2={x + (460 / (METHOD.length - 1)) - (isActive ? 11 : isDone ? 7 : 5)}
+                y2="160"
+                stroke={isActive || isDone ? "var(--research)" : "var(--line)"}
+                strokeWidth="2"
+                opacity={isActive || isDone ? 0.7 : 0.25}
+                marker-end="url(#arr)"
+              />
+            )}
+            <text
+              x={x}
+              y="190"
+              textAnchor="middle"
+              fontSize="10"
+              letterSpacing="0.12em"
+              fill={isActive ? "var(--foreground)" : isDone ? "var(--muted)" : "var(--faint)"}
+              style={{
+                fontFamily: "var(--font-mono)",
+                textTransform: "uppercase",
+                opacity: isActive || isDone ? 1 : 0.5,
+                transition: "all 0.7s ease",
+              }}
+            >
+              {step}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/** Compact mobile scene — one node at a time in the story stack. */
+function ResearchSceneMobile({ index, step }: { index: number; step: (typeof METHOD)[number] }) {
+  return (
+    <div className="flex items-center gap-3 text-muted label-mono mb-6">
+      <span className="h-8 w-8 rounded-full border border-line-strong flex items-center justify-center text-[10px]">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <span className="text-xs">{step}</span>
+    </div>
+  );
+}
 
 /** Research-method spine — the visual language of this page, distinct from every other section. */
 function MethodSpine() {
@@ -130,6 +234,28 @@ export default function ResearchPage() {
           </Reveal>
         </div>
       </header>
+
+      {/* ---- scroll-driven research story --------------------------------- */}
+      <section aria-label="Research process" className="border-b border-line py-16 md:py-24">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-8">
+          <StorySteps
+            steps={METHOD.map((step, i) => ({
+              id: `research-step-${step.toLowerCase()}`,
+              label: `STAGE ${String(i + 1).padStart(2, "0")}`,
+              title: step,
+              body: STEP_BODY[step],
+            }))}
+            scenes={METHOD.map((_, i) => (
+              <ResearchScene key={i} highlight={i} />
+            ))}
+            mobileScenes={METHOD.map((step, i) => (
+              <ResearchSceneMobile key={i} index={i} step={step} />
+            ))}
+            accent="var(--research)"
+            ariaLabel="Research process: question, hypothesis, method, evidence, result, limitation, conclusion"
+          />
+        </div>
+      </section>
 
       {/* ---- featured investigation ---- */}
       <section aria-label="Featured investigation" className="border-b border-line">

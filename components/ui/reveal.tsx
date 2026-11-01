@@ -8,6 +8,8 @@ interface RevealProps {
   delay?: number;
   clip?: boolean;
   id?: string;
+  /** Blur-to-sharp reveal — enters defocused, settles crisp. Foreground-only use. */
+  focus?: boolean;
 }
 
 /**
@@ -27,6 +29,7 @@ export default function Reveal({
   delay = 0,
   clip = false,
   id,
+  focus = false,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -85,7 +88,7 @@ export default function Reveal({
     <div
       id={id}
       ref={ref}
-      className={`${clip ? "reveal-clip" : "reveal"} ${className}`}
+      className={`${clip ? "reveal-clip" : "reveal"}${focus ? " reveal-focus" : ""} ${className}`}
       style={{ ["--reveal-delay" as string]: `${delay}ms` }}
     >
       {children}

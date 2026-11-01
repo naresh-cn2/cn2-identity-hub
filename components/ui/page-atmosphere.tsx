@@ -1435,6 +1435,8 @@ export default function PageAtmosphere({
         <canvas
             ref={canvasRef}
             aria-hidden="true"
+            data-cn2-depth=""
+            style={{ "--cn2-depth-k": 0.35 } as React.CSSProperties}
             className={`cn2-atmosphere pointer-events-none absolute inset-0 h-full w-full ${className}`}
         />
     );

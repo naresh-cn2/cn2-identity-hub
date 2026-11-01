@@ -54,7 +54,12 @@ export default function SiteAmbience() {
     if (!variant) return null;
 
     return (
-        <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
+        <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 -z-10 cn2-depth-layer cn2-diffuse"
+            data-cn2-depth=""
+            style={{ "--cn2-depth-k": 0.55 } as React.CSSProperties}
+        >
             <PageAtmosphere variant={variant} intensity={1} className="cn2-atmosphere-plain" />
         </div>
     );
