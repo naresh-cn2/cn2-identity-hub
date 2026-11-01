@@ -805,19 +805,14 @@ function ResearchScene({ highlight, isStickySlot }: { highlight: number; isStick
   );
 }
 
-/** Compact mobile scene — shows the stage indicator and the diagram inline. */
+/** Compact mobile scene — one node at a time in the story stack, hidden on desktop. */
 function ResearchSceneMobile({ index, step }: { index: number; step: (typeof METHOD)[number] }) {
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-3 text-muted label-mono mb-3">
-        <span className="h-7 w-7 rounded-full border border-research text-research flex items-center justify-center text-[10px]">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span className="text-xs text-foreground tracking-widest">{step}</span>
-      </div>
-      <div className="viz-frame p-3">
-        <ResearchScene highlight={index} />
-      </div>
+    <div className="flex items-center gap-3 text-muted label-mono mb-6 lg:hidden">
+      <span className="h-8 w-8 rounded-full border border-line-strong flex items-center justify-center text-[10px]">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <span className="text-xs">{step}</span>
     </div>
   );
 }
