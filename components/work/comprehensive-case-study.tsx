@@ -376,15 +376,27 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                   </div>
                   <p className="mt-3 text-xs leading-relaxed text-muted font-mono">{vis.caption}</p>
                   {src ? (
-                    <div className="mt-6 flex max-h-[440px] items-center justify-center overflow-hidden rounded border border-line bg-background/50 p-2">
-                      <Image
-                        src={src}
-                        alt={vis.title}
-                        width={800}
-                        height={420}
-                        className="max-h-[420px] w-auto max-w-full object-contain"
-                        unoptimized
-                      />
+                    <div className="mt-6 space-y-3">
+                      <div className="flex max-h-[480px] items-center justify-center overflow-hidden rounded border border-line bg-background/50 p-4 transition-colors hover:border-signal/50">
+                        <Image
+                          src={src}
+                          alt={vis.title}
+                          width={800}
+                          height={420}
+                          className="max-h-[440px] w-auto max-w-full object-contain shadow-lg"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <a
+                          href={src}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="label-mono text-[10px] text-research hover:underline inline-flex items-center gap-1"
+                        >
+                          OPEN FULL-RESOLUTION ARTIFACT ↗
+                        </a>
+                      </div>
                     </div>
                   ) : (
                     <div className="mt-6 flex h-48 items-center justify-center border border-dashed border-line bg-background/50 text-xs font-mono text-faint">

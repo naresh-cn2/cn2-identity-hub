@@ -182,14 +182,132 @@ export const bustubEngineItem: ComprehensiveWorkItem = {
     "Deterministic deadlock resolution breaking waits-for cycles with youngest-transaction abort semantics.",
   ],
   screenshotsAndVisuals: [
-    { title: "Four-Pillar Database Architecture", type: "diagram", caption: "Storage Engine, Concurrent B+ Tree Index, Volcano Query Pipeline, and Multi-Granularity Lock Manager." },
-    { title: "Terminal Verification & Sanitizer Proof", type: "schematic", caption: "Automated test execution telemetry under Clang-14 and AddressSanitizer." },
+    {
+      title: "Terminal Verification & Sanitizer Proof",
+      type: "schematic",
+      caption: "Automated test execution telemetry under Clang-14 and AddressSanitizer (56/56 passing suites).",
+      src: "/works/bustub/assets/terminal_verification_card.svg",
+    },
+    {
+      title: "P1: Storage Engine & Buffer Pool Manager",
+      type: "diagram",
+      caption: "LRU-K backward K-distance eviction and DiskScheduler asynchronous page fetching.",
+      src: "/works/bustub/assets/project_card_p1.svg",
+    },
+    {
+      title: "P2: Concurrent Latch-Crabbing B+ Tree Index",
+      type: "diagram",
+      caption: "Multi-threaded balanced tree indexing with optimistic read/write latch crabbing.",
+      src: "/works/bustub/assets/project_card_p2.svg",
+    },
+    {
+      title: "P3: Volcano Query Execution & Rule Optimizer",
+      type: "diagram",
+      caption: "Streaming pull-based iterator pipeline with join and aggregate physical execution.",
+      src: "/works/bustub/assets/project_card_p3.svg",
+    },
+    {
+      title: "P4: Multi-Granularity 2PL & Deadlock Detection",
+      type: "diagram",
+      caption: "Hierarchical locking with background DFS waits-for graph cycle detection.",
+      src: "/works/bustub/assets/project_card_p4.svg",
+    },
   ],
   linksList: [
     { label: "ARCHITECTURE CASE STUDY", href: "/case-studies/bustub-engine", type: "docs" },
     { label: "VERIFICATION & TELEMETRY PROOF", href: "/works/bustub/WORK_PROOF.md", type: "paper" },
     { label: "PRIVATE REPOSITORY (CMU COMPLIANT)", href: "https://github.com/naresh-cn2/bustub-engine", type: "github" },
   ],
+  detail: {
+    problem: [
+      "A relational database engine must coordinate buffer management, indexing, query execution, and concurrency control under strict memory-safety and high-concurrency constraints — any flaw in one layer cascades through the entire system.",
+      "Bridging the semantic gap between raw, page-oriented block storage (4 KB disk pages) and low-latency, multi-threaded transactional SQL queries without corrupting memory, leaking page frames, or deadlocking worker threads.",
+      "Designing high-concurrency index structures where concurrent node splits and merges do not introduce root-level latch contention or thread starvation.",
+      "Transforming unoptimized declarative relational plans into sub-quadratic physical operator trees that execute streaming iterators without materialization overhead.",
+    ],
+    approach: [
+      "Built each subsystem as an independently verifiable module with authentic commit hashes and test telemetry, then integrated them through a shared Transaction/ExecutionContext boundary.",
+      "Applied latch crabbing for B+ Tree concurrency, strict multi-granularity 2PL for transaction isolation, and autonomous DFS deadlock detection — each backed by dedicated test suites.",
+      "Validated memory safety with AddressSanitizer and UndefinedBehaviorSanitizer across all 56 test suites, with clang-tidy and Google C++ style compliance.",
+    ],
+    architecture: [
+      {
+        name: "P1: STORAGE ENGINE & BUFFER POOL",
+        role: "Page-level buffer management with LRU-K eviction & async disk I/O",
+        detail: [
+          "Backward K-distance history tracking (O(1) lookup)",
+          "Pin-count reference tracking & dirty-bit persistence",
+          "DiskScheduler with std::promise/std::future asynchronous worker queue",
+        ],
+      },
+      {
+        name: "P2: CONCURRENT B+ TREE INDEX",
+        role: "Dynamic B+ Tree with optimistic latch crabbing",
+        detail: [
+          "Split, coalesce, and borrow rebalancing across internal and leaf nodes",
+          "Optimistic read/write latch crabbing with early safe-ancestor unlock",
+          "Thread-safe forward iterators across leaf pages",
+        ],
+      },
+      {
+        name: "P3: VOLCANO EXECUTION ENGINE",
+        role: "Pull-based iterator pipeline with streaming tuple flow",
+        detail: [
+          "Init() / Next() iterators: SeqScan, IndexScan, Insert, Update, Delete",
+          "In-memory Grace HashJoin, NestedLoopJoin, Aggregation, and TopN executors",
+          "Filter predicate evaluation & tuple reconstruction",
+        ],
+      },
+      {
+        name: "P3: COST & RULE-BASED OPTIMIZER",
+        role: "Logical-to-physical AST plan transformation",
+        detail: [
+          "NLJAsHashJoin: rewrites equi-joins to O(N) hash join pipelines",
+          "SortLimitAsTopN: fuses Sort + Limit into bounded-heap O(N log K) TopN",
+          "Predicate pushdown into B+ Tree IndexScan executors",
+        ],
+      },
+      {
+        name: "P4: MULTI-GRANULARITY 2PL & DEADLOCK",
+        role: "Transaction isolation with autonomous deadlock resolution",
+        detail: [
+          "5 lock modes (IS, IX, S, SIX, X) with compatibility matrix enforcement",
+          "Strict 2PL state transitions: GROWING -> SHRINKING with prioritized upgrades",
+          "Background DFS waits-for graph cycle detection aborting youngest transactions",
+        ],
+      },
+    ],
+    results: [
+      "P1: 11 / 11 test suites passed — LRU-K replacer, disk scheduler, buffer pool manager (including ContentionTest and DeadlockTest in 39.41s).",
+      "P2: 6 / 6 concurrent stress tests passed in 2.58s with multi-threaded latch crabbing.",
+      "P3: 21 / 21 SQLLogicTest suites passed cleanly (p3.01-seqscan through p3.20-window-function).",
+      "P4: 11 / 11 concurrency suites passed — lock manager, deadlock detection, and transaction integration.",
+      "Sanitizers: 0 leaks, 0 errors, 0 races under AddressSanitizer (detect_leaks=1, strict_init_order=1) and UndefinedBehaviorSanitizer.",
+    ],
+    limitations: [
+      "Implementation source is private under CMU 15-445/645 academic integrity compliance — read-only reviewer access available to hiring teams upon request.",
+      "Currently operates with fixed 4 KB disk pages without variable-length compressed columnar storage.",
+      "Deadlock detection runs periodically via a background daemon thread rather than synchronously at lock timeout.",
+    ],
+    testing: [
+      "P1: LRUKReplacerTest, DiskSchedulerTest, BufferPoolManagerTest (including ContentionTest and DeadlockTest).",
+      "P2: BPlusTreeConcurrentTest (InsertTest1/2, DeleteTest1/2, MixTest1/2) with 6 multi-threaded concurrent test suites.",
+      "P3: 21 SQLLogicTest suites (p3.01 through p3.20) covering complex aggregations, hash joins, and window functions.",
+      "P4: LockManagerTest (TableLock, RowLock, TwoPL, Upgrades), DeadlockDetectionTest, CommitAbortTest, VisibilityTest, IsolationLevelTest.",
+      "Sanitizer validation: AddressSanitizer and UndefinedBehaviorSanitizer clean exit across all 56 binaries.",
+    ],
+    artifacts: [
+      "WORK_PROOF.md: Complete milestone commit hashes, terminal test logs, and sanitizer proofs.",
+      "Telemetry logs: p1_bpm_tests.log, p2_b_plus_tree_tests.log, p3_execution_optimizer_tests.log, p4_concurrency_tests.log, sanitizer_verification.log.",
+      "Visual assets: Four-pillar architecture diagrams, milestone SVG cards, and terminal verification card.",
+      "Commit provenance: fc821a8 (P1), 19275ad (P2), a56e622 (P3), 0ce5626 (P4).",
+    ],
+    currentState: [
+      "All four CMU 15-445/645 milestones fully implemented and 100% verified.",
+      "Full architectural documentation, execution telemetry logs, and sanitizer proofs are publicly accessible.",
+      "Source hosted in private repository (github.com/naresh-cn2/bustub-engine) under CMU academic integrity compliance.",
+    ],
+  },
 };
 
 export const strataEngineItem: ComprehensiveWorkItem = {
@@ -1273,9 +1391,11 @@ export const openVerseItem: ComprehensiveWorkItem = {
 export const ALL_WORKS: ComprehensiveWorkItem[] = [
   bustubEngineItem,
   strataEngineItem,
-  ...archiveProjects.map((p) => {
-    return enrichArchiveProject(p);
-  }),
+  ...archiveProjects
+    .filter((p) => p.id !== "bustub-engine" && p.id !== "strata-engine")
+    .map((p) => {
+      return enrichArchiveProject(p);
+    }),
   systemsKernelItem,
   sentimentStreamItem,
   cn2IdentityHubItem,
