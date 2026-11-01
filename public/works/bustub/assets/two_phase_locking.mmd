@@ -1,0 +1,52 @@
+```mermaid
+stateDiagram-v2
+    direction LR
+
+    [*] --> GROWING : Transaction Begin
+
+    state GROWING {
+        [*] --> CanAcquireLocks
+        CanAcquireLocks : Locks can be freely acquired or upgraded
+        CanAcquireLocks : IS, IX, S, SIX, X (Per Isolation Level)
+    }
+
+    GROWING --> SHRINKING : First Lock Release (Unlock)
+    GROWING --> COMMITTED : Commit (Direct if Strict 2PL)
+    GROWING --> ABORTED : Abort / Deadlock Detection Victim
+
+    state SHRINKING {
+        [*] --> OnlyRelease
+        OnlyRelease : Locks can only be released
+        OnlyRelease : NO new locks or upgrades permitted
+        OnlyRelease : Acquiring locks in SHRINKING -> LOCK_ON_SHRINKING exception
+    }
+
+    SHRINKING --> COMMITTED : All Locks Released on Commit
+    SHRINKING --> ABORTED : Abort on Transaction Failure
+
+    state "Isolation Level Rules" as IsoRules {
+        state "REPEATABLE_READ" as RR {
+            RR_Rule : Acquire all S/X locks in GROWING
+            RR_Rule : Release all locks strictly on COMMIT/ABORT
+        }
+        state "READ_COMMITTED" as RC {
+            RC_Rule : Acquire S locks as needed in GROWING
+            RC_Rule : S locks released immediately after read
+            RC_Rule : Txn remains in GROWING despite early S unlock
+            RC_Rule : X locks held until COMMIT/ABORT
+        }
+        state "READ_UNCOMMITTED" as RU {
+            RU_Rule : No S locks acquired (Dirty reads allowed)
+            RU_Rule : Only X / IX locks acquired
+            RU_Rule : Attempt to take S lock -> LOCK_SHARED_ON_READ_UNCOMMITTED
+        }
+    }
+
+    state "Lock Mode Compatibility Matrix" as Matrix {
+        IS_Mode : IS Compatible with IS, IX, S, SIX
+        IX_Mode : IX Compatible with IS, IX
+        S_Mode : S Compatible with IS, S
+        SIX_Mode : SIX Compatible with IS
+        X_Mode : X Incompatible with ALL
+    }
+```

@@ -1,0 +1,79 @@
+```mermaid
+flowchart TD
+    subgraph Frontend ["1. Frontend & Query Ingestion"]
+        SQL["SQL Query Text\n(e.g., SELECT ... FROM t1 JOIN t2 ...)"]
+        Parser["libpg_query Parser\n(AST Generation)"]
+        Binder["BusTub Binder\n(Schema Binding & Type Resolution)"]
+        BoundAST["Bound AST / Abstract Plan"]
+    end
+
+    subgraph Optimizer ["2. Cost & Rule-Based Query Optimizer"]
+        Planner["Logical Planner\n(Abstract Expression Tree)"]
+        OptEngine["Rule-Based Optimizer Engine"]
+        Rule1["NLJ -> HashJoin Rule"]
+        Rule2["SeqScan -> IndexScan Rule"]
+        Rule3["Sort + Limit -> TopN Rule"]
+        OptPlan["Physical Execution Plan Tree"]
+    end
+
+    subgraph Execution ["3. Volcano Iterator Execution Engine"]
+        ExecEngine["ExecutionEngine::Execute()"]
+        ExecContext["ExecutionContext\n(Txn, Catalog, BPM, LockMgr)"]
+        PlanRoot["Root Executor (e.g. Projection / TopN)"]
+        PlanChild1["Join Executor (HashJoin / NestedLoopJoin)"]
+        PlanChild2["Scan / Index Executor (SeqScan / IndexScan)"]
+    end
+
+    subgraph Concurrency ["4. Concurrency Control & Transaction Engine"]
+        TxnManager["TransactionManager\n(Begin, Commit, Abort)"]
+        LockManager["LockManager\n(Table & Row Multi-Granularity 2PL)"]
+        DeadlockDetector["Cycle Detection Thread\n(Waits-For Graph DFS)"]
+    end
+
+    subgraph Storage ["5. Storage Engine & Memory Hierarchy"]
+        Catalog["Catalog\n(Tables, Schemas, Indexes)"]
+        TableHeap["TableHeap & Slotted Pages\n(Tuple Storage & RIDs)"]
+        BPlusTree["B+ Tree Index\n(Internal & Leaf Pages)"]
+        BPM["BufferPoolManager\n(Page Frame Eviction & Pinning)"]
+        DiskScheduler["DiskScheduler & DiskManager\n(Asynchronous Block I/O)"]
+        StorageDisk[("Persistent Storage on Disk\n(.bustub Database File)")]
+    end
+
+    SQL --> Parser
+    Parser --> Binder
+    Binder --> BoundAST
+    BoundAST --> Planner
+    Planner --> OptEngine
+    OptEngine -.-> Rule1
+    OptEngine -.-> Rule2
+    OptEngine -.-> Rule3
+    Rule1 & Rule2 & Rule3 --> OptPlan
+
+    OptPlan --> ExecEngine
+    ExecEngine --> ExecContext
+    ExecContext --> PlanRoot
+    PlanRoot --> PlanChild1
+    PlanChild1 --> PlanChild2
+
+    PlanChild2 <--> LockManager
+    LockManager <--> TxnManager
+    LockManager -. Monitored by .-> DeadlockDetector
+
+    PlanChild2 <--> TableHeap
+    PlanChild2 <--> BPlusTree
+    TableHeap & BPlusTree <--> BPM
+    BPM <--> DiskScheduler
+    DiskScheduler <--> StorageDisk
+
+    classDef primary fill:#2563eb,stroke:#1d4ed8,stroke-width:2px,color:#fff;
+    classDef secondary fill:#059669,stroke:#047857,stroke-width:2px,color:#fff;
+    classDef accent fill:#7c3aed,stroke:#6d28d9,stroke-width:2px,color:#fff;
+    classDef storage fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff;
+    classDef warn fill:#dc2626,stroke:#b91c1c,stroke-width:2px,color:#fff;
+
+    class SQL,Parser,Binder,BoundAST primary;
+    class Planner,OptEngine,Rule1,Rule2,Rule3,OptPlan secondary;
+    class ExecEngine,ExecContext,PlanRoot,PlanChild1,PlanChild2 accent;
+    class TxnManager,LockManager,DeadlockDetector warn;
+    class Catalog,TableHeap,BPlusTree,BPM,DiskScheduler,StorageDisk storage;
+```

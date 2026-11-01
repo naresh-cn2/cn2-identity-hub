@@ -1,0 +1,186 @@
+================================================================================
+ADDRESSSANITIZER (ASAN) & UNDEFINEDBEHAVIORSANITIZER (UBSAN) VERIFICATION
+Zero Leaks, Zero Memory Corruption, Zero Data Races
+Timestamp: Sun Nov  1 10:15:45 UTC 2026
+================================================================================
+
+>>> Executing P4 Lock Manager with ASan Active:
+Running main() from gmock_main.cc
+[==========] Running 5 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 5 tests from LockManagerTest
+[ RUN      ] LockManagerTest.TableLockTest1
+[       OK ] LockManagerTest.TableLockTest1 (7 ms)
+[ RUN      ] LockManagerTest.TableLockUpgradeTest1
+[       OK ] LockManagerTest.TableLockUpgradeTest1 (0 ms)
+[ RUN      ] LockManagerTest.RowLockTest1
+[       OK ] LockManagerTest.RowLockTest1 (1 ms)
+[ RUN      ] LockManagerTest.TwoPLTest1
+[       OK ] LockManagerTest.TwoPLTest1 (2 ms)
+[ RUN      ] LockManagerTest.RowAbortTest1
+AbortTest1: multiple X should block
+[       OK ] LockManagerTest.RowAbortTest1 (103 ms)
+[----------] 5 tests from LockManagerTest (118 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 1 test suite ran. (122 ms total)
+[  PASSED  ] 5 tests.
+
+>>> Executing P4 Deadlock Detection with ASan Active:
+Running main() from gmock_main.cc
+[==========] Running 2 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 2 tests from LockManagerDeadlockDetectionTest
+[ RUN      ] LockManagerDeadlockDetectionTest.EdgeTest
+[       OK ] LockManagerDeadlockDetectionTest.EdgeTest (4 ms)
+[ RUN      ] LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest
+[       OK ] LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest (202 ms)
+[----------] 2 tests from LockManagerDeadlockDetectionTest (210 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test suite ran. (212 ms total)
+[  PASSED  ] 2 tests.
+
+>>> Executing P4 Transaction Integration with ASan Active:
+Running main() from gmock_main.cc
+[==========] Running 4 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from CommitAbortTest
+[ RUN      ] CommitAbortTest.CommitTestA
+--- TEST CASE CommitTest1 ---
+prepare
+Table created with id = 0	
+6	
+start txn 2 in READ_UNCOMMITTED
+insert data with v1 = 1 in txn 2 READ_UNCOMMITTED
+commit txn 2 in READ_UNCOMMITTED
+start txn 3 in READ_UNCOMMITTED
+scan data expect v1 in range [1, 233, 234] in txn 3 READ_UNCOMMITTED
+pass check
+commit txn 3 in READ_UNCOMMITTED
+[       OK ] CommitAbortTest.CommitTestA (73 ms)
+[----------] 1 test from CommitAbortTest (75 ms total)
+
+[----------] 1 test from VisibilityTest
+[ RUN      ] VisibilityTest.TestA
+--- TEST CASE Test1 ---
+prepare
+Table created with id = 0	
+6	
+start txn 2 in READ_COMMITTED
+delete data with v1 = 233 in txn 2 READ_COMMITTED
+commit txn 2 in READ_COMMITTED
+start txn 3 in READ_COMMITTED
+scan data expect v1 in range [234] in txn 3 READ_COMMITTED
+pass check
+commit txn 3 in READ_COMMITTED
+[       OK ] VisibilityTest.TestA (54 ms)
+[----------] 1 test from VisibilityTest (55 ms total)
+
+[----------] 2 tests from IsolationLevelTest
+[ RUN      ] IsolationLevelTest.InsertTestA
+--- InsertTestA.1 ---
+0: prepare
+0.1: create table
+Table created with id = 0	
+0.2: insert initial value
+6	
+1: read txn: READ_UNCOMMITTED
+2: write txn: READ_UNCOMMITTED
+2.1: insert new values
+3	
+2.2: X locks
+4: wait for result
+3: read txn read
+3.1: read values
+3.2: R locks
+3.3: read done
+pass check
+5: test reaches the end
+
+
+table: 0 page_id: 0 slot_num: 8
+table: 0 page_id: 0 slot_num: 7
+table: 0 page_id: 0 slot_num: 6
+[       OK ] IsolationLevelTest.InsertTestA (55 ms)
+[ RUN      ] IsolationLevelTest.DeleteTestA
+--- DeleteTestA.1 ---
+0: prepare
+0.1: create table
+Table created with id = 0	
+0.2: insert initial value
+6	
+1: read txn: READ_COMMITTED
+2: write txn: READ_UNCOMMITTED
+2.1: delete v1 = 2
+3	
+2.2: X locks
+4: wait for result
+3: read txn read
+3.1: read values
+3.2: R locks
+3.3: read done
+5: test reaches the end
+
+
+table: 0 page_id: 0 slot_num: 5
+table: 0 page_id: 0 slot_num: 4
+table: 0 page_id: 0 slot_num: 3
+[       OK ] IsolationLevelTest.DeleteTestA (1063 ms)
+[----------] 2 tests from IsolationLevelTest (1121 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 3 test suites ran. (1260 ms total)
+[  PASSED  ] 4 tests.
+
+>>> Executing P2 B+ Tree Concurrent Tests with ASan Active:
+Running main() from gmock_main.cc
+[==========] Running 6 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 6 tests from BPlusTreeConcurrentTest
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_InsertTest1
+[       OK ] BPlusTreeConcurrentTest.DISABLED_InsertTest1 (11152 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_InsertTest2
+[       OK ] BPlusTreeConcurrentTest.DISABLED_InsertTest2 (55358 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_DeleteTest1
+[       OK ] BPlusTreeConcurrentTest.DISABLED_DeleteTest1 (531 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_DeleteTest2
+[       OK ] BPlusTreeConcurrentTest.DISABLED_DeleteTest2 (826 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_MixTest1
+[       OK ] BPlusTreeConcurrentTest.DISABLED_MixTest1 (64131 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_MixTest2
+[       OK ] BPlusTreeConcurrentTest.DISABLED_MixTest2 (8705 ms)
+[----------] 6 tests from BPlusTreeConcurrentTest (140710 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test suite ran. (140715 ms total)
+[  PASSED  ] 6 tests.
+
+>>> Executing P1 Buffer Pool Manager with ASan Active:
+Running main() from gmock_main.cc
+[==========] Running 7 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 7 tests from BufferPoolManagerTest
+[ RUN      ] BufferPoolManagerTest.VeryBasicTest
+[       OK ] BufferPoolManagerTest.VeryBasicTest (24 ms)
+[ RUN      ] BufferPoolManagerTest.PagePinEasyTest
+[       OK ] BufferPoolManagerTest.PagePinEasyTest (26 ms)
+[ RUN      ] BufferPoolManagerTest.PagePinMediumTest
+[       OK ] BufferPoolManagerTest.PagePinMediumTest (40 ms)
+[ RUN      ] BufferPoolManagerTest.PageAccessTest
+[       OK ] BufferPoolManagerTest.PageAccessTest (1046 ms)
+[ RUN      ] BufferPoolManagerTest.ContentionTest
+[       OK ] BufferPoolManagerTest.ContentionTest (3811 ms)
+[ RUN      ] BufferPoolManagerTest.DeadlockTest
+[       OK ] BufferPoolManagerTest.DeadlockTest (1036 ms)
+[ RUN      ] BufferPoolManagerTest.EvictableTest
+[       OK ] BufferPoolManagerTest.EvictableTest (5167 ms)
+[----------] 7 tests from BufferPoolManagerTest (11164 ms total)
+
+[----------] Global test environment tear-down
+[==========] 7 tests from 1 test suite ran. (11170 ms total)
+[  PASSED  ] 7 tests.
+
+================================================================================
+ALL SANITIZER CHECKS VERIFIED: 0 LEAKS, 0 ERRORS.
+================================================================================

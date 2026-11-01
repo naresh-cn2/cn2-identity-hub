@@ -1,0 +1,57 @@
+================================================================================
+PROJECT 2: B+ TREE DATA STRUCTURE & CONCURRENCY CONTROL
+CTest & GTest Verbose Execution Log
+Timestamp: Sun Nov  1 10:10:46 UTC 2026
+================================================================================
+
+>>> Running CTest with GTEST_ALSO_RUN_DISABLED_TESTS=1:
+UpdateCTestConfiguration  from :/mnt/c/Users/nares/Workspace/bustub/build/DartConfiguration.tcl
+Test project /mnt/c/Users/nares/Workspace/bustub/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 43
+    Start 43: BPlusTreeConcurrentTest.InsertTest1
+1/6 Test #43: BPlusTreeConcurrentTest.InsertTest1 ...***Not Run (Disabled)   0.00 sec
+test 44
+    Start 44: BPlusTreeConcurrentTest.InsertTest2
+2/6 Test #44: BPlusTreeConcurrentTest.InsertTest2 ...***Not Run (Disabled)   0.00 sec
+test 45
+    Start 45: BPlusTreeConcurrentTest.DeleteTest1
+3/6 Test #45: BPlusTreeConcurrentTest.DeleteTest1 ...***Not Run (Disabled)   0.00 sec
+test 46
+    Start 46: BPlusTreeConcurrentTest.DeleteTest2
+4/6 Test #46: BPlusTreeConcurrentTest.DeleteTest2 ...***Not Run (Disabled)   0.00 sec
+test 47
+    Start 47: BPlusTreeConcurrentTest.MixTest1
+5/6 Test #47: BPlusTreeConcurrentTest.MixTest1 ......***Not Run (Disabled)   0.00 sec
+test 48
+    Start 48: BPlusTreeConcurrentTest.MixTest2
+6/6 Test #48: BPlusTreeConcurrentTest.MixTest2 ......***Not Run (Disabled)   0.00 sec
+No tests were found!!!
+
+>>> Direct Binary Execution with --gtest_also_run_disabled_tests:
+Running main() from gmock_main.cc
+[==========] Running 6 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 6 tests from BPlusTreeConcurrentTest
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_InsertTest1
+[       OK ] BPlusTreeConcurrentTest.DISABLED_InsertTest1 (11204 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_InsertTest2
+[       OK ] BPlusTreeConcurrentTest.DISABLED_InsertTest2 (60036 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_DeleteTest1
+[       OK ] BPlusTreeConcurrentTest.DISABLED_DeleteTest1 (664 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_DeleteTest2
+[       OK ] BPlusTreeConcurrentTest.DISABLED_DeleteTest2 (813 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_MixTest1
+[       OK ] BPlusTreeConcurrentTest.DISABLED_MixTest1 (65582 ms)
+[ RUN      ] BPlusTreeConcurrentTest.DISABLED_MixTest2
+[       OK ] BPlusTreeConcurrentTest.DISABLED_MixTest2 (8160 ms)
+[----------] 6 tests from BPlusTreeConcurrentTest (146470 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test suite ran. (146475 ms total)
+[  PASSED  ] 6 tests.

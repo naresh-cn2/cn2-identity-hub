@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="150" viewBox="0 0 660 150" fill="none">
+  <defs>
+    <linearGradient id="p1-bg" x1="0" y1="0" x2="660" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="p1-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="660" height="150" rx="10" fill="url(#p1-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="6" height="150" rx="3" fill="url(#p1-accent)"/>
+
+  <!-- Badge / Tag -->
+  <rect x="24" y="18" width="80" height="22" rx="4" fill="#1e3a8a" fill-opacity="0.4" stroke="#2563eb" stroke-width="1"/>
+  <text x="34" y="33" fill="#93c5fd" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600">PROJECT 1</text>
+
+  <!-- Title -->
+  <text x="116" y="34" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">Buffer Pool Storage Engine</text>
+
+  <!-- Description -->
+  <text x="24" y="65" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="400">
+    LRU-K Eviction Replacer (O(1) Backward Distance) • Asynchronous DiskScheduler •
+  </text>
+  <text x="24" y="85" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="400">
+    Thread-safe BufferPoolManager with slotted page frame caching and zero data races.
+  </text>
+
+  <!-- Metrics row -->
+  <line x1="24" y1="104" x2="636" y2="104" stroke="#1f2937" stroke-width="1"/>
+
+  <g transform="translate(24, 114)">
+    <!-- Metric 1 -->
+    <text x="0" y="16" fill="#10b981" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">✓ 11/11</text>
+    <text x="56" y="16" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5">Tests Passed</text>
+
+    <!-- Metric 2 -->
+    <text x="175" y="16" fill="#38bdf8" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">ASan / UBSan</text>
+    <text x="270" y="16" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5">0 Leaks Clean</text>
+
+    <!-- Metric 3 -->
+    <text x="430" y="16" fill="#a855f7" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">fc821a8</text>
+    <text x="490" y="16" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5">Verified Commit</text>
+  </g>
+</svg>

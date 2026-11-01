@@ -97,6 +97,7 @@ export interface ArchiveProject {
 }
 
 const FLAGSHIP_TAGS: Record<string, ArchiveCategory[]> = {
+  "bustub-engine": ["SYSTEMS", "ENGINEERING", "C++20"],
   "apex-quant-engine": ["QUANT", "RESEARCH"],
   "automated-trading-os": ["QUANT", "ENGINEERING"],
   "market-data-replay": ["DATA", "ENGINEERING"],
@@ -104,6 +105,7 @@ const FLAGSHIP_TAGS: Record<string, ArchiveCategory[]> = {
 };
 
 const FLAGSHIP_EVIDENCE: Record<string, string> = {
+  "bustub-engine": "TEST SUITE · 56/56 VERIFIED · ASAN CLEAN",
   "apex-quant-engine": "BACKTEST · SIMULATION",
   "automated-trading-os": "PAPER · STRUCTURAL TEST",
   "market-data-replay": "TEST SUITE · DETERMINISM",

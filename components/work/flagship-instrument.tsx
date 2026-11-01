@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { FlagshipProject } from "@/data/projects";
 import { EquitySurface, PipelineFlow, RegimeMap } from "@/components/viz/quant-primitives";
 import ReplayLab from "@/components/research/replay-lab";
@@ -55,6 +56,19 @@ const QRSIP_REGIMES: Array<{
   { name: "FAILED GATE", x: 0.8, y: 0.2, color: "var(--chart-axis)", size: 0.4, description: "Did not meet promotion criteria" },
 ];
 
+const BUSTUB_STAGES: Array<{
+  name: string;
+  role: string;
+  detail?: string[];
+  color?: "signal" | "faint" | "foreground";
+}> = [
+  { name: "P1: DISK & BUFFER POOL", role: "Page-level frame hierarchy & async I/O", detail: ["4096-byte disk pages", "LRU-K backward K-dist", "Dirty frame persistence"], color: "signal" },
+  { name: "P2: CONCURRENT B+ TREE", role: "Dynamic index & latch crabbing protocol", detail: ["Optimistic read crabbing", "Pessimistic write crabbing", "Lock-free leaf scans"], color: "foreground" },
+  { name: "P3: VOLCANO EXECUTION", role: "Iterator pull model (Init/Next pipeline)", detail: ["SeqScan & IndexScan", "Grace HashJoin", "Aggregation & TopN"], color: "foreground" },
+  { name: "P3: QUERY OPTIMIZER", role: "Rule-based & heuristic plan transformation", detail: ["Equi-join to HashJoin", "Sort+Limit to TopN heap", "Predicate pushdown"], color: "foreground" },
+  { name: "P4: 2PL CONCURRENCY", role: "Multi-granularity table/row locking", detail: ["5 Modes: IS, IX, S, SIX, X", "Strict 2PL state machine", "Wait-for DFS cycle detector"], color: "signal" },
+];
+
 function Frame({
   label,
   note,
@@ -77,6 +91,39 @@ function Frame({
 
 export default function FlagshipInstrument({ project }: { project: FlagshipProject }) {
   switch (project.id) {
+    case "bustub-engine":
+      return (
+        <Frame
+          label="INSTRUMENT / 4-PILLAR RELATIONAL DATABASE SUBSYSTEMS"
+          note="ARCHITECTURAL INVARIANTS & CONCURRENCY PROTOCOLS"
+        >
+          <PipelineFlow stages={BUSTUB_STAGES} flowDirection="vertical" animated />
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-4">
+            <p className="max-w-2xl text-sm leading-relaxed text-muted">
+              The full relational stack: from raw 4096-byte disk blocks up through the LRU-K frame cache,
+              concurrent latch-crabbing B+ Tree, Volcano iterator execution engine, and multi-granularity
+              Two-Phase Locking (2PL) with background DFS cycle detection.
+            </p>
+            <div className="flex flex-wrap gap-2 font-mono text-xs">
+              <Link
+                href="/case-studies/bustub-engine"
+                className="inline-flex items-center gap-1.5 rounded border border-signal/40 bg-signal/10 px-3 py-1.5 text-signal transition-colors hover:bg-signal/20"
+              >
+                READ FULL CASE STUDY →
+              </Link>
+              <a
+                href="/works/bustub/WORK_PROOF.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded border border-line bg-surface/50 px-3 py-1.5 text-foreground transition-colors hover:border-research hover:text-research"
+              >
+                VERIFICATION DOSSIER ↗
+              </a>
+            </div>
+          </div>
+        </Frame>
+      );
+
     case "apex-quant-engine": {
       const equity = equitySeries(42, 220);
       const dd = drawdownSeries(equity);

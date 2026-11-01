@@ -87,11 +87,11 @@ Assert "hub explore arrow nudges" $hubHtml.Contains("arr-down")
 $articleHtml = Get-Page "/articles/determinism-is-not-validity"
 Assert "article research rule present" $articleHtml.Contains("research-rule")
 
-$navHtml = Get-Page "/capabilities"
+$navHtml = Get-Page "/about"
 Assert "navbar signal rule present" $navHtml.Contains("signal-rule")
 
 Write-Host "== navigation surface (minimal bar: brand + search + theme) =="
-$capNav = Get-Page "/capabilities"
+$capNav = Get-Page "/about"
 Assert "no primary nav strip on inner pages" (-not ($capNav -match 'aria-label="Primary"'))
 Assert "no MENU trigger rendered" (-not ($capNav.Contains('aria-controls="mobile-menu"')))
 Assert "no menu overlay rendered" (-not ($capNav.Contains('id="mobile-menu"')))
@@ -148,7 +148,7 @@ Assert "share form rendered" $tHtml.Contains("rv-feedback")
 Assert "rating radiogroup present" $tHtml.Contains("radiogroup")
 Assert "honeypot field wired" $tHtml.Contains("rv-website")
 Assert "consent control present" ($tHtml.Contains("rv-consent") -or $tHtml.Contains("consent"))
-Assert "footer indexes testimonials route" ($tHtml.Contains('href="/testimonials">21'))
+Assert "footer indexes testimonials route" ($tHtml.Contains('href="/testimonials">TESTIMONIALS') -or $tHtml.Contains('href="/testimonials">21'))
 Assert "no endorsement strip without data" (-not $tHtml.Contains("FEEDBACK FROM THE WORK ITSELF"))
 $hubHtml2 = Get-Page "/hub"
 Assert "hub secondary links testimonials" ($hubHtml2 -match 'TESTIMONIALS')

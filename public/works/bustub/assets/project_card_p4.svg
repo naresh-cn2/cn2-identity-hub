@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="150" viewBox="0 0 660 150" fill="none">
+  <defs>
+    <linearGradient id="p4-bg" x1="0" y1="0" x2="660" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="p4-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="660" height="150" rx="10" fill="url(#p4-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="6" height="150" rx="3" fill="url(#p4-accent)"/>
+
+  <!-- Badge / Tag -->
+  <rect x="24" y="18" width="80" height="22" rx="4" fill="#78350f" fill-opacity="0.4" stroke="#d97706" stroke-width="1"/>
+  <text x="34" y="33" fill="#fcd34d" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" font-weight="600">PROJECT 4</text>
+
+  <!-- Title -->
+  <text x="116" y="34" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">Concurrency Control &amp; Lock Manager</text>
+
+  <!-- Description -->
+  <text x="24" y="65" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="400">
+    Multi-granularity 2PL (IS, IX, S, SIX, X) with FIFO queue priority &amp; upgrade rules •
+  </text>
+  <text x="24" y="85" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="400">
+    Background cycle detection with DFS waits-for graph &amp; youngest-txn victim resolution.
+  </text>
+
+  <!-- Metrics row -->
+  <line x1="24" y1="104" x2="636" y2="104" stroke="#1f2937" stroke-width="1"/>
+
+  <g transform="translate(24, 114)">
+    <!-- Metric 1 -->
+    <text x="0" y="16" fill="#10b981" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">✓ 11/11</text>
+    <text x="56" y="16" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5">P4 Tests Passed</text>
+
+    <!-- Metric 2 -->
+    <text x="170" y="16" fill="#38bdf8" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">Strict 2PL + Deadlock</text>
+    <text x="315" y="16" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5">Cycle Resolution</text>
+
+    <!-- Metric 3 -->
+    <text x="430" y="16" fill="#a855f7" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">0ce5626</text>
+    <text x="490" y="16" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11.5">Verified Commit</text>
+  </g>
+</svg>

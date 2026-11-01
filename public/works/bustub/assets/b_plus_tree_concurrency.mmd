@@ -1,0 +1,40 @@
+```mermaid
+flowchart TD
+    subgraph CrabbingModel ["B+ Tree Latch Crabbing Protocol"]
+        direction TB
+        Start(["Traverse Tree Request"]) --> CheckOp{"Operation Type"}
+        
+        CheckOp -->|"Read / Search (Point / Range)"| ReadCrab["Acquire Read Latch on Root\nR-Latch(Root)"]
+        ReadCrab --> FetchChildR["Fetch Child Page & R-Latch(Child)"]
+        FetchChildR --> ReleaseParentR["Release Parent Latch\nR-Unlatch(Parent)"]
+        ReleaseParentR --> IsLeafR{"Is Child a Leaf Page?"}
+        IsLeafR -->|"No"| FetchChildR
+        IsLeafR -->|"Yes"| LeafRead["Perform Binary Search on Leaf\nReturn Value / Iterator\nRelease R-Latch(Leaf)"]
+
+        CheckOp -->|"Insert / Delete / Update"| WriteCrab["Acquire Write Latch on Root\nW-Latch(Root)\nPush Root to Context::write_set_"]
+        WriteCrab --> FetchChildW["Fetch Child Page & W-Latch(Child)"]
+        FetchChildW --> IsSafe{"Is Child Safe?\n(Insert: Size < MaxSize - 1)\n(Delete: Size > MinSize)"}
+        
+        IsSafe -->|"YES (Child is Safe)"| ReleaseAncestors["Release All Ancestor Latches in write_set_\nClear write_set_\nKeep only W-Latch(Child)"]
+        IsSafe -->|"NO (Split/Merge Risk)"| RetainAncestors["Retain Ancestor Latches\nPush Child to write_set_"]
+        
+        ReleaseAncestors --> IsLeafW{"Is Child a Leaf Page?"}
+        RetainAncestors --> IsLeafW
+        
+        IsLeafW -->|"No"| FetchChildW
+        IsLeafW -->|"Yes"| LeafModify["Modify Leaf Page\n(Insert key-value or Delete key)"]
+        LeafModify --> NeedsSplit{"Split / Coalesce Needed?"}
+        NeedsSplit -->|"Yes"| Propagate["Propagate Split/Coalesce Upwards using write_set_\nUnpin & Unlatch all pages in reverse"]
+        NeedsSplit -->|"No"| DirectUnlock["Unlatch & Unpin Leaf\nComplete Operation"]
+    end
+
+    classDef rnode fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#fff;
+    classDef wnode fill:#ea580c,stroke:#c2410c,stroke-width:2px,color:#fff;
+    classDef decision fill:#475569,stroke:#334155,stroke-width:2px,color:#fff;
+    classDef action fill:#16a34a,stroke:#15803d,stroke-width:2px,color:#fff;
+
+    class ReadCrab,FetchChildR,ReleaseParentR,LeafRead rnode;
+    class WriteCrab,FetchChildW,RetainAncestors,LeafModify,Propagate wnode;
+    class CheckOp,IsSafe,IsLeafR,IsLeafW,NeedsSplit decision;
+    class ReleaseAncestors,DirectUnlock action;
+```

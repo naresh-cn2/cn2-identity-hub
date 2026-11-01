@@ -1,0 +1,44 @@
+```mermaid
+flowchart TD
+    subgraph BackgroundThread ["Background Cycle Detection Worker (Runs every cycle_detection_interval_)"]
+        Trigger(["Wakeup Timer"]) --> BuildGraph["Build Directed Waits-For Graph\n(Iterate table_lock_map_ & row_lock_map_)"]
+        
+        BuildGraph --> InspectQueues["For each LockRequestQueue:\nFor each waiting txn (T_wait):\n  For each granted txn (T_hold):\n    Add directed edge T_wait -> T_hold"]
+        
+        InspectQueues --> SortTxns["Sort all Txn vertices in ascending order\n(Ensures deterministic cycle traversal)"]
+        
+        SortTxns --> DFSIter["For each Vertex v in sorted order:\nRun Depth-First Search (DFS)"]
+        
+        DFSIter --> CycleFound{"Back-edge detected\n(Cycle Found?)"}
+        
+        CycleFound -->|"No"| Sleep["Sleep until next interval"]
+        
+        CycleFound -->|"Yes"| FindVictim["Extract Cycle Vertices\nSelect Youngest Txn:\nvictim = max(txn_id in cycle)"]
+        
+        FindVictim --> AbortVictim["1. Mark victim->SetState(ABORTED)\n2. Remove victim from Waits-For Graph\n3. Notify condition_variable\n4. Repeat DFS to check for remaining cycles"]
+        
+        AbortVictim --> DFSIter
+    end
+
+    subgraph WaitsForExample ["Directed Waits-For Graph Example"]
+        T1["Txn 1 (Older)"]
+        T2["Txn 2 (Intermediate)"]
+        T3["Txn 3 (Youngest: Max ID)"]
+
+        T1 -- "Waits for Lock held by" --> T2
+        T2 -- "Waits for Lock held by" --> T3
+        T3 -- "Waits for Lock held by (Cycle!)" --> T1
+
+        DeadlockBox["Cycle Detected:\nT1 -> T2 -> T3 -> T1\n\nVictim Selection Strategy:\nmax(T1, T2, T3) = T3\n\nAction: Abort T3, break cycle!"]
+    end
+
+    classDef proc fill:#1e40af,stroke:#1d4ed8,stroke-width:2px,color:#fff;
+    classDef dec fill:#b45309,stroke:#92400e,stroke-width:2px,color:#fff;
+    classDef kill fill:#b91c1c,stroke:#991b1b,stroke-width:2px,color:#fff;
+    classDef waitGraph fill:#334155,stroke:#1e293b,stroke-width:2px,color:#fff;
+
+    class Trigger,BuildGraph,InspectQueues,SortTxns,DFSIter,Sleep proc;
+    class CycleFound dec;
+    class FindVictim,AbortVictim kill;
+    class T1,T2,T3,DeadlockBox waitGraph;
+```

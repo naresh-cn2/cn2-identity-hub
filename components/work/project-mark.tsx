@@ -194,7 +194,62 @@ const costintel = (
   </g>
 );
 
+/** BUSTUB — multi-tier relational engine: buffer frame array, B+ tree branching, and volcano pipeline. */
+const bustub = (
+  <g fill="none">
+    {/* Baseline disk buffer frames */}
+    <line x1="0" y1="124" x2="320" y2="124" stroke="var(--line-strong)" strokeWidth="1" />
+    {[16, 44, 72, 100, 128, 156, 184, 212, 240, 268, 296].map((x, i) => (
+      <rect
+        key={i}
+        x={x}
+        y="112"
+        width="22"
+        height="10"
+        fill={i % 3 === 0 ? "var(--signal)" : "var(--research)"}
+        opacity={i % 3 === 0 ? 0.75 : 0.35}
+        stroke="var(--line-strong)"
+        strokeWidth="1"
+      />
+    ))}
+
+    {/* B+ Tree branch edges */}
+    <line x1="160" y1="24" x2="90" y2="58" stroke="var(--faint)" strokeWidth="1.2" />
+    <line x1="160" y1="24" x2="230" y2="58" stroke="var(--faint)" strokeWidth="1.2" />
+    <line x1="90" y1="68" x2="48" y2="92" stroke="var(--faint)" strokeWidth="1" />
+    <line x1="90" y1="68" x2="116" y2="92" stroke="var(--faint)" strokeWidth="1" />
+    <line x1="230" y1="68" x2="204" y2="92" stroke="var(--faint)" strokeWidth="1" />
+    <line x1="230" y1="68" x2="272" y2="92" stroke="var(--faint)" strokeWidth="1" />
+
+    {/* Leaf node sibling chain */}
+    <line x1="68" y1="96" x2="98" y2="96" stroke="var(--signal)" strokeWidth="1" strokeDasharray="2 2" />
+    <line x1="136" y1="96" x2="186" y2="96" stroke="var(--signal)" strokeWidth="1" strokeDasharray="2 2" />
+    <line x1="224" y1="96" x2="254" y2="96" stroke="var(--signal)" strokeWidth="1" strokeDasharray="2 2" />
+
+    {/* Root Node */}
+    <rect x="135" y="14" width="50" height="14" rx="2" fill="var(--surface)" stroke="var(--signal)" strokeWidth="1.5" />
+    <line x1="160" y1="14" x2="160" y2="28" stroke="var(--signal)" strokeWidth="1" />
+    <circle cx="147" cy="21" r="2" fill="var(--signal)" />
+    <circle cx="173" cy="21" r="2" fill="var(--foreground)" />
+
+    {/* Internal Nodes */}
+    <rect x="70" y="54" width="40" height="13" rx="2" fill="var(--surface)" stroke="var(--research)" strokeWidth="1" />
+    <rect x="210" y="54" width="40" height="13" rx="2" fill="var(--surface)" stroke="var(--research)" strokeWidth="1" />
+
+    {/* Leaf Nodes */}
+    <rect x="30" y="90" width="36" height="12" rx="2" fill="var(--surface)" stroke="var(--line-strong)" strokeWidth="1" />
+    <rect x="98" y="90" width="36" height="12" rx="2" fill="var(--surface)" stroke="var(--line-strong)" strokeWidth="1" />
+    <rect x="186" y="90" width="36" height="12" rx="2" fill="var(--surface)" stroke="var(--line-strong)" strokeWidth="1" />
+    <rect x="254" y="90" width="36" height="12" rx="2" fill="var(--surface)" stroke="var(--line-strong)" strokeWidth="1" />
+
+    {/* Latch Crabbing Indicator */}
+    <circle cx="160" cy="8" r="3" fill="var(--signal)" />
+    <line x1="160" y1="11" x2="160" y2="14" stroke="var(--signal)" strokeWidth="1" />
+  </g>
+);
+
 const marks: Record<string, React.ReactNode> = {
+  "bustub-engine": bustub,
   "apex-quant-engine": apex,
   "automated-trading-os": atos,
   "market-data-replay": replay,

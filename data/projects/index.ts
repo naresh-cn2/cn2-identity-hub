@@ -1,7 +1,7 @@
 import type { FlagshipProject } from "./types";
+import { bustubEngine } from "./bustub-engine";
 import { apexQuantEngine } from "./apex-quant-engine";
 import { automatedTradingOs } from "./automated-trading-os";
-import { bustubEngine } from "./bustub-engine";
 import { marketDataReplay } from "./market-data-replay";
 import { qrsip } from "./qrsip";
 
@@ -16,11 +16,11 @@ export type {
 } from "./types";
 
 export const flagshipProjects: FlagshipProject[] = [
+  bustubEngine,
   apexQuantEngine,
   automatedTradingOs,
   marketDataReplay,
   qrsip,
-  bustubEngine,
 ];
 
 export function getProject(id: string): FlagshipProject | undefined {

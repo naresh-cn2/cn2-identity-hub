@@ -1,0 +1,434 @@
+================================================================================
+PROJECT 4: MULTI-GRANULARITY LOCK MANAGER, DEADLOCK DETECTION & 2PL EXECUTION
+CTest & GTest Verbose Execution Log
+Timestamp: Sun Nov  1 10:15:38 UTC 2026
+================================================================================
+
+>>> Running CTest for P4 Targets:
+UpdateCTestConfiguration  from :/mnt/c/Users/nares/Workspace/bustub/build/DartConfiguration.tcl
+Test project /mnt/c/Users/nares/Workspace/bustub/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 18
+      Start 18: LockManagerDeadlockDetectionTest.EdgeTest
+
+18: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/deadlock_detection_test "--gtest_filter=LockManagerDeadlockDetectionTest.EdgeTest" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/deadlock_detection_test.xml" "--gtest_catch_exceptions=0"
+18: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+18: Test timeout computed to be: 120
+18: Running main() from gmock_main.cc
+18: Note: Google Test filter = LockManagerDeadlockDetectionTest.EdgeTest
+18: [==========] Running 1 test from 1 test suite.
+18: [----------] Global test environment set-up.
+18: [----------] 1 test from LockManagerDeadlockDetectionTest
+18: [ RUN      ] LockManagerDeadlockDetectionTest.EdgeTest
+18: [       OK ] LockManagerDeadlockDetectionTest.EdgeTest (8 ms)
+18: [----------] 1 test from LockManagerDeadlockDetectionTest (8 ms total)
+18: 
+18: [----------] Global test environment tear-down
+18: [==========] 1 test from 1 test suite ran. (10 ms total)
+18: [  PASSED  ] 1 test.
+ 1/11 Test #18: LockManagerDeadlockDetectionTest.EdgeTest .....................   Passed    0.14 sec
+test 19
+      Start 19: LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest
+
+19: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/deadlock_detection_test "--gtest_filter=LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/deadlock_detection_test.xml" "--gtest_catch_exceptions=0"
+19: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+19: Test timeout computed to be: 120
+19: Running main() from gmock_main.cc
+19: Note: Google Test filter = LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest
+19: [==========] Running 1 test from 1 test suite.
+19: [----------] Global test environment set-up.
+19: [----------] 1 test from LockManagerDeadlockDetectionTest
+19: [ RUN      ] LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest
+19: [       OK ] LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest (203 ms)
+19: [----------] 1 test from LockManagerDeadlockDetectionTest (203 ms total)
+19: 
+19: [----------] Global test environment tear-down
+19: [==========] 1 test from 1 test suite ran. (203 ms total)
+19: [  PASSED  ] 1 test.
+ 2/11 Test #19: LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest ...   Passed    0.30 sec
+test 20
+      Start 20: LockManagerTest.TableLockTest1
+
+20: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test "--gtest_filter=LockManagerTest.TableLockTest1" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test.xml" "--gtest_catch_exceptions=0"
+20: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+20: Test timeout computed to be: 120
+20: Running main() from gmock_main.cc
+20: Note: Google Test filter = LockManagerTest.TableLockTest1
+20: [==========] Running 1 test from 1 test suite.
+20: [----------] Global test environment set-up.
+20: [----------] 1 test from LockManagerTest
+20: [ RUN      ] LockManagerTest.TableLockTest1
+20: [       OK ] LockManagerTest.TableLockTest1 (13 ms)
+20: [----------] 1 test from LockManagerTest (13 ms total)
+20: 
+20: [----------] Global test environment tear-down
+20: [==========] 1 test from 1 test suite ran. (14 ms total)
+20: [  PASSED  ] 1 test.
+ 3/11 Test #20: LockManagerTest.TableLockTest1 ................................   Passed    0.28 sec
+test 21
+      Start 21: LockManagerTest.TableLockUpgradeTest1
+
+21: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test "--gtest_filter=LockManagerTest.TableLockUpgradeTest1" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test.xml" "--gtest_catch_exceptions=0"
+21: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+21: Test timeout computed to be: 120
+21: Running main() from gmock_main.cc
+21: Note: Google Test filter = LockManagerTest.TableLockUpgradeTest1
+21: [==========] Running 1 test from 1 test suite.
+21: [----------] Global test environment set-up.
+21: [----------] 1 test from LockManagerTest
+21: [ RUN      ] LockManagerTest.TableLockUpgradeTest1
+21: [       OK ] LockManagerTest.TableLockUpgradeTest1 (6 ms)
+21: [----------] 1 test from LockManagerTest (6 ms total)
+21: 
+21: [----------] Global test environment tear-down
+21: [==========] 1 test from 1 test suite ran. (6 ms total)
+21: [  PASSED  ] 1 test.
+ 4/11 Test #21: LockManagerTest.TableLockUpgradeTest1 .........................   Passed    0.14 sec
+test 22
+      Start 22: LockManagerTest.RowLockTest1
+
+22: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test "--gtest_filter=LockManagerTest.RowLockTest1" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test.xml" "--gtest_catch_exceptions=0"
+22: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+22: Test timeout computed to be: 120
+22: Running main() from gmock_main.cc
+22: Note: Google Test filter = LockManagerTest.RowLockTest1
+22: [==========] Running 1 test from 1 test suite.
+22: [----------] Global test environment set-up.
+22: [----------] 1 test from LockManagerTest
+22: [ RUN      ] LockManagerTest.RowLockTest1
+22: [       OK ] LockManagerTest.RowLockTest1 (4 ms)
+22: [----------] 1 test from LockManagerTest (4 ms total)
+22: 
+22: [----------] Global test environment tear-down
+22: [==========] 1 test from 1 test suite ran. (5 ms total)
+22: [  PASSED  ] 1 test.
+ 5/11 Test #22: LockManagerTest.RowLockTest1 ..................................   Passed    0.13 sec
+test 23
+      Start 23: LockManagerTest.TwoPLTest1
+
+23: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test "--gtest_filter=LockManagerTest.TwoPLTest1" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test.xml" "--gtest_catch_exceptions=0"
+23: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+23: Test timeout computed to be: 120
+23: Running main() from gmock_main.cc
+23: Note: Google Test filter = LockManagerTest.TwoPLTest1
+23: [==========] Running 1 test from 1 test suite.
+23: [----------] Global test environment set-up.
+23: [----------] 1 test from LockManagerTest
+23: [ RUN      ] LockManagerTest.TwoPLTest1
+23: [       OK ] LockManagerTest.TwoPLTest1 (12 ms)
+23: [----------] 1 test from LockManagerTest (12 ms total)
+23: 
+23: [----------] Global test environment tear-down
+23: [==========] 1 test from 1 test suite ran. (14 ms total)
+23: [  PASSED  ] 1 test.
+ 6/11 Test #23: LockManagerTest.TwoPLTest1 ....................................   Passed    0.13 sec
+test 24
+      Start 24: LockManagerTest.RowAbortTest1
+
+24: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test "--gtest_filter=LockManagerTest.RowAbortTest1" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/lock_manager_test.xml" "--gtest_catch_exceptions=0"
+24: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+24: Test timeout computed to be: 120
+24: Running main() from gmock_main.cc
+24: Note: Google Test filter = LockManagerTest.RowAbortTest1
+24: [==========] Running 1 test from 1 test suite.
+24: [----------] Global test environment set-up.
+24: [----------] 1 test from LockManagerTest
+24: [ RUN      ] LockManagerTest.RowAbortTest1
+24: AbortTest1: multiple X should block
+24: [       OK ] LockManagerTest.RowAbortTest1 (108 ms)
+24: [----------] 1 test from LockManagerTest (108 ms total)
+24: 
+24: [----------] Global test environment tear-down
+24: [==========] 1 test from 1 test suite ran. (109 ms total)
+24: [  PASSED  ] 1 test.
+ 7/11 Test #24: LockManagerTest.RowAbortTest1 .................................   Passed    0.24 sec
+test 25
+      Start 25: CommitAbortTest.CommitTestA
+
+25: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test "--gtest_filter=CommitAbortTest.CommitTestA" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test.xml" "--gtest_catch_exceptions=0"
+25: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+25: Test timeout computed to be: 120
+25: Running main() from gmock_main.cc
+25: Note: Google Test filter = CommitAbortTest.CommitTestA
+25: [==========] Running 1 test from 1 test suite.
+25: [----------] Global test environment set-up.
+25: [----------] 1 test from CommitAbortTest
+25: [ RUN      ] CommitAbortTest.CommitTestA
+25: --- TEST CASE CommitTest1 ---
+25: prepare
+25: Table created with id = 0	
+25: 6	
+25: start txn 2 in READ_UNCOMMITTED
+25: insert data with v1 = 1 in txn 2 READ_UNCOMMITTED
+25: commit txn 2 in READ_UNCOMMITTED
+25: start txn 3 in READ_UNCOMMITTED
+25: scan data expect v1 in range [1, 233, 234] in txn 3 READ_UNCOMMITTED
+25: pass check
+25: commit txn 3 in READ_UNCOMMITTED
+25: [       OK ] CommitAbortTest.CommitTestA (60 ms)
+25: [----------] 1 test from CommitAbortTest (60 ms total)
+25: 
+25: [----------] Global test environment tear-down
+25: [==========] 1 test from 1 test suite ran. (62 ms total)
+25: [  PASSED  ] 1 test.
+ 8/11 Test #25: CommitAbortTest.CommitTestA ...................................   Passed    0.21 sec
+test 26
+      Start 26: VisibilityTest.TestA
+
+26: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test "--gtest_filter=VisibilityTest.TestA" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test.xml" "--gtest_catch_exceptions=0"
+26: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+26: Test timeout computed to be: 120
+26: Running main() from gmock_main.cc
+26: Note: Google Test filter = VisibilityTest.TestA
+26: [==========] Running 1 test from 1 test suite.
+26: [----------] Global test environment set-up.
+26: [----------] 1 test from VisibilityTest
+26: [ RUN      ] VisibilityTest.TestA
+26: --- TEST CASE Test1 ---
+26: prepare
+26: Table created with id = 0	
+26: 6	
+26: start txn 2 in READ_COMMITTED
+26: delete data with v1 = 233 in txn 2 READ_COMMITTED
+26: commit txn 2 in READ_COMMITTED
+26: start txn 3 in READ_COMMITTED
+26: scan data expect v1 in range [234] in txn 3 READ_COMMITTED
+26: pass check
+26: commit txn 3 in READ_COMMITTED
+26: [       OK ] VisibilityTest.TestA (62 ms)
+26: [----------] 1 test from VisibilityTest (62 ms total)
+26: 
+26: [----------] Global test environment tear-down
+26: [==========] 1 test from 1 test suite ran. (63 ms total)
+26: [  PASSED  ] 1 test.
+ 9/11 Test #26: VisibilityTest.TestA ..........................................   Passed    0.22 sec
+test 27
+      Start 27: IsolationLevelTest.InsertTestA
+
+27: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test "--gtest_filter=IsolationLevelTest.InsertTestA" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test.xml" "--gtest_catch_exceptions=0"
+27: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+27: Test timeout computed to be: 120
+27: Running main() from gmock_main.cc
+27: Note: Google Test filter = IsolationLevelTest.InsertTestA
+27: [==========] Running 1 test from 1 test suite.
+27: [----------] Global test environment set-up.
+27: [----------] 1 test from IsolationLevelTest
+27: [ RUN      ] IsolationLevelTest.InsertTestA
+27: --- InsertTestA.1 ---
+27: 0: prepare
+27: 0.1: create table
+27: Table created with id = 0	
+27: 0.2: insert initial value
+27: 6	
+27: 1: read txn: READ_UNCOMMITTED
+27: 2: write txn: READ_UNCOMMITTED
+27: 2.1: insert new values
+27: 3	
+27: 2.2: X locks
+27: 4: wait for result
+27: 3: read txn read
+27: 3.1: read values
+27: 3.2: R locks
+27: 3.3: read done
+27: pass check
+27: 5: test reaches the end
+27: 
+27: 
+27: table: 0 page_id: 0 slot_num: 8
+27: table: 0 page_id: 0 slot_num: 7
+27: table: 0 page_id: 0 slot_num: 6
+27: [       OK ] IsolationLevelTest.InsertTestA (123 ms)
+27: [----------] 1 test from IsolationLevelTest (123 ms total)
+27: 
+27: [----------] Global test environment tear-down
+27: [==========] 1 test from 1 test suite ran. (124 ms total)
+27: [  PASSED  ] 1 test.
+10/11 Test #27: IsolationLevelTest.InsertTestA ................................   Passed    0.28 sec
+test 28
+      Start 28: IsolationLevelTest.DeleteTestA
+
+28: Test command: /mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test "--gtest_filter=IsolationLevelTest.DeleteTestA" "--gtest_also_run_disabled_tests" "--gtest_output=xml:/mnt/c/Users/nares/Workspace/bustub/build/test/txn_integration_test.xml" "--gtest_catch_exceptions=0"
+28: Working Directory: /mnt/c/Users/nares/Workspace/bustub/build/test
+28: Test timeout computed to be: 120
+28: Running main() from gmock_main.cc
+28: Note: Google Test filter = IsolationLevelTest.DeleteTestA
+28: [==========] Running 1 test from 1 test suite.
+28: [----------] Global test environment set-up.
+28: [----------] 1 test from IsolationLevelTest
+28: [ RUN      ] IsolationLevelTest.DeleteTestA
+28: --- DeleteTestA.1 ---
+28: 0: prepare
+28: 0.1: create table
+28: Table created with id = 0	
+28: 0.2: insert initial value
+28: 6	
+28: 1: read txn: READ_COMMITTED
+28: 2: write txn: READ_UNCOMMITTED
+28: 2.1: delete v1 = 2
+28: 3	
+28: 2.2: X locks
+28: 4: wait for result
+28: 3: read txn read
+28: 3.1: read values
+28: 3.2: R locks
+28: 3.3: read done
+28: 5: test reaches the end
+28: 
+28: 
+28: table: 0 page_id: 0 slot_num: 5
+28: table: 0 page_id: 0 slot_num: 4
+28: table: 0 page_id: 0 slot_num: 3
+28: [       OK ] IsolationLevelTest.DeleteTestA (1074 ms)
+28: [----------] 1 test from IsolationLevelTest (1074 ms total)
+28: 
+28: [----------] Global test environment tear-down
+28: [==========] 1 test from 1 test suite ran. (1076 ms total)
+28: [  PASSED  ] 1 test.
+11/11 Test #28: IsolationLevelTest.DeleteTestA ................................   Passed    1.25 sec
+
+The following tests passed:
+	LockManagerDeadlockDetectionTest.EdgeTest
+	LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest
+	LockManagerTest.TableLockTest1
+	LockManagerTest.TableLockUpgradeTest1
+	LockManagerTest.RowLockTest1
+	LockManagerTest.TwoPLTest1
+	LockManagerTest.RowAbortTest1
+	CommitAbortTest.CommitTestA
+	VisibilityTest.TestA
+	IsolationLevelTest.InsertTestA
+	IsolationLevelTest.DeleteTestA
+
+100% tests passed, 0 tests failed out of 11
+
+Total Test time (real) =   4.87 sec
+
+>>> Direct Binary Execution:
+Running main() from gmock_main.cc
+[==========] Running 5 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 5 tests from LockManagerTest
+[ RUN      ] LockManagerTest.TableLockTest1
+[       OK ] LockManagerTest.TableLockTest1 (13 ms)
+[ RUN      ] LockManagerTest.TableLockUpgradeTest1
+[       OK ] LockManagerTest.TableLockUpgradeTest1 (0 ms)
+[ RUN      ] LockManagerTest.RowLockTest1
+[       OK ] LockManagerTest.RowLockTest1 (1 ms)
+[ RUN      ] LockManagerTest.TwoPLTest1
+[       OK ] LockManagerTest.TwoPLTest1 (2 ms)
+[ RUN      ] LockManagerTest.RowAbortTest1
+AbortTest1: multiple X should block
+[       OK ] LockManagerTest.RowAbortTest1 (105 ms)
+[----------] 5 tests from LockManagerTest (127 ms total)
+
+[----------] Global test environment tear-down
+[==========] 5 tests from 1 test suite ran. (134 ms total)
+[  PASSED  ] 5 tests.
+Running main() from gmock_main.cc
+[==========] Running 2 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 2 tests from LockManagerDeadlockDetectionTest
+[ RUN      ] LockManagerDeadlockDetectionTest.EdgeTest
+[       OK ] LockManagerDeadlockDetectionTest.EdgeTest (14 ms)
+[ RUN      ] LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest
+[       OK ] LockManagerDeadlockDetectionTest.BasicDeadlockDetectionTest (203 ms)
+[----------] 2 tests from LockManagerDeadlockDetectionTest (220 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test suite ran. (225 ms total)
+[  PASSED  ] 2 tests.
+Running main() from gmock_main.cc
+[==========] Running 4 tests from 3 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from CommitAbortTest
+[ RUN      ] CommitAbortTest.CommitTestA
+--- TEST CASE CommitTest1 ---
+prepare
+Table created with id = 0	
+6	
+start txn 2 in READ_UNCOMMITTED
+insert data with v1 = 1 in txn 2 READ_UNCOMMITTED
+commit txn 2 in READ_UNCOMMITTED
+start txn 3 in READ_UNCOMMITTED
+scan data expect v1 in range [1, 233, 234] in txn 3 READ_UNCOMMITTED
+pass check
+commit txn 3 in READ_UNCOMMITTED
+[       OK ] CommitAbortTest.CommitTestA (59 ms)
+[----------] 1 test from CommitAbortTest (60 ms total)
+
+[----------] 1 test from VisibilityTest
+[ RUN      ] VisibilityTest.TestA
+--- TEST CASE Test1 ---
+prepare
+Table created with id = 0	
+6	
+start txn 2 in READ_COMMITTED
+delete data with v1 = 233 in txn 2 READ_COMMITTED
+commit txn 2 in READ_COMMITTED
+start txn 3 in READ_COMMITTED
+scan data expect v1 in range [234] in txn 3 READ_COMMITTED
+pass check
+commit txn 3 in READ_COMMITTED
+[       OK ] VisibilityTest.TestA (57 ms)
+[----------] 1 test from VisibilityTest (58 ms total)
+
+[----------] 2 tests from IsolationLevelTest
+[ RUN      ] IsolationLevelTest.InsertTestA
+--- InsertTestA.1 ---
+0: prepare
+0.1: create table
+Table created with id = 0	
+0.2: insert initial value
+6	
+1: read txn: READ_UNCOMMITTED
+2: write txn: READ_UNCOMMITTED
+2.1: insert new values
+3	
+2.2: X locks
+4: wait for result
+3: read txn read
+3.1: read values
+3.2: R locks
+3.3: read done
+pass check
+5: test reaches the end
+
+
+table: 0 page_id: 0 slot_num: 8
+table: 0 page_id: 0 slot_num: 7
+table: 0 page_id: 0 slot_num: 6
+[       OK ] IsolationLevelTest.InsertTestA (58 ms)
+[ RUN      ] IsolationLevelTest.DeleteTestA
+--- DeleteTestA.1 ---
+0: prepare
+0.1: create table
+Table created with id = 0	
+0.2: insert initial value
+6	
+1: read txn: READ_COMMITTED
+2: write txn: READ_UNCOMMITTED
+2.1: delete v1 = 2
+3	
+2.2: X locks
+4: wait for result
+3: read txn read
+3.1: read values
+3.2: R locks
+3.3: read done
+5: test reaches the end
+
+
+table: 0 page_id: 0 slot_num: 5
+table: 0 page_id: 0 slot_num: 4
+table: 0 page_id: 0 slot_num: 3
+[       OK ] IsolationLevelTest.DeleteTestA (1061 ms)
+[----------] 2 tests from IsolationLevelTest (1122 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 3 test suites ran. (1251 ms total)
+[  PASSED  ] 4 tests.
