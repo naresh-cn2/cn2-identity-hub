@@ -1342,7 +1342,7 @@ export const bustubEngineItem: ComprehensiveWorkItem = {
   linksList: [
     {
       label: "ARCHITECTURE CASE STUDY",
-      href: "/projects/bustub-engine",
+      href: "/case-studies/bustub-engine",
       type: "docs",
     },
     {

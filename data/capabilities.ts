@@ -133,11 +133,11 @@ export const capabilities: Capability[] = [
     domain: "SYSTEMS",
     description:
       "Low-level memory management, pointer arithmetic, custom allocators, and hardware-close systems engineering in C and C++.",
-    projects: ["billing-data-gateway"],
+    projects: ["billing-data-gateway", "bustub-engine"],
     research: ["decimal-arithmetic"],
-    technologies: ["C", "C++", "Memory Layout", "Pointers & Heap Management", "Valgrind", "POSIX"],
+    technologies: ["C", "C++", "Memory Layout", "Pointers & Heap Management", "Valgrind", "POSIX", "C++20 Concurrency", "AddressSanitizer"],
     evidence:
-      "Demonstrated through CS50x Harvard systems coursework and the zero-dependency C11 billing-data-gateway memory-mapped pipeline.",
+      "Demonstrated through CS50x Harvard systems coursework and the zero-dependency C11 billing-data-gateway memory-mapped pipeline, and the BusTub multi-threaded relational database engine with latch-crabbing B+ Trees, Volcano execution, and multi-granularity 2PL concurrency control — verified with AddressSanitizer and UndefinedBehaviorSanitizer across 56 test suites.",
   },
   {
     id: "algorithmic-foundations",

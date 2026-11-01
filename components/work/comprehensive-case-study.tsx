@@ -376,12 +376,12 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                 {vis.src ? (
                   <div className="mt-6 flex h-[320px] items-center justify-center border border-line bg-background/50 rounded-lg overflow-hidden">
                     <Image
-                    src={vis.src}
-                    alt={vis.title}
-                    className="w-full h-full object-contain max-h-full"
-                    loading="lazy"
-                    sizes="(max-width: 768px) 100vw, 750px"
-                  />
+                      src={vis.src}
+                      alt={vis.title}
+                      className="w-full h-full object-contain max-h-full"
+                      loading="lazy"
+                      unoptimized
+                    />
                   </div>
                 ) : (
                   <div className="mt-6 flex h-48 items-center justify-center border border-dashed border-line bg-background/50 text-xs font-mono text-faint">

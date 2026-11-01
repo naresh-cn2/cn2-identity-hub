@@ -1,6 +1,7 @@
 import type { FlagshipProject } from "./types";
 import { apexQuantEngine } from "./apex-quant-engine";
 import { automatedTradingOs } from "./automated-trading-os";
+import { bustubEngine } from "./bustub-engine";
 import { marketDataReplay } from "./market-data-replay";
 import { qrsip } from "./qrsip";
 
@@ -19,6 +20,7 @@ export const flagshipProjects: FlagshipProject[] = [
   automatedTradingOs,
   marketDataReplay,
   qrsip,
+  bustubEngine,
 ];
 
 export function getProject(id: string): FlagshipProject | undefined {
