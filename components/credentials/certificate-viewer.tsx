@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 /**
  * CertificateViewer — internal lightbox for viewing certificate images.
@@ -10,6 +11,11 @@ import { useEffect } from "react";
  * its original aspect ratio (object-contain, original bytes), and closes
  * via the close button, Escape, or a backdrop click. Works on desktop and
  * mobile; an optional action opens the raw image in a new tab for zooming.
+ *
+ * Rendered through a portal on document.body: any wrapper with a transform
+ * or will-change (Reveal sections, page transitions, VFX layers) would
+ * otherwise become the containing block for this fixed overlay and anchor
+ * it to the section instead of the viewport.
  */
 export default function CertificateViewer({
   isOpen,
@@ -34,9 +40,9 @@ export default function CertificateViewer({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       role="dialog"
@@ -85,6 +91,7 @@ export default function CertificateViewer({
           OPEN FULL SIZE ↗
         </a>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

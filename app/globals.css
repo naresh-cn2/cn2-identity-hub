@@ -290,9 +290,15 @@ body {
   will-change: opacity, transform;
 }
 
+/* Settle to `none` (not translateY(0)) and drop will-change: any non-none
+   transform or will-change on an ancestor becomes the containing block for
+   position:fixed descendants — it trapped the certificate lightbox inside
+   this wrapper (centered against the section, not the viewport). `none`
+   still interpolates as the identity, so the entrance is unchanged. */
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  will-change: auto;
 }
 
 .reveal-clip {
@@ -1544,6 +1550,7 @@ button.corner-ticks {
   .reveal {
     opacity: 1;
     transform: none;
+    will-change: auto;
   }
 
   .reveal-clip {
