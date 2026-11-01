@@ -82,6 +82,8 @@ export interface WorkItemVisual {
   title: string;
   type: "schematic" | "diagram" | "chart" | "stream";
   caption: string;
+  /** Source path to an SVG/PNG asset in public/, rendered inline in the card. */
+  src?: string;
 }
 
 export interface WorkItemLink {
@@ -1310,26 +1312,31 @@ export const bustubEngineItem: ComprehensiveWorkItem = {
       title: "Buffer Pool Storage Engine",
       type: "schematic",
       caption: "P1 — LRU-K eviction replacer with asynchronous DiskScheduler and thread-safe frame management.",
+      src: "/works/bustub/p1-buffer-pool-topology.svg",
     },
     {
       title: "Concurrent B+ Tree Index",
       type: "diagram",
       caption: "P2 — Latch crabbing protocol with optimistic reader validation and forward iterators.",
+      src: "/works/bustub/p2-bplus-tree-concurrency.svg",
     },
     {
       title: "Query Execution & Optimizer Pipeline",
       type: "diagram",
       caption: "P3 — Volcano iterator model with rule-based optimizer transformations.",
+      src: "/works/bustub/p3-volcano-optimizer-pipeline.svg",
     },
     {
       title: "Concurrency Control & Lock Manager",
       type: "diagram",
       caption: "P4 — Multi-granularity 2PL with waits-for graph cycle detection and victim resolution.",
+      src: "/works/bustub/p4-2pl-deadlock-detector.svg",
     },
     {
       title: "Verification Telemetry",
       type: "chart",
       caption: "Terminal verification card — ASan & UBSan clean across all four project suites.",
+      src: "/works/bustub/bustub-terminal-verification.svg",
     },
   ],
   linksList: [

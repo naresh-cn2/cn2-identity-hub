@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <marker id="arrow3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#8b5cf6"/>
+    </marker>
+    <linearGradient id="p3-bg" x1="0" y1="0" x2="800" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#0b111e"/>
+    </linearGradient>
+    <linearGradient id="p3-surface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="600" rx="12" fill="url(#p3-bg)" stroke="#1e293b" stroke-width="1.5"/>
+
+  <g stroke="#1f2937" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="60" x2="800" y2="60"/>
+    <line x1="0" y1="420" x2="800" y2="420"/>
+    <line x1="267" y1="0" x2="267" y2="600"/>
+    <line x1="533" y1="0" x2="533" y2="600"/>
+  </g>
+
+  <!-- Left: SQL Input -->
+  <rect x="30" y="80" width="230" height="120" rx="8" fill="url(#p3-surface)" stroke="#334155" stroke-width="1"/>
+  <text x="50" y="110" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">SQL QUERY</text>
+  <text x="50" y="140" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">SELECT ... FROM t1 JOIN t2 ...</text>
+
+  <!-- Center: Optimizer -->
+  <rect x="285" y="80" width="485" height="120" rx="8" fill="url(#p3-surface)" stroke="#334155" stroke-width="1"/>
+  <text x="305" y="110" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">RULE-BASED QUERY OPTIMIZER</text>
+  <g transform="translate(305, 140)">
+    <rect x="0" y="0" width="50" height="30" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="25" y="20" fill="#8b5cf6" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" text-anchor="middle">LOGICAL</text>
+    <line x1="55" y1="15" x2="75" y2="15" stroke="#334155" stroke-width="1" marker-end="url(#arrow3)"/>
+    <rect x="80" y="0" width="90" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="125" y="20" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" text-anchor="middle">PLAN TREE</text>
+    <line x1="175" y1="15" x2="195" y2="15" stroke="#334155" stroke-width="1" marker-end="url(#arrow3)"/>
+    <rect x="200" y="0" width="70" height="30" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="235" y="20" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="9" text-anchor="middle">PHYSICAL</text>
+  </g>
+  <g transform="translate(305, 180)">
+    <rect x="0" y="0" width="55" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="27" y="13" fill="#38bdf8" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">NLJ → HashJoin</text>
+    <line x1="60" y1="10" x2="70" y2="10" stroke="#334155" stroke-width="1"/>
+    <rect x="75" y="0" width="55" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="102" y="13" fill="#38bdf8" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">Sort+Limit → TopN</text>
+    <line x1="135" y1="10" x2="145" y2="10" stroke="#334155" stroke-width="1"/>
+    <rect x="150" y="0" width="60" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="180" y="13" fill="#38bdf8" font-family="'JetBrains Mono', Consolas, monospace" font-size="9">predicate pushdown</text>
+  </g>
+
+  <!-- Right: Volcano Executor -->
+  <rect x="30" y="220" width="230" height="320" rx="8" fill="url(#p3-surface)" stroke="#334155" stroke-width="1"/>
+  <text x="50" y="250" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">VOLCANO ITERATOR</text>
+  <text x="50" y="270" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">pull-based Init() / Next(Tuple*, RID*)</text>
+
+  <!-- Iterator pipeline -->
+  <g transform="translate(50, 300)">
+    <rect x="0" y="0" width="130" height="40" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="65" y="25" fill="#f8fafc" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" text-anchor="middle" font-weight="700">PROJECTION / TOPN</text>
+    <line x1="65" y1="40" x2="65" y2="55" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrow3)"/>
+    <rect x="0" y="60" width="130" height="40" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="65" y="85" fill="#f8fafc" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" text-anchor="middle" font-weight="700">HASHJOIN / NESTEDLOOPJOIN</text>
+    <line x1="65" y1="100" x2="65" y2="115" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrow3)"/>
+    <rect x="0" y="120" width="130" height="40" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="65" y="145" fill="#f8fafc" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" text-anchor="middle" font-weight="700">SEQSCAN / INDEXSCAN</text>
+    <line x1="65" y1="160" x2="65" y2="175" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrow3)"/>
+    <rect x="0" y="180" width="130" height="40" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="65" y="205" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="11" text-anchor="middle">TABLE HEAP / B+ TREE</text>
+  </g>
+
+  <!-- Center-right: Optimizer Rules -->
+  <rect x="285" y="220" width="230" height="180" rx="8" fill="url(#p3-surface)" stroke="#334155" stroke-width="1"/>
+  <text x="305" y="250" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">OPTIMIZER RULES</text>
+  <g transform="translate(305, 280)">
+    <text x="0" y="20" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">1.</text>
+    <text x="20" y="20" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">NLJ → HashJoin (build/probe buckets)</text>
+    <text x="0" y="45" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">2.</text>
+    <text x="20" y="45" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">Sort + Limit → bounded-heap TopN</text>
+    <text x="0" y="70" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">3.</text>
+    <text x="20" y="70" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">SeqScan + Predicate → IndexScan</text>
+    <text x="0" y="95" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">4.</text>
+    <text x="20" y="95" fill="#cbd5e1" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">ExternalMergeSort → 2-way</text>
+  </g>
+
+  <!-- Far right: Execution Context -->
+  <rect x="540" y="220" width="230" height="180" rx="8" fill="url(#p3-surface)" stroke="#334155" stroke-width="1"/>
+  <text x="560" y="250" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">EXECUTION CONTEXT</text>
+  <g transform="translate(560, 280)">
+    <text x="0" y="20" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">Txn · Catalog · BPM · LockMgr</text>
+    <text x="0" y="45" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">passed through Init() → Next()</text>
+    <text x="0" y="70" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">each operator pulls tuples</text>
+    <text x="0" y="95" fill="#94a3b8" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">upstream on demand</text>
+  </g>
+
+  <!-- Footer telemetry -->
+  <rect x="30" y="500" width="740" height="70" rx="8" fill="#0b111e" stroke="#334155" stroke-width="1"/>
+  <text x="50" y="525" fill="#22c55e" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">✓ 21/21 SQLLOGIC TESTS</text>
+  <text x="300" y="525" fill="#8b5cf6" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">p3.00 → p3.22</text>
+  <text x="460" y="525" fill="#3b82f6" font-family="'JetBrains Mono', Consolas, monospace" font-size="12" font-weight="700">a56e622</text>
+  <text x="50" y="550" fill="#64748b" font-family="'JetBrains Mono', Consolas, monospace" font-size="10">Volcano Execution · Rule-Based Optimizer · a56e622 · P3</text>
+</svg>
