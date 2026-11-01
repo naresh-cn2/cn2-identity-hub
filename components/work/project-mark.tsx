@@ -248,8 +248,31 @@ const bustub = (
   </g>
 );
 
+/** STRATLAB — strategy backtest equity step curve with performance markers. */
+const stratlab = (
+  <g fill="none">
+    <path
+      d="M10 110 L50 102 L90 105 L130 84 L170 78 L210 52 L250 44 L290 24 L310 18"
+      stroke="var(--signal)"
+      strokeWidth="2"
+    />
+    <path
+      d="M10 110 L50 102 L90 105 L130 84 L170 78 L210 52 L250 44 L290 24 L310 18 L310 130 L10 130 Z"
+      fill="var(--signal)"
+      opacity="0.06"
+    />
+    <line x1="0" y1="130" x2="320" y2="130" stroke="var(--line-strong)" strokeWidth="1" />
+    {[50, 90, 130, 170, 210, 250, 290].map((x, i) => (
+      <circle key={i} cx={x} cy={130 - (i * 14 + 18)} r="3" fill="var(--research)" />
+    ))}
+    <line x1="210" y1="52" x2="210" y2="130" stroke="var(--research)" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
+    <circle cx="210" cy="52" r="5" fill="none" stroke="var(--signal)" strokeWidth="1.5" />
+  </g>
+);
+
 const marks: Record<string, React.ReactNode> = {
   "bustub-engine": bustub,
+  stratlab: stratlab,
   "apex-quant-engine": apex,
   "automated-trading-os": atos,
   "market-data-replay": replay,

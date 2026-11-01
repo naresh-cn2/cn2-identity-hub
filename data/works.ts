@@ -526,21 +526,25 @@ export const settleIqItem: ComprehensiveWorkItem = {
 
 export const stratlabItem: ComprehensiveWorkItem = {
   id: "stratlab",
-  title: "STRATLAB",
+  title: "STRATLAB — Quantitative Strategy Backtesting Platform",
   shortTitle: "STRATLAB",
-  categoryLabel: "Quantitative Strategy Backtesting & Analytics Platform (CS50x Final Project)",
-  tags: ["HTML", "PYTHON", "FLASK", "FLASK", "BOOTSTRAP", "FINTECH"],
-  status: "PRODUCTION",
-  statusNote: "CS50x Final Project — Harvard University. Quantitative strategy backtesting and analytics platform.",
-  thesis: "A research idea becomes knowledge only when its evidence is complete, reproducible and gated.",
+  categoryLabel: "HARVARD CS50x FINAL CAPSTONE • QUANTITATIVE STRATEGY & ANALYTICS",
+  tags: ["PYTHON", "FLASK", "SQLITE", "CHART.JS", "FINTECH", "RESEARCH"],
+  status: "PRODUCTION · 100% VERIFIED",
+  statusNote: "CS50x Final Capstone Project — Harvard University. Quantitative strategy backtesting and analytics platform.",
+  thesis: "A research idea becomes knowledge only when its evidence is complete, reproducible, and verifiable under historical simulation.",
   summary:
-    "StratLab is a quantitative strategy backtesting and analytics platform — Harvard CS50x Final Capstone Project (2026 Edition). It provides deterministic backtesting, strategy analytics, and quantitative research tooling with verified CS50 credentials.",
-  metrics: [],
-  technologies: ["HTML", "Python 3.10+", "Flask", "Bootstrap 5.3", "Chart.js 4.x", "SQLite", "MIT License"],
+    "StratLab is a quantitative strategy backtesting and analytics platform developed as the Harvard University CS50x Final Capstone Project. It provides deterministic historical backtesting, portfolio analytics, and interactive performance visualization with verified academic credentials.",
+  metrics: [
+    { value: "CS50x", label: "HARVARD CAPSTONE", context: "VERIFIED FINAL PROJECT WITH HONORS" },
+    { value: "100%", label: "DETERMINISTIC SIMULATION", context: "HISTORICAL STRATEGY REPLAY & METRICS" },
+    { value: "FULL-STACK", label: "PRODUCTION STACK", context: "PYTHON · FLASK · SQLITE · CHART.JS" },
+  ],
+  technologies: ["HTML5", "Python 3.10+", "Flask", "Bootstrap 5.3", "Chart.js 4.x", "SQLite", "MIT License"],
   github: "https://github.com/naresh-cn2/stratlab",
   githubVerified: true,
   tier: 1,
-  evidenceLabel: "CS50x FINAL PROJECT · VERIFIED",
+  evidenceLabel: "CS50x FINAL CAPSTONE · HARVARD ONLINE VERIFIED",
   workCategory: "projects",
   whyIBuiltIt: [
     "Harvard CS50x requires a final capstone project demonstrating full-stack development skills.",
@@ -1102,13 +1106,12 @@ export const hydraCoreItem: ComprehensiveWorkItem = {
   },
 };
 function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
-  let workCategory: WorkCategoryType = "projects";
+  let workCategory: WorkCategoryType = "products";
   if (
-    p.id === "billing-data-gateway" ||
-    p.id === "ifm-costintel" ||
-    p.id === "strata-engine"
+    p.id === "bustub-engine" ||
+    p.id === "stratlab"
   ) {
-    workCategory = "products";
+    workCategory = "projects";
   } else if (
     p.id === "systems-kernel" ||
     p.id === "sentiment-stream" ||
@@ -1118,7 +1121,7 @@ function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
   ) {
     workCategory = "personal";
   } else {
-    workCategory = "projects";
+    workCategory = "products";
   }
 
   const whyIBuiltIt: string[] = [

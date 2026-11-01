@@ -364,33 +364,36 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             <p className="label-mono mt-2 text-faint">SYSTEM TOPOLOGY &amp; INSTRUMENTATION SCHEMATICS</p>
           </Reveal>
           <div className="mt-8 grid gap-6">
-            {item.screenshotsAndVisuals.map((vis) => (
-              <div key={vis.title} className="border border-line bg-surface p-6">
-                <div className="flex items-center justify-between border-b border-line pb-3">
-                  <h3 className="font-mono text-sm font-bold text-foreground">{vis.title}</h3>
-                  <span className="label-mono text-[9px] border border-line px-2 py-0.5 text-faint">
-                    {vis.type.toUpperCase()}
-                  </span>
+            {item.screenshotsAndVisuals.map((vis) => {
+              const src = (vis as { src?: string }).src;
+              return (
+                <div key={vis.title} className="border border-line bg-surface p-6">
+                  <div className="flex items-center justify-between border-b border-line pb-3">
+                    <h3 className="font-mono text-sm font-bold text-foreground">{vis.title}</h3>
+                    <span className="label-mono text-[9px] border border-line px-2 py-0.5 text-faint">
+                      {vis.type.toUpperCase()}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-xs leading-relaxed text-muted font-mono">{vis.caption}</p>
+                  {src ? (
+                    <div className="mt-6 flex max-h-[440px] items-center justify-center overflow-hidden rounded border border-line bg-background/50 p-2">
+                      <Image
+                        src={src}
+                        alt={vis.title}
+                        width={800}
+                        height={420}
+                        className="max-h-[420px] w-auto max-w-full object-contain"
+                        unoptimized
+                      />
+                    </div>
+                  ) : (
+                    <div className="mt-6 flex h-48 items-center justify-center border border-dashed border-line bg-background/50 text-xs font-mono text-faint">
+                      [LIVE SYSTEM TOPOLOGY · TELEMETRY INLINE]
+                    </div>
+                  )}
                 </div>
-                <p className="mt-3 text-xs leading-relaxed text-muted font-mono">{vis.caption}</p>
-                {vis.src ? (
-                  <div className="mt-6 flex max-h-[440px] items-center justify-center overflow-hidden rounded border border-line bg-background/50 p-2">
-                    <Image
-                      src={vis.src}
-                      alt={vis.title}
-                      width={800}
-                      height={420}
-                      className="max-h-[420px] w-auto max-w-full object-contain"
-                      unoptimized
-                    />
-                  </div>
-                ) : (
-                  <div className="mt-6 flex h-48 items-center justify-center border border-dashed border-line bg-background/50 text-xs font-mono text-faint">
-                    [LIVE SYSTEM TOPOLOGY · TELEMETRY INLINE]
-                  </div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
