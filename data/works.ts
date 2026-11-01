@@ -1113,11 +1113,9 @@ function enrichArchiveProject(p: ArchiveProject): ComprehensiveWorkItem {
   ) {
     workCategory = "projects";
   } else if (
-    p.id === "systems-kernel" ||
-    p.id === "sentiment-stream" ||
-    p.id === "qrsip" ||
     p.id === "cn2-identity-hub" ||
-    p.id === "openverse"
+    p.id === "openverse" ||
+    p.id === "open-verse"
   ) {
     workCategory = "personal";
   } else {
