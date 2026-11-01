@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { CredentialRecord, StudyTrack } from "@/data/credentials";
 import { getArchiveProject } from "@/data/archive";
 import { researchEntries } from "@/data/research";
+import CertificateViewer from "@/components/credentials/certificate-viewer";
 
 /**
  * CredentialTimeline — the professional-development sequence.
@@ -51,6 +52,7 @@ export default function CredentialTimeline({
   tracks: StudyTrack[];
 }) {
   const [openIds, setOpenIds] = useState<ReadonlySet<string>>(() => new Set());
+  const [viewerImage, setViewerImage] = useState<string | null>(null);
 
   const toggle = (id: string) =>
     setOpenIds((prev) => {
@@ -83,6 +85,7 @@ export default function CredentialTimeline({
   const splitPct = (credentials.length / rows.length) * 100;
 
   return (
+    <>
     <div>
       {/* ---- sequence rail: the whole record, dated ticks where dates exist ---- */}
       <div className="relative mx-auto hidden h-24 max-w-5xl lg:block" aria-hidden="true">
@@ -134,6 +137,7 @@ export default function CredentialTimeline({
             ? researchEntries.find((r) => r.id === c.relatedResearch)
             : undefined;
           const dateLabel = formatDate(row.date);
+          const certImage = c?.certificateImage;
 
           return (
             <li key={row.id} className="relative pl-10 md:pl-14">
@@ -261,7 +265,7 @@ export default function CredentialTimeline({
                             )}
                           </div>
 
-                          {(c.verificationUrl || c.certificateUrl || (c.notes?.length ?? 0) > 0 || relBuild || relResearch) && (
+                          {(c.verificationUrl || certImage || (c.notes?.length ?? 0) > 0 || relBuild || relResearch) && (
                             <div className="space-y-3 border-t border-line pt-5 md:col-span-2">
                               {c.verificationUrl && (
                                 <a
@@ -275,17 +279,16 @@ export default function CredentialTimeline({
                                   </span>
                                 </a>
                               )}
-                              {c.certificateUrl && (
-                                <a
-                                  href={c.certificateUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="group/link inline-block"
+                              {certImage && (
+                                <button
+                                  type="button"
+                                  onClick={() => setViewerImage(certImage)}
+                                  className="group/link block"
                                 >
                                   <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
                                     VIEW CERTIFICATE →
                                   </span>
-                                </a>
+                                </button>
                               )}
                               {c.notes?.map((note) => (
                                 <p key={note} className="text-xs leading-relaxed text-faint">
@@ -379,5 +382,15 @@ export default function CredentialTimeline({
         </ol>
       </div>
     </div>
+
+    {/* certificate viewer — opens the actual certificate image in place */}
+    {viewerImage && (
+      <CertificateViewer
+        isOpen={!!viewerImage}
+        imageSrc={viewerImage}
+        onClose={() => setViewerImage(null)}
+      />
+    )}
+    </>
   );
 }

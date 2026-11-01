@@ -320,20 +320,21 @@ body {
 
 /* ---------------- page transition ---------------- */
 
+/* Opacity-only: a transform here — even a lingering one — would turn the
+   wrapper into the containing block for position:fixed descendants and
+   stretch every full-viewport background canvas to the full page height. */
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(12px);
   }
 
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
 .page-enter {
-  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes signal-sweep {

@@ -27,24 +27,6 @@ export default function CollaborationPaths() {
           </Reveal>
         ))}
       </div>
-
-      <Reveal>
-        <div className="mt-24 flex flex-col gap-8 border-t border-line pt-12 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="display text-4xl md:text-6xl">BUKYA NARESH</h2>
-            <p className="label-mono mt-4 text-[10px] text-faint">
-              CN2.DEV — QUANTITATIVE DEVELOPER
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="link-line label-mono inline-flex items-center gap-2 self-start text-[10px] text-foreground transition-colors duration-300 hover:text-signal md:self-auto"
-          >
-            CONTACT
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-      </Reveal>
     </>
   );
 }

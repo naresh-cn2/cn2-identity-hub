@@ -6,9 +6,10 @@ import { useEffect } from "react";
 /**
  * CertificateViewer — internal lightbox for viewing certificate images.
  *
- * Opens without leaving /credentials. Displays the full certificate image,
- * preserves aspect ratio, supports closing via close button, Escape key,
- * or clicking the backdrop. Works on desktop and mobile.
+ * Opens without leaving /credentials. Displays the complete certificate at
+ * its original aspect ratio (object-contain, original bytes), and closes
+ * via the close button, Escape, or a backdrop click. Works on desktop and
+ * mobile; an optional action opens the raw image in a new tab for zooming.
  */
 export default function CertificateViewer({
   isOpen,
@@ -25,53 +26,64 @@ export default function CertificateViewer({
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
       aria-label="View certificate"
     >
-      {/* Backdrop */}
+      {/* Backdrop — click to close */}
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/85 backdrop-blur-sm"
         aria-hidden="true"
         onClick={onClose}
       />
 
-      {/* Content wrapper */}
+      {/* Certificate — full frame, original proportions preserved */}
       <div
-        className="relative z-10 flex items-center justify-center p-4 max-w-[95vw] max-h-[95vh]"
+        className="relative z-10 flex h-[86vh] w-[92vw] max-w-[1400px] items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <Image
           src={imageSrc}
           alt="Certificate of completion"
-          className="max-w-full max-h-full object-contain rounded-lg shadow-2xl bg-white dark:bg-surface"
-          loading="lazy"
-          decoding="async"
-          sizes="(max-width: 768px) 90vw, (max-width: 1200px) 70vw, 60vw"
-          style={{ maxWidth: "100%", maxHeight: "100%", width: "auto", height: "auto" }}
+          fill
+          unoptimized
+          sizes="92vw"
+          className="object-contain drop-shadow-2xl"
+          priority
         />
 
-        {/* Close button */}
+        {/* Close */}
         <button
+          type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 z-20 p-2 rounded-full bg-black/60 hover:bg-black/80 transition-colors"
+          className="absolute -top-3 right-0 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black"
           aria-label="Close certificate viewer"
         >
-          <span className="text-white text-xl font-semibold leading-none">×</span>
+          <span className="text-xl leading-none">&times;</span>
         </button>
 
-        {/* Full-size hint */}
-        <p className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-[10px] text-white/60 tracking-wider uppercase">
-          Click backdrop to close · Esc to exit
-        </p>
+        {/* Optional full-size view */}
+        <a
+          href={imageSrc}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="label-mono absolute -bottom-8 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap text-[10px] text-white/70 transition-colors hover:text-white"
+        >
+          OPEN FULL SIZE ↗
+        </a>
       </div>
     </div>
   );

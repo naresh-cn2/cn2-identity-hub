@@ -77,13 +77,16 @@ export default function AboutPage() {
         <SystemsUniverse />
       </div>
 
-      {/* Atmospheric grid overlay for depth and technical texture */}
+      {/* Atmospheric layer — technical grid, deep blue illumination,
+          restrained red horizon accent. Sits behind every section. */}
       <div
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
         aria-hidden="true"
       >
-        <div className="absolute inset-0" />
-        <div className="absolute inset-0" />
+        <div className="absolute inset-0 grid-field opacity-70" />
+        <div className="absolute -left-[20vw] -top-[10vh] h-[75vh] w-[75vw] rounded-full bg-[radial-gradient(closest-side,rgba(22,119,255,0.16),transparent)] blur-2xl" />
+        <div className="absolute -bottom-[15vh] -right-[15vw] h-[70vh] w-[70vw] rounded-full bg-[radial-gradient(closest-side,rgba(0,240,255,0.10),transparent)] blur-2xl" />
+        <div className="absolute inset-x-0 top-[38%] h-px bg-gradient-to-r from-transparent via-signal/20 to-transparent" />
       </div>
 
       <div className="relative z-10">

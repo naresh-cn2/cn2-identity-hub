@@ -24,8 +24,8 @@ const nextConfig: NextConfig = {
       { source: "/quant/automated-trading-os", destination: "/work/automated-trading-os", permanent: true },
       { source: "/research/market-data-replay", destination: "/work/market-data-replay", permanent: true },
       { source: "/research/qrsip", destination: "/work/qrsip", permanent: true },
-      { source: "/career", destination: "/capabilities", permanent: true },
-      { source: "/about/capabilities", destination: "/capabilities", permanent: true },
+      { source: "/career", destination: "/about#capability-map", permanent: true },
+      { source: "/about/capabilities", destination: "/about#capability-map", permanent: true },
     ];
   },
 };

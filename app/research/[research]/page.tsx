@@ -222,7 +222,7 @@ export default async function ResearchEntryPage({
                   <ul className="space-y-3">
                     {relatedCaps.map((cap) => (
                       <li key={cap.id}>
-                        <Link href="/capabilities" className="group block">
+                        <Link href="/about#capability-map" className="group block">
                           <span className="label-mono text-foreground transition-colors group-hover:text-research">
                             {cap.name} →
                           </span>
@@ -282,7 +282,7 @@ export default async function ResearchEntryPage({
               THE WORK BEHIND IT →
             </Link>
             <Link
-              href="/capabilities"
+              href="/about#capability-map"
               className="link-line label-mono text-xs text-muted hover:text-signal"
             >
               CAPABILITIES →

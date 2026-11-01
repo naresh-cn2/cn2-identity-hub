@@ -23,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/intelligence",
     "/credentials",
     "/proof",
-    "/capabilities",
     "/lab",
     "/about",
     "/services",

@@ -40,7 +40,7 @@ export default function ProofPage() {
                     <Reveal>
                         <div className="flex flex-wrap items-baseline justify-between gap-4">
                             <p className="label-mono text-muted">
-                                SECTION <span className="text-signal">/</span> PROOF
+                                PROOF
                             </p>
                             <p className="label-mono text-faint">
                                 {repos.length} REPOSITORIES · {verifiedResearch.length} VERIFIED ENTRIES

@@ -12,13 +12,26 @@ import { usePathname } from "next/navigation";
  * - Automatic safety timer guarantees the transition overlay unmounts even if
  *   animation events are throttled by the browser in background tabs.
  * - Reduced-motion completely neutralizes the sweep for instantaneous transitions.
- * - Content settles to `transform: none` to ensure fixed/sticky descendants remain stable.
+ * - The enter animation is opacity-only: a transform on this wrapper would make
+ *   it the containing block for position:fixed descendants and break every
+ *   full-viewport background canvas. The class is also dropped once entered.
  */
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const first = useRef(true);
   const [sweep, setSweep] = useState(0);
   const [sweeping, setSweeping] = useState(false);
+  const [enteredPath, setEnteredPath] = useState<string | null>(null);
+  const entered = enteredPath === pathname;
+
+  /* The wrapper carries `page-enter` only until its own animation ends —
+     a 700ms safety timer covers browsers that never fire animationend
+     (background/occluded tabs). No animation styles linger afterwards, so
+     fixed descendants (background canvases, ambient VFX) stay viewport-sized. */
+  useEffect(() => {
+    const settle = setTimeout(() => setEnteredPath(pathname), 700);
+    return () => clearTimeout(settle);
+  }, [pathname]);
 
   useEffect(() => {
     if (first.current) {
@@ -48,7 +61,13 @@ export default function PageTransition({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div key={pathname} className="page-enter">
+      <div
+        key={pathname}
+        className={entered ? undefined : "page-enter"}
+        onAnimationEnd={(e) => {
+          if (e.target === e.currentTarget) setEnteredPath(pathname);
+        }}
+      >
         {children}
       </div>
 

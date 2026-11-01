@@ -16,7 +16,7 @@ function Assert([string]$name, [bool]$cond) {
 
 $seeds = @(
     "/", "/hub", "/work", "/research", "/articles", "/case-studies",
-    "/services", "/credentials", "/capabilities", "/intelligence", "/proof",
+    "/services", "/credentials", "/works/products", "/intelligence", "/proof",
     "/lab", "/about", "/contact", "/links", "/cv", "/opportunities",
     "/testimonials", "/how-i-work", "/privacy", "/terms", "/work-with-me",
     "/research/lookahead-bias", "/work/crypto-platform",

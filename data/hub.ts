@@ -120,7 +120,7 @@ export const hubIndex: { label: string; href: string }[] = [
   { label: "PROOF", href: "/proof" },
   { label: "CV", href: "/cv" },
   { label: "CASE STUDIES", href: "/case-studies" },
-  { label: "CAPABILITIES", href: "/capabilities" },
+  { label: "CAPABILITIES", href: "/about#capability-map" },
   { label: "ARTICLES", href: "/articles" },
   { label: "INTELLIGENCE", href: "/intelligence" },
   { label: "IDENTITY", href: "/identity" },

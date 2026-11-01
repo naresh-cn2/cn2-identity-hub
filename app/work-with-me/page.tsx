@@ -81,7 +81,7 @@ export default function WorkWithMePage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-muted">
-                SECTION <span className="text-signal">/</span> WORK WITH ME
+                WORK WITH ME
               </p>
               <p className="label-mono text-faint">{site.status}</p>
             </div>
