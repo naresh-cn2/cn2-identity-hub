@@ -1,4 +1,4 @@
-<img src="public/images/cn2-hero-final.png" alt="CN2.DEV" width="900" />
+
 
 # CN2.DEV
 
