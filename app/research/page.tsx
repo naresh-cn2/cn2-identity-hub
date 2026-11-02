@@ -221,7 +221,7 @@ function StageQuestionVisual() {
   );
 }
 
-function StageHypothesisVisual() {
+function StageHypothesisVisual({ gradId }: { gradId: string }) {
   return (
     <g className="stage-visual stage-hypothesis">
       <text x="24" y="94" fill="var(--research)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.08em">
@@ -249,7 +249,7 @@ function StageHypothesisVisual() {
 
       <path
         d="M 260,368 C 340,368 380,150 440,150 C 500,150 560,368 640,368"
-        fill="url(#h1Grad)"
+        fill={`url(#${gradId})`}
       />
       <path
         d="M 260,368 C 340,368 380,150 440,150 C 500,150 560,368 640,368"
@@ -398,7 +398,7 @@ function StageMethodVisual() {
   );
 }
 
-function StageEvidenceVisual() {
+function StageEvidenceVisual({ gradId }: { gradId: string }) {
   return (
     <g className="stage-visual stage-evidence">
       <text x="24" y="94" fill="var(--research)" fontSize="10" fontFamily="var(--font-mono)" letterSpacing="0.08em">
@@ -430,7 +430,7 @@ function StageEvidenceVisual() {
 
       <path
         d="M 60,285 L 100,271 L 140,259 L 180,263 L 220,237 L 260,223 L 300,229 L 340,203 L 380,187 L 420,171 L 460,177 L 500,151 L 540,139 L 580,129 L 620,117 L 620,285 L 60,285 Z"
-        fill="url(#evidenceGrad)"
+        fill={`url(#${gradId})`}
       />
       <path
         d="M 60,285 L 100,271 L 140,259 L 180,263 L 220,237 L 260,223 L 300,229 L 340,203 L 380,187 L 420,171 L 460,177 L 500,151 L 540,139 L 580,129 L 620,117"
@@ -772,20 +772,25 @@ function ResearchScene({ highlight, isStickySlot }: { highlight: number; isStick
   // so they need p-6 to match scenes[0]'s padding inside viz-frame p-6.
   const containerClass = isStickySlot && !isFirst ? "w-full h-full p-6 flex flex-col justify-center" : "w-full";
 
+  // Unique gradient IDs per scene — all 7 scenes share one DOM (cross-fade
+  // stack), so duplicate ids collide in url() resolution and kill gradients.
+  const evidenceId = `evidenceGrad-${highlight}`;
+  const h1Id = `h1Grad-${highlight}`;
+
   return (
     <div className={containerClass}>
       <svg
-        viewBox="0 0 700 470"
+        viewBox="0 0 700 530"
         className="w-full max-w-[620px] mx-auto h-auto"
         role="img"
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id="evidenceGrad" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={evidenceId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--research)" stopOpacity="0.25" />
             <stop offset="100%" stopColor="var(--research)" stopOpacity="0.0" />
           </linearGradient>
-          <linearGradient id="h1Grad" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={h1Id} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--research)" stopOpacity="0.18" />
             <stop offset="100%" stopColor="var(--research)" stopOpacity="0.0" />
           </linearGradient>
@@ -793,26 +798,35 @@ function ResearchScene({ highlight, isStickySlot }: { highlight: number; isStick
 
         <MethodPipelineHeader highlight={highlight} />
 
-        {highlight === 0 && <StageQuestionVisual />}
-        {highlight === 1 && <StageHypothesisVisual />}
-        {highlight === 2 && <StageMethodVisual />}
-        {highlight === 3 && <StageEvidenceVisual />}
-        {highlight === 4 && <StageResultVisual />}
-        {highlight === 5 && <StageLimitationVisual />}
-        {highlight === 6 && <StageConclusionVisual />}
+        {/* Stage visuals are authored starting at y=94 — shift them below the
+            method header (labels end at y=70) so the two never overlap. */}
+        <g transform="translate(0, 74)">
+          {highlight === 0 && <StageQuestionVisual />}
+          {highlight === 1 && <StageHypothesisVisual gradId={h1Id} />}
+          {highlight === 2 && <StageMethodVisual />}
+          {highlight === 3 && <StageEvidenceVisual gradId={evidenceId} />}
+          {highlight === 4 && <StageResultVisual />}
+          {highlight === 5 && <StageLimitationVisual />}
+          {highlight === 6 && <StageConclusionVisual />}
+        </g>
       </svg>
     </div>
   );
 }
 
-/** Compact mobile scene — one node at a time in the story stack, hidden on desktop. */
+/** Compact mobile scene — the stage schematic inline in the story stack, hidden on desktop. */
 function ResearchSceneMobile({ index, step }: { index: number; step: (typeof METHOD)[number] }) {
   return (
-    <div className="flex items-center gap-3 text-muted label-mono mb-6 lg:hidden">
-      <span className="h-8 w-8 rounded-full border border-line-strong flex items-center justify-center text-[10px]">
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      <span className="text-xs">{step}</span>
+    <div className="mb-8 lg:hidden">
+      <div className="flex items-center gap-3 text-muted label-mono mb-4">
+        <span className="h-8 w-8 rounded-full border border-line-strong flex items-center justify-center text-[10px]">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="text-xs">{step}</span>
+      </div>
+      <div className="viz-frame p-4">
+        <ResearchScene highlight={index} />
+      </div>
     </div>
   );
 }
