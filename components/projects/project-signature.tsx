@@ -12,10 +12,18 @@ import { getFlagship, type ArchiveProject } from "@/data/archive";
  * signature scenes. Falls back to the deterministic mark if a project has
  * neither yet.
  */
-export default function ProjectSignature({ project }: { project: ArchiveProject }) {
+export default function ProjectSignature({
+  project,
+  embedded = false,
+}: {
+  project: ArchiveProject;
+  /** Rendered inside an ancestor <a> — internal links become inert spans
+   *  so the document never nests anchors (React hydration error). */
+  embedded?: boolean;
+}) {
   if (project.tier === 1) {
     const flagship = getFlagship(project.id);
-    if (flagship) return <FlagshipInstrument project={flagship} />;
+    if (flagship) return <FlagshipInstrument project={flagship} embedded={embedded} />;
     return <ProjectMark id={project.id} />;
   }
   return <TierTwoSignature project={project} />;

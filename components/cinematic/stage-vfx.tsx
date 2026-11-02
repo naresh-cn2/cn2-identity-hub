@@ -972,7 +972,12 @@ export default function StageVFX() {
     if (!motif) return null;
 
     return (
-        <div className="stage-layer cn2-diffuse" aria-hidden="true">
+        <div
+            className="stage-layer cn2-diffuse"
+            data-cn2-depth=""
+            style={{ "--cn2-depth-k": 0.5 } as React.CSSProperties}
+            aria-hidden="true"
+        >
             <canvas ref={canvasRef} className="stage-canvas" />
         </div>
     );

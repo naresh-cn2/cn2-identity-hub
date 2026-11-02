@@ -89,9 +89,18 @@ function Frame({
   );
 }
 
-export default function FlagshipInstrument({ project }: { project: FlagshipProject }) {
+export default function FlagshipInstrument({
+  project,
+  embedded = false,
+}: {
+  project: FlagshipProject;
+  /** Inside an ancestor <a>: the read/dossier links render as inert styled
+   *  spans (the wrapper link already navigates the card). Avoids nested
+   *  anchors — a React hydration error. */
+  embedded?: boolean;
+}) {
   switch (project.id) {
-    case "bustub-engine":
+    case "bustub-engine": {
       return (
         <Frame
           label="INSTRUMENT / 4-PILLAR RELATIONAL DATABASE SUBSYSTEMS"
@@ -105,24 +114,37 @@ export default function FlagshipInstrument({ project }: { project: FlagshipProje
               Two-Phase Locking (2PL) with background DFS cycle detection.
             </p>
             <div className="flex flex-wrap gap-2 font-mono text-xs">
-              <Link
-                href="/case-studies/bustub-engine"
-                className="inline-flex items-center gap-1.5 rounded border border-signal/40 bg-signal/10 px-3 py-1.5 text-signal transition-colors hover:bg-signal/20"
-              >
-                READ FULL CASE STUDY →
-              </Link>
-              <a
-                href="/works/bustub/WORK_PROOF.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded border border-line bg-surface/50 px-3 py-1.5 text-foreground transition-colors hover:border-research hover:text-research"
-              >
-                VERIFICATION DOSSIER ↗
-              </a>
+              {embedded ? (
+                <span className="inline-flex items-center gap-1.5 rounded border border-signal/40 bg-signal/10 px-3 py-1.5 text-signal">
+                  READ FULL CASE STUDY →
+                </span>
+              ) : (
+                <Link
+                  href="/case-studies/bustub-engine"
+                  className="inline-flex items-center gap-1.5 rounded border border-signal/40 bg-signal/10 px-3 py-1.5 text-signal transition-colors hover:bg-signal/20"
+                >
+                  READ FULL CASE STUDY →
+                </Link>
+              )}
+              {embedded ? (
+                <span className="inline-flex items-center gap-1.5 rounded border border-line bg-surface/50 px-3 py-1.5 text-foreground">
+                  VERIFICATION DOSSIER ↗
+                </span>
+              ) : (
+                <a
+                  href="/works/bustub/WORK_PROOF.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded border border-line bg-surface/50 px-3 py-1.5 text-foreground transition-colors hover:border-research hover:text-research"
+                >
+                  VERIFICATION DOSSIER ↗
+                </a>
+              )}
             </div>
           </div>
         </Frame>
       );
+    }
 
     case "apex-quant-engine": {
       const equity = equitySeries(42, 220);

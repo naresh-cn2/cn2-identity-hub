@@ -20,7 +20,7 @@ export default function SectionHeader({ act, code, title, subtitle, meta }: Sect
             {meta && <p className="label-mono hidden text-faint md:block">{meta}</p>}
           </div>
         </Reveal>
-        <Reveal delay={100}>
+        <Reveal delay={100} focus>
           <h2 className="display mt-6 text-[clamp(2.6rem,7vw,5.5rem)]">{title}</h2>
         </Reveal>
         {subtitle && (

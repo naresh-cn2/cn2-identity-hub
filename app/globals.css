@@ -1842,6 +1842,23 @@ button.corner-ticks {
   bottom: -12vh;
 }
 
+/* Background grids drift with the same shift — consumed as background
+   phase, not as a transform, so the tiled pattern never exposes an edge
+   and never creates a containing block. Grids are the farthest layer,
+   so they take the slowest rate (0.4x of the ambience drift). */
+.grid-field,
+.grid-field-fine {
+  background-position: 0 calc(var(--cn2-shift, 0px) * 0.4);
+}
+
+/* The stage motif layer drifts too. Oversized on both edges so the
+   parallax travel never exposes a seam inside the 100dvh box (the
+   height-based layout makes .cn2-depth-layer's bottom edge moot here). */
+.stage-layer[data-cn2-depth] {
+  top: -6vh;
+  height: calc(100dvh + 12vh);
+}
+
 /* Blur-to-sharp reveal — opt-in via <Reveal focus>. Enters defocused and
    settles to `filter: none`, so no lingering containing block remains
    (the certificate-lightbox lesson). */
@@ -1904,6 +1921,11 @@ button.corner-ticks {
     filter: none !important;
   }
 
+  .grid-field,
+  .grid-field-fine {
+    background-position: 0 0;
+  }
+
   .reveal.reveal-focus {
     filter: none;
   }
@@ -1921,6 +1943,11 @@ button.corner-ticks {
 
   [data-cn2-diffuse] {
     filter: none !important;
+  }
+
+  .grid-field,
+  .grid-field-fine {
+    background-position: 0 0;
   }
 
   .reveal.reveal-focus {

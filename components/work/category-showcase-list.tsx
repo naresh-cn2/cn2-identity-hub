@@ -136,7 +136,7 @@ export default function CategoryShowcaseList({ items, categoryTitle }: Props) {
           const visual = (
             <TiltCard className={`min-w-0 ${flip ? "lg:order-2" : ""}`} max={2.5}>
               <Link href={`/works/${item.id}`} aria-hidden="true" tabIndex={-1} className="block">
-                <ProjectSignature project={item} />
+                <ProjectSignature project={item} embedded />
               </Link>
             </TiltCard>
           );

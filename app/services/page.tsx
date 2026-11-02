@@ -54,7 +54,7 @@ export default function ServicesPage() {
               investigate, design, and solve.
             </p>
           </Reveal>
-          <Reveal delay={280}>
+          <Reveal delay={280} focus>
             <div className='viz-frame mt-12 p-4 md:mt-16 md:p-6'>
               <div className='relative'>
                 <ServicesFlowViz />

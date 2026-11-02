@@ -18,8 +18,8 @@ export default function CategoryDoors() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
             {/* Visual Column */}
             <div className="relative flex items-center justify-center">
-              <Reveal>
-                <div className="w-full max-w-[540px]">
+              <Reveal className="w-full">
+                <div className="mx-auto w-full max-w-[540px]">
                   <BuildsVisual />
                 </div>
               </Reveal>
@@ -94,8 +94,8 @@ export default function CategoryDoors() {
 
             {/* Visual Column */}
             <div className="relative flex items-center justify-center lg:order-2">
-              <Reveal>
-                <div className="w-full max-w-[540px]">
+              <Reveal className="w-full">
+                <div className="mx-auto w-full max-w-[540px]">
                   <ResearchVisual />
                 </div>
               </Reveal>
@@ -110,8 +110,8 @@ export default function CategoryDoors() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
             {/* Visual Column */}
             <div className="relative flex items-center justify-center">
-              <Reveal>
-                <div className="w-full max-w-[540px]">
+              <Reveal className="w-full">
+                <div className="mx-auto w-full max-w-[540px]">
                   <PersonalVisual />
                 </div>
               </Reveal>

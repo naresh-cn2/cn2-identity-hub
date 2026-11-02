@@ -910,7 +910,7 @@ export default function ResearchPage() {
                 </p>
               </Reveal>
             </div>
-            <Reveal delay={240}>
+            <Reveal delay={240} focus>
               <div className="viz-frame p-4">
                 <GaussianManifold />
                 <p className="label-mono mt-3 text-center text-[10px] text-faint">
@@ -920,7 +920,7 @@ export default function ResearchPage() {
             </Reveal>
           </div>
 
-          <Reveal delay={300}>
+          <Reveal delay={300} focus>
             <div className="mt-14 max-w-5xl">
               <MethodSpine />
             </div>
@@ -973,7 +973,7 @@ export default function ResearchPage() {
             </p>
           </Reveal>
 
-          <Reveal delay={140}>
+          <Reveal delay={140} focus>
             <div className="viz-frame mt-10 p-5 md:p-8">
               <div className="relative">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">

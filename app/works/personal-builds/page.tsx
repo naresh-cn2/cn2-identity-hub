@@ -83,8 +83,8 @@ export default function PersonalBuildsCategoryPage() {
 
             {/* Immersive Autonomous Agents Visual Column */}
             <div className="relative flex items-center justify-center">
-              <Reveal delay={120}>
-                <div className="w-full max-w-[560px]">
+              <Reveal delay={120} className="w-full">
+                <div className="mx-auto w-full max-w-[560px]">
                   <PersonalVisual />
                 </div>
               </Reveal>

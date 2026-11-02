@@ -93,7 +93,7 @@ function Showcase({ project, flip }: { project: ArchiveProject; flip: boolean })
   const visual = (
     <TiltCard className={`min-w-0 ${flip ? "lg:order-2" : ""}`} max={2.5}>
       <Link href={`/work/${project.id}`} aria-hidden="true" tabIndex={-1} className="block">
-        <ProjectSignature project={project} />
+        <ProjectSignature project={project} embedded />
       </Link>
     </TiltCard>
   );

@@ -166,7 +166,7 @@ export default function CredentialsPage() {
             </div>
           </Reveal>
 
-          <Reveal delay={100}>
+          <Reveal delay={100} focus>
             <div className="mt-12">
               <CredentialTimeline credentials={credentials} tracks={studyTracks} />
             </div>
@@ -209,7 +209,9 @@ export default function CredentialsPage() {
               <p className="label-mono text-faint">{credentialBadges.length} EARNED</p>
             </div>
           </Reveal>
-          <CredentialBadgeList />
+          <Reveal delay={140} focus>
+            <CredentialBadgeList />
+          </Reveal>
         </div>
       </section>
 
