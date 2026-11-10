@@ -2,13 +2,16 @@ import type { ArchiveProject } from "./archive";
 import { archiveProjects } from "./archive";
 
 /**
- * WORKS INFORMATION ARCHITECTURE (spec: WORKS v6)
+ * BUILDS INFORMATION ARCHITECTURE (spec: BUILDS v7, IA v5)
  *
- * Three distinct destinations:
- * 1. PRODUCTS & PLATFORMS - Commercial products, quantitative systems,
+ * Three distinct destinations under the Builds umbrella:
+ * 1. PRODUCTS - Commercial products, quantitative systems,
  *    FinOps tools and high-performance infrastructure I have built.
  * 2. PROJECTS - Genuine standalone projects that are not presented as products.
- * 3. PERSONAL BUILDS - Independent personal systems and tools.
+ * 3. INDEPENDENT BUILDS - Independent personal systems and tools.
+ *
+ * The slugs are unchanged from v6 so every existing route keeps working;
+ * only the display names moved to the IA v5 vocabulary.
  */
 
 export type WorkCategoryType = "products" | "projects" | "personal";
@@ -26,7 +29,7 @@ export interface CategoryMeta {
 export const WORK_CATEGORIES: Record<WorkCategoryType, CategoryMeta> = {
   products: {
     id: "products",
-    title: "PRODUCTS & PLATFORMS",
+    title: "PRODUCTS",
     slug: "products",
     badge: "COMMERCIAL & PLATFORM SYSTEMS",
     tagline: "Quantitative systems, FinOps tools, and high-performance infrastructure.",
@@ -46,7 +49,7 @@ export const WORK_CATEGORIES: Record<WorkCategoryType, CategoryMeta> = {
   },
   personal: {
     id: "personal",
-    title: "PERSONAL BUILDS",
+    title: "INDEPENDENT BUILDS",
     slug: "personal-builds",
     badge: "INDEPENDENT SYSTEMS & AI AGENTS",
     tagline: "Independent personal systems and tools.",
@@ -216,7 +219,7 @@ export const bustubEngineItem: ComprehensiveWorkItem = {
   linksList: [
     { label: "ARCHITECTURE CASE STUDY", href: "/case-studies/bustub-engine", type: "docs" },
     { label: "VERIFICATION & TELEMETRY PROOF", href: "/works/bustub/WORK_PROOF.md", type: "paper" },
-    { label: "PRIVATE REPOSITORY (CMU COMPLIANT)", href: "https://github.com/naresh-cn2/bustub-engine", type: "github" },
+    { label: "PRIVATE REPOSITORY — ACCESS RESTRICTED (CMU COMPLIANT)", href: "https://github.com/naresh-cn2/bustub-engine", type: "github" },
   ],
   detail: {
     problem: [
@@ -317,28 +320,25 @@ export const strataEngineItem: ComprehensiveWorkItem = {
   shortTitle: "STRATA-ENGINE",
   categoryLabel: "QUANTITATIVE STRATEGY & RISK EXECUTION PLATFORM",
   tags: ["QUANT", "ENGINEERING", "FINTECH"],
-  status: "PRODUCTION READY v2.1",
-  statusNote: "Multi-market execution engine with hardware-isolated risk gate and sub-millisecond invariant validation.",
+  status: "UNPUBLISHED · NO BENCHMARK RELEASED",
+  statusNote:
+    "Multi-market execution engine with an isolated pre-trade risk gate. The source repository is not published, and no latency, throughput or availability benchmark has been released.",
   thesis: "Systematic execution should enforce pre-trade capital and risk invariants before an order ever reaches exchange sockets.",
   summary:
-    "An institutional-grade algorithmic strategy engine and real-time risk platform. STRATA-ENGINE provides sub-millisecond execution routing, strict pre-trade margin governors, deterministic state machines, and high-frequency order book tracking across multiple asset classes.",
-  metrics: [
-    { value: "< 0.42 ms", label: "EXECUTION LATENCY", context: "BENCHMARK — 99.9th PERCENTILE TICK-TO-ORDER" },
-    { value: "100%", label: "INVARIANT CHECKS", context: "FAIL-CLOSED — PRE-TRADE CAPITAL GUARDS" },
-    { value: "99.99%", label: "ENGINE UPTIME", context: "HIGH AVAILABILITY — DUAL ARBITRATED DAEMONS" },
-  ],
+    "An institutional-grade algorithmic strategy engine and real-time risk platform. STRATA-ENGINE provides deterministic execution routing, strict pre-trade margin governors, deterministic state machines, and high-frequency order book tracking across multiple asset classes.",
+  metrics: [],
   technologies: ["Rust", "C++20", "Python 3.12", "WebSocket", "ZeroMQ", "Docker", "POSIX Shared Memory"],
-  github: "https://github.com/naresh-cn2/strata-engine",
-  githubVerified: true,
+  github: undefined,
+  githubVerified: false,
   tier: 1,
-  evidenceLabel: "BENCHMARK · PRODUCTION HARNESS",
+  evidenceLabel: "NO PUBLISHED BENCHMARK",
   workCategory: "products",
   whyIBuiltIt: [
     "Most commercial trading software relies on interpreted script wrappers with unmodeled execution slippage and unreliable risk overrides.",
     "I built STRATA-ENGINE to provide a zero-compromise, fail-closed quantitative execution platform where mathematical models and risk governors operate with zero runtime interpretation overhead.",
   ],
   keyCapabilities: [
-    { title: "Sub-Millisecond Invariant Gate", desc: "Per-tick checks verifying max drawdown, gross exposure, and margin limits before order transmission." },
+    { title: "Pre-Trade Invariant Gate", desc: "Per-tick checks verifying max drawdown, gross exposure, and margin limits before order transmission." },
     { title: "Continuous Order Book Depth", desc: "L2/L3 order book reconstruction maintaining bid/ask queue state with lock-free ring buffers." },
     { title: "Multi-Broker Routing Bus", desc: "Asynchronous protocol adapters translating internal unified orders to FIX, Binance, and Interactive Brokers." },
     { title: "Hardware-Isolated Failsafe", desc: "Autonomous heartbeat watchdog that forces immediate position hedging if connectivity degrades." },
@@ -356,28 +356,28 @@ export const strataEngineItem: ComprehensiveWorkItem = {
   developmentJourney: [
     { phase: "v0.5", title: "C++ Low-Latency Core", detail: "Order-book parsing and microsecond clock synchronization testbed." },
     { phase: "v1.2", title: "Rust Memory Safety Pivot", detail: "Rewrote execution routing and state machine in Rust to guarantee concurrency safety." },
-    { phase: "v2.1", title: "Commercial Platform Release", detail: "Added WebSocket management interface, real-time risk telemetry, and dockerized deployment." },
+    { phase: "v2.1", title: "Platform Build", detail: "Added WebSocket management interface, real-time risk telemetry, and dockerized deployment." },
   ],
   caseStudiesList: [
     {
       title: "Flash Crash Volatility Rejection",
       summary: "Stress-testing engine behavior during synthetic order book collapse scenarios.",
-      outcome: "Engine successfully rejected 100% of non-conforming out-of-margin orders while maintaining continuous heartbeat telemetry.",
+      outcome:
+        "Design requirement: reject non-conforming out-of-margin orders before transmission while heartbeat telemetry continues. No published test artifact confirms this behaviour yet.",
     },
   ],
   evidenceAndResults: [
-    "Tick-to-order roundtrip latency stays below 420 microseconds under 15,000 events/sec sustained load.",
-    "Zero unhandled panic restarts across 500 consecutive test cycles.",
-    "Formally verified state transitions using invariant regression harness.",
+    "No benchmark, test-suite result or runtime telemetry has been published for this build, so no latency, throughput or availability figure is claimed here.",
+    "The four-layer design — market intake, book state, invariant gate, router bus — is documented below.",
   ],
   screenshotsAndVisuals: [
-    { title: "System Architecture Schematic", type: "schematic", caption: "Multi-layered decoupled bus between state engine, risk governor, and order routing." },
-    { title: "Latency Histogram", type: "chart", caption: "Microsecond distribution curve showing sub-millisecond execution consistency." },
+    {
+      title: "System Architecture Schematic",
+      type: "schematic",
+      caption: "Multi-layered decoupled bus between state engine, risk governor, and order routing. Schematic only — no measurement data.",
+    },
   ],
-  linksList: [
-    { label: "GITHUB REPOSITORY", href: "https://github.com/naresh-cn2/strata-engine", type: "github" },
-    { label: "ARCHITECTURE DOCUMENTATION", href: "#architecture", type: "docs" },
-  ],
+  linksList: [{ label: "ARCHITECTURE DOCUMENTATION", href: "#architecture", type: "docs" }],
   detail: {
     problem: [
       "Commercial platforms frequently couple strategy logic with exchange communication, introducing unmodeled latency and allowing runaway algorithmic behavior during market dislocations.",
@@ -391,25 +391,25 @@ export const strataEngineItem: ComprehensiveWorkItem = {
       { name: "MARKET INTAKE", role: "Direct exchange WebSocket & FIX intake", detail: ["Nanosecond timestamping", "Raw quote normalization"] },
       { name: "BOOK STATE", role: "Continuous L2/L3 order book builder", detail: ["Lock-free ring buffers", "Shared memory page mapping"] },
       { name: "INVARIANT GATE", role: "Atomic pre-trade risk validation", detail: ["Drawdown limiters", "Margin verification"] },
-      { name: "ROUTER BUS", role: "Unified order dispatch", detail: ["Fail-safe circuit breakers", "Sub-millisecond execution"] },
+      { name: "ROUTER BUS", role: "Unified order dispatch", detail: ["Fail-safe circuit breakers", "Deterministic order dispatch"] },
     ],
     results: [
-      "Sub-millisecond latency (p99.9 < 0.42ms) under high-throughput conditions.",
-      "100% adherence to pre-trade risk boundaries across millions of simulated ticks.",
+      "Design and implementation cover a four-layer pipeline: market intake, book state, invariant gate and router bus.",
+      "No measured result is published for this build — any latency, adherence or availability figure would be unsupported.",
     ],
     limitations: [
-      "Requires dedicated Linux kernel tuning (CPU pinning, isolcpus) for optimal sub-millisecond performance.",
-      "Throughput benchmarks reflect modern x86-64 hardware with optical network interfaces.",
+      "No public repository, benchmark harness or test log exists for this build, so performance and correctness claims cannot be inspected.",
+      "Latency, throughput and availability targets are design goals rather than measurements.",
+      "Sub-millisecond behaviour would additionally depend on dedicated Linux kernel tuning (CPU pinning, isolcpus) and modern x86-64 hardware.",
     ],
     testing: [
-      "End-to-end integration tests in CI verifying zero packet drop and deterministic execution state recovery.",
+      "No test suite, CI result or verification log has been published for this build at this time.",
     ],
     artifacts: [
-      "Production-ready Rust codebase with modular crate architecture.",
-      "Comprehensive telemetry dashboard and CLI inspection utilities.",
+      "Architecture documentation presented on this page.",
     ],
     currentState: [
-      "v2.1 released. Actively utilized for algorithmic research and market simulation.",
+      "Source not published. No release tag, benchmark or verification artifact is publicly available.",
     ],
   },
 };
@@ -421,21 +421,18 @@ export const systemsKernelItem: ComprehensiveWorkItem = {
   shortTitle: "SYSTEMS KERNEL",
   categoryLabel: "DESKTOP RESEARCH DAEMON & AUTONOMOUS WORKSPACE KERNEL",
   tags: ["ENGINEERING", "TOOLS", "AI"],
-  status: "OPERATIONAL PROTOTYPE",
-  statusNote: "Lightweight background daemon for quantitative workstation telemetry, process supervision, and market monitoring.",
-  thesis: "Financial researchers need an autonomous workspace environment that supervises market feeds, triggers alerts, and operates at 0% idle CPU.",
+  status: "PROTOTYPE · SOURCE NOT PUBLISHED",
+  statusNote: "Lightweight background daemon for quantitative workstation telemetry, process supervision, and market monitoring. Source is not published and no measurement has been released.",
+  thesis:
+    "Financial researchers need an autonomous workspace environment that supervises market feeds and triggers alerts without keeping the machine busy while nothing is happening.",
   summary:
     "An autonomous quantitative desktop daemon and developer workspace kernel. Built to orchestrate background data scrapers, monitor execution daemons, aggregate telemetry, and provide an interactive terminal interface without bloat.",
-  metrics: [
-    { value: "< 14 MB", label: "RAM FOOTPRINT", context: "IDLE FOOTPRINT — MINIMAL BACKGROUND RESOURCE USE" },
-    { value: "0.0%", label: "IDLE CPU USAGE", context: "EVENT-DRIVEN WAKEUP — SLEEP BETWEEN TICKS" },
-    { value: "100%", label: "OFFLINE READY", context: "LOCAL FIRST — ZERO THIRD-PARTY CLOUD DEPENDENCY" },
-  ],
+  metrics: [],
   technologies: ["TypeScript", "Node.js", "Electron", "POSIX Shell", "TailwindCSS", "SQLite"],
-  github: "https://github.com/naresh-cn2/systems-kernel",
-  githubVerified: true,
+  github: undefined,
+  githubVerified: false,
   tier: 2,
-  evidenceLabel: "PROTOTYPE · LOCAL HARNESS",
+  evidenceLabel: "SOURCE NOT PUBLISHED",
   workCategory: "products",
   whyIBuiltIt: [
     "Modern quantitative research involves orchestrating dozens of background processes, terminals, and live market feeds, which quickly clutters desktops and wastes system memory.",
@@ -460,19 +457,18 @@ export const systemsKernelItem: ComprehensiveWorkItem = {
     {
       title: "48-Hour Unattended Observation Run",
       summary: "Monitoring overnight market sessions and logging unexpected tick gaps.",
-      outcome: "Zero memory leakage detected over continuous 48-hour supervision run.",
+      outcome:
+        "Design requirement: supervise continuously without leaking memory. No run log has been published, so this is not presented as a measured result.",
     },
   ],
   evidenceAndResults: [
-    "Maintains < 14MB RAM memory usage during standard operations.",
-    "Wakeup latency from sleep mode is instantaneous (< 5ms).",
+    "No repository, run log or memory profile has been published for this build, so no footprint or latency figure is claimed here.",
+    "The daemon, telemetry engine and HUD surfaces are described below.",
   ],
   screenshotsAndVisuals: [
-    { title: "Workspace HUD Layout", type: "schematic", caption: "Minimal telemetry bar showing live background services and process status." },
+    { title: "Workspace HUD Layout", type: "schematic", caption: "Minimal telemetry bar showing live background services and process status. Schematic only." },
   ],
-  linksList: [
-    { label: "GITHUB REPOSITORY", href: "https://github.com/naresh-cn2/systems-kernel", type: "github" },
-  ],
+  linksList: [],
   detail: {
     problem: [
       "Managing multiple distributed quant services across local and remote instances leads to process drift and unmonitored failures.",
@@ -486,19 +482,21 @@ export const systemsKernelItem: ComprehensiveWorkItem = {
       { name: "SURFACE INTERFACE", role: "Minimalist operator HUD", detail: ["Keyboard driven", "Instant focus"] },
     ],
     results: [
-      "Operates cleanly in the background with negligible battery or memory impact.",
+      "Architecture covers process supervision, telemetry aggregation and a keyboard-driven operator surface.",
+      "No memory, CPU or latency measurement has been published for this build.",
     ],
     limitations: [
       "Engineered specifically for personal developer workflow; configuration is code-based rather than GUI-configured.",
+      "The source repository is not published, so the implementation cannot be inspected independently.",
     ],
     testing: [
-      "Verified on macOS and Linux desktop workstations.",
+      "No test suite or run log has been published for this build.",
     ],
     artifacts: [
-      "Lightweight open-source repository and installation scripts.",
+      "Architecture documentation presented on this page.",
     ],
     currentState: [
-      "Operational in daily developer workflows.",
+      "Prototype. Source not published and no verification artifact is publicly available.",
     ],
   },
 };
@@ -510,21 +508,18 @@ export const sentimentStreamItem: ComprehensiveWorkItem = {
   shortTitle: "SENTIMENT STREAM",
   categoryLabel: "REAL-TIME FINANCIAL NLP & SENTIMENT AGENT",
   tags: ["AI", "FINTECH", "RESEARCH"],
-  status: "EXPERIMENTAL PROTOTYPE",
-  statusNote: "Streaming financial news NLP engine and verified conversational analyst with zero hallucination guardrails.",
+  status: "PROTOTYPE · SOURCE NOT PUBLISHED",
+  statusNote:
+    "Streaming financial news NLP engine with citation guardrails against unverifiable claims. Source is not published and no benchmark has been released.",
   thesis: "Financial sentiment analysis must extract concrete market signals and citations without speculative extrapolation.",
   summary:
     "A real-time financial news stream processor and conversational research agent. Ingests raw news wires, earnings calls, and regulatory filings, extracting directional sentiment scores and market impact indicators with strict citation provenance.",
-  metrics: [
-    { value: "< 180 ms", label: "STREAM INFERENCE", context: "LATENCY — PER-HEADLINE SENTIMENT EXTRACTION" },
-    { value: "100%", label: "STRICT CITATION", context: "GROUNDING — NO HALLUCINATED NUMBERS OR DATES" },
-    { value: "48+", label: "SOURCE FEEDS", context: "REAL-TIME AGGREGATION — REGULATORY & NEWS WIRES" },
-  ],
+  metrics: [],
   technologies: ["Python 3.12", "FastAPI", "Transformers", "Next.js", "Vector Indexing", "WebSockets"],
-  github: "https://github.com/naresh-cn2/financial-sentiment-stream",
-  githubVerified: true,
+  github: undefined,
+  githubVerified: false,
   tier: 2,
-  evidenceLabel: "PROTOTYPE · STREAM HARNESS",
+  evidenceLabel: "SOURCE NOT PUBLISHED",
   workCategory: "products",
   whyIBuiltIt: [
     "Traditional LLM chatbots hallucinate numbers and cite outdated quarterly figures when asked about financial events.",
@@ -548,20 +543,19 @@ export const sentimentStreamItem: ComprehensiveWorkItem = {
   caseStudiesList: [
     {
       title: "FOMC Rate Statement Analysis",
-      summary: "Parsing live central bank statements to detect tone shifts in under 2 seconds.",
-      outcome: "Accurately flagged hawkish linguistic deviations before general media consensus.",
+      summary: "Parsing central bank statements to detect tone shifts as they are released.",
+      outcome:
+        "Design requirement: surface hawkish or dovish wording ahead of downstream summaries. No evaluation set has been published, so this is not presented as a measured result.",
     },
   ],
   evidenceAndResults: [
-    "Sub-200ms classification latency on standard CPU inference setups.",
-    "Zero fabricated data points observed across 1,000 question-answer verification pairs.",
+    "No repository, latency measurement or evaluation set has been published for this build, so no throughput, accuracy or citation figure is claimed here.",
+    "The intake, scorer and citation-verifier stages are described below.",
   ],
   screenshotsAndVisuals: [
-    { title: "Sentiment Pipeline Flow", type: "diagram", caption: "Dataflow from news intake to tokenizer, embedding index, and citation generator." },
+    { title: "Sentiment Pipeline Flow", type: "diagram", caption: "Dataflow from news intake to tokenizer, embedding index, and citation generator. Diagram only." },
   ],
-  linksList: [
-    { label: "GITHUB REPOSITORY", href: "https://github.com/naresh-cn2/financial-sentiment-stream", type: "github" },
-  ],
+  linksList: [],
   detail: {
     problem: [
       "Financial markets move too quickly for manual news reading, while generic AI tools hallucinate critical financial statistics.",
@@ -575,25 +569,27 @@ export const sentimentStreamItem: ComprehensiveWorkItem = {
       { name: "CITATION VERIFIER", role: "Strict grounding engine", detail: ["Source mapping", "Hallucination check"] },
     ],
     results: [
-      "Fast, reliable headline categorization for quantitative researchers.",
+      "Design covers news intake, sentence-level scoring and a citation-verification stage.",
+      "No accuracy, latency or citation-coverage figure has been published for this build.",
     ],
     limitations: [
       "Requires high-quality API keys for low-latency news wire access.",
+      "The source repository is not published, so the implementation and any evaluation results cannot be inspected independently.",
     ],
     testing: [
-      "Tested against historical news archives and market reaction datasets.",
+      "No test suite or evaluation report has been published for this build.",
     ],
     artifacts: [
-      "Python pipeline with integrated web-based live dashboard.",
+      "Architecture documentation presented on this page.",
     ],
     currentState: [
-      "Operational prototype under continual tuning.",
+      "Prototype. Source not published and no verification artifact is publicly available.",
     ],
   },
 };
 
 /* ------------------------------------------------------------------ */
-/* NEW PRODUCTS & PLATFORMS (not yet in archive.ts)                   */
+/* NEW PRODUCTS (not yet in archive.ts)                                     */
 /* ------------------------------------------------------------------ */
 
 export const settleIqItem: ComprehensiveWorkItem = {

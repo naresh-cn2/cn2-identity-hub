@@ -25,7 +25,8 @@ export const metadata: Metadata = {
 
 export default function ProofPage() {
     const verifiedResearch = researchEntries.filter((e) => e.status === "VERIFIED");
-    const repos = archiveProjects.filter((p) => p.github);
+    const repos = archiveProjects.filter((p) => p.github && !p.githubPrivate);
+    const restricted = archiveProjects.filter((p) => p.github && p.githubPrivate);
     const figures = archiveProjects.flatMap((p) =>
         p.metrics.map((m, i) => ({ key: `${p.id}-${i}`, project: p.shortTitle, ...m }))
     );
@@ -98,7 +99,8 @@ export default function ProofPage() {
                         <h2 className="display mt-4 text-2xl md:text-4xl">PUBLIC REPOSITORIES</h2>
                         <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
                             The code is the final authority on every claim. A verified repository is a
-                            dedicated, public project — systems that are still private are marked private.
+                            dedicated, public project — systems whose source is held privately are listed
+                            separately below, with their public verification artifacts.
                         </p>
                     </Reveal>
                     <div className="mt-10 grid gap-px bg-line md:grid-cols-2">
@@ -129,6 +131,31 @@ export default function ProofPage() {
                             </Reveal>
                         ))}
                     </div>
+
+                    {restricted.length > 0 && (
+                        <div className="mt-10 border border-line bg-surface p-6 md:p-8">
+                            <p className="label-mono text-faint">HELD PRIVATELY</p>
+                            <div className="mt-5 space-y-4">
+                                {restricted.map((p) => (
+                                    <div
+                                        key={p.id}
+                                        className="flex flex-wrap items-baseline justify-between gap-3 border-t border-line pt-4"
+                                    >
+                                        <div className="min-w-0">
+                                            <p className="display text-lg">{p.shortTitle}</p>
+                                            <p className="label-mono mt-2 text-[10px] text-faint">
+                                                {p.github?.replace("https://", "")} — ACCESS RESTRICTED
+                                            </p>
+                                        </div>
+                                        <p className="max-w-md text-sm leading-relaxed text-muted">
+                                            Source is not publicly readable. Verification artifacts for this
+                                            build are published on its own project page.
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
 

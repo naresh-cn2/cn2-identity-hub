@@ -90,6 +90,12 @@ export interface ArchiveProject {
   technologies: string[];
   github?: string;
   githubVerified: boolean;
+  /**
+   * True when the repository exists but is not publicly readable — the link
+   * only resolves for people who already have access, so the project must not
+   * be presented as a public repository.
+   */
+  githubPrivate?: boolean;
   tier: 1 | 2;
   /** Provenance tag shown next to every figure on this project. */
   evidenceLabel: string;
@@ -128,6 +134,7 @@ function fromFlagship(p: FlagshipProject): ArchiveProject {
     technologies: p.technologies,
     github: p.github,
     githubVerified: true,
+    githubPrivate: p.githubPrivate,
     tier: 1,
     evidenceLabel: FLAGSHIP_EVIDENCE[p.id] ?? "EVIDENCE",
   };
@@ -235,9 +242,9 @@ const ifmCostIntel: ArchiveProject = {
   summary:
     "An intelligence layer that ingests and processes large enterprise cost datasets, transforming raw multi-cloud expenditure into structured intermediate financial models built for querying, anomaly detection and optimization decisions.",
   metrics: [],
-  technologies: ["Python", "Intermediate financial model", "Anomaly detection", "Query layer"],
-  github: "https://github.com/naresh-cn2",
-  githubVerified: false,
+  technologies: ["C11", "Intermediate financial model (IFM NDJSON)", "Anomaly detection", "Reconciliation invariants"],
+  github: "https://github.com/naresh-cn2/ifm-costintel",
+  githubVerified: true,
   tier: 2,
   evidenceLabel: "IN DEVELOPMENT · NO PUBLISHED BENCHMARK",
   detail: {
@@ -276,19 +283,20 @@ const ifmCostIntel: ArchiveProject = {
       "In development. No throughput, accuracy or cost-saving figure has been published for this system yet.",
     ],
     limitations: [
-      "No public benchmark exists for this system. Any performance statement would be unsupported.",
+      "No published benchmark exists for this system. Any performance statement would be unsupported.",
       "Anomaly detection output depends on the structuring model's choices and has not been validated against a labelled cost dataset.",
-      "The repository is not yet publicly linked, so the code is not independently inspectable at this time.",
+      "The repository is public, but no independently reviewed benchmark or evaluation report has been published alongside it.",
     ],
     testing: [
-      "Development-stage verification only. There is no published test suite result for this system.",
+      "Development-stage verification only. There is no published benchmark result for this system.",
     ],
     artifacts: [
       "Intermediate financial model definition for enterprise cost data.",
       "Ingestion pipeline for multi-cloud expenditure datasets.",
+      "Public repository at github.com/naresh-cn2/ifm-costintel.",
     ],
     currentState: [
-      "ACTIVE DEVELOPMENT — no release tag, no published benchmark, repository not yet public.",
+      "ACTIVE DEVELOPMENT — no published benchmark; repository public but not independently verified.",
     ],
   },
 };
@@ -487,21 +495,18 @@ const strataEngine: ArchiveProject = {
   shortTitle: "STRATA-ENGINE",
   categoryLabel: "QUANTITATIVE STRATEGY & RISK EXECUTION PLATFORM (RUST / C++)",
   tags: ["QUANT", "ENGINEERING", "FINTECH"],
-  status: "PRODUCTION READY v2.1",
-  statusNote: "Multi-market execution engine with hardware-isolated risk gate and sub-millisecond invariant validation.",
+  status: "UNPUBLISHED · NO BENCHMARK RELEASED",
+  statusNote:
+    "Multi-market execution engine with an isolated pre-trade risk gate. The source repository is not published, and no latency, throughput or availability benchmark has been released.",
   thesis: "Systematic execution should enforce pre-trade capital and risk invariants before an order ever reaches exchange sockets.",
   summary:
-    "An institutional-grade algorithmic strategy engine and real-time risk platform. STRATA-ENGINE provides sub-millisecond execution routing, strict pre-trade margin governors, deterministic state machines, and high-frequency order book tracking across multiple asset classes.",
-  metrics: [
-    { value: "< 0.42 ms", label: "EXECUTION LATENCY", context: "BENCHMARK — 99.9th PERCENTILE TICK-TO-ORDER" },
-    { value: "100%", label: "INVARIANT CHECKS", context: "FAIL-CLOSED — PRE-TRADE CAPITAL GUARDS" },
-    { value: "99.99%", label: "ENGINE UPTIME", context: "HIGH AVAILABILITY — DUAL ARBITRATED DAEMONS" },
-  ],
+    "An institutional-grade algorithmic strategy engine and real-time risk platform. STRATA-ENGINE provides deterministic execution routing, strict pre-trade margin governors, deterministic state machines, and high-frequency order book tracking across multiple asset classes.",
+  metrics: [],
   technologies: ["Rust", "C++20", "Python 3.12", "WebSocket", "ZeroMQ", "Docker", "POSIX Shared Memory"],
-  github: "https://github.com/naresh-cn2/strata-engine",
-  githubVerified: true,
+  github: undefined,
+  githubVerified: false,
   tier: 1,
-  evidenceLabel: "BENCHMARK · PRODUCTION HARNESS",
+  evidenceLabel: "NO PUBLISHED BENCHMARK",
   detail: {
     problem: [
       "Commercial platforms frequently couple strategy logic with exchange communication, introducing unmodeled latency and allowing runaway algorithmic behavior during market dislocations.",
@@ -515,25 +520,25 @@ const strataEngine: ArchiveProject = {
       { name: "MARKET INTAKE", role: "Direct exchange WebSocket & FIX intake", detail: ["Nanosecond timestamping", "Raw quote normalization"] },
       { name: "BOOK STATE", role: "Continuous L2/L3 order book builder", detail: ["Lock-free ring buffers", "Shared memory page mapping"] },
       { name: "INVARIANT GATE", role: "Atomic pre-trade risk validation", detail: ["Drawdown limiters", "Margin verification"] },
-      { name: "ROUTER BUS", role: "Unified order dispatch", detail: ["Fail-safe circuit breakers", "Sub-millisecond execution"] },
+      { name: "ROUTER BUS", role: "Unified order dispatch", detail: ["Fail-safe circuit breakers", "Deterministic order dispatch"] },
     ],
     results: [
-      "Sub-millisecond latency (p99.9 < 0.42ms) under high-throughput conditions.",
-      "100% adherence to pre-trade risk boundaries across millions of simulated ticks.",
+      "Design and implementation cover a four-layer pipeline: market intake, book state, invariant gate and router bus.",
+      "No measured result is published for this build — any latency, adherence or availability figure would be unsupported.",
     ],
     limitations: [
-      "Requires dedicated Linux kernel tuning (CPU pinning, isolcpus) for optimal sub-millisecond performance.",
-      "Throughput benchmarks reflect modern x86-64 hardware with optical network interfaces.",
+      "No public repository, benchmark harness or test log exists for this build, so performance and correctness claims cannot be inspected.",
+      "Latency, throughput and availability targets are design goals rather than measurements.",
+      "Sub-millisecond behaviour would additionally depend on dedicated Linux kernel tuning (CPU pinning, isolcpus) and modern x86-64 hardware.",
     ],
     testing: [
-      "End-to-end integration tests in CI verifying zero packet drop and deterministic execution state recovery.",
+      "No test suite, CI result or verification log has been published for this build at this time.",
     ],
     artifacts: [
-      "Production-ready Rust codebase with modular crate architecture.",
-      "Comprehensive telemetry dashboard and CLI inspection utilities.",
+      "Architecture documentation presented on this page.",
     ],
     currentState: [
-      "v2.1 released. Actively utilized for algorithmic research and market simulation.",
+      "Source not published. No release tag, benchmark or verification artifact is publicly available.",
     ],
   },
 };
@@ -545,21 +550,19 @@ const systemsKernel: ArchiveProject = {
   shortTitle: "SYSTEMS KERNEL",
   categoryLabel: "DESKTOP RESEARCH DAEMON & AUTONOMOUS WORKSPACE KERNEL",
   tags: ["ENGINEERING", "TOOLS", "AI"],
-  status: "OPERATIONAL PROTOTYPE",
-  statusNote: "Lightweight background daemon for quantitative workstation telemetry, process supervision, and market monitoring.",
-  thesis: "Financial researchers need an autonomous workspace environment that supervises market feeds, triggers alerts, and operates at 0% idle CPU.",
+  status: "PROTOTYPE · SOURCE NOT PUBLISHED",
+  statusNote:
+    "Lightweight background daemon for quantitative workstation telemetry, process supervision, and market monitoring. Source is not published and no measurement has been released.",
+  thesis:
+    "Financial researchers need an autonomous workspace environment that supervises market feeds and triggers alerts without keeping the machine busy while nothing is happening.",
   summary:
     "An autonomous quantitative desktop daemon and developer workspace kernel. Built to orchestrate background data scrapers, monitor execution daemons, aggregate telemetry, and provide an interactive terminal interface without bloat.",
-  metrics: [
-    { value: "< 14 MB", label: "RAM FOOTPRINT", context: "IDLE FOOTPRINT — MINIMAL BACKGROUND RESOURCE USE" },
-    { value: "0.0%", label: "IDLE CPU USAGE", context: "EVENT-DRIVEN WAKEUP — SLEEP BETWEEN TICKS" },
-    { value: "100%", label: "OFFLINE READY", context: "LOCAL FIRST — ZERO THIRD-PARTY CLOUD DEPENDENCY" },
-  ],
+  metrics: [],
   technologies: ["TypeScript", "Node.js", "Electron", "POSIX Shell", "TailwindCSS", "SQLite"],
-  github: "https://github.com/naresh-cn2/systems-kernel",
-  githubVerified: true,
+  github: undefined,
+  githubVerified: false,
   tier: 2,
-  evidenceLabel: "PROTOTYPE · LOCAL HARNESS",
+  evidenceLabel: "SOURCE NOT PUBLISHED",
   detail: {
     problem: [
       "Managing multiple distributed quant services across local and remote instances leads to process drift and unmonitored failures.",
@@ -573,19 +576,21 @@ const systemsKernel: ArchiveProject = {
       { name: "SURFACE INTERFACE", role: "Minimalist operator HUD", detail: ["Keyboard driven", "Instant focus"] },
     ],
     results: [
-      "Operates cleanly in the background with negligible battery or memory impact.",
+      "Architecture covers process supervision, telemetry aggregation and a keyboard-driven operator surface.",
+      "No memory, CPU or latency measurement has been published for this build.",
     ],
     limitations: [
       "Engineered specifically for personal developer workflow; configuration is code-based rather than GUI-configured.",
+      "The source repository is not published, so the implementation cannot be inspected independently.",
     ],
     testing: [
-      "Verified on macOS and Linux desktop workstations.",
+      "No test suite or run log has been published for this build.",
     ],
     artifacts: [
-      "Lightweight open-source repository and installation scripts.",
+      "Architecture documentation presented on the project page.",
     ],
     currentState: [
-      "Operational in daily developer workflows.",
+      "Prototype. Source not published and no verification artifact is publicly available.",
     ],
   },
 };
@@ -597,21 +602,18 @@ const sentimentStream: ArchiveProject = {
   shortTitle: "SENTIMENT STREAM",
   categoryLabel: "REAL-TIME FINANCIAL NLP & SENTIMENT AGENT",
   tags: ["AI", "FINTECH", "RESEARCH"],
-  status: "EXPERIMENTAL PROTOTYPE",
-  statusNote: "Streaming financial news NLP engine and verified conversational analyst with zero hallucination guardrails.",
+  status: "PROTOTYPE · SOURCE NOT PUBLISHED",
+  statusNote:
+    "Streaming financial news NLP engine with citation guardrails against unverifiable claims. Source is not published and no benchmark has been released.",
   thesis: "Financial sentiment analysis must extract concrete market signals and citations without speculative extrapolation.",
   summary:
     "A real-time financial news stream processor and conversational research agent. Ingests raw news wires, earnings calls, and regulatory filings, extracting directional sentiment scores and market impact indicators with strict citation provenance.",
-  metrics: [
-    { value: "< 180 ms", label: "STREAM INFERENCE", context: "LATENCY — PER-HEADLINE SENTIMENT EXTRACTION" },
-    { value: "100%", label: "STRICT CITATION", context: "GROUNDING — NO HALLUCINATED NUMBERS OR DATES" },
-    { value: "48+", label: "SOURCE FEEDS", context: "REAL-TIME AGGREGATION — REGULATORY & NEWS WIRES" },
-  ],
+  metrics: [],
   technologies: ["Python 3.12", "FastAPI", "Transformers", "Next.js", "Vector Indexing", "WebSockets"],
-  github: "https://github.com/naresh-cn2/financial-sentiment-stream",
-  githubVerified: true,
+  github: undefined,
+  githubVerified: false,
   tier: 2,
-  evidenceLabel: "PROTOTYPE · STREAM HARNESS",
+  evidenceLabel: "SOURCE NOT PUBLISHED",
   detail: {
     problem: [
       "Financial markets move too quickly for manual news reading, while generic AI tools hallucinate critical financial statistics.",
@@ -625,19 +627,21 @@ const sentimentStream: ArchiveProject = {
       { name: "CITATION VERIFIER", role: "Strict grounding engine", detail: ["Source mapping", "Hallucination check"] },
     ],
     results: [
-      "Fast, reliable headline categorization for quantitative researchers.",
+      "Design covers news intake, sentence-level scoring and a citation-verification stage.",
+      "No accuracy, latency or citation-coverage figure has been published for this build.",
     ],
     limitations: [
       "Requires high-quality API keys for low-latency news wire access.",
+      "The source repository is not published, so the implementation and any evaluation results cannot be inspected independently.",
     ],
     testing: [
-      "Tested against historical news archives and market reaction datasets.",
+      "No test suite or evaluation report has been published for this build.",
     ],
     artifacts: [
-      "Python pipeline with integrated web-based live dashboard.",
+      "Architecture documentation presented on the project page.",
     ],
     currentState: [
-      "Operational prototype under continual tuning.",
+      "Prototype. Source not published and no verification artifact is publicly available.",
     ],
   },
 };

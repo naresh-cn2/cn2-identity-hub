@@ -7,13 +7,13 @@ import CategoryShowcaseList from "@/components/work/category-showcase-list";
 import { WORK_CATEGORIES, getWorksByCategory } from "@/data/works";
 
 export const metadata: Metadata = {
-  title: "Projects — Works",
+  title: "Projects — Builds",
   description:
     "What I've worked on, researched, and accomplished — quantitative research engines, deterministic execution systems, and verified engineering proofs of work.",
   alternates: { canonical: "/works/projects" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Projects — Works — Bukya Naresh / CN2.dev",
+    title: "Projects — Builds — Bukya Naresh / CN2.dev",
     description: "What I've worked on, researched, and accomplished.",
   },
 };
@@ -75,7 +75,7 @@ export default function ProjectsCategoryPage() {
                     href="/works"
                     className="label-mono border border-line-strong px-6 py-4 text-xs text-muted transition-colors hover:border-foreground hover:text-foreground"
                   >
-                    ← RETURN TO WORKS
+                    ← RETURN TO BUILDS
                   </Link>
                 </div>
               </Reveal>

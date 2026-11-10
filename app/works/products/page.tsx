@@ -7,13 +7,13 @@ import CategoryShowcaseList from "@/components/work/category-showcase-list";
 import { WORK_CATEGORIES, getWorksByCategory } from "@/data/works";
 
 export const metadata: Metadata = {
-  title: "Products & Platforms — Works",
+  title: "Products - Builds",
   description:
     "What I build for users, businesses, and the market — commercial quantitative platforms, high-throughput financial data engines, and enterprise cost intelligence software.",
   alternates: { canonical: "/works/products" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Products & Platforms — Works — Bukya Naresh / CN2.dev",
+    title: "Products - Builds - Bukya Naresh / CN2.dev",
     description: "What I build for users, businesses, and the market.",
   },
 };
@@ -36,11 +36,11 @@ export default function ProductsPage() {
               <Reveal>
                 <div className="flex flex-wrap items-center gap-2">
                   <Link href="/works" className="label-mono text-faint transition-colors hover:text-foreground">
-                    WORKS
+                    BUILDS
                   </Link>
                   <span className="label-mono text-line-strong" aria-hidden="true">/</span>
                   <p className="label-mono text-signal font-bold">
-                    COMMERCIAL PLATFORMS &amp; SYSTEMS
+                    COMMERCIAL &amp; PRODUCTION SYSTEMS
                   </p>
                 </div>
               </Reveal>
@@ -75,7 +75,7 @@ export default function ProductsPage() {
                     href="/works"
                     className="label-mono border border-line-strong px-6 py-4 text-xs text-muted transition-colors hover:border-foreground hover:text-foreground"
                   >
-                    ← RETURN TO WORKS
+                    ← RETURN TO BUILDS
                   </Link>
                 </div>
               </Reveal>
@@ -101,7 +101,7 @@ export default function ProductsPage() {
               <div>
                 <p className="label-mono text-signal">SYSTEMS DIRECTORY</p>
                 <h2 className="display mt-2 text-3xl md:text-5xl text-foreground">
-                  COMMERCIAL PRODUCTS &amp; PLATFORMS
+                  COMMERCIAL PRODUCTS
                 </h2>
               </div>
               <p className="label-mono text-faint">
@@ -111,7 +111,7 @@ export default function ProductsPage() {
           </Reveal>
         </div>
 
-        <CategoryShowcaseList items={items} categoryTitle="Products & Platforms" />
+        <CategoryShowcaseList items={items} categoryTitle="Products" />
       </section>
     </>
   );

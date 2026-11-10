@@ -133,7 +133,7 @@ export default function ServicesPage() {
                 href='/opportunities/freelance'
                 className='label-mono mt-6 inline-block border border-line-strong px-5 py-3 text-foreground transition-colors hover:border-signal hover:text-signal'
               >
-                EXPLORE OPPORTUNITIES →
+                EXPLORE COLLABORATION →
               </Link>
             </div>
             <div>

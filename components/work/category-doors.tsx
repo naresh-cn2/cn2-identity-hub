@@ -12,7 +12,7 @@ export default function CategoryDoors() {
 
   return (
     <div aria-label="Works categories" className="divide-y divide-line">
-      {/* ==================== 01. PRODUCTS & PLATFORMS ==================== */}
+      {/* ==================== 01. PRODUCTS ==================== */}
       <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-surface/20 py-20 md:py-28">
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
@@ -46,7 +46,7 @@ export default function CategoryDoors() {
                     href={`/works/${products.slug}`}
                     className="corner-ticks group inline-flex items-center gap-4 border border-signal bg-signal/15 px-8 py-4 label-mono text-xs font-bold text-signal transition-colors hover:bg-signal hover:text-white"
                   >
-                    <span>ENTER PRODUCTS &amp; PLATFORMS</span>
+                    <span>ENTER PRODUCTS</span>
                     <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>
@@ -104,7 +104,7 @@ export default function CategoryDoors() {
         </div>
       </section>
 
-      {/* ==================== 03. PERSONAL BUILDS ==================== */}
+      {/* ==================== 03. INDEPENDENT BUILDS ==================== */}
       <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-surface/20 py-20 md:py-28">
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
@@ -138,7 +138,7 @@ export default function CategoryDoors() {
                     href={`/works/${personal.slug}`}
                     className="corner-ticks group inline-flex items-center gap-4 border border-cyan-500 bg-cyan-500/15 px-8 py-4 label-mono text-xs font-bold text-cyan-500 dark:text-cyan-400 transition-colors hover:bg-cyan-500 hover:text-black"
                   >
-                    <span>ENTER PERSONAL BUILDS</span>
+                    <span>ENTER INDEPENDENT BUILDS</span>
                     <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>

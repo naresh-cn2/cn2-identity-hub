@@ -13,13 +13,13 @@ import { flagshipProjects } from "@/data/projects";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Research",
+  title: "Research & Journal",
   description:
     "My research explores how markets, quantitative methods, data and software systems interact — the questions I investigate, the methods I use, and the findings and limitations of each study.",
   alternates: { canonical: "/research" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Research — Bukya Naresh / CN2.dev",
+    title: "Research & Journal — Bukya Naresh / CN2.dev",
     description:
       "Falsifiable market questions, deterministic methods, and the findings and limitations of each study.",
   },

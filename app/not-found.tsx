@@ -3,8 +3,8 @@ import KineticText from "@/components/ui/kinetic-text";
 import Reveal from "@/components/ui/reveal";
 
 const SUGGESTED = [
-    { label: "WORK", href: "/work", note: "Products. Projects. Engineering." },
-    { label: "RESEARCH", href: "/research", note: "Questions, methods, findings, limitations." },
+    { label: "BUILDS", href: "/works", note: "Products. Projects. Independent builds." },
+    { label: "RESEARCH & JOURNAL", href: "/research", note: "Questions, methods, findings, limitations." },
     { label: "SERVICES", href: "/services", note: "What an engagement produces." },
     { label: "CONTACT", href: "/contact", note: "Direct channels and the enquiry form." },
 ];

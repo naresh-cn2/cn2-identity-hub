@@ -8,13 +8,13 @@ import RiskSurface from "@/components/lab/risk-surface";
 import MarketTimeline from "@/components/lab/market-timeline";
 
 export const metadata: Metadata = {
-  title: "Quant Lab",
+  title: "Laboratory",
   description:
     "Interactive quantitative instruments — risk simulator, point-in-time replay lab, strategy visualizer, risk/return surface and experiment explorer.",
   alternates: { canonical: "/lab" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Quant Lab — Bukya Naresh / CN2.dev",
+    title: "Laboratory — Bukya Naresh / CN2.dev",
     description:
       "Interactive quantitative instruments: risk, replay, strategy geometry, risk/return surface and experiment governance.",
   },
@@ -113,7 +113,7 @@ export default function LabPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]">QUANT LAB</KineticText>
+            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]">LABORATORY</KineticText>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
@@ -240,7 +240,7 @@ export default function LabPage() {
                   href="/research"
                   className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-research hover:text-research"
                 >
-                  RESEARCH →
+                  RESEARCH & JOURNAL →
                 </Link>
               </div>
             </div>

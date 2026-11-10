@@ -176,7 +176,7 @@ export default function ContactPage() {
                                 href="/opportunities"
                                 className="group flex h-full flex-col bg-background p-6 transition-colors hover:bg-surface"
                             >
-                                <span className="label-mono text-foreground group-hover:text-signal">OPPORTUNITIES →</span>
+                                <span className="label-mono text-foreground group-hover:text-signal">CAREERS & COLLABORATION →</span>
                                 <span className="mt-3 text-sm leading-relaxed text-muted">
                                     Employment, freelance, research and partnership pathways.
                                 </span>

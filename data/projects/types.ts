@@ -96,6 +96,12 @@ export interface FlagshipProject {
   visualMetaphor: string;
   interactive: InteractiveModule[];
   github: string;
+  /**
+   * True when the repository exists but is not publicly readable, so the link
+   * only resolves for people who already have access. Rendered as a restricted
+   * record rather than as a public repository.
+   */
+  githubPrivate?: boolean;
   /** Optional dated verification record — absent = no line rendered. */
   verified?: VerificationRecord;
 }

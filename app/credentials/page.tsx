@@ -17,13 +17,13 @@ import {
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Credentials",
+  title: "Education & Credentials",
   description:
     "Education, completed programmes and continuous learning — Bukya Naresh. Internships, courses and certifications across quantitative finance, data and software engineering, generative AI, plus active self-directed study tracks.",
   alternates: { canonical: "/credentials" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Credentials — Bukya Naresh / CN2.dev",
+    title: "Education & Credentials — Bukya Naresh / CN2.dev",
     description:
       "Completed programmes, issued certificates and self-directed study — each linked to the work it produced.",
   },
@@ -146,7 +146,7 @@ export default function CredentialsPage() {
       </header>
 
       {/* ---- professional development timeline ---- */}
-      <section aria-label="Professional development timeline" className="border-b border-line">
+      <section id="timeline" aria-label="Professional development timeline" className="scroll-mt-28 border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -190,7 +190,7 @@ export default function CredentialsPage() {
       </section>
 
       {/* ---- digital badges ---- */}
-      <section aria-label="Digital badges" className="border-b border-line">
+      <section id="badges" aria-label="Digital badges" className="scroll-mt-28 border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
@@ -216,7 +216,7 @@ export default function CredentialsPage() {
       </section>
 
       {/* ---- states ---- */}
-      <section aria-label="Credential states" className="border-b border-line">
+      <section id="states" aria-label="Credential states" className="scroll-mt-28 border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
           <Reveal>
             <h2 className="display text-2xl md:text-4xl">WHAT EACH STATE MEANS</h2>

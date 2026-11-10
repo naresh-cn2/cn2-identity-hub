@@ -229,6 +229,9 @@ export const bustubEngine: FlagshipProject = {
     },
   ],
   github: "https://github.com/naresh-cn2/bustub-engine",
+  // Held private under CMU 15-445/645 academic-integrity compliance: the repo
+  // resolves only for people with access, so it is never shown as public.
+  githubPrivate: true,
   verified: {
     date: "2026-11-01",
     method: "GoogleTest + SQLLogicTest + Clang-14 ASan/UBSan: 56/56 Passed",

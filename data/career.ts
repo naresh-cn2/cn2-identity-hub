@@ -59,6 +59,7 @@ export const career = {
       scope:
         "Complete research-to-execution pipeline: data engine, strategy engine, risk engine, portfolio allocation, deterministic backtesting, paper execution.",
       metrics: "+570.18% net simulated ROI (master-fund backtest) · 5,867 trades · 44.50s backtest",
+      skills: ["Deterministic backtesting", "Portfolio allocation", "Risk engines", "Paper execution"],
       href: "/work/apex-quant-engine",
     },
     {
@@ -67,6 +68,7 @@ export const career = {
       scope:
         "Multi-timeframe execution architecture with verified structural controls from HTF context to order construction.",
       metrics: "1% risk cap · 1:4 R:R floor · full cost modelling",
+      skills: ["Multi-timeframe execution", "Position sizing", "Cost modelling", "Structural risk controls"],
       href: "/work/automated-trading-os",
     },
     {
@@ -75,6 +77,7 @@ export const career = {
       scope:
         "Point-in-time safe market-data infrastructure with deterministic replay and adversarial testing.",
       metrics: "9-stage pipeline · nanosecond timestamps · SQLite WAL",
+      skills: ["Point-in-time correctness", "Deterministic replay", "Ingestion & validation", "Adversarial test design"],
       href: "/work/market-data-replay",
     },
     {
@@ -83,6 +86,7 @@ export const career = {
       scope:
         "Research governance platform: hypothesis → experiment → verification → artifact → report → promotion.",
       metrics: "352 tests · deterministic fixtures · CI security validation",
+      skills: ["Experiment governance", "Test architecture", "CI pipelines", "Reproducibility"],
       href: "/work/qrsip",
     },
     {
@@ -91,6 +95,7 @@ export const career = {
       scope:
         "Zero-dependency C11 utility normalizing multi-cloud cost exports into an intermediate financial model.",
       metrics: "487,421 rec/s · 31.89 MB/s · 2,051 ns per record",
+      skills: ["C11 systems programming", "Memory-mapped I/O", "Zero-copy parsing", "Schema normalization"],
       href: "https://github.com/CloudOps-Financial-Platform/billing-data-gateway",
     },
   ],

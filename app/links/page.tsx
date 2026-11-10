@@ -28,11 +28,16 @@ const ROWS: LinkRow[] = [
   { code: "02", label: "LINKEDIN", href: site.links.linkedin, kind: "external", meta: "LINKEDIN.COM" },
   { code: "03", label: "EMAIL", href: site.links.email, kind: "mail", meta: "DIRECT" },
   { code: "04", label: "CV", href: "/cv", kind: "internal", meta: "PRINT-READY" },
-  { code: "05", label: "WORK", href: "/work", kind: "internal", meta: "ENGINEERING" },
-  { code: "06", label: "RESEARCH", href: "/research", kind: "internal", meta: "EVIDENCE" },
-  { code: "07", label: "LAB", href: "/lab", kind: "internal", meta: "INSTRUMENTS" },
-  { code: "08", label: "PRIVACY", href: "/privacy", kind: "internal", meta: "DATA HANDLING" },
-  { code: "09", label: "TERMS", href: "/terms", kind: "internal", meta: "PLAIN TERMS" },
+  { code: "05", label: "BUILDS", href: "/works", kind: "internal", meta: "ENGINEERING" },
+  { code: "06", label: "LABORATORY", href: "/lab", kind: "internal", meta: "INSTRUMENTS" },
+  { code: "07", label: "RESEARCH & JOURNAL", href: "/research", kind: "internal", meta: "EVIDENCE" },
+  { code: "08", label: "SERVICES", href: "/services", kind: "internal", meta: "DELIVERY" },
+  { code: "09", label: "EDUCATION & CREDENTIALS", href: "/credentials", kind: "internal", meta: "QUALIFICATIONS" },
+  { code: "10", label: "CAREERS & COLLABORATION", href: "/opportunities", kind: "internal", meta: "PATHWAYS" },
+  { code: "11", label: "ABOUT", href: "/about", kind: "internal", meta: "IDENTITY" },
+  { code: "12", label: "CONTACT", href: "/contact", kind: "internal", meta: "CHANNELS" },
+  { code: "13", label: "PRIVACY", href: "/privacy", kind: "internal", meta: "DATA HANDLING" },
+  { code: "14", label: "TERMS", href: "/terms", kind: "internal", meta: "PLAIN TERMS" },
 ];
 
 const ROW_CLASS =

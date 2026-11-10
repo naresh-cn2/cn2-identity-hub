@@ -7,13 +7,13 @@ import CategoryShowcaseList from "@/components/work/category-showcase-list";
 import { WORK_CATEGORIES, getWorksByCategory } from "@/data/works";
 
 export const metadata: Metadata = {
-  title: "Personal Builds — Works",
+  title: "Independent Builds — Builds",
   description:
     "What I create beyond formal work — autonomous AI assistants, financial intelligence agents, personal workspace daemons, and creative technical prototypes.",
   alternates: { canonical: "/works/personal-builds" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Personal Builds — Works — Bukya Naresh / CN2.dev",
+    title: "Independent Builds — Builds — Bukya Naresh / CN2.dev",
     description: "What I create beyond formal work.",
   },
 };
@@ -66,7 +66,7 @@ export default function PersonalBuildsCategoryPage() {
                     href="#catalogue"
                     className="corner-ticks group inline-flex items-center gap-4 border border-cyan-500 bg-cyan-500/15 px-8 py-4 label-mono text-xs font-bold text-cyan-500 dark:text-cyan-400 transition-colors hover:bg-cyan-500 hover:text-black"
                   >
-                    <span>EXPLORE PERSONAL BUILDS</span>
+                    <span>EXPLORE INDEPENDENT BUILDS</span>
                     <span aria-hidden="true" className="arr-down transition-transform duration-300 group-hover:translate-y-1">
                       ↓
                     </span>
@@ -75,7 +75,7 @@ export default function PersonalBuildsCategoryPage() {
                     href="/works"
                     className="label-mono border border-line-strong px-6 py-4 text-xs text-muted transition-colors hover:border-foreground hover:text-foreground"
                   >
-                    ← RETURN TO WORKS
+                    ← RETURN TO BUILDS
                   </Link>
                 </div>
               </Reveal>
@@ -93,7 +93,7 @@ export default function PersonalBuildsCategoryPage() {
         </div>
       </header>
 
-      {/* ---- DEDICATED PERSONAL BUILDS CATALOGUE ---- */}
+      {/* ---- DEDICATED INDEPENDENT BUILDS CATALOGUE ---- */}
       <section id="catalogue" className="scroll-mt-20 py-20 md:py-28">
         <div className="mx-auto max-w-[1440px] px-5 pb-12 sm:px-8">
           <Reveal>

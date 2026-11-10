@@ -328,25 +328,37 @@ export default function CaseStudy({
 
             <Chapter id="github" index={14} title="GITHUB">
               <Reveal>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="card-depth group flex max-w-3xl items-center justify-between border border-line-strong bg-surface p-6 transition-colors hover:border-signal md:p-8"
-                >
-                  <div>
+                {project.githubPrivate ? (
+                  <div className="card-depth max-w-3xl border border-line-strong bg-surface p-6 md:p-8">
                     <p className="label-mono text-faint">SOURCE OF EVIDENCE</p>
                     <p className="mt-2 break-all font-mono text-sm text-foreground md:text-base">
                       {project.github.replace("https://", "")}
                     </p>
+                    <p className="label-mono mt-4 text-[10px] text-signal">
+                      PRIVATE REPOSITORY — ACCESS RESTRICTED. PUBLIC VERIFICATION ARTIFACTS ARE LINKED ABOVE.
+                    </p>
                   </div>
-                  <span
-                    className="display ml-6 text-2xl text-signal transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden="true"
+                ) : (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="card-depth group flex max-w-3xl items-center justify-between border border-line-strong bg-surface p-6 transition-colors hover:border-signal md:p-8"
                   >
-                    →
-                  </span>
-                </a>
+                    <div>
+                      <p className="label-mono text-faint">SOURCE OF EVIDENCE</p>
+                      <p className="mt-2 break-all font-mono text-sm text-foreground md:text-base">
+                        {project.github.replace("https://", "")}
+                      </p>
+                    </div>
+                    <span
+                      className="display ml-6 text-2xl text-signal transition-transform duration-300 group-hover:translate-x-1"
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
+                  </a>
+                )}
               </Reveal>
               <div className="mt-8 flex flex-wrap gap-2">
                 {project.technologies.map((t) => (

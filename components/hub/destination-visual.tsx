@@ -13,15 +13,21 @@ import ConnectVisual from "./visuals/connect-visual";
  *
  * One shared frame (canvas ambience under crisp SVG structure), eight
  * distinct compositions. Each visual evolves independently in its own file.
+ *
+ * The mapping is positional and follows the IA v5 journey order:
+ * 01 Builds · 02 Laboratory · 03 Research & Journal · 04 Services ·
+ * 05 Education & Credentials · 06 Careers & Collaboration · 07 About ·
+ * 08 Contact. A scene travels with its destination, so reordering the
+ * journey means reordering this switch — never the scenes themselves.
  */
 export default function DestinationVisual({ code }: { code: string }) {
   switch (code) {
     case "01":
       return <BuildsVisual />;
     case "02":
-      return <ResearchVisual />;
-    case "03":
       return <LabVisual />;
+    case "03":
+      return <ResearchVisual />;
     case "04":
       return <ServicesVisual />;
     case "05":

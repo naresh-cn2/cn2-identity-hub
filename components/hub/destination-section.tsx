@@ -1,17 +1,19 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
-import type { HubDestination } from "@/data/hub";
+import type { HubChild, HubDestination } from "@/data/hub";
 
 /**
  * DestinationSection — one full-screen stop in the CN2.DEV universe.
  *
  * One destination, one immersive introduction, one clear action: the ENTER
  * button sits right beside the introduction and opens the destination's
- * complete page. No counters, no statistics — a short invitation and a
- * single prominent action, with the destination's own scene filling the
- * rest of the composition. Copy and visual alternate sides down the
- * journey; each stop carries its own ambient light and a subtle scroll
+ * complete page. Under the composition, the destination's own sub-destinations
+ * are listed as cards, so a visitor knows what is inside before they walk
+ * in. No counters, no statistics — a short invitation, a single prominent
+ * action, and the real routes behind it, with the destination's own scene
+ * filling the rest of the composition. Copy and visual alternate sides down
+ * the journey; each stop carries its own ambient light and a subtle scroll
  * cue. min-h is a floor, not a fixed height, so short viewports and mobile
  * simply grow taller.
  */
@@ -26,8 +28,55 @@ interface Props {
   visual: ReactNode;
 }
 
+/** True when the child link leaves the site (GitHub, LinkedIn, mail). */
+function isExternalHref(href: string) {
+  return href.startsWith("http");
+}
+
+function ChildCard({ child }: { child: HubChild }) {
+  const body = (
+    <>
+      <span className="label-mono text-[10px] text-foreground transition-colors group-hover:text-signal">
+        {child.label}
+      </span>
+      <span
+        aria-hidden="true"
+        className="label-mono text-[10px] text-faint transition-transform duration-300 group-hover:translate-x-1 group-hover:text-signal"
+      >
+        →
+      </span>
+    </>
+  );
+
+  return (
+    <li className="bg-background">
+      {isExternalHref(child.href) ? (
+        <a
+          href={child.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center justify-between gap-3 border border-line bg-background px-4 py-3 transition-colors hover:border-signal/60 hover:bg-surface"
+        >
+          {body}
+        </a>
+      ) : (
+        <Link
+          href={child.href}
+          className="group flex items-center justify-between gap-3 border border-line bg-background px-4 py-3 transition-colors hover:border-signal/60 hover:bg-surface"
+        >
+          {body}
+        </Link>
+      )}
+      <p className="px-1 pb-3 pt-2 text-xs leading-relaxed text-faint">{child.note}</p>
+    </li>
+  );
+}
+
 export default function DestinationSection({ destination, contentSide, ambient, visual }: Props) {
   const contentFirst = contentSide === "left";
+  const hasChildren = destination.children.length > 0;
+  /* Dense destinations (services) read better in three columns. */
+  const childColumns = destination.children.length >= 6 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
     <section
@@ -73,6 +122,12 @@ export default function DestinationSection({ destination, contentSide, ambient, 
                   </span>
                 </Link>
               </Reveal>
+
+              <Reveal delay={280}>
+                <p className="label-mono mt-5 text-[10px] text-faint">
+                  FOR {destination.audience}
+                </p>
+              </Reveal>
             </div>
           </div>
 
@@ -90,6 +145,20 @@ export default function DestinationSection({ destination, contentSide, ambient, 
             )}
           </div>
         </div>
+
+        {/* ---- what is inside this destination ---- */}
+        {hasChildren && (
+          <Reveal delay={120}>
+            <div className="mt-12 border-t border-line pt-8 md:mt-16">
+              <p className="label-mono text-faint">INSIDE — {destination.label}</p>
+              <ul className={`mt-5 grid gap-px bg-line ${childColumns}`}>
+                {destination.children.map((child) => (
+                  <ChildCard key={child.href} child={child} />
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        )}
 
         {/* ---- scroll cue: the journey continues below ---- */}
         <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block" aria-hidden="true">

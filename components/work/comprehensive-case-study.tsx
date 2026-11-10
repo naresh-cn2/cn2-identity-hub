@@ -11,6 +11,26 @@ interface Props {
 export default function ComprehensiveCaseStudy({ item }: Props) {
   const categoryMeta = WORK_CATEGORIES[item.workCategory];
 
+  const hasArchitecture = (item.detail?.architecture?.length ?? 0) > 0;
+  const hasChallenges = item.engineeringChallenges.length > 0;
+  const hasCaseStudies = (item.caseStudiesList?.length ?? 0) > 0;
+  const hasFindings = item.evidenceAndResults.length > 0;
+  const hasVisuals = item.screenshotsAndVisuals.length > 0;
+  const hasLinks = item.linksList.length > 0;
+
+  const jumpLinks = [
+    { label: "PROBLEM", href: "#problem" },
+    { label: "WHY I BUILT IT", href: "#why" },
+    ...(hasArchitecture ? [{ label: "ARCHITECTURE", href: "#architecture" }] : []),
+    { label: "CAPABILITIES", href: "#capabilities" },
+    { label: "TECH STACK", href: "#tech-stack" },
+    ...(hasChallenges ? [{ label: "CHALLENGES", href: "#challenges" }] : []),
+    ...(hasCaseStudies ? [{ label: "CASE STUDIES", href: "#case-studies" }] : []),
+    { label: "EVIDENCE & RESULTS", href: "#results" },
+    ...(hasVisuals ? [{ label: "VISUALS", href: "#visuals" }] : []),
+    ...(hasLinks ? [{ label: "RESOURCES", href: "#links" }] : []),
+  ];
+
   return (
     <article className="overflow-hidden">
       {/* ---- 1. OVERVIEW HERO ---- */}
@@ -35,6 +55,11 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                 <span className="label-mono text-xs font-bold text-foreground">{item.status}</span>
               </div>
             </div>
+            {item.statusNote && (
+              <p className="label-mono mt-4 w-full max-w-4xl border-l-2 border-signal pl-4 text-[10px] leading-relaxed text-muted">
+                {item.statusNote}
+              </p>
+            )}
           </Reveal>
 
           <Reveal delay={80}>
@@ -76,16 +101,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
           {/* Direct Jump Navigation Strip */}
           <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-line/60 pt-6">
             <span className="label-mono text-[10px] text-faint mr-2">QUICK JUMP:</span>
-            {[
-              { label: "PROBLEM", href: "#problem" },
-              { label: "WHY I BUILT IT", href: "#why" },
-              { label: "ARCHITECTURE", href: "#architecture" },
-              { label: "CAPABILITIES", href: "#capabilities" },
-              { label: "TECH STACK", href: "#tech-stack" },
-              { label: "CHALLENGES", href: "#challenges" },
-              { label: "EVIDENCE & RESULTS", href: "#results" },
-              { label: "RESOURCES", href: "#links" },
-            ].map((link) => (
+            {jumpLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -148,6 +164,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
         </section>
 
         {/* ---- 4. ARCHITECTURE ---- */}
+        {hasArchitecture && (
         <section id="architecture" className="scroll-mt-28 border-t border-line pt-12">
           <Reveal>
             <div className="flex items-center gap-3">
@@ -191,6 +208,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             ))}
           </div>
         </section>
+        )}
 
         {/* ---- 5. KEY CAPABILITIES ---- */}
         <section id="capabilities" className="scroll-mt-28 border-t border-line pt-12">
@@ -238,6 +256,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
         </section>
 
         {/* ---- 7. ENGINEERING CHALLENGES ---- */}
+        {hasChallenges && (
         <section id="challenges" className="scroll-mt-28 border-t border-line pt-12">
           <Reveal>
             <div className="flex items-center gap-3">
@@ -265,6 +284,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             ))}
           </div>
         </section>
+        )}
 
         {/* ---- 8. DEVELOPMENT JOURNEY ---- */}
         <section id="journey" className="scroll-mt-28 border-t border-line pt-12">
@@ -294,7 +314,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                 <span className="h-2 w-2 rounded-full bg-signal" />
                 <h2 className="display text-2xl md:text-4xl text-foreground">CASE STUDIES</h2>
               </div>
-              <p className="label-mono mt-2 text-faint">EMPIRICAL SCENARIO INVESTIGATIONS</p>
+              <p className="label-mono mt-2 text-faint">SCENARIO INVESTIGATIONS &amp; THEIR OUTCOMES</p>
             </Reveal>
             <div className="mt-8 grid gap-6">
               {item.caseStudiesList.map((cs) => (
@@ -303,7 +323,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                   <h3 className="display text-xl md:text-2xl mt-2">{cs.title}</h3>
                   <p className="mt-3 text-base leading-relaxed text-muted">{cs.summary}</p>
                   <div className="mt-5 border-t border-line pt-4">
-                    <span className="label-mono text-xs text-research font-bold">VERIFIED OUTCOME</span>
+                    <span className="label-mono text-xs text-research font-bold">OUTCOME</span>
                     <p className="mt-2 text-sm text-foreground/90 font-mono">{cs.outcome}</p>
                   </div>
                 </div>
@@ -319,25 +339,32 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
               <span className="h-2 w-2 rounded-full bg-research" />
               <h2 className="display text-2xl md:text-4xl text-foreground">EVIDENCE &amp; RESULTS</h2>
             </div>
-            <p className="label-mono mt-2 text-faint">VERIFIED TEST SUITES, BENCHMARKS &amp; HONEST LIMITATIONS</p>
+            <p className="label-mono mt-2 text-faint">TEST SUITES, BENCHMARKS &amp; HONEST LIMITATIONS</p>
           </Reveal>
           <div className="mt-8 grid gap-8 md:grid-cols-2">
             <div className="border border-line bg-surface p-6 md:p-8">
-              <span className="label-mono text-research text-xs font-bold">EMPIRICAL FINDINGS</span>
-              <ul className="mt-4 space-y-3">
-                {item.evidenceAndResults.map((res, i) => (
-                  <li key={i} className="text-sm leading-relaxed text-muted flex items-start gap-2">
-                    <span className="text-research font-bold">✓</span>
-                    <span>{res}</span>
-                  </li>
-                ))}
-              </ul>
+              <span className="label-mono text-research text-xs font-bold">FINDINGS</span>
+              {hasFindings ? (
+                <ul className="mt-4 space-y-3">
+                  {item.evidenceAndResults.map((res, i) => (
+                    <li key={i} className="text-sm leading-relaxed text-muted flex items-start gap-2">
+                      <span className="text-research font-bold">✓</span>
+                      <span>{res}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-sm leading-relaxed text-muted">
+                  No findings have been published for this build yet. Nothing is claimed here until there
+                  is an artifact behind it.
+                </p>
+              )}
             </div>
 
             <div className="border border-line bg-surface p-6 md:p-8">
               <span className="label-mono text-signal text-xs font-bold">HONEST LIMITATIONS</span>
               <ul className="mt-4 space-y-3">
-                {item.detail?.limitations ? (
+                {item.detail?.limitations && item.detail.limitations.length > 0 ? (
                   item.detail.limitations.map((lim, i) => (
                     <li key={i} className="text-sm leading-relaxed text-muted flex items-start gap-2">
                       <span className="text-signal font-bold">!</span>
@@ -346,7 +373,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                   ))
                 ) : (
                   <li className="text-sm text-muted">
-                    Figures are benchmarked on dedicated harnesses and dependent on underlying hardware.
+                    No separate limitations list has been recorded for this build yet.
                   </li>
                 )}
               </ul>
@@ -355,6 +382,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
         </section>
 
         {/* ---- 11. SCREENSHOTS & VISUALISATIONS ---- */}
+        {hasVisuals && (
         <section id="visuals" className="scroll-mt-28 border-t border-line pt-12">
           <Reveal>
             <div className="flex items-center gap-3">
@@ -399,8 +427,8 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
                       </div>
                     </div>
                   ) : (
-                    <div className="mt-6 flex h-48 items-center justify-center border border-dashed border-line bg-background/50 text-xs font-mono text-faint">
-                      [LIVE SYSTEM TOPOLOGY · TELEMETRY INLINE]
+                    <div className="mt-6 flex h-48 items-center justify-center border border-dashed border-line bg-background/50 px-6 text-center text-xs font-mono text-faint">
+                      SCHEMATIC ONLY — NO CAPTURED SCREENSHOT PUBLISHED FOR THIS BUILD
                     </div>
                   )}
                 </div>
@@ -408,6 +436,7 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             })}
           </div>
         </section>
+        )}
 
         {/* ---- 12. LINKS & RESOURCES ---- */}
         <section id="links" className="scroll-mt-28 border-t border-line pt-12">
@@ -419,18 +448,24 @@ export default function ComprehensiveCaseStudy({ item }: Props) {
             <p className="label-mono mt-2 text-faint">REPOSITORIES, PROOFS &amp; DOCUMENTATION</p>
           </Reveal>
           <div className="mt-8 flex flex-wrap gap-4">
-            {item.linksList.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="label-mono inline-flex items-center gap-2 border border-signal bg-signal/5 px-6 py-3.5 text-xs font-bold text-signal transition-all hover:bg-signal hover:text-white"
-              >
-                <span>{link.label}</span>
-                <span aria-hidden="true">↗</span>
-              </a>
-            ))}
+            {hasLinks ? (
+              item.linksList.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="label-mono inline-flex items-center gap-2 border border-signal bg-signal/5 px-6 py-3.5 text-xs font-bold text-signal transition-all hover:bg-signal hover:text-white"
+                >
+                  <span>{link.label}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              ))
+            ) : (
+              <p className="label-mono inline-flex items-center border border-line bg-surface px-6 py-3.5 text-xs text-faint">
+                NO EXTERNAL RESOURCE PUBLISHED FOR THIS BUILD YET
+              </p>
+            )}
             <Link
               href={`/works/${categoryMeta.slug}`}
               className="label-mono inline-flex items-center gap-2 border border-line px-6 py-3.5 text-xs font-bold text-muted transition-colors hover:border-foreground hover:text-foreground"

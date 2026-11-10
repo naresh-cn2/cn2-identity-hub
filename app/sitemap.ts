@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/data/site";
-import { archiveProjects } from "@/data/archive";
+import { allArchiveProjects } from "@/data/archive";
 import { caseStudies } from "@/data/case-studies";
 import { researchEntries } from "@/data/research";
 import { publishedArticles } from "@/data/articles";
@@ -40,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/links",
     "/cv",
   ];
-  const builds = archiveProjects.map((p) => `/work/${p.id}`);
+  const builds = allArchiveProjects.map((p) => `/work/${p.id}`);
   const studies = caseStudies.map((p) => `/case-studies/${p.id}`);
   const research = researchEntries.map((e) => `/research/${e.id}`);
   const articles = publishedArticles.map((a) => `/articles/${a.id}`);

@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { navRoutes, site, workRoute } from "@/data/site";
-import { archiveProjects } from "@/data/archive";
+import { navRoutes, site } from "@/data/site";
+import { allArchiveProjects } from "@/data/archive";
 import { researchEntries } from "@/data/research";
 import { caseStudies } from "@/data/case-studies";
 import { publishedArticles } from "@/data/articles";
@@ -22,13 +22,48 @@ type Command = {
     | "CASE STUDIES"
     | "ARTICLES"
     | "SERVICES"
-    | "LAB"
-    | "CREDENTIALS"
+    | "LABORATORY"
+    | "EDUCATION & CREDENTIALS"
     | "ACTIONS";
   hint?: string;
   keywords: string;
   action: "route" | "external" | "theme";
   target: string;
+};
+
+/**
+ * Extra search terms for the navigation entries, so a destination can be
+ * found by what it contains and not only by its current label. The IA v5
+ * rename changed the names — the search must still answer to the old ones.
+ */
+const NAV_KEYWORDS: Record<string, string> = {
+  "/works": "builds works portfolio products projects independent personal systems engineering",
+  "/works/products": "products platforms commercial builds systems",
+  "/works/projects": "projects standalone engineering quantitative builds",
+  "/works/personal-builds": "independent builds personal self-initiated prototypes agents",
+  "/lab": "laboratory lab experiments instruments quantitative prototyping",
+  "/lab/experiments": "lab experiments prototype exploration",
+  "/lab/risk": "risk simulator position sizing lab",
+  "/lab/market-replay": "point in time replay lookahead lab market data",
+  "/lab/strategy": "strategy visualizer r multiple geometry lab",
+  "/research": "research journal studies investigations evidence chain findings",
+  "/articles": "articles publications writing journal technical",
+  "/intelligence": "intelligence notes field notes mental models journal",
+  "/services": "services freelance hire contract offerings delivery engagement",
+  "/credentials": "education credentials certificates cs50 harvard braou qualifications study verified",
+  "/opportunities": "careers collaboration opportunities employment recruitment partnership",
+  "/opportunities/career": "career employment job role hiring recruiters",
+  "/opportunities/freelance": "freelance contract project engagement",
+  "/opportunities/collaborate": "collaborate collaboration open source research",
+  "/opportunities/partnerships": "partnerships partnership product technical",
+  "/about": "about identity biography philosophy principles vision direction",
+  "/about#capability-map": "capabilities skills tech stack tools tooling",
+  "/contact": "contact email enquiry enquiry hire reach github linkedin",
+  "/cv": "resume curriculum vitae experience",
+  "/proof": "proof evidence repository status verification",
+  "/case-studies": "case studies deep dive flagship",
+  "/work": "project worlds archive catalogue",
+  "/work-with-me": "work with me hire freelance contract collaboration open to",
 };
 
 const commands: Command[] = [
@@ -37,56 +72,11 @@ const commands: Command[] = [
     label: r.label,
     group: "NAVIGATION" as const,
     hint: r.code,
-    keywords: `${r.label} ${r.href} navigation go ${r.label === "WORK" ? "projects builds engineering portfolio" : ""} ${r.label === "SERVICES" ? "freelance hire contract offerings" : ""} ${r.label === "CREDENTIALS" ? "certificates cs50 harvard education verified" : ""} ${r.label === "CAPABILITIES" ? "skills tech stack tools tooling" : ""} ${r.label === "CV" ? "resume curriculum vitae experience" : ""}`,
+    keywords: `${r.label} ${r.href} navigation go ${NAV_KEYWORDS[r.href] ?? ""}`,
     action: "route" as const,
     target: r.href,
   })),
-  {
-    id: "nav-work",
-    label: workRoute.label,
-    group: "NAVIGATION",
-    hint: workRoute.code,
-    keywords: "work with me hire freelance contract collaboration open to",
-    action: "route",
-    target: workRoute.href,
-  },
-  {
-    id: "nav-works-main",
-    label: "WORKS DIRECTORY",
-    group: "NAVIGATION",
-    hint: "WORKS",
-    keywords: "works directory portfolio products projects personal builds systems",
-    action: "route",
-    target: "/works",
-  },
-  {
-    id: "nav-works-products",
-    label: "PRODUCTS & PLATFORMS",
-    group: "NAVIGATION",
-    hint: "TIER 01",
-    keywords: "products platforms commercial strata-engine billing costintel",
-    action: "route",
-    target: "/works/products",
-  },
-  {
-    id: "nav-works-projects",
-    label: "PROJECTS (ENGINEERING & QUANT)",
-    group: "NAVIGATION",
-    hint: "TIER 02",
-    keywords: "projects engineering quantitative apex trading os market data forex crypto",
-    action: "route",
-    target: "/works/projects",
-  },
-  {
-    id: "nav-works-personal",
-    label: "PERSONAL BUILDS",
-    group: "NAVIGATION",
-    hint: "TIER 03",
-    keywords: "personal builds independent ai assistants agents prototypes qrsip kernel sentiment",
-    action: "route",
-    target: "/works/personal-builds",
-  },
-  ...archiveProjects.map((p) => ({
+  ...allArchiveProjects.map((p) => ({
     id: `project-${p.id}`,
     label: p.shortTitle,
     group: "PROJECTS" as const,
@@ -134,7 +124,7 @@ const commands: Command[] = [
   ...labModules.map((m) => ({
     id: `lab-${m.id}`,
     label: m.name,
-    group: "LAB" as const,
+    group: "LABORATORY" as const,
     hint: m.code,
     keywords: `${m.name} ${m.description} lab tool instrument`,
     action: "route" as const,
@@ -143,7 +133,7 @@ const commands: Command[] = [
   ...credentials.map((c) => ({
     id: `credential-${c.id}`,
     label: c.program,
-    group: "CREDENTIALS" as const,
+    group: "EDUCATION & CREDENTIALS" as const,
     hint: c.provider,
     keywords: `${c.program} ${c.provider} ${c.state} ${c.credentialId || ""} CS50 CS50x Harvard certificate computer science credential study verified`,
     action: "route" as const,
@@ -183,8 +173,8 @@ const GROUP_ORDER: Command["group"][] = [
   "CASE STUDIES",
   "ARTICLES",
   "SERVICES",
-  "LAB",
-  "CREDENTIALS",
+  "LABORATORY",
+  "EDUCATION & CREDENTIALS",
   "ACTIONS",
 ];
 

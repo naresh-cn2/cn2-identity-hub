@@ -50,7 +50,7 @@ export default function PathwayMap({ pathways }: { pathways: readonly MapPathway
       <circle cx={60} cy={TRUNK_Y} r="7" fill="none" stroke="var(--line-strong)" strokeWidth="1.5" />
       <circle cx={60} cy={TRUNK_Y} r="2.5" fill="var(--signal)" />
       <text x={60} y={TRUNK_Y - 34} className="label-mono hidden sm:block" fill="var(--faint)" fontSize="14">
-        OPPORTUNITIES
+        CAREERS
       </text>
 
       {/* branches */}

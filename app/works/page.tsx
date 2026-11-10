@@ -9,15 +9,15 @@ import { career } from "@/data/career";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Works — Bukya Naresh / CN2.dev",
+  title: "Builds — Bukya Naresh / CN2.dev",
   description:
-    "Works directory across three core disciplines: Products & Platforms, Projects, and Personal Builds. Quantitative systems, market-data infrastructure, research tooling and financial data engines, each documented with verifiable architecture and evidence.",
+    "Builds directory across three core disciplines: Products, Projects, and Independent Builds. Quantitative systems, market-data infrastructure, research tooling and financial data engines, each documented with verifiable architecture and evidence.",
   alternates: { canonical: "/works" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Works — Bukya Naresh / CN2.dev",
+    title: "Builds — Bukya Naresh / CN2.dev",
     description:
-      "Products, projects, and personal builds — quantitative systems, market-data infrastructure, research tooling and financial data engines.",
+      "Products, projects, and independent builds — quantitative systems, market-data infrastructure, research tooling and financial data engines.",
   },
 };
 
@@ -32,7 +32,7 @@ export default function WorksPage() {
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="label-mono text-signal">
-                WORKS DIRECTORY
+                BUILDS DIRECTORY
               </p>
               <p className="label-mono text-faint">
                 3 CORE DISCIPLINES · VERIFIED SYSTEMS &amp; PLATFORMS
@@ -40,17 +40,17 @@ export default function WorksPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]" ariaLabel="WORK">
-              WORKS
+            <KineticText className="display mt-8 text-[clamp(3rem,10vw,8rem)]" ariaLabel="BUILDS">
+              BUILDS
             </KineticText>
           </Reveal>
           <Reveal delay={160}>
             <div className="mt-4 flex flex-col gap-1">
               <p className="display-condensed text-2xl text-foreground md:text-3xl">
-                PRODUCTS. PROJECTS. PERSONAL BUILDS.
+                PRODUCTS. PROJECTS. INDEPENDENT BUILDS.
               </p>
               <p className="label-mono text-xs text-faint">
-                PRODUCTS. PROJECTS. ENGINEERING.
+                THREE CATEGORIES · ONE VERIFIED RECORD
               </p>
             </div>
           </Reveal>
@@ -68,7 +68,7 @@ export default function WorksPage() {
                 href="/works/products"
                 className="label-mono border border-signal bg-signal/10 px-6 py-3 text-signal transition-colors hover:bg-signal hover:text-white"
               >
-                PRODUCTS &amp; PLATFORMS →
+                PRODUCTS &amp; BUILD SYSTEMS →
               </Link>
               <Link
                 href="/works/projects"
@@ -80,7 +80,7 @@ export default function WorksPage() {
                 href="/works/personal-builds"
                 className="label-mono border border-cyan-500/40 bg-cyan-500/10 px-6 py-3 text-cyan-500 dark:text-cyan-400 transition-colors hover:bg-cyan-500 hover:text-black"
               >
-                PERSONAL BUILDS →
+                INDEPENDENT BUILDS →
               </Link>
             </div>
           </Reveal>

@@ -91,14 +91,20 @@ export default function ProjectOverview({ project }: { project: FlagshipProject 
                             >
                                 READ CASE STUDY →
                             </Link>
-                            <a
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
-                            >
-                                SOURCE ON GITHUB →
-                            </a>
+                            {project.githubPrivate ? (
+                                <span className="label-mono border border-line-strong px-6 py-3 text-muted">
+                                    PRIVATE REPOSITORY · ACCESS RESTRICTED
+                                </span>
+                            ) : (
+                                <a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
+                                >
+                                    SOURCE ON GITHUB →
+                                </a>
+                            )}
                         </div>
                     </Reveal>
                 </div>

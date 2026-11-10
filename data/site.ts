@@ -44,58 +44,74 @@ export interface NavItem extends NavLeaf {
 }
 
 /**
- * Primary navigation (spec §20, IA v4).
+ * Primary navigation (spec §20, IA v5).
  *
- * The top bar carries the six primary destinations — WORK, RESEARCH, SERVICES,
- * ABOUT, CREDENTIALS, CONTACT. WORK and RESEARCH keep grouped children for the
- * menu overlay. Everything else (laboratory, opportunities, testimonials, CV,
- * links) lives in secondaryNav and stays reachable through the MENU control.
+ * The eight primary destinations, in journey order, grouped the same way the
+ * hub groups them: BUILDS · LABORATORY · RESEARCH & JOURNAL under Engineering;
+ * SERVICES · EDUCATION & CREDENTIALS under Professional Capabilities;
+ * CAREERS & COLLABORATION · ABOUT · CONTACT under Engagement.
+ *
+ * The top bar itself stays minimal (brand · search · theme) — this registry
+ * is what the footer index, /links and the command palette render, so the
+ * names and the order must match the hub exactly.
  */
 export const primaryNav: NavItem[] = [
   {
-    label: "WORKS",
+    label: "BUILDS",
     href: "/works",
     code: "01",
     children: [
-      { label: "WORKS DIRECTORY", href: "/works", code: "01" },
-      { label: "PRODUCTS & PLATFORMS", href: "/works/products", code: "01A" },
+      { label: "BUILDS", href: "/works", code: "01" },
+      { label: "PRODUCTS", href: "/works/products", code: "01A" },
       { label: "PROJECTS", href: "/works/projects", code: "01B" },
-      { label: "PERSONAL BUILDS", href: "/works/personal-builds", code: "01C" },
+      { label: "INDEPENDENT BUILDS", href: "/works/personal-builds", code: "01C" },
       { label: "CASE STUDIES", href: "/case-studies", code: "02" },
       { label: "CAPABILITIES", href: "/about#capability-map", code: "03" },
       { label: "PROOF", href: "/proof", code: "09" },
     ],
   },
   {
-    label: "RESEARCH",
+    label: "LABORATORY",
+    href: "/lab",
+    code: "11",
+    children: [
+      { label: "LABORATORY", href: "/lab", code: "11" },
+      { label: "EXPERIMENTS", href: "/lab/experiments", code: "11A" },
+      { label: "RISK SIMULATOR", href: "/lab/risk", code: "11B" },
+      { label: "POINT-IN-TIME REPLAY", href: "/lab/market-replay", code: "11C" },
+      { label: "STRATEGY VISUALIZER", href: "/lab/strategy", code: "11D" },
+    ],
+  },
+  {
+    label: "RESEARCH & JOURNAL",
     href: "/research",
     code: "04",
     children: [
-      { label: "RESEARCH", href: "/research", code: "04" },
+      { label: "RESEARCH & JOURNAL", href: "/research", code: "04" },
       { label: "ARTICLES", href: "/articles", code: "05" },
       { label: "INTELLIGENCE", href: "/intelligence", code: "06" },
     ],
   },
   { label: "SERVICES", href: "/services", code: "20" },
-  { label: "ABOUT", href: "/about", code: "10" },
-  { label: "CREDENTIALS", href: "/credentials", code: "07" },
-  { label: "CONTACT", href: "/contact", code: "16" },
-];
-
-/** Secondary destinations — carried by the footer index, /links and the command palette. */
-export const secondaryNav: NavItem[] = [
-  { label: "LABORATORY", href: "/lab", code: "11" },
+  { label: "EDUCATION & CREDENTIALS", href: "/credentials", code: "07" },
   {
-    label: "OPPORTUNITIES",
+    label: "CAREERS & COLLABORATION",
     href: "/opportunities",
     code: "12",
     children: [
-      { label: "CAREER", href: "/opportunities/career", code: "12" },
+      { label: "CAREERS & COLLABORATION", href: "/opportunities", code: "12" },
+      { label: "CAREER & ROLES", href: "/opportunities/career", code: "12A" },
       { label: "FREELANCE", href: "/opportunities/freelance", code: "13" },
       { label: "COLLABORATE", href: "/opportunities/collaborate", code: "14" },
       { label: "PARTNERSHIPS", href: "/opportunities/partnerships", code: "15" },
     ],
   },
+  { label: "ABOUT", href: "/about", code: "10" },
+  { label: "CONTACT", href: "/contact", code: "16" },
+];
+
+/** Secondary destinations — carried by the footer index, /links and the command palette. */
+export const secondaryNav: NavItem[] = [
   { label: "TESTIMONIALS", href: "/testimonials", code: "21" },
   { label: "CV", href: "/cv", code: "18" },
   { label: "LINKS", href: "/links", code: "19" },
@@ -121,7 +137,7 @@ export const allRoutes: NavLeaf[] = [
     item.children ? item.children : [{ label: item.label, href: item.href, code: item.code }]
   ),
   { label: workRoute.label, href: workRoute.href, code: workRoute.code },
-  { label: "WORK", href: "/work", code: "01" },
+  { label: "PROJECT WORLDS", href: "/work", code: "01D" },
 ];
 
 /** Deduplicated route index (a group landing href can repeat as a child). */

@@ -10,13 +10,13 @@ import { RecordSpine } from "@/components/opportunities/pathway-visuals";
 export const metadata: Metadata = {
   title: "Career — Employment Opportunities",
   description:
-    "Education, projects and CV for quantitative development and research roles.",
+    "Self-directed study record, built systems and CV for quantitative development and research roles.",
   alternates: { canonical: "/opportunities/career" },
   openGraph: {
     images: ["/opengraph-image"],
     title: "Career — Bukya Naresh / CN2.dev",
     description:
-      "Quantitative development and research roles. Education, projects, experience and CV.",
+      "Quantitative development and research roles. Study record, built systems and CV.",
   },
 };
 
@@ -36,7 +36,7 @@ export default function CareerPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <KineticText accent={"OPPORTUNITIES"} className="display mt-8 text-[clamp(2.8rem,9vw,7rem)]">
+            <KineticText accent={"CAREERS"} className="display mt-8 text-[clamp(2.8rem,9vw,7rem)]">
               CAREER
             </KineticText>
           </Reveal>
@@ -97,8 +97,12 @@ export default function CareerPage() {
       <section aria-label="Experience" className="border-b border-line">
         <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-24">
           <Reveal>
-            <p className="label-mono text-signal">EXPERIENCE</p>
+            <p className="label-mono text-signal">PROJECT EXPERIENCE</p>
             <h2 className="display mt-4 text-3xl md:text-5xl">SYSTEMS BUILT</h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
+              This is a record of systems I designed and built end to end — not employment history.
+              Each entry links to the project so the work can be inspected directly.
+            </p>
           </Reveal>
           <div className="mt-10 space-y-8">
             {career.experience.map((exp, i) => (
@@ -112,6 +116,16 @@ export default function CareerPage() {
                     <h3 className="display text-xl md:text-2xl">{exp.project}</h3>
                     <p className="mt-3 text-base leading-relaxed text-muted">{exp.scope}</p>
                     <p className="label-mono mt-3 text-[10px] text-research">{exp.metrics}</p>
+                    <ul className="mt-4 flex flex-wrap gap-2" aria-label="Skills demonstrated">
+                      {exp.skills.map((skill) => (
+                        <li
+                          key={skill}
+                          className="label-mono border border-line px-2.5 py-1 text-[10px] text-muted"
+                        >
+                          {skill}
+                        </li>
+                      ))}
+                    </ul>
                     {exp.href.startsWith("http") ? (
                       <a
                         href={exp.href}
@@ -146,13 +160,14 @@ export default function CareerPage() {
           <Reveal delay={120}>
             <div className="card-depth mt-8 corner-ticks border border-line bg-surface p-6 md:p-10">
               <p className="text-base leading-relaxed text-muted md:text-lg">
-                The full record — capability, work and study — in a print-ready format.
+                The full record — capability, work and study — laid out so it can be read on screen or
+                printed to PDF from the browser.
               </p>
               <Link
                 href="/cv"
                 className="label-mono mt-6 inline-block border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
-                DOWNLOAD CV →
+                VIEW THE CV →
               </Link>
             </div>
           </Reveal>

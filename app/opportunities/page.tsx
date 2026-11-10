@@ -7,13 +7,13 @@ import { site } from "@/data/site";
 import PathwayMap from "@/components/opportunities/pathway-map";
 
 export const metadata: Metadata = {
-  title: "Opportunities",
+  title: "Careers & Collaboration",
   description:
     "Open to quantitative research, engineering, freelance contracts, research collaboration and technical partnerships.",
   alternates: { canonical: "/opportunities" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Opportunities — Bukya Naresh / CN2.dev",
+    title: "Careers & Collaboration — Bukya Naresh / CN2.dev",
     description:
       "Quantitative research, market-data engineering, freelance contracts, research collaboration and technical partnerships.",
   },
