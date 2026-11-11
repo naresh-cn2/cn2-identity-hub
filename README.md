@@ -16,7 +16,7 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | --- | --- |
 | `/` | Entrance — code-generated mathematical identity |
 | `/hub` | Headquarters — the master index with central Holographic Data Gate & 8 animated destination scenes |
-| `/works` (or `/work`) | WORKS — 3-tier directory: Products & Platforms (`/works/products`), Projects (`/works/projects`), and Personal Builds (`/works/personal-builds`), each item with a 12-section comprehensive engineering case study (`/works/<project>`) |
+| `/works` | BUILDS — 3-tier directory: Products & Platforms (`/works/products`), Projects (`/works/projects`), and Personal Builds (`/works/personal-builds`), each item with a 12-section comprehensive engineering case study (`/works/<project>`) |
 | `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
 | `/research` | Research entries with stated method, findings, and Gaussian Probability Density Manifold |
 | `/articles` | Engineering articles & methodologies |
