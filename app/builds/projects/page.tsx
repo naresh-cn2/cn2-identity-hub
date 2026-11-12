@@ -80,6 +80,17 @@ export default function ProjectsPage() {
             caseStudyUrl="/works/stratlab"
             category="PROJECT"
           />
+          <ProjectCard
+            name="HARVARD CS50 AI"
+            tagline="Twelve Applied Artificial Intelligence Projects"
+            description="Applied artificial intelligence engineering spanning search algorithms, knowledge representation, probabilistic reasoning, optimization, machine learning, reinforcement learning, neural networks, and natural language processing. Twelve verified projects with certificate from CS50, Harvard University."
+            tech={["Python", "Search Algorithms", "Knowledge Representation", "Probabilistic Reasoning", "Optimization", "Machine Learning", "Reinforcement Learning", "Neural Networks", "NLP", "Computer Vision"]}
+            status="CS50 · VERIFIED · 12/12 PROJECTS"
+            evidenceLabel="HARVARD CS50AI · CERTIFICATE VERIFIED"
+            repoUrl="https://github.com/naresh-cn2/harvard-cs50-ai"
+            caseStudyUrl="/builds/projects/cs50-ai"
+            category="PROJECT"
+          />
         </section>
       </main>
     </>

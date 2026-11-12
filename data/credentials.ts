@@ -356,6 +356,55 @@ export const studyTracks: StudyTrack[] = [
     evidenceProject: "market-data-replay",
     evidenceResearch: "decimal-arithmetic",
   },
+  {
+    id: "cs50-ai-artificial-intelligence",
+    provider: "CS50 — Harvard University",
+    program: "CS50AI: Introduction to Artificial Intelligence with Python",
+    state: "VERIFIED",
+    date: "2026-11-11",
+    expires: "Does not expire",
+    credentialId: "693ef47a-6151-4545-9661-add787b5f7b",
+    verificationUrl:
+      "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5f7b",
+    certificateUrl:
+      "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5f7b.pdf",
+    topics: [
+      "Graph search and breadth-first search (Degrees)",
+      "Minimax and adversarial search (Tic-Tac-Toe)",
+      "Propositional logic and model checking (Knights)",
+      "Knowledge representation and inference (Minesweeper)",
+      "Markov chains and random walks (PageRank)",
+      "Bayesian networks and probability (Heredity)",
+      "Constraint satisfaction and backtracking (Crossword)",
+      "Supervised machine learning (Shopping)",
+      "Reinforcement learning and Q-learning (Nim)",
+      "Computer vision and convolutional neural networks (Traffic)",
+      "Context-free grammars and natural language processing (Parser)",
+      "Transformer attention mechanisms (Attention)",
+    ],
+    skills: [
+      "Python",
+      "Search Algorithms",
+      "Knowledge Representation",
+      "Probabilistic Reasoning",
+      "Optimization",
+      "Machine Learning",
+      "Reinforcement Learning",
+      "Neural Networks",
+      "Natural Language Processing",
+      "Computer Vision",
+    ],
+    learned:
+      "Twelve applied artificial intelligence projects spanning search, knowledge representation, probabilistic reasoning, optimization, machine learning, reinforcement learning, neural networks, and natural language processing. Each project implements a complete system from problem formulation through validation, establishing practical fluency in modern AI engineering techniques.",
+    assessment:
+      "Certificate of Completion issued by CS50, Harvard University. Twelve projects completed, each assessed against defined rubrics. Independent verification available at the certificate URL.",
+    relatedProject: "harvard-cs50-ai",
+    notes: [
+      "Certificate issued November 11, 2026.",
+      "All 12/12 projects completed.",
+      "Not a Harvard degree — professional certificate programme.",
+    ],
+  },
 ];
 
 export const credentialStates: { state: CredentialState; meaning: string }[] = [
