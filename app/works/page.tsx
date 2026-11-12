@@ -9,10 +9,10 @@ import { career } from "@/data/career";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Builds — Bukya Naresh / CN2.dev",
+  title: "BUILDS — Bukya Naresh / CN2.dev",
   description:
-    "Builds directory across three core disciplines: Products, Projects, and Independent Builds. Quantitative systems, market-data infrastructure, research tooling and financial data engines, each documented with verifiable architecture and evidence.",
-  alternates: { canonical: "/works" },
+    "Products, engineering projects and independent builds - every system documented from the original problem through architecture and implementation to verifiable evidence.",
+  alternates: { canonical: "/builds" },
   openGraph: {
     images: ["/opengraph-image"],
     title: "Builds — Bukya Naresh / CN2.dev",

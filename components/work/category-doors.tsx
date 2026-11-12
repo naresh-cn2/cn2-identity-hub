@@ -16,7 +16,6 @@ export default function CategoryDoors() {
       <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-surface/20 py-20 md:py-28">
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-            {/* Visual Column */}
             <div className="relative flex items-center justify-center">
               <Reveal className="w-full">
                 <div className="mx-auto w-full max-w-[540px]">
@@ -24,13 +23,11 @@ export default function CategoryDoors() {
                 </div>
               </Reveal>
             </div>
-
-            {/* Copy Column */}
             <div className="relative z-10">
               <Reveal delay={80}>
                 <p className="label-mono text-signal font-bold">{products.badge}</p>
                 <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
-                  <Link href={`/works/${products.slug}`} className="transition-colors hover:text-signal">
+                  <Link href={`/builds/${products.slug}`} className="transition-colors hover:text-signal">
                     {products.title}
                   </Link>
                 </h2>
@@ -40,10 +37,9 @@ export default function CategoryDoors() {
                 <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
                   {products.description}
                 </p>
-
                 <div className="mt-9">
                   <Link
-                    href={`/works/${products.slug}`}
+                    href={`/builds/${products.slug}`}
                     className="corner-ticks group inline-flex items-center gap-4 border border-signal bg-signal/15 px-8 py-4 label-mono text-xs font-bold text-signal transition-colors hover:bg-signal hover:text-white"
                   >
                     <span>ENTER PRODUCTS</span>
@@ -62,12 +58,11 @@ export default function CategoryDoors() {
       <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-background py-20 md:py-28">
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-            {/* Copy Column */}
             <div className="relative z-10 lg:order-1">
               <Reveal delay={80}>
                 <p className="label-mono text-research font-bold">{projects.badge}</p>
                 <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
-                  <Link href={`/works/${projects.slug}`} className="transition-colors hover:text-research">
+                  <Link href={`/builds/${projects.slug}`} className="transition-colors hover:text-research">
                     {projects.title}
                   </Link>
                 </h2>
@@ -77,10 +72,9 @@ export default function CategoryDoors() {
                 <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
                   {projects.description}
                 </p>
-
                 <div className="mt-9">
                   <Link
-                    href={`/works/${projects.slug}`}
+                    href={`/builds/${projects.slug}`}
                     className="corner-ticks group inline-flex items-center gap-4 border border-research bg-research/15 px-8 py-4 label-mono text-xs font-bold text-research transition-colors hover:bg-research hover:text-white"
                   >
                     <span>ENTER PROJECTS DESTINATION</span>
@@ -91,8 +85,6 @@ export default function CategoryDoors() {
                 </div>
               </Reveal>
             </div>
-
-            {/* Visual Column */}
             <div className="relative flex items-center justify-center lg:order-2">
               <Reveal className="w-full">
                 <div className="mx-auto w-full max-w-[540px]">
@@ -108,7 +100,6 @@ export default function CategoryDoors() {
       <section className="relative flex min-h-[80svh] items-center overflow-hidden bg-surface/20 py-20 md:py-28">
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-            {/* Visual Column */}
             <div className="relative flex items-center justify-center">
               <Reveal className="w-full">
                 <div className="mx-auto w-full max-w-[540px]">
@@ -116,13 +107,11 @@ export default function CategoryDoors() {
                 </div>
               </Reveal>
             </div>
-
-            {/* Copy Column */}
             <div className="relative z-10">
               <Reveal delay={80}>
                 <p className="label-mono text-cyan-500 dark:text-cyan-400 font-bold">{personal.badge}</p>
                 <h2 className="display mt-4 text-[clamp(2.4rem,5.5vw,4.5rem)] leading-none text-foreground">
-                  <Link href={`/works/${personal.slug}`} className="transition-colors hover:text-cyan-500">
+                  <Link href="/builds/personal" className="transition-colors hover:text-cyan-500">
                     {personal.title}
                   </Link>
                 </h2>
@@ -132,13 +121,12 @@ export default function CategoryDoors() {
                 <p className="mt-3 text-base leading-relaxed text-muted md:text-lg">
                   {personal.description}
                 </p>
-
                 <div className="mt-9">
                   <Link
-                    href={`/works/${personal.slug}`}
+                    href="/builds/personal"
                     className="corner-ticks group inline-flex items-center gap-4 border border-cyan-500 bg-cyan-500/15 px-8 py-4 label-mono text-xs font-bold text-cyan-500 dark:text-cyan-400 transition-colors hover:bg-cyan-500 hover:text-black"
                   >
-                    <span>ENTER INDEPENDENT BUILDS</span>
+                    <span>ENTER PERSONAL BUILDS</span>
                     <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>

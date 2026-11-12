@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
-import type { HubChild, HubDestination } from "@/data/hub";
+import type { HubDestination } from "@/data/hub";
 
 /**
  * DestinationSection — one full-screen stop in the CN2.DEV universe.
@@ -33,50 +33,8 @@ function isExternalHref(href: string) {
   return href.startsWith("http");
 }
 
-function ChildCard({ child }: { child: HubChild }) {
-  const body = (
-    <>
-      <span className="label-mono text-[10px] text-foreground transition-colors group-hover:text-signal">
-        {child.label}
-      </span>
-      <span
-        aria-hidden="true"
-        className="label-mono text-[10px] text-faint transition-transform duration-300 group-hover:translate-x-1 group-hover:text-signal"
-      >
-        →
-      </span>
-    </>
-  );
-
-  return (
-    <li className="bg-background">
-      {isExternalHref(child.href) ? (
-        <a
-          href={child.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center justify-between gap-3 border border-line bg-background px-4 py-3 transition-colors hover:border-signal/60 hover:bg-surface"
-        >
-          {body}
-        </a>
-      ) : (
-        <Link
-          href={child.href}
-          className="group flex items-center justify-between gap-3 border border-line bg-background px-4 py-3 transition-colors hover:border-signal/60 hover:bg-surface"
-        >
-          {body}
-        </Link>
-      )}
-      <p className="px-1 pb-3 pt-2 text-xs leading-relaxed text-faint">{child.note}</p>
-    </li>
-  );
-}
-
 export default function DestinationSection({ destination, contentSide, ambient, visual }: Props) {
   const contentFirst = contentSide === "left";
-  const hasChildren = destination.children.length > 0;
-  /* Dense destinations (services) read better in three columns. */
-  const childColumns = destination.children.length >= 6 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
     <section
@@ -136,29 +94,9 @@ export default function DestinationSection({ destination, contentSide, ambient, 
             <Reveal delay={140}>
               <div className="dest-recede">{visual}</div>
             </Reveal>
-            {destination.interactive && (
-              <Reveal delay={220}>
-                <p className="mt-4 label-mono text-faint md:text-right">
-                  REAL CHANNELS <span className="text-signal">—</span> SELECT A NODE TO OPEN
-                </p>
-              </Reveal>
-            )}
+            {/* destination-scene padding keeps the visual balanced */}
           </div>
         </div>
-
-        {/* ---- what is inside this destination ---- */}
-        {hasChildren && (
-          <Reveal delay={120}>
-            <div className="mt-12 border-t border-line pt-8 md:mt-16">
-              <p className="label-mono text-faint">INSIDE — {destination.label}</p>
-              <ul className={`mt-5 grid gap-px bg-line ${childColumns}`}>
-                {destination.children.map((child) => (
-                  <ChildCard key={child.href} child={child} />
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        )}
 
         {/* ---- scroll cue: the journey continues below ---- */}
         <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block" aria-hidden="true">

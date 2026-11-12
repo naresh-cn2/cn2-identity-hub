@@ -16,8 +16,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async redirects() {
     return [
-      { source: "/builds", destination: "/work", permanent: true },
-      { source: "/builds/:project", destination: "/work/:project", permanent: true },
       { source: "/certifications", destination: "/credentials", permanent: true },
       { source: "/quant", destination: "/work", permanent: true },
       { source: "/quant/apex-quant-engine", destination: "/work/apex-quant-engine", permanent: true },

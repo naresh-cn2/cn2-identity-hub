@@ -1,28 +1,24 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
 import Link from "next/link";
+import Reveal from "@/components/ui/reveal";
 import UniverseIntro from "@/components/hub/universe-intro";
-import DestinationIndex from "@/components/hub/destination-index";
-import GroupDivider from "@/components/hub/group-divider";
-import DestinationSection from "@/components/hub/destination-section";
 import DestinationVisual from "@/components/hub/destination-visual";
-import { hubDestinations, hubGroups, hubIndex } from "@/data/hub";
+import { hubDestinations } from "@/data/hub";
 
 export const metadata: Metadata = {
   title: "Explore the Universe",
   description:
-    "The CN2.DEV universe — eight destinations in three groups. Builds, Laboratory, Research & Journal, Services, Education & Credentials, Careers & Collaboration, About and Contact: quantitative research, software engineering, intelligent automation, and the ideas connecting them.",
+    "The CN2.DEV universe - eight destinations. Builds, Laboratory, Research & Journal, Services, Education & Credentials, Careers & Collaboration, About and Contact.",
   alternates: { canonical: "/hub" },
   openGraph: {
     images: ["/opengraph-image"],
-    title: "Explore the CN2.DEV Universe — Bukya Naresh / CN2.DEV",
+    title: "Explore the CN2.DEV Universe - Bukya Naresh / CN2.DEV",
     description:
-      "One identity. Multiple disciplines. A world of things to build. Eight destinations in three groups, one immersive introduction at a time.",
+      "One identity. Multiple disciplines. A world of things to build. Eight destinations in one immersive introduction.",
   },
 };
 
-/**
- * One ambient light source per stop — soft enough to read against,
+/** One ambient light source per stop - soft enough to read against,
  * distinct enough that every destination owns its own atmosphere.
  * Codes are positional and follow the IA v5 journey order.
  */
@@ -44,48 +40,81 @@ export default function HubPage() {
 
       {/* ---- the universe: one destination per full-screen section ---- */}
       <main id="destinations" aria-label="The CN2.DEV universe">
-        {/* ---- the map: all eight destinations, grouped, before the journey ---- */}
-        <DestinationIndex />
-
-        {hubDestinations.map((destination, i) => {
-          const previous = hubDestinations[i - 1];
-          const startsGroup = !previous || previous.group !== destination.group;
-          const groupIndex = hubGroups.findIndex((g) => g.id === destination.group);
-          const group = hubGroups[groupIndex];
-
-          return (
-            <Fragment key={destination.code}>
-              {startsGroup && group && (
-                <GroupDivider group={group} index={groupIndex + 1} />
-              )}
-              <DestinationSection
-                destination={destination}
-                contentSide={i % 2 === 0 ? "left" : "right"}
-                ambient={AMBIENTS[destination.code] ?? "grid-field"}
-                visual={<DestinationVisual code={destination.code} />}
-              />
-            </Fragment>
-          );
-        })}
-      </main>
-
-      {/* ---- secondary index ---- */}
-      <section aria-label="Secondary index">
-        <div className="mx-auto max-w-[1440px] px-5 py-10 sm:px-8 md:py-12">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <p className="label-mono text-muted">ALSO INSIDE</p>
-            {hubIndex.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="label-mono text-[10px] text-muted transition-colors hover:text-signal"
+        <div className="mx-auto max-w-[1440px] px-5 pb-20 sm:px-8 md:pb-24">
+          {hubDestinations.map((destination, i) => {
+            const visual = <DestinationVisual code={destination.code} />;
+            return (
+              <section
+                key={destination.code}
+                id={`dest-${destination.code}`}
+                aria-labelledby={`dest-${destination.code}`}
+                className="relative flex min-h-[92svh] items-center overflow-hidden border-b border-line"
               >
-                {item.label}
-              </Link>
-            ))}
-          </div>
+                <div
+                  className={`absolute inset-0 ${AMBIENTS[destination.code] ?? "grid-field"}`}
+                  aria-hidden="true"
+                />
+
+                <div className="relative w-full mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-24">
+                  <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+                    {/* ---- copy column: the destination and its one action ---- */}
+                    <div className="relative z-10">
+                      <Reveal>
+                        <p className="label-mono text-signal">{destination.caption}</p>
+                      </Reveal>
+
+                      <Reveal delay={80}>
+                        <h2
+                          id={`dest-${destination.code}`}
+                          className="display mt-5 text-[clamp(2.4rem,6vw,4.75rem)] leading-[0.95]"
+                        >
+                          {destination.label}
+                        </h2>
+                      </Reveal>
+
+                      <Reveal delay={160}>
+                        <p className="mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">
+                          {destination.blurb}
+                        </p>
+                      </Reveal>
+
+                      <Reveal delay={240}>
+                        <Link
+                          href={destination.href}
+                          className="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal/80 bg-signal/15 px-8 py-4 label-mono font-semibold text-signal transition-all duration-200 hover:bg-signal hover:text-white"
+                        >
+                          <span>{destination.action}</span>
+                          <span aria-hidden="true" className="arr-live transition-transform duration-300 group-hover:translate-x-1">
+                            &rarr;
+                          </span>
+                        </Link>
+                      </Reveal>
+
+                      <Reveal delay={280}>
+                        <p className="label-mono mt-5 text-[10px] text-faint">
+                          FOR {destination.audience}
+                        </p>
+                      </Reveal>
+                    </div>
+
+                    {/* ---- the destination's own scene ---- */}
+                    <div className="relative">
+                      <Reveal delay={140}>
+                        <div className="dest-recede">{visual}</div>
+                      </Reveal>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ---- scroll cue: the journey continues below ---- */}
+                <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block" aria-hidden="true">
+                  <span className="dest-cue" />
+                </div>
+              </section>
+            );
+          })}
         </div>
-      </section>
+      </main>
     </>
   );
 }
