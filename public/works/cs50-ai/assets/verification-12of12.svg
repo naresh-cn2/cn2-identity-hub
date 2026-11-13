@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" fill="none">
+  <defs>
+    <linearGradient id="ver-bg" x1="0" y1="0" x2="960" y2="560" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="ver-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="560" rx="12" fill="url(#ver-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#ver-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">TESTING EVIDENCE — CS50AI ASSIGNMENT VERIFICATION (12/12 COMPLETE)</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">GRADED BY HARVARD'S AUTOMATED check50 HARNESS · SUBMITTED VIA submit50 · 70% PASS REQUIRED PER PROJECT</text>
+
+  <rect x="32" y="96" width="896" height="360" rx="8" fill="#0a0f1a" stroke="#1f2937" stroke-width="1"/>
+  <text x="52" y="126" fill="#475569" font-family="Consolas, monospace" font-size="10" letter-spacing="1">================================================================================</text>
+
+  <g font-family="Consolas, monospace" font-size="12">
+    <text x="52" y="156" fill="#94a3b8">  [01] Degrees          :</text><text x="300" y="156" fill="#10b981">✓ Passed</text><text x="420" y="156" fill="#64748b">(QueueFrontier BFS)</text>
+    <text x="52" y="182" fill="#94a3b8">  [02] Tic-Tac-Toe      :</text><text x="300" y="182" fill="#10b981">✓ Passed</text><text x="420" y="182" fill="#64748b">(Minimax + Alpha-Beta Pruning)</text>
+    <text x="52" y="208" fill="#94a3b8">  [03] Knights          :</text><text x="300" y="208" fill="#10b981">✓ Passed</text><text x="420" y="208" fill="#64748b">(Propositional Model Checking)</text>
+    <text x="52" y="234" fill="#94a3b8">  [04] Minesweeper      :</text><text x="300" y="234" fill="#10b981">✓ Passed</text><text x="420" y="234" fill="#64748b">(Subset Deductive Inference)</text>
+    <text x="52" y="260" fill="#94a3b8">  [05] PageRank         :</text><text x="300" y="260" fill="#10b981">✓ Passed</text><text x="420" y="260" fill="#64748b">(Markov Random Surfer &amp; Iterative)</text>
+    <text x="52" y="286" fill="#94a3b8">  [06] Heredity         :</text><text x="300" y="286" fill="#10b981">✓ Passed</text><text x="420" y="286" fill="#64748b">(Bayesian Network Marginalization)</text>
+    <text x="52" y="312" fill="#94a3b8">  [07] Crossword        :</text><text x="300" y="312" fill="#10b981">✓ Passed</text><text x="420" y="312" fill="#64748b">(CSP Arc Consistency AC-3 &amp; MRV)</text>
+    <text x="52" y="338" fill="#94a3b8">  [08] Shopping         :</text><text x="300" y="338" fill="#10b981">✓ Passed</text><text x="420" y="338" fill="#64748b">(k-NN Sensitivity/Specificity)</text>
+    <text x="52" y="364" fill="#94a3b8">  [09] Nim              :</text><text x="300" y="364" fill="#10b981">✓ Passed</text><text x="420" y="364" fill="#64748b">(Q-Learning Temporal Difference)</text>
+    <text x="52" y="390" fill="#94a3b8">  [10] Traffic          :</text><text x="300" y="390" fill="#10b981">✓ Passed</text><text x="420" y="390" fill="#64748b">(Deep CNN · OpenCV + TensorFlow)</text>
+    <text x="52" y="416" fill="#94a3b8">  [11] Parser           :</text><text x="300" y="416" fill="#10b981">✓ Passed</text><text x="420" y="416" fill="#64748b">(Context-Free Grammar · NP Chunks)</text>
+    <text x="52" y="442" fill="#94a3b8">  [12] Attention        :</text><text x="300" y="442" fill="#10b981">✓ Passed</text><text x="420" y="442" fill="#64748b">(BERT Mask Token &amp; Self-Attention)</text>
+  </g>
+
+  <text x="700" y="126" fill="#10b981" font-family="Consolas, monospace" font-size="12" font-weight="700">SUITE SCORE: 12/12 — 100%</text>
+
+  <!-- footer strip -->
+  <line x1="32" y1="490" x2="928" y2="490" stroke="#1f2937" stroke-width="1"/>
+  <g font-family="Consolas, monospace" font-size="11">
+    <text x="32" y="516" fill="#38bdf8" font-weight="700">ACADEMIC INTEGRITY</text>
+    <text x="190" y="516" fill="#64748b">solution code excluded via .gitignore — the repository publishes conceptual documentation only, per cs50.harvard.edu/ai/honesty</text>
+    <text x="32" y="538" fill="#38bdf8" font-weight="700">VERIFICATION</text>
+    <text x="190" y="538" fill="#64748b">cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5f7b</text>
+  </g>
+</svg>

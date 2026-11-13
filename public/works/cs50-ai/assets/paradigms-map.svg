@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" fill="none">
+  <defs>
+    <linearGradient id="pm-bg" x1="0" y1="0" x2="960" y2="540" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="pm-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="540" rx="12" fill="url(#pm-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#pm-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, 'IBM Plex Mono', monospace" font-size="15" font-weight="700" letter-spacing="2">ARTIFICIAL INTELLIGENCE — SIX PARADIGMS / TWELVE PROJECTS</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, 'IBM Plex Mono', monospace" font-size="11" letter-spacing="1">HARVARD CS50AI · CURRICULUM ARCHITECTURE MAP</text>
+
+  <!-- Row 1: reasoning -->
+  <g>
+    <rect x="32" y="100" width="278" height="190" rx="8" fill="#0d1322" stroke="#1e3a5f" stroke-width="1"/>
+    <rect x="48" y="116" width="64" height="20" rx="4" fill="#1e3a8a" fill-opacity="0.4" stroke="#2563eb"/>
+    <text x="55" y="130" fill="#93c5fd" font-family="Consolas, monospace" font-size="10" font-weight="600">SEARCH</text>
+    <text x="48" y="162" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">Exploration of state spaces</text>
+    <text x="48" y="188" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">01 · Degrees — BFS on IMDb graphs</text>
+    <text x="48" y="208" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">02 · Tic-Tac-Toe — Minimax + α/β</text>
+    <text x="48" y="238" fill="#64748b" font-family="Consolas, monospace" font-size="10">FIFO frontier · optimal on unweighted edges</text>
+  </g>
+  <g>
+    <rect x="341" y="100" width="278" height="190" rx="8" fill="#0d1322" stroke="#1e3a5f" stroke-width="1"/>
+    <rect x="357" y="116" width="96" height="20" rx="4" fill="#134e4a" fill-opacity="0.6" stroke="#14b8a6"/>
+    <text x="364" y="130" fill="#5eead4" font-family="Consolas, monospace" font-size="10" font-weight="600">KNOWLEDGE</text>
+    <text x="357" y="162" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">Logic and entailment</text>
+    <text x="357" y="188" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">03 · Knights — model checking</text>
+    <text x="357" y="208" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">04 · Minesweeper — subset inference</text>
+    <text x="357" y="238" fill="#64748b" font-family="Consolas, monospace" font-size="10">sound + complete for propositional logic</text>
+  </g>
+  <g>
+    <rect x="650" y="100" width="278" height="190" rx="8" fill="#0d1322" stroke="#1e3a5f" stroke-width="1"/>
+    <rect x="666" y="116" width="106" height="20" rx="4" fill="#4c1d95" fill-opacity="0.45" stroke="#8b5cf6"/>
+    <text x="673" y="130" fill="#c4b5fd" font-family="Consolas, monospace" font-size="10" font-weight="600">OPTIMIZATION</text>
+    <text x="666" y="162" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">Constraints and consistency</text>
+    <text x="666" y="188" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">05 · PageRank — Markov fixed point</text>
+    <text x="666" y="208" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">06 · Heredity — Bayesian inference</text>
+    <text x="666" y="228" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">07 · Crossword — CSP + AC-3</text>
+  </g>
+
+  <!-- Row 2: learning -->
+  <g>
+    <rect x="32" y="310" width="278" height="190" rx="8" fill="#0d1322" stroke="#1e3a5f" stroke-width="1"/>
+    <rect x="48" y="326" width="88" height="20" rx="4" fill="#7c2d12" fill-opacity="0.5" stroke="#f97316"/>
+    <text x="55" y="340" fill="#fdba74" font-family="Consolas, monospace" font-size="10" font-weight="600">LEARNING</text>
+    <text x="48" y="372" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">Statistical learning</text>
+    <text x="48" y="398" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">08 · Shopping — supervised k-NN</text>
+    <text x="48" y="418" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">09 · Nim — Q-learning self-play</text>
+    <text x="48" y="438" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">10 · Traffic — CNN (GTSRB)</text>
+    <text x="48" y="468" fill="#64748b" font-family="Consolas, monospace" font-size="10">ε-greedy · Bellman TD updates · softmax</text>
+  </g>
+  <g>
+    <rect x="341" y="310" width="278" height="190" rx="8" fill="#0d1322" stroke="#1e3a5f" stroke-width="1"/>
+    <rect x="357" y="326" width="106" height="20" rx="4" fill="#052e16" fill-opacity="0.6" stroke="#22c55e"/>
+    <text x="364" y="340" fill="#86efac" font-family="Consolas, monospace" font-size="10" font-weight="600">UNCERTAINTY</text>
+    <text x="357" y="372" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">Probabilistic reasoning</text>
+    <text x="357" y="398" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">Markov chains · random surfer</text>
+    <text x="357" y="418" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">Bayesian networks · marginalization</text>
+    <text x="357" y="448" fill="#64748b" font-family="Consolas, monospace" font-size="10">Perron–Frobenius stationary distribution</text>
+  </g>
+  <g>
+    <rect x="650" y="310" width="278" height="190" rx="8" fill="#0d1322" stroke="#1e3a5f" stroke-width="1"/>
+    <rect x="666" y="326" width="106" height="20" rx="4" fill="#831843" fill-opacity="0.5" stroke="#ec4899"/>
+    <text x="673" y="340" fill="#f9a8d4" font-family="Consolas, monospace" font-size="10" font-weight="600">LANGUAGE</text>
+    <text x="666" y="372" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="14" font-weight="700">Syntax and transformers</text>
+    <text x="666" y="398" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">11 · Parser — CFG parse trees</text>
+    <text x="666" y="418" fill="#94a3b8" font-family="Segoe UI, sans-serif" font-size="11.5">12 · Attention — BERT MLM + heads</text>
+    <text x="666" y="448" fill="#64748b" font-family="Consolas, monospace" font-size="10">softmax(QKᵀ/√dₖ)V — scaled dot-product</text>
+  </g>
+
+  <text x="32" y="524" fill="#475569" font-family="Consolas, monospace" font-size="10" letter-spacing="1">SOURCE: github.com/naresh-cn2/harvard-cs50-ai · DOCUMENTATION/algorithms-reference.md</text>
+</svg>

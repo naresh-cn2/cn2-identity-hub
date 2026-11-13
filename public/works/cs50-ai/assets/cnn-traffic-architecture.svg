@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="470" viewBox="0 0 960 470" fill="none">
+  <defs>
+    <linearGradient id="cnn-bg" x1="0" y1="0" x2="960" y2="470" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="cnn-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="470" rx="12" fill="url(#cnn-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#cnn-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">TRAFFIC — CNN PIPELINE FOR GTSRB SIGN CLASSIFICATION</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">43 CATEGORIES · 30×30×3 INPUT · TENSORFLOW/KERAS · ADAM (η = 0.001)</text>
+
+  <!-- pipeline blocks -->
+  <g font-family="Consolas, monospace" text-anchor="middle">
+    <rect x="40" y="120" width="104" height="70" rx="8" fill="#0d1322" stroke="#334155" stroke-width="1.4"/>
+    <text x="92" y="148" fill="#94a3b8" font-size="11">INPUT</text>
+    <text x="92" y="168" fill="#64748b" font-size="10">30×30×3</text>
+
+    <rect x="168" y="120" width="110" height="70" rx="8" fill="#0d1322" stroke="#2563eb" stroke-width="2"/>
+    <text x="223" y="142" fill="#93c5fd" font-size="11" font-weight="700">Conv2D</text>
+    <text x="223" y="160" fill="#64748b" font-size="10">32 · 3×3 · ReLU</text>
+    <text x="223" y="176" fill="#475569" font-size="9">S(i,j) = (X*W)(i,j)+b</text>
+
+    <rect x="302" y="134" width="100" height="42" rx="8" fill="#0d1322" stroke="#334155" stroke-width="1.4"/>
+    <text x="352" y="152" fill="#94a3b8" font-size="11">MaxPool 2×2</text>
+    <text x="352" y="168" fill="#64748b" font-size="10">P(i,j) = max window</text>
+
+    <rect x="426" y="120" width="110" height="70" rx="8" fill="#0d1322" stroke="#2563eb" stroke-width="2"/>
+    <text x="481" y="142" fill="#93c5fd" font-size="11" font-weight="700">Conv2D</text>
+    <text x="481" y="160" fill="#64748b" font-size="10">64 · 3×3 · ReLU</text>
+    <text x="481" y="176" fill="#475569" font-size="9">hierarchical features</text>
+
+    <rect x="560" y="134" width="100" height="42" rx="8" fill="#0d1322" stroke="#334155" stroke-width="1.4"/>
+    <text x="610" y="152" fill="#94a3b8" font-size="11">MaxPool 2×2</text>
+    <text x="610" y="168" fill="#64748b" font-size="10">translation invariance</text>
+
+    <rect x="684" y="120" width="100" height="70" rx="8" fill="#0d1322" stroke="#334155" stroke-width="1.4"/>
+    <text x="734" y="148" fill="#94a3b8" font-size="11">Flatten</text>
+    <text x="734" y="168" fill="#64748b" font-size="10">1D feature vector</text>
+
+    <rect x="808" y="120" width="120" height="70" rx="8" fill="#0d1322" stroke="#a855f7" stroke-width="2"/>
+    <text x="868" y="142" fill="#d8b4fe" font-size="11" font-weight="700">Dense 128</text>
+    <text x="868" y="160" fill="#64748b" font-size="10">ReLU + Dropout 0.5</text>
+
+    <rect x="690" y="240" width="238" height="52" rx="8" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+    <text x="809" y="262" fill="#86efac" font-size="12" font-weight="700">Dense 43 · Softmax</text>
+    <text x="809" y="280" fill="#4ade80" font-size="10">ŷₖ = e^(zₖ)/Σ e^(zⱼ) · cross-entropy</text>
+  </g>
+
+  <!-- connectors -->
+  <g stroke="#1e3a5f" stroke-width="1.4">
+    <line x1="144" y1="155" x2="168" y2="155"/>
+    <line x1="278" y1="155" x2="302" y2="155"/>
+    <line x1="402" y1="155" x2="426" y2="155"/>
+    <line x1="536" y1="155" x2="560" y2="155"/>
+    <line x1="660" y1="155" x2="684" y2="155"/>
+    <line x1="784" y1="155" x2="808" y2="155"/>
+    <line x1="868" y1="190" x2="868" y2="240"/>
+  </g>
+
+  <!-- preprocessing strip -->
+  <line x1="32" y1="330" x2="928" y2="330" stroke="#1f2937" stroke-width="1"/>
+  <g font-family="Consolas, monospace" font-size="11" fill="#94a3b8">
+    <text x="32" y="356" fill="#38bdf8" font-weight="700">PREPROCESSING</text>
+    <text x="170" y="356">cv2.imread → cv2.resize (30×30) → normalize [0,255]→[0,1] → one-hot labels over 43 classes</text>
+    <text x="32" y="384" fill="#10b981" font-weight="700">VERIFIED</text>
+    <text x="150" y="384">test accuracy &gt; 95% on held-out splits (per the project's published evaluation)</text>
+    <text x="32" y="412" fill="#a855f7" font-weight="700">REGULARIZATION</text>
+    <text x="200" y="412">dropout p = 0.5 at training — breaks neuron co-adaptation, mitigates overfitting</text>
+  </g>
+  <text x="32" y="442" fill="#475569" font-family="Consolas, monospace" font-size="10" letter-spacing="1">ARCHITECTURE AS SPECIFIED IN PROJECTS/traffic.md — github.com/naresh-cn2/harvard-cs50-ai</text>
+</svg>

@@ -49,7 +49,7 @@ export default function BuildsPage() {
           </Reveal>
           <Reveal delay={220}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              Explore the products, software systems, and technical work I'm developing —
+              Explore the products, software systems, and technical work I&apos;m developing —
               structured across commercial products, engineering projects, and independent builds.
               Every system is documented from the original problem to the architecture, implementation,
               experiments, and evidence.

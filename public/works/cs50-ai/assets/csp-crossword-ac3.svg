@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" fill="none">
+  <defs>
+    <linearGradient id="csp-bg" x1="0" y1="0" x2="960" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="csp-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="500" rx="12" fill="url(#csp-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#csp-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">CROSSWORD — CSP SOLVING WITH AC-3 AND BACKTRACKING HEURISTICS</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">VARIABLES = SLOTS · DOMAINS = DICTIONARY WORDS · BINARY CONSTRAINTS AT OVERLAP CELLS</text>
+
+  <!-- crossword grid illustration -->
+  <g>
+    <rect x="60" y="120" width="64" height="64" fill="#0d1322" stroke="#22c55e" stroke-width="2"/>
+    <text x="92" y="157" fill="#86efac" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">C</text>
+    <rect x="124" y="120" width="64" height="64" fill="#0d1322" stroke="#22c55e" stroke-width="2"/>
+    <text x="156" y="157" fill="#86efac" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">A</text>
+    <rect x="188" y="120" width="64" height="64" fill="#0d1322" stroke="#22c55e" stroke-width="2"/>
+    <text x="220" y="157" fill="#86efac" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">T</text>
+    <rect x="252" y="120" width="64" height="64" fill="#0d1322" stroke="#22c55e" stroke-width="2"/>
+    <text x="284" y="157" fill="#86efac" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">S</text>
+
+    <rect x="188" y="184" width="64" height="64" fill="#0d1322" stroke="#38bdf8" stroke-width="2"/>
+    <text x="220" y="221" fill="#93c5fd" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">A</text>
+    <rect x="188" y="248" width="64" height="64" fill="#0d1322" stroke="#38bdf8" stroke-width="2"/>
+    <text x="220" y="285" fill="#93c5fd" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">R</text>
+    <rect x="188" y="312" width="64" height="64" fill="#0d1322" stroke="#38bdf8" stroke-width="2"/>
+    <text x="220" y="349" fill="#93c5fd" font-family="Consolas, monospace" font-size="16" text-anchor="middle" font-weight="700">T</text>
+
+    <text x="60" y="410" fill="#64748b" font-family="Consolas, monospace" font-size="10.5">ACROSS: CATS (len 4) · DOWN: TART (len 4)</text>
+    <text x="60" y="428" fill="#64748b" font-family="Consolas, monospace" font-size="10.5">OVERLAP CONSTRAINT: word₁[2] = word₂[0] → both 'T'</text>
+  </g>
+
+  <!-- AC-3 algorithm -->
+  <g font-family="Consolas, monospace" font-size="11" fill="#94a3b8">
+    <text x="400" y="120" fill="#38bdf8" font-weight="700">AC-3 ARC CONSISTENCY</text>
+    <text x="400" y="148">queue ← all arcs (Xᵢ, Xⱼ)</text>
+    <text x="400" y="172">while queue not empty:</text>
+    <text x="424" y="196">dequeue (X, Y); REVISE(X, Y)</text>
+    <text x="424" y="220">if Dₓ emptied → return failure</text>
+    <text x="424" y="244">else re-enqueue neighbors (Z, X)</text>
+    <text x="400" y="276" fill="#64748b">REVISE removes x ∈ Dₓ when no y ∈ Dʏ</text>
+    <text x="400" y="296" fill="#64748b">satisfies the character-agreement constraint</text>
+
+    <text x="400" y="340" fill="#38bdf8" font-weight="700">BACKTRACKING HEURISTICS</text>
+    <text x="400" y="368">· MRV — fewest remaining values first</text>
+    <text x="400" y="392">· Degree — most unassigned overlaps as tie-break</text>
+    <text x="400" y="416">· LCV — order values by choices they eliminate</text>
+    <text x="400" y="440">· AC-3 re-run after each assignment (inference)</text>
+  </g>
+
+  <line x1="32" y1="452" x2="928" y2="452" stroke="#1f2937" stroke-width="1"/>
+  <text x="32" y="478" fill="#475569" font-family="Consolas, monospace" font-size="10" letter-spacing="1">STRUCTURE AS SPECIFIED IN PROJECTS/crossword.md — github.com/naresh-cn2/harvard-cs50-ai</text>
+</svg>

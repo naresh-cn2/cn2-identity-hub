@@ -265,7 +265,7 @@ export default function CredentialTimeline({
                             )}
                           </div>
 
-                          {(c.verificationUrl || certImage || (c.notes?.length ?? 0) > 0 || relBuild || relResearch) && (
+                          {(c.verificationUrl || certImage || (c.notes?.length ?? 0) > 0 || relBuild || relResearch || c.relatedCaseStudy) && (
                             <div className="space-y-3 border-t border-line pt-5 md:col-span-2">
                               {c.verificationUrl && (
                                 <a
@@ -275,9 +275,17 @@ export default function CredentialTimeline({
                                   className="group/link inline-block"
                                 >
                                   <span className="label-mono text-research transition-transform duration-300 group-hover/link:translate-x-1">
-                                    VERIFY AT THE ISSUER →
+                                    VERIFY CERTIFICATE AT THE ISSUER →
                                   </span>
                                 </a>
+                              )}
+                              {c.relatedCaseStudy && (
+                                <Link href={c.relatedCaseStudy.href} className="group/link inline-block">
+                                  <span className="label-mono block text-[10px] text-faint">CASE STUDY</span>
+                                  <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
+                                    {c.relatedCaseStudy.label} →
+                                  </span>
+                                </Link>
                               )}
                               {certImage && (
                                 <button

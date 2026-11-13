@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" fill="none">
+  <defs>
+    <linearGradient id="bfs-bg" x1="0" y1="0" x2="960" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="bfs-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="480" rx="12" fill="url(#bfs-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#bfs-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">DEGREES — BREADTH-FIRST SEARCH ON THE IMDb GRAPH</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">ACTORS AND MOVIES FORM A BIPARTITE GRAPH · FIFO FRONTIER GUARANTEES THE SHORTEST PATH</text>
+
+  <!-- bipartite graph -->
+  <g>
+    <!-- actor nodes -->
+    <circle cx="110" cy="150" r="20" fill="#0d1322" stroke="#2563eb" stroke-width="2"/>
+    <text x="110" y="155" fill="#93c5fd" font-family="Consolas, monospace" font-size="11" text-anchor="middle">SRC</text>
+    <circle cx="110" cy="260" r="20" fill="#0d1322" stroke="#334155" stroke-width="1.5"/>
+    <text x="110" y="265" fill="#64748b" font-family="Consolas, monospace" font-size="10" text-anchor="middle">A2</text>
+    <circle cx="110" cy="360" r="20" fill="#0d1322" stroke="#334155" stroke-width="1.5"/>
+    <text x="110" y="365" fill="#64748b" font-family="Consolas, monospace" font-size="10" text-anchor="middle">A3</text>
+
+    <!-- movie nodes -->
+    <circle cx="330" cy="110" r="18" fill="#0d1322" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="330" y="115" fill="#5eead4" font-family="Consolas, monospace" font-size="10" text-anchor="middle">M1</text>
+    <circle cx="330" cy="205" r="18" fill="#0d1322" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="330" y="210" fill="#5eead4" font-family="Consolas, monospace" font-size="10" text-anchor="middle">M2</text>
+    <circle cx="330" cy="310" r="18" fill="#0d1322" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="330" y="315" fill="#5eead4" font-family="Consolas, monospace" font-size="10" text-anchor="middle">M3</text>
+    <circle cx="330" cy="400" r="18" fill="#0d1322" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="330" y="405" fill="#64748b" font-family="Consolas, monospace" font-size="10" text-anchor="middle">M4</text>
+
+    <!-- mid actors -->
+    <circle cx="540" cy="160" r="20" fill="#0d1322" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="540" y="165" fill="#93c5fd" font-family="Consolas, monospace" font-size="10" text-anchor="middle">A4</text>
+    <circle cx="540" cy="270" r="20" fill="#0d1322" stroke="#22c55e" stroke-width="2"/>
+    <text x="540" y="275" fill="#86efac" font-family="Consolas, monospace" font-size="10" text-anchor="middle">A5</text>
+    <circle cx="540" cy="370" r="20" fill="#0d1322" stroke="#334155" stroke-width="1.5"/>
+    <text x="540" y="375" fill="#64748b" font-family="Consolas, monospace" font-size="10" text-anchor="middle">A6</text>
+
+    <!-- target -->
+    <circle cx="760" cy="270" r="22" fill="#052e16" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="760" y="275" fill="#86efac" font-family="Consolas, monospace" font-size="11" font-weight="700" text-anchor="middle">TGT</text>
+
+    <!-- edges -->
+    <line x1="130" y1="150" x2="312" y2="112" stroke="#1e3a5f" stroke-width="1.2"/>
+    <line x1="130" y1="150" x2="312" y2="203" stroke="#2563eb" stroke-width="2"/>
+    <line x1="130" y1="260" x2="312" y2="308" stroke="#1e3a5f" stroke-width="1.2"/>
+    <line x1="130" y1="360" x2="312" y2="398" stroke="#1e3a5f" stroke-width="1.2"/>
+    <line x1="348" y1="205" x2="520" y2="165" stroke="#1e3a5f" stroke-width="1.2"/>
+    <line x1="348" y1="205" x2="520" y2="266" stroke="#2563eb" stroke-width="2"/>
+    <line x1="348" y1="310" x2="520" y2="365" stroke="#1e3a5f" stroke-width="1.2"/>
+    <line x1="560" y1="270" x2="738" y2="270" stroke="#22c55e" stroke-width="2.5"/>
+  </g>
+
+  <!-- legend -->
+  <g font-family="Consolas, monospace" font-size="10.5">
+    <circle cx="805" cy="112" r="6" fill="#0d1322" stroke="#2563eb" stroke-width="2"/>
+    <text x="820" y="116" fill="#94a3b8">actor node</text>
+    <circle cx="805" cy="138" r="6" fill="#0d1322" stroke="#14b8a6" stroke-dasharray="3 2"/>
+    <text x="820" y="142" fill="#94a3b8">movie (shared film)</text>
+    <line x1="799" y1="164" x2="811" y2="164" stroke="#22c55e" stroke-width="2.5"/>
+    <text x="820" y="168" fill="#94a3b8">solution path · deg = 3</text>
+  </g>
+
+  <!-- bottom metrics strip -->
+  <line x1="32" y1="424" x2="928" y2="424" stroke="#1f2937" stroke-width="1"/>
+  <g font-family="Consolas, monospace" font-size="11.5">
+    <text x="32" y="450" fill="#10b981" font-weight="700">✓ O(b^d)</text>
+    <text x="130" y="450" fill="#64748b">optimal: layer k explored before layer k+1</text>
+    <text x="470" y="450" fill="#38bdf8" font-weight="700">EXPLORED SET</text>
+    <text x="580" y="450" fill="#64748b">hash set of visited IDs — no cycles</text>
+    <text x="32" y="468" fill="#38bdf8" font-weight="700">EARLY CHECK</text>
+    <text x="140" y="468" fill="#64748b">goal test at generation, not expansion — saves a factor of b in memory</text>
+  </g>
+</svg>

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" fill="none">
+  <defs>
+    <linearGradient id="at-bg" x1="0" y1="0" x2="960" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="at-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="500" rx="12" fill="url(#at-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#at-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">ATTENTION — SELF-ATTENTION HEAD PATTERNS (BERT)</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">TOKEN i attends TO TOKEN j WITH WEIGHT A(i,j) = softmax(qᵢ·kⱼ/√dₖ) · GRAYSCALE = ROUND(SCORE × 255)</text>
+
+  <!-- example sentence -->
+  <g font-family="Consolas, monospace" font-size="12" fill="#94a3b8">
+    <text x="40" y="120">QUERY ROW: "We turned on the [MASK] because it was dark."</text>
+    <text x="40" y="140" fill="#64748b" font-size="11">WordPiece tokens · [CLS] … [SEP] boundaries · top-K candidate prediction</text>
+  </g>
+
+  <!-- heatmap grid 6x6 -->
+  <g>
+    <!-- row labels -->
+    <g font-family="Consolas, monospace" font-size="10" fill="#64748b" text-anchor="end">
+      <text x="148" y="196">We</text>
+      <text x="148" y="228">turned</text>
+      <text x="148" y="260">the</text>
+      <text x="148" y="292">[MASK]</text>
+      <text x="148" y="324">dark</text>
+      <text x="148" y="356">[SEP]</text>
+    </g>
+    <!-- col labels -->
+    <g font-family="Consolas, monospace" font-size="10" fill="#64748b" text-anchor="middle">
+      <text x="164" y="176">We</text>
+      <text x="196" y="176">turned</text>
+      <text x="228" y="176">the</text>
+      <text x="260" y="176">[MASK]</text>
+      <text x="292" y="176">dark</text>
+      <text x="324" y="176">[SEP]</text>
+    </g>
+
+    <!-- cells: row 1 (local syntax) -->
+    <rect x="156" y="184" width="28" height="28" fill="#e5e5e5"/>
+    <rect x="188" y="184" width="28" height="28" fill="#1a1a1a"/>
+    <rect x="220" y="184" width="28" height="28" fill="#0d0d0d"/>
+    <rect x="252" y="184" width="28" height="28" fill="#141414"/>
+    <rect x="284" y="184" width="28" height="28" fill="#0a0a0a"/>
+    <rect x="316" y="184" width="28" height="28" fill="#2b2b2b"/>
+    <!-- row 2 (verb-object) -->
+    <rect x="156" y="216" width="28" height="28" fill="#3d3d3d"/>
+    <rect x="188" y="216" width="28" height="28" fill="#e0e0e0"/>
+    <rect x="220" y="216" width="28" height="28" fill="#3a3a3a"/>
+    <rect x="252" y="216" width="28" height="28" fill="#d4d4d4"/>
+    <rect x="284" y="216" width="28" height="28" fill="#161616"/>
+    <rect x="316" y="216" width="28" height="28" fill="#2f2f2f"/>
+    <!-- row 3 -->
+    <rect x="156" y="248" width="28" height="28" fill="#242424"/>
+    <rect x="188" y="248" width="28" height="28" fill="#4a4a4a"/>
+    <rect x="220" y="248" width="28" height="28" fill="#ededed"/>
+    <rect x="252" y="248" width="28" height="28" fill="#8a8a8a"/>
+    <rect x="284" y="248" width="28" height="28" fill="#404040"/>
+    <rect x="316" y="248" width="28" height="28" fill="#333333"/>
+    <!-- row 4 (query row highlighted) -->
+    <rect x="156" y="280" width="28" height="28" fill="#565656"/>
+    <rect x="188" y="280" width="28" height="28" fill="#c9c9c9"/>
+    <rect x="220" y="280" width="28" height="28" fill="#909090"/>
+    <rect x="252" y="280" width="28" height="28" fill="#ffffff" stroke="#22d3ee" stroke-width="2"/>
+    <rect x="284" y="280" width="28" height="28" fill="#b5b5b5"/>
+    <rect x="316" y="280" width="28" height="28" fill="#3f3f3f"/>
+    <!-- row 5 (coreference) -->
+    <rect x="156" y="312" width="28" height="28" fill="#2e2e2e"/>
+    <rect x="188" y="312" width="28" height="28" fill="#5a5a5a"/>
+    <rect x="220" y="312" width="28" height="28" fill="#6e6e6e"/>
+    <rect x="252" y="312" width="28" height="28" fill="#d8d8d8"/>
+    <rect x="284" y="312" width="28" height="28" fill="#e8e8e8"/>
+    <rect x="316" y="312" width="28" height="28" fill="#454545"/>
+    <!-- row 6 (delimiter) -->
+    <rect x="156" y="344" width="28" height="28" fill="#1f1f1f"/>
+    <rect x="188" y="344" width="28" height="28" fill="#181818"/>
+    <rect x="220" y="344" width="28" height="28" fill="#151515"/>
+    <rect x="252" y="344" width="28" height="28" fill="#121212"/>
+    <rect x="284" y="344" width="28" height="28" fill="#101010"/>
+    <rect x="316" y="344" width="28" height="28" fill="#f5f5f5"/>
+  </g>
+  <text x="170" y="396" fill="#475569" font-family="Consolas, monospace" font-size="9.5">ILLUSTRATIVE HEAD-LEVEL PATTERN · ACTUAL HEATMAPS GENERATED PER projects/attention.md</text>
+
+  <!-- head specializations -->
+  <g font-family="Consolas, monospace" font-size="11" fill="#94a3b8">
+    <text x="470" y="120" fill="#38bdf8" font-weight="700">HEAD SPECIALIZATIONS OBSERVED</text>
+    <text x="470" y="150">· local syntax — adjacent-token attention</text>
+    <text x="470" y="172">· verb–object dependency heads</text>
+    <text x="470" y="194">· coreference — pronoun ↔ noun links</text>
+    <text x="470" y="216">· universal attention to [SEP] / [CLS]</text>
+
+    <text x="470" y="256" fill="#38bdf8" font-weight="700">MLM PIPELINE</text>
+    <text x="470" y="286">tokenize (WordPiece) → locate  index</text>
+    <text x="470" y="308">→ logits over vocab → top-K candidates</text>
+    <text x="470" y="330">→ e.g. light · lamp · lantern</text>
+
+    <text x="470" y="370" fill="#38bdf8" font-weight="700">VISUALIZATION</text>
+    <text x="470" y="400">every layer ℓ and head h rendered as an N×N</text>
+    <text x="470" y="422">grayscale grid — intensity = round(score × 255)</text>
+  </g>
+</svg>

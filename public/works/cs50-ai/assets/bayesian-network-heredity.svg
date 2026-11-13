@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="460" viewBox="0 0 960 460" fill="none">
+  <defs>
+    <linearGradient id="bn-bg" x1="0" y1="0" x2="960" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="bn-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="460" rx="12" fill="url(#bn-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#bn-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">HEREDITY — BAYESIAN NETWORK OVER A FAMILY PEDIGREE</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">Gᵢ ∈ {0,1,2} MUTATED GENE COPIES · Tᵢ TRAIT EXPRESSION · μ = 0.01 SPONTANEOUS MUTATION</text>
+
+  <!-- DAG -->
+  <g font-family="Consolas, monospace" font-size="11" text-anchor="middle">
+    <rect x="150" y="120" width="150" height="44" rx="8" fill="#0d1322" stroke="#14b8a6" stroke-width="1.5"/>
+    <text x="225" y="139" fill="#5eead4">MOTHER</text>
+    <text x="225" y="155" fill="#64748b" font-size="10">G_M ∈ {0,1,2}</text>
+
+    <rect x="420" y="120" width="150" height="44" rx="8" fill="#0d1322" stroke="#14b8a6" stroke-width="1.5"/>
+    <text x="495" y="139" fill="#5eead4">FATHER</text>
+    <text x="495" y="155" fill="#64748b" font-size="10">G_F ∈ {0,1,2}</text>
+
+    <rect x="285" y="216" width="150" height="44" rx="8" fill="#0d1322" stroke="#2563eb" stroke-width="2"/>
+    <text x="360" y="235" fill="#93c5fd">CHILD GENE</text>
+    <text x="360" y="251" fill="#64748b" font-size="10">P(G_C | G_M, G_F)</text>
+
+    <rect x="285" y="316" width="150" height="44" rx="8" fill="#0d1322" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="360" y="335" fill="#c4b5fd">TRAIT</text>
+    <text x="360" y="351" fill="#64748b" font-size="10">P(T_C | G_C)</text>
+
+    <!-- edges -->
+    <line x1="240" y1="164" x2="320" y2="216" stroke="#1e3a5f" stroke-width="1.6" marker-end="url(#bn-arrow)"/>
+    <line x1="480" y1="164" x2="400" y2="216" stroke="#1e3a5f" stroke-width="1.6"/>
+    <line x1="360" y1="260" x2="360" y2="316" stroke="#1e3a5f" stroke-width="1.6"/>
+  </g>
+  <defs>
+    <marker id="bn-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#2563eb" stroke-width="1.2"/>
+    </marker>
+  </defs>
+
+  <!-- inheritance probabilities -->
+  <g font-family="Consolas, monospace" font-size="10.5" fill="#94a3b8">
+    <text x="600" y="120">TRANSMISSION MODEL</text>
+    <text x="600" y="148">g = 2 → passes allele w.p. 1 − μ</text>
+    <text x="600" y="168">g = 1 → passes allele w.p. 0.5</text>
+    <text x="600" y="188">g = 0 → passes allele w.p. μ</text>
+    <text x="600" y="224" fill="#64748b">child inherits one allele from each parent,</text>
+    <text x="600" y="240" fill="#64748b">two independent Bernoulli events</text>
+  </g>
+
+  <!-- factorization -->
+  <line x1="32" y1="392" x2="928" y2="392" stroke="#1f2937" stroke-width="1"/>
+  <text x="32" y="418" fill="#38bdf8" font-family="Consolas, monospace" font-size="12" font-weight="700">JOINT FACTORIZATION</text>
+  <text x="220" y="418" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">P(G₁,T₁,…,Gₙ,Tₙ) = ∏ᵢ P(Gᵢ | Parents(Gᵢ)) · P(Tᵢ | Gᵢ)</text>
+  <text x="32" y="440" fill="#10b981" font-family="Consolas, monospace" font-size="12" font-weight="700">INFERENCE</text>
+  <text x="220" y="440" fill="#94a3b8" font-family="Consolas, monospace" font-size="12">enumerate unobserved variables → accumulate → normalize by α = Σ P(X=v, e)</text>
+</svg>

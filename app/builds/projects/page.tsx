@@ -54,7 +54,7 @@ export default function ProjectsPage() {
               PROJECTS
             </h2>
             <p className="mt-2 label-mono text-xs text-faint">
-              2 PROJECTS · VERIFIED ENGINEERING
+              3 PROJECTS · VERIFIED ENGINEERING
             </p>
           </header>
 

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480" viewBox="0 0 960 480" fill="none">
+  <defs>
+    <linearGradient id="ql-bg" x1="0" y1="0" x2="960" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#101623"/>
+    </linearGradient>
+    <linearGradient id="ql-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="480" rx="12" fill="url(#ql-bg)" stroke="#1e293b" stroke-width="1.5"/>
+  <rect x="0" y="0" width="960" height="6" rx="3" fill="url(#ql-accent)"/>
+
+  <text x="32" y="52" fill="#f8fafc" font-family="Consolas, monospace" font-size="15" font-weight="700" letter-spacing="2">NIM — MODEL-FREE Q-LEARNING THROUGH SELF-PLAY</text>
+  <text x="32" y="74" fill="#64748b" font-family="Consolas, monospace" font-size="11" letter-spacing="1">NO NIM-SUM RULES GIVEN · OPTIMAL POLICY LEARNED FROM REWARD SIGNAL ALONE · α = 0.5 · γ = 1.0 (EPISODIC)</text>
+
+  <!-- TD loop -->
+  <g font-family="Consolas, monospace" font-size="11" text-anchor="middle">
+    <rect x="60" y="140" width="120" height="50" rx="8" fill="#0d1322" stroke="#2563eb" stroke-width="1.6"/>
+    <text x="120" y="162" fill="#93c5fd">STATE s</text>
+    <text x="120" y="180" fill="#64748b" font-size="10">(1, 3, 5, 7)</text>
+
+    <rect x="240" y="140" width="130" height="50" rx="8" fill="#0d1322" stroke="#f97316" stroke-width="1.6"/>
+    <text x="305" y="162" fill="#fdba74">ACTION a</text>
+    <text x="305" y="180" fill="#64748b" font-size="10">(pile, count)</text>
+
+    <rect x="430" y="140" width="130" height="50" rx="8" fill="#0d1322" stroke="#22c55e" stroke-width="1.6"/>
+    <text x="495" y="162" fill="#86efac">REWARD r</text>
+    <text x="495" y="180" fill="#64748b" font-size="10">+1 win · −1 lose · 0</text>
+
+    <rect x="620" y="140" width="130" height="50" rx="8" fill="#0d1322" stroke="#14b8a6" stroke-width="1.6"/>
+    <text x="685" y="162" fill="#5eead4">NEXT STATE s′</text>
+    <text x="685" y="180" fill="#64748b" font-size="10">opponent replies</text>
+
+    <!-- arrows -->
+    <line x1="180" y1="165" x2="240" y2="165" stroke="#1e3a5f" stroke-width="1.4"/>
+    <line x1="370" y1="165" x2="430" y2="165" stroke="#1e3a5f" stroke-width="1.4"/>
+    <line x1="560" y1="165" x2="620" y2="165" stroke="#1e3a5f" stroke-width="1.4"/>
+
+    <!-- feedback loop -->
+    <path d="M 685 190 L 685 260 L 120 260 L 120 190" fill="none" stroke="#8b5cf6" stroke-width="1.6" stroke-dasharray="7 5"/>
+    <text x="400" y="252" fill="#c4b5fd" font-size="11">TD error = r + γ·max Q(s′,a′) − Q(s,a)</text>
+    <text x="400" y="278" fill="#94a3b8" font-size="12" font-weight="700">Q(s,a) ← Q(s,a) + α [ r + γ max Q(s′,a′) − Q(s,a) ]</text>
+  </g>
+
+  <!-- epsilon-greedy -->
+  <g font-family="Consolas, monospace" font-size="11" fill="#94a3b8">
+    <text x="60" y="330" fill="#38bdf8" font-weight="700">ε-GREEDY SELECTION</text>
+    <text x="60" y="356">p = 1 − ε → argmax Q(s, a) · exploit</text>
+    <text x="60" y="378">p = ε     → uniform random action · explore</text>
+
+    <text x="530" y="330" fill="#38bdf8" font-weight="700">CONVERGENCE MECHANISM</text>
+    <text x="530" y="356">Q-values backpropagate from terminal wins</text>
+    <text x="530" y="378">to opening moves over ~10,000 self-play episodes;</text>
+    <text x="530" y="400">evaluation sets ε = 0 — deterministic greedy play</text>
+  </g>
+
+  <line x1="32" y1="424" x2="928" y2="424" stroke="#1f2937" stroke-width="1"/>
+  <text x="32" y="450" fill="#10b981" font-family="Consolas, monospace" font-size="11.5" font-weight="700">RESULT</text>
+  <text x="120" y="450" fill="#94a3b8" font-family="Consolas, monospace" font-size="11.5">agent converges to game-theoretic equilibrium without any hardcoded Nim arithmetic — per PROJECTS/nim.md</text>
+</svg>
