@@ -57,11 +57,12 @@ export const credentials: CredentialRecord[] = [
     state: "VERIFIED",
     date: "2026-11-11",
     expires: "Does not expire",
-    credentialId: "693ef47a-6151-4545-9661-add787b5f7b",
+    credentialId: "693ef47a-6151-4545-9661-add787b5ff7b",
     verificationUrl:
-      "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5f7b",
+      "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5ff7b",
     certificateUrl:
-      "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5f7b.pdf",
+      "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5ff7b.pdf",
+    certificateImage: "/certificates/cs50ai-harvard-certificate.png",
     topics: [
       "Graph search and breadth-first search (Degrees)",
       "Minimax and adversarial search (Tic-Tac-Toe)",
@@ -97,8 +98,10 @@ export const credentials: CredentialRecord[] = [
       href: "/builds/projects/cs50-ai",
     },
     notes: [
-      "Certificate issued November 11, 2026.",
+      "Certificate issued November 11, 2026 — awarded from Cambridge, Massachusetts, as printed on the document.",
+      "Signed by David J. Malan, Gordon McKay Professor of the Practice of Computer Science, Harvard University.",
       "All 12/12 projects completed.",
+      "The verification URL printed on the certificate and encoded in its QR matches this record.",
       "Not a Harvard degree — professional certificate programme.",
     ],
   },

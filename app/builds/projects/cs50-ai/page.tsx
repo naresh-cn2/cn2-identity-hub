@@ -8,7 +8,8 @@ import MarketDepth from "@/components/visuals/market-depth";
 import { site } from "@/data/site";
 
 const REPO = "https://github.com/naresh-cn2/harvard-cs50-ai";
-const CERTIFICATE = "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5f7b";
+const CERTIFICATE = "https://cs50.harvard.edu/certificates/693ef47a-6151-4545-9661-add787b5ff7b";
+const RELEASE = `${REPO}/releases/tag/v1.0.0`;
 
 export const metadata: Metadata = {
   title: "Harvard CS50 AI — Twelve Applied AI Projects — Case Study",
@@ -43,6 +44,50 @@ const REPO_DOCS = {
   outcomes: `${REPO}/blob/main/DOCUMENTATION/learning-outcomes.md`,
   integrity: `${REPO}/blob/main/DOCUMENTATION/academic-integrity.md`,
 };
+
+/** Grounded in DOCUMENTATION/learning-outcomes.md in the published repository. */
+const LEARNING_OUTCOMES = [
+  {
+    area: "01 · Classical Search & Optimization",
+    detail:
+      "Uniformed and informed search topologies — BFS, DFS, greedy best-first and A* with admissible, consistent heuristics — plus game-theoretic adversarial search with minimax trees and alpha-beta pruning approaching O(√(b^d)) branch cutoffs.",
+  },
+  {
+    area: "02 · Knowledge Representation & Formal Logic",
+    detail:
+      "Knowledge bases built from propositional connectives, automated inference engines — model checking and resolution theorem proving — and subset-based deduction over partial information.",
+  },
+  {
+    area: "03 · Probabilistic Reasoning & Uncertainty",
+    detail:
+      "Conditional probability and Bayes' rule, stochastic Markov transition models with empirically demonstrated convergence to unique stationary distributions, and Bayesian-network factorisation with marginalisation over unobserved variables.",
+  },
+  {
+    area: "04 · Constraint Satisfaction",
+    detail:
+      "Modelling tasks as constraint graphs with unary, binary and global constraints; enforcing node and arc consistency (AC-3) before search; heuristic backtracking with MRV, degree and least-constraining-value ordering.",
+  },
+  {
+    area: "05 · Machine Learning & Statistical Pattern Recognition",
+    detail:
+      "End-to-end supervised pipelines with non-parametric models, feature normalisation and categorical encoding — evaluated beyond raw accuracy with sensitivity and specificity under class imbalance.",
+  },
+  {
+    area: "06 · Reinforcement Learning",
+    detail:
+      "Markov decision processes for episodic decision problems, model-free temporal-difference Q-learning via the Bellman equation, and ε-greedy policies balancing exploration against exploitation.",
+  },
+  {
+    area: "07 · Deep Learning & Computer Vision",
+    detail:
+      "Multi-layer CNN architectures in TensorFlow/Keras — convolutions, ReLU, spatial max-pooling and dropout — with automated OpenCV pipelines for resizing, reshaping and pixel normalisation.",
+  },
+  {
+    area: "08 · NLP & Transformers",
+    detail:
+      "Context-free grammars in NLTK for parsing ambiguous sentences into hierarchical trees, and masked language modelling with BERT — query-key-value self-attention analysis and heatmap generation across layers and heads.",
+  },
+];
 
 /* ------------------------------------------------------------------ */
 /* Twelve-project case-study records.                                  */
@@ -769,6 +814,7 @@ export default function CS50AICaseStudy() {
                 "12/12 PROJECTS COMPLETE",
                 "CS50 · HARVARD UNIVERSITY",
                 "COMPLETED NOVEMBER 11, 2026",
+                "RELEASE v1.0.0 PUBLISHED",
                 "NOT A HARVARD DEGREE — PROFESSIONAL CERTIFICATE",
               ].map((badge) => (
                 <span
@@ -797,6 +843,14 @@ export default function CS50AICaseStudy() {
                 className="label-mono border border-line-strong px-6 py-3 text-foreground transition-colors hover:border-signal hover:text-signal"
               >
                 GITHUB REPOSITORY →
+              </a>
+              <a
+                href={RELEASE}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="label-mono border border-line px-6 py-3 text-muted transition-colors hover:border-line-strong hover:text-foreground"
+              >
+                RELEASE v1.0.0 →
               </a>
             </div>
           </Reveal>
@@ -1190,6 +1244,40 @@ export default function CS50AICaseStudy() {
           </div>
         </section>
 
+        {/* ---- learning outcomes ---- */}
+        <section id="learning-outcomes" aria-labelledby="learning-outcomes-heading" className="scroll-mt-28 border-b border-line py-16 md:py-20">
+          <Reveal>
+            <p className="label-mono text-signal">LEARNING OUTCOMES</p>
+            <h2 id="learning-outcomes-heading" className="display mt-4 text-3xl md:text-4xl">
+              WHAT THE CURRICULUM ESTABLISHED
+            </h2>
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-muted">
+              Eight competency areas, documented in the repository&apos;s learning-outcomes reference
+              and evidenced by the twelve systems above — from classical search theory to the
+              attention mechanics of production transformers.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-px bg-line sm:grid-cols-2">
+            {LEARNING_OUTCOMES.map((o) => (
+              <Reveal key={o.area}>
+                <div className="h-full bg-background p-6 md:p-8">
+                  <p className="label-mono text-[10px] text-signal">{o.area}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted">{o.detail}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={100}>
+            <div className="mt-10">
+              <a href={REPO_DOCS.outcomes} target="_blank" rel="noopener noreferrer" className="group/link">
+                <span className="label-mono text-research transition-transform duration-300 group-hover/link:translate-x-1">
+                  FULL LEARNING-OUTCOMES REFERENCE IN THE REPOSITORY →
+                </span>
+              </a>
+            </div>
+          </Reveal>
+        </section>
+
         {/* ---- results & limitations ---- */}
         <section id="results" aria-labelledby="results-heading" className="scroll-mt-28 border-b border-line py-16 md:py-20">
           <Reveal>
@@ -1303,6 +1391,11 @@ export default function CS50AICaseStudy() {
                   ACADEMIC INTEGRITY DECLARATION →
                 </span>
               </a>
+              <a href={RELEASE} target="_blank" rel="noopener noreferrer" className="group/link">
+                <span className="label-mono text-research transition-transform duration-300 group-hover/link:translate-x-1">
+                  RELEASE NOTES v1.0.0 →
+                </span>
+              </a>
             </div>
           </Reveal>
         </section>
@@ -1351,24 +1444,35 @@ export default function CS50AICaseStudy() {
         <section id="cta" aria-label="Continue" className="pt-16 md:pt-20">
           <Reveal>
             <div className="grid gap-px border border-line bg-line md:grid-cols-2">
-              <a
-                href={REPO}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-background p-8 transition-colors hover:bg-surface md:p-10"
-              >
-                <p className="label-mono text-signal">GITHUB REPOSITORY</p>
+              <div className="bg-background p-8 transition-colors hover:bg-surface md:p-10">
+                <p className="label-mono text-signal">GITHUB REPOSITORY · RELEASE v1.0.0</p>
                 <p className="display mt-4 text-2xl text-foreground md:text-3xl">
                   READ THE FULL TECHNICAL DOCUMENTATION
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-muted">
                   Twelve project write-ups, the algorithms reference, technical overview, learning
-                  outcomes and the academic-integrity declaration.
+                  outcomes and the academic-integrity declaration — published as the v1.0.0
+                  completion release.
                 </p>
-                <p className="label-mono mt-6 text-signal transition-transform duration-300 group-hover:translate-x-1">
-                  github.com/naresh-cn2/harvard-cs50-ai →
-                </p>
-              </a>
+                <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <a
+                    href={REPO}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="label-mono text-signal transition-transform duration-300 hover:translate-x-1"
+                  >
+                    GITHUB REPOSITORY →
+                  </a>
+                  <a
+                    href={RELEASE}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="label-mono text-muted transition-transform duration-300 hover:translate-x-1 hover:text-foreground"
+                  >
+                    RELEASE NOTES v1.0.0 →
+                  </a>
+                </div>
+              </div>
               <a
                 href={CERTIFICATE}
                 target="_blank"
