@@ -206,7 +206,7 @@ export default function LearningMap({ tracks }: { tracks: StudyTrack[] }) {
         {tracks.map((t, i) => (
           <li key={t.id} className="bg-background p-5">
             <p className="num-mono text-xs text-research">S{i + 1}</p>
-            <h4 className="display mt-2 text-base">{t.title}</h4>
+            <h3 className="display mt-2 text-base">{t.title}</h3>
             <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
               {edges
                 .filter((e) => e.trackIndex === i)
