@@ -125,16 +125,20 @@ export default function CredentialsPage() {
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <KineticText className="display mt-8 text-[clamp(2.6rem,8.5vw,6.5rem)]">
-              LEARN. BUILD. PROGRESS.
+            <KineticText
+              accent="OR CHECKBOXES."
+              className="display mt-8 text-[clamp(2.2rem,7.5vw,6rem)]"
+            >
+              VERIFIABLE SKILLS,
             </KineticText>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-              My learning journey spans quantitative finance, algorithmic trading, data,
-              software engineering, and generative AI. Here, I document the programmes I have
-              completed, the skills I am developing, and the knowledge I put into practice through
-              technical projects.
+              My learning spans quantitative finance, algorithmic trading, data, software
+              engineering and generative AI. Every record below is an issued certificate — named
+              provider, printed date, printed identifier — with the issuer&apos;s own check page or
+              the certificate document itself attached, and every one linked to the technical work
+              it fed into.
             </p>
           </Reveal>
           <Reveal delay={280}>
@@ -201,9 +205,10 @@ export default function CredentialsPage() {
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
                   A digital badge is the compact form of a completed course — issued by the programme
-                  itself and easy to spot at a glance. Every badge here links straight to the full
-                  certificate behind it, so anyone reviewing my work can open the original and verify
-                  every detail for themselves.
+                  itself and easy to spot at a glance. Every badge here leads to the full
+                  certificate behind it and, where the provider publishes one, to the issuer&apos;s
+                  own verification page — so anyone reviewing my work can open the original and
+                  check every detail for themselves.
                 </p>
               </div>
               <p className="label-mono text-faint">{credentialBadges.length} EARNED</p>

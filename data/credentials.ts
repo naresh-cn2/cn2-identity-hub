@@ -15,6 +15,17 @@
 
 export type CredentialState = "IN PROGRESS" | "COMPLETED" | "VERIFIED" | "PLANNED";
 
+/**
+ * How a credential can be checked.
+ *
+ * Two mechanisms exist in this file and they are not the same thing:
+ * an issuer link takes you to the provider's own verification page; a
+ * certificate document is the issued certificate itself, held and viewable
+ * here. A record declares which one it has so the page never implies an
+ * issuer check that does not exist.
+ */
+export type VerificationMethod = "ISSUER LINK" | "CERTIFICATE DOCUMENT";
+
 /** The full shape a real credential record must satisfy before it is listed. */
 export interface CredentialRecord {
   id: string;
@@ -37,6 +48,8 @@ export interface CredentialRecord {
   credentialId?: string;
   /** Additional printed details, such as a QR target or issuer context. */
   notes?: string[];
+  /** Which mechanism lets a visitor check this record. */
+  verificationMethod?: VerificationMethod;
   relatedProject?: string;
   relatedResearch?: string;
   /** A dedicated CN2.DEV case study written for the work behind this credential. */
@@ -93,9 +106,12 @@ export const credentials: CredentialRecord[] = [
       "Twelve applied artificial intelligence projects spanning search, knowledge representation, probabilistic reasoning, optimization, machine learning, reinforcement learning, neural networks, and natural language processing. Each project implements a complete system from problem formulation through validation, establishing practical fluency in modern AI engineering techniques.",
     assessment:
       "Certificate of Completion issued by CS50, Harvard University. Twelve projects completed, each assessed against defined rubrics. Independent verification available at the certificate URL.",
+    verificationMethod: "ISSUER LINK",
+    relatedProject: "qrsip",
+    relatedResearch: "promotion-gates",
     relatedCaseStudy: {
       label: "CS50 AI — Twelve Applied AI Projects",
-      href: "/builds/projects/cs50-ai",
+      href: "/works/cs50-ai",
     },
     notes: [
       "Certificate issued November 11, 2026 — awarded from Cambridge, Massachusetts, as printed on the document.",
@@ -139,6 +155,9 @@ export const credentials: CredentialRecord[] = [
       "Working through CS50x from manual byte manipulation, pointers, and heap allocations in C to full-stack systems with Python and relational SQL established a rigorous, first-principles foundation for high-performance software engineering and algorithmic analysis.",
     assessment:
       "Certificate of Completion issued by CS50, Harvard University, awarded by David J. Malan for completing ten problem sets and a capstone project.",
+    verificationMethod: "ISSUER LINK",
+    relatedProject: "bustub-engine",
+    relatedResearch: "deterministic-tie-breaking",
     notes: [
       "Awarded by David J. Malan, Gordon McKay Professor of the Practice of Computer Science, Harvard University.",
       "Credential does not expire.",
@@ -157,6 +176,9 @@ export const credentials: CredentialRecord[] = [
       "Working through the lab end to end turned data into an analysis that had to stand on its own evidence — every step producing something inspectable, not just described.",
     assessment: "Certificate of Completion issued by WorldQuant University.",
     certificateUrl: "/credentials/worldquant-data-science-lab.pdf",
+    verificationMethod: "CERTIFICATE DOCUMENT",
+    relatedProject: "apex-quant-engine",
+    relatedResearch: "backtest-overfitting",
     notes: [
       "The certificate prints the recipient name and the issue date (Oct 15, 2026).",
       "The companion digital badge for this completion sits in the badges section below.",
@@ -175,6 +197,9 @@ export const credentials: CredentialRecord[] = [
     learned:
       "Building with generative AI in an internship format — the difference between prompting a model and shipping something around one.",
     assessment: "Certificate of completion issued for the internship programme.",
+    verificationMethod: "CERTIFICATE DOCUMENT",
+    relatedProject: "qrsip",
+    relatedResearch: "promotion-gates",
   },
   {
     id: "quantconnect-us-equities-101",
@@ -188,6 +213,9 @@ export const credentials: CredentialRecord[] = [
     learned:
       "The boot camp connected the market-data and backtesting work I already do to how US equity sessions and orders actually fit together.",
     assessment: "Certificate of completion issued for the boot camp.",
+    verificationMethod: "CERTIFICATE DOCUMENT",
+    relatedProject: "apex-quant-engine",
+    relatedResearch: "regime-dependence",
     notes: ["The QR printed on the certificate resolves to quantconnect.com/learning."],
   },
   {
@@ -201,6 +229,9 @@ export const credentials: CredentialRecord[] = [
     learned:
       "The 210-hour programme put structure around data engineering for AI systems: pipelines designed for models, not just reports.",
     assessment: "Certificate of Completion for the 210-hour online skilling course.",
+    verificationMethod: "ISSUER LINK",
+    relatedProject: "market-data-replay",
+    relatedResearch: "decimal-arithmetic",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-f09bf277-3615-45db-8ebb-65ea222ac556",
     notes: ["210 hours of coursework as printed on the certificate."],
@@ -220,6 +251,9 @@ export const credentials: CredentialRecord[] = [
     learned:
       "Fifteen hours structured around what generative AI is actually doing under the hood — the machine-learning foundations that keep the hype honest.",
     assessment: "Certificate of Participation for the 15-hour online skilling course.",
+    verificationMethod: "ISSUER LINK",
+    relatedProject: "qrsip",
+    relatedResearch: "promotion-gates",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-755cb06d-8412-4fc1-b5ef-0ae95a32f059",
     notes: ["15 hours of coursework as printed on the certificate."],
@@ -235,6 +269,9 @@ export const credentials: CredentialRecord[] = [
     learned:
       "It gave me the vocabulary of AI delivery pipelines — the names for things I was already assembling by hand.",
     assessment: "Certificate of Participation for the 1-hour online skilling course.",
+    verificationMethod: "ISSUER LINK",
+    relatedProject: "market-data-replay",
+    relatedResearch: "lookahead-bias",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-6d136b29-9b3a-4b26-9d76-b05369cb648c",
     notes: ["1 hour of coursework as printed on the certificate."],
@@ -253,6 +290,9 @@ export const credentials: CredentialRecord[] = [
     learned:
       "Studying against a published occupational standard gave me a fixed reference point: data work measured against what the standard defines, not against what happens to run.",
     assessment: "Certificate of Achievement issued for completing the standard.",
+    verificationMethod: "ISSUER LINK",
+    relatedProject: "billing-data-gateway",
+    relatedResearch: "decimal-arithmetic",
     verificationUrl:
       "https://api-fe.skillindiadigital.gov.in/api/registry-course/getCertificatePresignedUrl/2025080842904947-30abc684-c033-40a9-836b-caa3d4b7be33",
     notes: [
@@ -270,6 +310,8 @@ export const credentials: CredentialRecord[] = [
     learned:
       "Revisiting data structures and algorithms in Python made the everyday implementation choices — when a dict, when a list, when a heap — deliberate instead of habitual.",
     assessment: "Course completion certificate for the Python DSA track.",
+    verificationMethod: "CERTIFICATE DOCUMENT",
+    relatedProject: "bustub-engine",
     notes: ["The certificate carries an Unstop verification QR."],
   },
 ];
@@ -419,5 +461,9 @@ export const credentialStates: { state: CredentialState; meaning: string }[] = [
   { state: "PLANNED", meaning: "Intended, not yet started." },
   { state: "IN PROGRESS", meaning: "Started, not yet finished." },
   { state: "COMPLETED", meaning: "Finished, with the issuer's own record confirming it." },
-  { state: "VERIFIED", meaning: "Independently confirmable at the provider through a verification link." },
+  {
+    state: "VERIFIED",
+    meaning:
+      "Independently checkable — either through an issuer verification link, or through the issued certificate document itself, which is held and viewable here. Each record declares which of the two applies.",
+  },
 ];

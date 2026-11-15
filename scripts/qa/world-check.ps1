@@ -31,7 +31,13 @@ Check "builds: hero counter removed" (-not ($works -match 'SYSTEMS ARCHIVED'))
 $world = (Invoke-WebRequest -Uri "$base/work/crypto-platform" -UseBasicParsing).Content
 
 Check "world: PROJECT WORLD eyebrow" ($world -match 'PROJECT WORLD')
-Check "world: no numbered project eyebrow" (-not ($world -match 'PROJECT WORLD[\s\S]{0,60}\d\d'))
+# Scoped to the eyebrow element itself. A page-wide pattern also hits the
+# "PROJECT WORLDS" nav and footer links, whose num-mono index badge renders
+# a text-[10px] class containing digits, so it reported a numbered eyebrow
+# that does not exist. Requires the eyebrow to be found, so a markup change
+# fails loudly instead of passing vacuously.
+$eyebrowTail = [regex]::Match($world, '<p class="label-mono text-muted">PROJECT WORLD</p>([\s\S]{0,80})')
+Check "world: no numbered project eyebrow" ($eyebrowTail.Success -and -not ($eyebrowTail.Groups[1].Value -match '\d\d'))
 Check "world: h1 CRYPTO PLATFORM" ($world -match '<h1 class="display[^"]*">CRYPTO PLATFORM</h1>')
 Check "world: CTA explore architecture" ($world -match 'href="#architecture"[^>]*>EXPLORE ARCHITECTURE')
 Check "world: CTA view evidence" ($world -match 'href="#evidence"[^>]*>VIEW EVIDENCE')

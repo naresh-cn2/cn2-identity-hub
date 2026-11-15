@@ -265,8 +265,13 @@ export default function CredentialTimeline({
                             )}
                           </div>
 
-                          {(c.verificationUrl || certImage || (c.notes?.length ?? 0) > 0 || relBuild || relResearch || c.relatedCaseStudy) && (
+                          {(c.verificationUrl || certImage || c.certificateUrl || (c.notes?.length ?? 0) > 0 || relBuild || relResearch || c.relatedCaseStudy) && (
                             <div className="space-y-3 border-t border-line pt-5 md:col-span-2">
+                              {c.verificationMethod && (
+                                <p className="label-mono text-[10px] text-faint">
+                                  HOW TO CHECK — {c.verificationMethod}
+                                </p>
+                              )}
                               {c.verificationUrl && (
                                 <a
                                   href={c.verificationUrl}
@@ -297,6 +302,20 @@ export default function CredentialTimeline({
                                     VIEW CERTIFICATE →
                                   </span>
                                 </button>
+                              )}
+                              {/* A certificate held as a document rather than an image still
+                                  has to be openable — otherwise the record is an assertion. */}
+                              {!certImage && c.certificateUrl && (
+                                <a
+                                  href={c.certificateUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="group/link block"
+                                >
+                                  <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
+                                    OPEN THE CERTIFICATE ↗
+                                  </span>
+                                </a>
                               )}
                               {c.notes?.map((note) => (
                                 <p key={note} className="text-xs leading-relaxed text-faint">

@@ -123,8 +123,10 @@ function Get-StatusAndLocation($path) {
         return [pscustomobject]@{ code = [int]$resp.StatusCode; loc = $loc }
     }
 }
+# /builds is a live three-section destination since 128f514, not a
+# redirect to /work. Only the legacy project slugs below still redirect.
 $m1 = Get-StatusAndLocation "/builds"
-Assert "permanent redirect /builds → /work" (($m1.code -eq 301 -or $m1.code -eq 308) -and $m1.loc -match "/work$")
+Assert "builds is a live destination (200)" ($m1.code -eq 200)
 $m2 = Get-StatusAndLocation "/builds/crypto-platform"
 Assert "permanent redirect /builds/crypto-platform → /work/crypto-platform" (($m2.code -eq 301 -or $m2.code -eq 308) -and $m2.loc -match "/work/crypto-platform$")
 $m3 = Get-StatusAndLocation "/certifications"
@@ -133,7 +135,7 @@ $m4 = Get-StatusAndLocation "/quant"
 Assert "permanent redirect /quant → /work" (($m4.code -eq 301 -or $m4.code -eq 308) -and $m4.loc -match "/work$")
 
 Write-Host "== WORK landing (IA v4) =="
-Assert "hero subhead PRODUCTS. PROJECTS. ENGINEERING." $buildsHtml.Contains("PRODUCTS. PROJECTS. ENGINEERING.")
+Assert "hero subhead PRODUCTS. PROJECTS. INDEPENDENT BUILDS." $buildsHtml.Contains("PRODUCTS. PROJECTS. INDEPENDENT BUILDS.")
 Assert "work title is Work" ((Get-Page "/work") -match "<title>[^<]*Work")
 Assert "credentials title is Credentials" ((Get-Page "/credentials") -match "<title>[^<]*Credentials")
 
@@ -163,7 +165,8 @@ Assert "cursor light styles removed" (-not $css.Contains(".cursor-light-dot"))
 Assert "scroll reel styles" $css.Contains(".scroll-progress-bar")
 Assert "star twinkle styles" $css.Contains("star-twinkle")
 Assert "kinetic heading rendered" $buildsHtml.Contains("kt-word")
-Assert "kinetic aria label intact" $buildsHtml.Contains('aria-label="WORK"')
+# Renamed from WORK to BUILDS in the works/builds naming unification.
+Assert "kinetic aria label intact" $buildsHtml.Contains('aria-label="BUILDS"')
 Assert "scroll reel on inner page" $buildsHtml.Contains("scroll-progress-bar")
 Assert "cursor light off on inner page" (-not $buildsHtml.Contains("cursor-light-dot"))
 Assert "cursor light off on hub" (-not $hubHtml.Contains("cursor-light-dot"))

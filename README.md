@@ -1,5 +1,3 @@
-
-
 # CN2.DEV
 
 **The digital headquarters of Bukya Naresh — Quantitative Developer**
@@ -7,6 +5,8 @@
 [Live site](https://cn2-identity-hub.vercel.app) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub) · [ORCID](https://orcid.org/0009-0007-7269-1583) · [Contra](https://contra.com/naresh_cn2)
 
 CN2.DEV is a multi-route professional platform covering quantitative development, systematic trading research, engineering services, and published technical writing. Every claim on the site is backed by real artifacts — working systems, test suites, research entries, certificates with verification links — and nothing is invented: no fabricated credentials, clients, metrics, or quotations.
+
+> **Current release `v1.2.0`** — 119 static routes · 305/305 automated assertions green · CI runs on every push to `main`.
 
 ---
 
@@ -16,7 +16,10 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | --- | --- |
 | `/` | Entrance — code-generated mathematical identity |
 | `/hub` | Headquarters — the master index with central Holographic Data Gate & 8 animated destination scenes |
-| `/works` | BUILDS — 3-tier directory: Products & Platforms (`/works/products`), Projects (`/works/projects`), and Personal Builds (`/works/personal-builds`), each item with a 12-section comprehensive engineering case study (`/works/<project>`) |
+| `/builds` | BUILDS — three-section destination: Products (`/builds/products`), Projects (`/builds/projects`), Independent (`/builds/personal`) |
+| `/works` | Catalogue — Products & Platforms (`/works/products`), Projects (`/works/projects`), Independent (`/works/personal-builds`), each item opening a full engineering case study at `/works/<project>` |
+| `/works/context-engineering-labs` | **Context Engineering Labs** — six agent-stack implementations in one repository, with per-unit verification and stated limitations |
+| `/works/cs50-ai` | **Harvard CS50 AI** — twelve applied AI projects, official certificate and validation methodology |
 | `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
 | `/research` | Research entries with stated method, findings, and Gaussian Probability Density Manifold |
 | `/articles` | Engineering articles & methodologies |
@@ -24,7 +27,7 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | `/services` | Service offerings anchored to capabilities and proven by projects |
 | `/lab` | Interactive instruments — risk/return surface, strategy viewer, market replay, experiments |
 | `/intelligence` | Knowledge graph connecting projects, research and capabilities |
-| `/credentials` | Issued certificates (including CS50x Harvard, WorldQuant, NSDC) with verification URLs and PDF viewer |
+| `/credentials` | Issued certificates (CS50x Harvard, WorldQuant, NSDC) with a stated verification method per record — **issuer link** or **certificate document** — plus a PDF viewer |
 | `/opportunities` | Career, freelance, collaboration and partnership pathways |
 | `/testimonials` | Reviews & testimonials — consented feedback with per-review ratings |
 | `/how-i-work` | How engagements actually run — six steps from brief to handover |
@@ -32,6 +35,51 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | `/about`, `/identity`, `/cv`, `/proof`, `/links`, `/contact` | Profile, record and contact surfaces |
 
 The top bar is deliberately minimal — brand, search and the light/dark toggle. Every destination stays reachable through the command palette (<kbd>⌘K</kbd>), the footer route index, `/links` and the hub.
+
+### URL compatibility
+
+Two generations of URL coexist and both resolve. Legacy paths redirect permanently rather than 404:
+
+| Legacy | Now |
+| --- | --- |
+| `/builds/<project>` (12 slugs) | `/work/<project>` |
+| `/certifications` | `/credentials` |
+| `/quant`, `/quant/<project>` | `/work`, `/work/<project>` |
+| `/research/market-data-replay`, `/research/qrsip` | `/work/…` |
+| `/career`, `/capabilities`, `/about/capabilities` | `/about#capability-map` |
+
+**Not a redirect — a canonical:** `/builds/projects/cs50-ai` serves the same page as `/works/cs50-ai` and declares `/works/cs50-ai` as its canonical, so the two URLs never compete in search.
+
+`next.config.ts` holds the redirect table. Note that the legacy slugs are enumerated rather than matched by a `:project` wildcard: Next.js checks redirects *before* the filesystem, so a wildcard would shadow the live `/builds/products|projects|personal` pages.
+
+---
+
+## Release history
+
+### v1.2.0 — Context Engineering Labs, CS50 AI case study, legacy URL repair
+
+**Added**
+
+- **`/works/context-engineering-labs`** — a case study for six agent-stack implementations held in a single public repository: Agent Skills, Model Context Protocol, Plugins, Subagents, Hooks and a Nano Harness. The page carries a source-verified record per unit (problem, capabilities, stack, engineering concepts, source path, evidence class), a re-run of the repository's test suite, and a *where it stops matching its own documentation* section on every unit. Presented as **6 implementations · 1 repository**, never as six separate products. **No certificate is claimed.**
+- **`/works/cs50-ai`** — canonical Harvard CS50 AI case study (twelve projects, official certificate, validation methodology). `/builds/projects/cs50-ai` now re-exports it as a legacy route with a canonical URL, so the older inbound link keeps working.
+- **`/credentials` verification model** — each record now declares *how* it can be checked: `ISSUER LINK` (the provider's own verification page) or `CERTIFICATE DOCUMENT` (the issued certificate held on the site). A record never implies an issuer check it does not have.
+- **`ExploreNext`** closing navigation on the new case study.
+
+**Fixed**
+
+- **Twelve legacy `/builds/<project>` URLs returned 404.** `128f514` removed the blanket `/builds/:project → /work/:project` redirect when `/builds` became a real destination. Dropping the top-level rule was correct; dropping the deep-link rule stranded every old project URL. The twelve slugs are now enumerated explicitly — a `:project` wildcard would shadow the live `/builds/products|projects|personal` pages, because Next.js checks redirects *before* the filesystem.
+- **`next.config.ts` documented a redirect that did not exist.** Its header comment claimed `/builds[/*] → /work[/*]` while the array contained no such rule. The comment now describes what the code actually does.
+- **Three QA suites asserted pre-rename copy** and had been failing on production too:
+  - `hub-check.ps1` still expected `ENTER WORKS`, `EXPLORE RESEARCH`, `ENTER THE LAB`, `EXPLORE OPPORTUNITIES` and the `WORKS`/`CREDENTIALS`/`ABOUT ME` headings from before the works → builds naming unification; it also required two sections that were deliberately removed (`ALSO INSIDE`, `REAL CHANNELS`).
+  - `world-check.ps1` matched `PROJECT WORLD` page-wide, so the `PROJECT WORLDS` nav button — whose `num-mono` badge renders a `text-[10px]` class containing digits — was read as a numbered eyebrow. The check is now scoped to the eyebrow element and fails loudly if the markup moves.
+  - `live-check.ps1` expected `/builds` to redirect to `/work`, expected the old hero subhead, and expected `aria-label="WORK"` where the heading is now `BUILDS`.
+
+**Deliberately unchanged**
+
+- No licence was added — this remains a personal project with all rights reserved.
+- No existing project, case study, research entry or credential record was modified beyond the verification-method field described above.
+- No performance, adoption or user metrics were introduced anywhere. The only numbers on the site are ones that can be reproduced from a repository.
+- Production deployment still requires an explicit push to `main`; nothing auto-publishes from a branch.
 
 ---
 
@@ -65,8 +113,9 @@ npm run dev        # development server → http://localhost:3000
 | --- | --- |
 | `npm run dev` | Development server with hot reload |
 | `npm run lint` | ESLint across the codebase |
-| `npm run build` | Type-check + production build (all 95 routes static-prerendered) |
+| `npm run build` | Type-check + production build (119 static-prerendered routes) |
 | `npm start` | Serve the production build locally |
+| `npx tsc --noEmit` | Standalone type-check (run after `npm run build`, which emits route types) |
 
 ---
 
@@ -76,27 +125,33 @@ npm run dev        # development server → http://localhost:3000
 - **Cinematic mathematical atmosphere** — living quantitative geometry (implied volatility surfaces, Gaussian probability manifolds, isometric depth mountains), cursor ambient lighting, and dual cyan/crimson signal route transitions.
 - **Responsive** — verified with rendered overflow sweeps from 320 px to 2560 px on every route; touch devices receive enlarged hit areas for compact controls while desktop sizing stays untouched.
 - **Accessible** — keyboard-completable interactions, focus-visible states, reduced-motion freezes every animation at its neutral rest state.
-- **Performance-conscious** — static generation for all 95 content routes; canvases are DPR-capped, pause when the tab is hidden or scrolled out of view, and run at 0% CPU at idle.
+- **Performance-conscious** — static generation for all 119 content routes; canvases are DPR-capped, pause when the tab is hidden or scrolled out of view, and run at 0% CPU at idle.
 - **SEO & Identity** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs, a site-wide Open Graph share card (`next/og`), icons + web manifest, and JSON-LD (`Person` + `WebSite`).
 
-### Automated Test Suites
+### Automated test suites
 
 The rendered-output suites live in `scripts/qa/` and run against any build served on `:3000`:
 
-| Suite | What it asserts | Assertions |
+| Suite | What it asserts | Result |
 | --- | --- | --- |
-| `live-check.ps1` | Site-wide assertions — motion, accessibility, minimal navigation bar, enquiry form, trust pages, 404, share-card head tags | 133 / 133 PASS |
-| `hub-check.ps1` | Hub-universe assertions — portal gate, 8 destination scenes, action links | 56 / 56 PASS |
-| `world-check.ps1` | Project-world assertions — systems architecture, case studies, quantitative lab | 88 / 88 PASS |
-| `api-check.ps1` | End-to-end API checks — reviews + enquiries + health + rate limiters | 18 / 18 PASS |
-| `token-check.ps1` | Static design-token contrast — every text token ≥ 4.5:1 on every surface in both themes | 6 / 6 PASS |
-| **Total** | **Continuous Automated Verification** | **301 / 301 PASS** |
+| `live-check.ps1` | Site-wide assertions — motion, accessibility, minimal navigation bar, enquiry form, trust pages, 404, permanent redirects, share-card head tags, landmarks | 133 / 133 |
+| `hub-check.ps1` | Hub-universe assertions — portal gate, 8 destination scenes, action links, region labelling, compiled CSS | 56 / 56 |
+| `world-check.ps1` | Project-world assertions — systems architecture, case studies, evidence schema, quantitative lab | 88 / 88 |
+| `api-check.ps1` | End-to-end API checks — reviews + enquiries + health + rate limiters | 18 / 18 |
+| `link-check.ps1` | Crawls 26 seed routes and resolves every internal destination | 4 / 4 (92 destinations) |
+| `token-check.ps1` | Static design-token contrast — every text token ≥ 4.5:1 on every surface in both themes | 6 / 6 |
+| **Total** | **Continuous automated verification** | **305 / 305** |
 
 ```powershell
 npm run build; npm start          # serve the production build on :3000
 .\scripts\qa\token-check.ps1      # static — runs without a server
-.\scripts\qa\live-check.ps1       # runs full live suite
+.\scripts\qa\api-check.ps1        # run first: it ends on the per-IP 429 limiter by design
+.\scripts\qa\live-check.ps1       # run last: needs the rate-limit window to have expired
 ```
+
+> `api-check.ps1` must run against a **freshly started** server — its final case deliberately trips the rate limiter, which then fails any suite run in the same window.
+
+CI (`.github/workflows/ci.yml`) runs lint, token contrast, production build, type-check and all five server-backed suites on every push to `main` and on every pull request, on `windows-latest` so the PowerShell suites execute under the runtime they were authored against.
 
 ---
 

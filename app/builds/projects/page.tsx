@@ -54,7 +54,7 @@ export default function ProjectsPage() {
               PROJECTS
             </h2>
             <p className="mt-2 label-mono text-xs text-faint">
-              3 PROJECTS · VERIFIED ENGINEERING
+              4 PROJECTS · VERIFIED ENGINEERING
             </p>
           </header>
 
@@ -88,7 +88,18 @@ export default function ProjectsPage() {
             status="CS50 · VERIFIED · 12/12 PROJECTS"
             evidenceLabel="HARVARD CS50AI · CERTIFICATE VERIFIED"
             repoUrl="https://github.com/naresh-cn2/harvard-cs50-ai"
-            caseStudyUrl="/builds/projects/cs50-ai"
+            caseStudyUrl="/works/cs50-ai"
+            category="PROJECT"
+          />
+          <ProjectCard
+            name="CONTEXT ENGINEERING LABS"
+            tagline="Six agent systems — skills, MCP, plugins, orchestration, observability, sandboxing"
+            description="One public MIT-licensed repository containing six implementations of the agent stack, built while studying the Hugging Face Context Engineering Course: a portable Agent Skill that validates datasets before training, an MCP server exposing five analysis tools over JSON-RPC 2.0 on stdio, a cross-agent plugin bundle with three host manifests, a four-role multi-agent code-quality pipeline, a lifecycle dashboard that normalises agent events, and a standard-library execution harness with path confinement, command allowlisting, write gating and SSRF preflight. The 72-case suite was re-run from a fresh clone and passes in 28.38s. No certificate is claimed and nothing is deployed."
+            tech={["Python 3.12", "Model Context Protocol", "Agent Skills", "FastAPI", "Gradio", "JavaScript ESM", "pytest"]}
+            status="72 / 72 TESTS REPRODUCED"
+            evidenceLabel="TEST SUITE RE-RUN LOCALLY · ONE REPOSITORY · NO CERTIFICATE CLAIMED"
+            repoUrl="https://github.com/naresh-cn2/context-engineering-labs"
+            caseStudyUrl="/works/context-engineering-labs"
             category="PROJECT"
           />
         </section>

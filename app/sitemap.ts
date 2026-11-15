@@ -17,6 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/builds/projects",
     "/builds/personal",
     "/builds/projects/cs50-ai",
+    "/works/cs50-ai",
+    "/works/context-engineering-labs",
     "/works",
     "/works/products",
     "/works/projects",

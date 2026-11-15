@@ -692,6 +692,143 @@ export const stratlabItem: ComprehensiveWorkItem = {
   },
 };
 
+/**
+ * Context Engineering Labs.
+ *
+ * Six implementations of the agent stack — portable knowledge, an MCP
+ * server, a cross-agent plugin bundle, a multi-agent code-quality
+ * pipeline, an agent activity dashboard and a sandboxed execution
+ * harness — built while studying the Hugging Face Context Engineering
+ * Course.
+ *
+ * One repository, six source directories. The catalogue entry says so
+ * explicitly rather than letting the six units read as six separate
+ * projects with six separate repositories.
+ *
+ * The deep record is the bespoke page at /works/context-engineering-labs.
+ * This entry points there: that page carries the per-unit breakdown,
+ * the verification run and the per-unit limitations, and a second
+ * thinner version of it would be a downgrade.
+ */
+export const contextEngineeringLabsItem: ComprehensiveWorkItem = {
+  id: "context-engineering-labs",
+  title: "Context Engineering Labs — Six Agent Systems, One Repository",
+  shortTitle: "CONTEXT ENGINEERING LABS",
+  categoryLabel: "AGENT INFRASTRUCTURE · SKILLS, MCP, PLUGINS, ORCHESTRATION, OBSERVABILITY & SANDBOXING",
+  tags: ["AI", "AGENTS", "MCP", "PYTHON", "ORCHESTRATION", "OBSERVABILITY", "SECURITY"],
+  status: "72 / 72 TESTS REPRODUCED",
+  statusNote:
+    "One public MIT-licensed repository containing six implementations. The 72-case suite was re-run from a fresh clone on Python 3.12.10 / pytest 9.1.1 and passed in 28.38s. No Hugging Face certificate is claimed, nothing is deployed, and the per-unit cards state where each unit stops matching its own documentation.",
+  thesis:
+    "An agent is only as reliable as the structure around it: what it is told, how it calls tools, how those tools reach other machines, how several agents divide work, how you see what happened, and what it is allowed to touch when it runs code.",
+  summary:
+    "Six implementations of that structure in one repository, built while studying the Hugging Face Context Engineering Course: a portable Agent Skill that validates datasets before training, an MCP server exposing five analysis tools over JSON-RPC 2.0 on stdio, a cross-agent plugin bundle with three host manifests, a four-role multi-agent code-quality pipeline with deterministic and live modes, a FastAPI and Gradio dashboard that normalises agent lifecycle events, and a standard-library execution harness with path confinement, command allowlisting, write gating and SSRF preflight.",
+  metrics: [
+    { value: "72 / 72", label: "TESTS PASSING", context: "RE-RUN LOCALLY FROM A FRESH CLONE · PYTEST 9.1.1" },
+    { value: "6", label: "IMPLEMENTATIONS", context: "SIX SOURCE DIRECTORIES IN ONE REPOSITORY" },
+    { value: "1", label: "PUBLIC REPOSITORY", context: "ONE TREE, ONE LICENCE, ONE TEST SUITE" },
+  ],
+  technologies: [
+    "Python 3.12",
+    "Model Context Protocol",
+    "Agent Skills Specification",
+    "FastAPI",
+    "Gradio",
+    "JavaScript ESM",
+    "pandas",
+    "pytest",
+  ],
+  github: "https://github.com/naresh-cn2/context-engineering-labs",
+  githubVerified: true,
+  tier: 1,
+  evidenceLabel: "TEST SUITE REPRODUCED LOCALLY · ONE REPOSITORY · NO CERTIFICATE CLAIMED",
+  workCategory: "projects",
+  /*
+   * The structural fields below are deliberately short. The deep record
+   * for this build is the bespoke page at /works/context-engineering-labs
+   * — it carries the six-unit breakdown, the verification run and the
+   * per-unit limitations in full. Repeating that content here would
+   * create a second copy that could drift from the page it describes.
+   */
+  whyIBuiltIt: [
+    "Most agent portfolios show a prompt and a tool call. The parts that decide whether an agent is dependable in production — the packaging, the protocol, the permission boundary, the telemetry — are exactly the parts that are tedious to build and easy to skip.",
+    "This repository builds those parts deliberately and in order: knowledge first, then the protocol to call it through, then the bundle that ships it, then the agents that divide the work, then the telemetry to see what happened, and finally the boundary that decides what the agent may touch.",
+  ],
+  keyCapabilities: [
+    { title: "Portable Agent Knowledge", desc: "A skill declared in the Agent Skills specification with YAML frontmatter, plus a deterministic dataset validator covering CSV, Parquet, JSON/JSONL and Arrow with exit-code pipeline gating." },
+    { title: "Tool Protocol", desc: "An MCP server over JSON-RPC 2.0 on stdio exposing five tools that return parsed values rather than prose, with a compatibility shim across MCP 1.x and 2.x." },
+    { title: "Cross-Agent Distribution", desc: "One bundle expressed in OpenCode/npm, Claude Code and Codex manifest formats, with three declarative skills and a JavaScript lifecycle plugin." },
+    { title: "Multi-Agent Orchestration", desc: "Researcher to Implementer handoff, two reviewers fanned out on a two-worker pool, a boolean sign-off, and a live mode driving a real OpenCode server over its REST API." },
+    { title: "Lifecycle Observability", desc: "A FastAPI receiver and Gradio dashboard over a bounded 500-event buffer, with an SSE bridge that normalises OpenCode, Claude and Codex payloads into one lifecycle taxonomy." },
+    { title: "Execution Boundary", desc: "Path confinement, a command allowlist with shell-token rejection, write gating over credential paths, SSRF preflight on resolved addresses, and error sanitisation — in the Python standard library only." },
+  ],
+  engineeringChallenges: [],
+  developmentJourney: [
+    { phase: "PROBLEM", title: "Problem", detail: "An agent's reliability is decided by the structure around it, not by the prompt alone." },
+    { phase: "ARCHITECTURE", title: "Architecture", detail: "Six layers: knowledge, protocol, packaging, orchestration, observability and execution boundary — each answering the one below it." },
+    { phase: "IMPLEMENTATION", title: "Implementation", detail: "Six source directories in one repository, with per-unit documentation, architecture notes, changelogs and environment templates." },
+    { phase: "VALIDATION", title: "Validation", detail: "A 72-case pytest suite across the six units plus a cross-unit integration audit, re-run from a fresh clone." },
+    { phase: "RESULTS", title: "Results", detail: "72 of 72 passing locally in 28.38s, including one live end-to-end test that drives a real OpenCode session." },
+    { phase: "LESSONS", title: "Lessons & Limits", detail: "Several of the repository's own documentation claims exceed what its code does; each unit records exactly where." },
+  ],
+  caseStudiesList: [],
+  evidenceAndResults: [
+    "72 of 72 tests pass when the suite is re-run from a fresh clone — Python 3.12.10, pytest 9.1.1, 28.38s.",
+    "71 of the 72 cases are self-contained. The remaining one drives a live OpenCode server and has no skip marker, so it errors rather than skipping when no daemon is running.",
+    "All 26 repository URLs and the 21 documentation URLs this page links to were checked over HTTP and resolve.",
+    "Unit 05 is the only part with a genuine end-to-end test against a live service; Unit 03's suite is structural — it parses manifests and reads the plugin source as text, and never executes the JavaScript.",
+    "No Hugging Face certificate is claimed. The repository's own progress document records course completion as self-reported and unverified.",
+    "Nothing is deployed. The dashboard, MCP server and pipeline are local processes; the repository is source, documentation and tests.",
+  ],
+  screenshotsAndVisuals: [],
+  linksList: [
+    { label: "THE COMPLETE REPOSITORY", href: "https://github.com/naresh-cn2/context-engineering-labs", type: "github" },
+    { label: "THE FULL RECORD", href: "/works/context-engineering-labs", type: "paper" },
+    { label: "PROJECT DOSSIER", href: "https://github.com/naresh-cn2/context-engineering-labs/blob/main/PROJECTS.md", type: "docs" },
+    { label: "RUNTIME VERIFICATION", href: "https://github.com/naresh-cn2/context-engineering-labs/blob/main/docs/RUNTIME_VERIFICATION.md", type: "docs" },
+    { label: "SECURITY AUDIT", href: "https://github.com/naresh-cn2/context-engineering-labs/blob/main/docs/SECURITY_AUDIT.md", type: "docs" },
+  ],
+  detail: {
+    problem: [
+      "Most agent portfolios demonstrate a prompt and a tool call. The structural parts that decide whether an agent is dependable — packaging, protocol, orchestration, telemetry, permission boundaries — are the tedious parts, and they are the parts that get skipped.",
+    ],
+    approach: [
+      "Build the six layers in dependency order, in one repository, with a test suite per unit and a cross-unit integration audit at the root.",
+    ],
+    architecture: [
+      { name: "PORTABLE KNOWLEDGE", role: "Agent Skills specification", detail: ["SKILL.md with YAML frontmatter", "Deterministic dataset validation CLI", "Exit-code gating"] },
+      { name: "TOOL PROTOCOL", role: "MCP over JSON-RPC 2.0 stdio", detail: ["Five analysis tools", "SDK compatibility shim", "Gradio front end"] },
+      { name: "DISTRIBUTION", role: "Cross-agent bundle", detail: ["Three host manifests", "MCP server binding", "JavaScript lifecycle hooks"] },
+      { name: "MULTI-AGENT WORK", role: "Four roles, two reviewer verdicts", detail: ["Sequential handoff", "Two-worker fan-out", "Deterministic and live modes"] },
+      { name: "OBSERVABILITY", role: "Lifecycle event normalisation", detail: ["Bounded 500-event buffer", "SSE ingestion bridge", "Fail-soft delivery"] },
+      { name: "EXECUTION BOUNDARY", role: "Sandboxed tool namespace", detail: ["Path confinement", "Command allowlist", "Write gating and SSRF preflight"] },
+    ],
+    results: [
+      "72 of 72 tests passing when re-run from a fresh clone on Python 3.12.10 with pytest 9.1.1, in 28.38s.",
+      "One repository, six source directories, 47 linked URLs checked over HTTP and all resolving.",
+    ],
+    limitations: [
+      "The repository's own portfolio document calls every unit a production reference. The source does not support that: the dashboard has no server-side event stream, the plugin's analytics live in a sibling directory, the pipeline's deterministic mode is string heuristics rather than simulated agents, and the harness is an in-process boundary rather than an operating-system sandbox.",
+      "The repository documents an MCP resource and prompt that the server does not implement, a live SSE endpoint the dashboard does not serve, a CLI invocation the parser would reject, and a dependency-free validator that imports pandas. Each unit's card on the deep page names the specific corrections.",
+      "No Hugging Face certificate is claimed, and the repository's progress document records course completion as self-reported and unverified.",
+      "Nothing is deployed and there are no users, no adoption figures and no performance benchmarks to report.",
+    ],
+    testing: [
+      "72 pytest cases: 10 for dataset validation, 9 for the MCP server, 6 for the plugin bundle, 11 for the multi-agent pipeline, 9 for the dashboard and forwarder, 15 for the execution harness, and 12 for the cross-unit integration audit.",
+      "71 cases are self-contained. One — the end-to-end event-forwarding test — requires a running OpenCode daemon at 127.0.0.1:28894 and a model that answers; it has no skip marker, so without one it errors rather than skipping.",
+    ],
+    artifacts: [
+      "One public MIT-licensed repository containing six implementations, their documentation, per-unit architecture notes and changelogs.",
+      "A published live-run trace from the multi-agent pipeline.",
+      "A security audit document covering path confinement, command injection, write gating and SSRF defence.",
+      "A runtime verification document recording what was executed against a live OpenCode runtime.",
+    ],
+    currentState: [
+      "Complete and independently reproduced. The repository is public and MIT-licensed; the suite passes; the record on this site reflects what the source does rather than what the documentation claims.",
+    ],
+  },
+};
+
 export const axiomJsonItem: ComprehensiveWorkItem = {
   id: "axiom-json",
   title: "AXIOM-JSON",
@@ -1398,6 +1535,7 @@ export const ALL_WORKS: ComprehensiveWorkItem[] = [
   openVerseItem,
   settleIqItem,
   stratlabItem,
+  contextEngineeringLabsItem,
   axiomJsonItem,
   omniLedgerEngineItem,
   cloudCostEngineItem,

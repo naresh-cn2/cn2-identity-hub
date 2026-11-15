@@ -54,6 +54,32 @@ export default function CredentialBadgeList() {
                         </span>
                       </button>
                     )}
+                    {/* A badge without a local image still has to lead somewhere — the
+                        issued certificate document or the issuer's own check page. */}
+                    {!record?.certificateImage && record?.certificateUrl && (
+                      <a
+                        href={record.certificateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link mt-4 inline-block"
+                      >
+                        <span className="label-mono text-foreground transition-transform duration-300 group-hover/link:translate-x-1">
+                          VIEW CERTIFICATE ↗
+                        </span>
+                      </a>
+                    )}
+                    {record?.verificationUrl && (
+                      <a
+                        href={record.verificationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/link mt-3 inline-block"
+                      >
+                        <span className="label-mono text-signal transition-transform duration-300 group-hover/link:translate-x-1">
+                          VERIFY AT THE ISSUER ↗
+                        </span>
+                      </a>
+                    )}
                   </div>
                 )}
               </div>

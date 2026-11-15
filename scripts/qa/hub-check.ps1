@@ -17,21 +17,27 @@ Check "portal canvas mounted" ($html.Contains('pointer-events-none absolute inse
 Check "portal overlay structure" ($html.Contains('<circle cx="70" cy="70" r="4" fill="none"'))
 
 # ---- eight sections: rendered-only action links ----
-$btnRe = '<a class="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal[^\"]* bg-signal[^\"]* px-8 py-4 label-mono[^\"]*" href="([a-z/-]+)"><span>([A-Z ]+)</span>'
+# Span text is captured verbatim, HTML entities included, so a label that
+# contains an ampersand ("ENTER RESEARCH &amp; JOURNAL") matches exactly.
+$btnRe = '<a class="corner-ticks group mt-9 inline-flex items-center gap-4 border border-signal[^\"]* bg-signal[^\"]* px-8 py-4 label-mono[^\"]*" href="([a-z/-]+)"><span>([^<]+)</span>'
 $btns = [regex]::Matches($html, $btnRe)
 Check "8 rendered action buttons" ($btns.Count -eq 8)
+# Destination 01 is BUILDS since the works/builds naming unification
+# (ff04489); /lab and /opportunities relabelled in the same pass.
 $want = @{
-  "/works"="ENTER WORKS"; "/credentials"="EXPLORE CREDENTIALS"; "/services"="EXPLORE SERVICES";
-  "/lab"="ENTER THE LAB"; "/research"="EXPLORE RESEARCH"; "/opportunities"="EXPLORE OPPORTUNITIES";
+  "/builds"="ENTER BUILDS"; "/credentials"="EXPLORE CREDENTIALS"; "/services"="EXPLORE SERVICES";
+  "/lab"="ENTER LABORATORY"; "/research"="ENTER RESEARCH &amp; JOURNAL"; "/opportunities"="EXPLORE COLLABORATION";
   "/about"="GET TO KNOW ME"; "/contact"="GET IN TOUCH"
 }
 $got = @{}; foreach ($m in $btns) { $got[$m.Groups[1].Value] = $m.Groups[2].Value }
 foreach ($k in $want.Keys) { Check "button $k => $($want[$k])" (($got[$k] -eq $want[$k])) }
 
 # ---- region labelling + titles ----
-$regions = [regex]::Matches($html, '<section aria-labelledby="dest-(\d\d)"')
+# id= precedes aria-labelledby= in the rendered markup, so the match must
+# tolerate attributes in between.
+$regions = [regex]::Matches($html, '<section[^>]*aria-labelledby="dest-(\d\d)"')
 Check "8 regions dest-01..08" (($regions | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique).Count -eq 8)
-foreach ($t in @('WORKS','CREDENTIALS','SERVICES','LABORATORY','RESEARCH','OPPORTUNITIES','ABOUT ME','LET&#x27;S CONNECT')) {
+foreach ($t in @('BUILDS','EDUCATION &amp; CREDENTIALS','SERVICES','LABORATORY','RESEARCH &amp; JOURNAL','CAREERS &amp; COLLABORATION','ABOUT','CONTACT')) {
   Check "title contains $t" ($html.Contains(">$t<"))
 }
 
@@ -42,7 +48,9 @@ Check "no ghost watermark" (-not ($html -match 'opacity-\[0\.05\]'))
 Check "no 'INTELLIGENCE NEXUS'" (-not $html.Contains('INTELLIGENCE NEXUS'))
 Check "no 'SECONDARY INDEX'" (-not $html.Contains('SECONDARY INDEX'))
 Check "no metric block" (-not ($html -match 'num-mono text-3xl'))
-Check "ALSO INSIDE index" ($html.Contains('ALSO INSIDE'))
+# The four-audience pathways closing section was removed in ce9039b; the
+# assertion now guards that it stays gone.
+Check "no 'ALSO INSIDE' index" (-not $html.Contains('ALSO INSIDE'))
 Check "return to entrance removed" (-not $html.Contains('RETURN TO ENTRANCE'))
 Check "bottom-left back on hub" ($html.Contains('Go back to the previous page'))
 
@@ -57,7 +65,9 @@ Check "recede wrapper x8" (([regex]::Matches($html, '<div class="dest-recede">')
 
 # ---- captions: no illustrative clutter ----
 Check "no illustrative captions" (-not $html.Contains('ILLUSTRATIVE'))
-Check "connect: REAL CHANNELS" ($html.Contains('REAL CHANNELS'))
+# The connect block no longer carries a section heading; the four channel
+# links below are what actually has to survive.
+Check "connect: REAL CHANNELS heading removed" (-not $html.Contains('REAL CHANNELS'))
 
 # ---- connect: real links ----
 Check "connect: mailto" ($html -match '<a href="mailto:bukyanaresh2003@gmail.com" class="chan"')

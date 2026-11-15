@@ -105,7 +105,7 @@ export default function ProjectsCategoryPage() {
                 </h2>
               </div>
               <p className="label-mono text-faint">
-                {items.length} QUANTITATIVE &amp; ARCHITECTURAL SYSTEMS
+                {items.length} ENGINEERING SYSTEMS & RESEARCH BUILDS
               </p>
             </div>
           </Reveal>

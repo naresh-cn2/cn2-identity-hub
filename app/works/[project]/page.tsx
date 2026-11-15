@@ -4,8 +4,22 @@ import ComprehensiveCaseStudy from "@/components/work/comprehensive-case-study";
 import { getAllWorks, getWorkItem } from "@/data/works";
 import { site } from "@/data/site";
 
+/**
+ * Records that own their own route.
+ *
+ * Context Engineering Labs has a bespoke page at
+ * /works/context-engineering-labs that carries the six-unit breakdown,
+ * the verification run and the per-unit limitations in full. The
+ * catalogue rendering cannot hold that, so the record declares its own
+ * static route and is excluded here — otherwise the dynamic segment
+ * would generate a second, thinner version of the same record.
+ */
+const STANDALONE_RECORDS = new Set(["context-engineering-labs"]);
+
 export function generateStaticParams() {
-  return getAllWorks().map((w) => ({ project: w.id }));
+  return getAllWorks()
+    .filter((w) => !STANDALONE_RECORDS.has(w.id))
+    .map((w) => ({ project: w.id }));
 }
 
 export async function generateMetadata({
