@@ -25,6 +25,7 @@ function ProductEntry({
   status,
   evidenceLabel,
   repoUrl,
+  caseStudyUrl,
   category = "PRODUCT",
 }: {
   name: string;
@@ -34,6 +35,7 @@ function ProductEntry({
   status: string;
   evidenceLabel: string;
   repoUrl: string;
+  caseStudyUrl?: string;
   category?: string;
 }) {
   return (
@@ -56,15 +58,26 @@ function ProductEntry({
       </div>
       <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-line">
         <span className="label-mono text-xs text-faint">{evidenceLabel}</span>
-        <a
-          href={repoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="corner-ticks group inline-flex items-center gap-2 text-sm label-mono text-signal transition-colors hover:text-white"
-        >
-          <span>VIEW REPOSITORY</span>
-          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </a>
+        <div className="flex items-center gap-2">
+          {caseStudyUrl && (
+            <a
+              href={caseStudyUrl}
+              className="corner-ticks group inline-flex items-center gap-2 text-sm label-mono text-muted transition-colors hover:text-signal"
+            >
+              <span>CASE STUDY</span>
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          )}
+          <a
+            href={repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="corner-ticks group inline-flex items-center gap-2 text-sm label-mono text-signal transition-colors hover:text-white"
+          >
+            <span>VIEW REPOSITORY</span>
+            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        </div>
       </div>
     </article>
   );
@@ -106,7 +119,7 @@ export default function ProductsPage() {
               PRODUCTS & PLATFORMS
             </h2>
             <p className="mt-2 label-mono text-xs text-faint">
-              4 PRODUCTS · VERIFIED ARCHITECTURES
+              9 PRODUCTS · VERIFIED ARCHITECTURES
             </p>
           </header>
 
@@ -148,6 +161,61 @@ export default function ProductsPage() {
             status="ACTIVE DEVELOPMENT"
             evidenceLabel="IN DEVELOPMENT · NO PUBLISHED BENCHMARK"
             repoUrl="https://github.com/naresh-cn2/cloud-cost-engine"
+            category="PRODUCT"
+          />
+          <ProductEntry
+            name="SETTLE-IQ"
+            tagline="Financial Settlement Discrepancy Investigation Engine"
+            description="Financial settlement discrepancy investigation engine that reconciles expected vs. actual settlements, identifies variances, and generates evidence-backed investigation reports."
+            tech={["Python", "Financial reconciliation", "Investigation reporting"]}
+            status="ACTIVE DEVELOPMENT"
+            evidenceLabel="ACTIVE DEVELOPMENT"
+            repoUrl="https://github.com/naresh-cn2/settleiq"
+            caseStudyUrl="/works/settleiq"
+            category="PRODUCT"
+          />
+          <ProductEntry
+            name="B2B LEAD PROSPECTOR"
+            tagline="B2B Lead Scraping & Contact Enrichment Platform"
+            description="Production B2B lead scraper and contact enrichment platform for Apify."
+            tech={["Python", "Apify", "Web scraping", "Contact enrichment"]}
+            status="PRODUCTION"
+            evidenceLabel="PRODUCTION"
+            repoUrl="https://github.com/naresh-cn2/b2b-lead-prospector"
+            caseStudyUrl="/works/b2b-lead-prospector"
+            category="PRODUCT"
+          />
+          <ProductEntry
+            name="FORGE-STREAM"
+            tagline="High-Performance Data Ingestion & CSV Processing"
+            description="High-performance data ingestion and CSV processing infrastructure."
+            tech={["C", "Systems programming", "CSV parsing", "Data ingestion"]}
+            status="ACTIVE DEVELOPMENT"
+            evidenceLabel="ACTIVE DEVELOPMENT"
+            repoUrl="https://github.com/naresh-cn2/forge-stream"
+            caseStudyUrl="/works/forge-stream"
+            category="PRODUCT"
+          />
+          <ProductEntry
+            name="ZERO-LATENCY-ENGINE"
+            tagline="High-Performance C Engine for CSV Processing"
+            description="High-performance C engine achieving 15x speedup over Python/Pandas using mmap and custom parsing for 20M+ row CSV files."
+            tech={["C11", "mmap", "Custom parsing", "CSV processing"]}
+            status="ACTIVE DEVELOPMENT"
+            evidenceLabel="ACTIVE DEVELOPMENT"
+            repoUrl="https://github.com/naresh-cn2/Zero-Latency-Engine"
+            caseStudyUrl="/works/zero-latency-engine"
+            category="PRODUCT"
+          />
+          <ProductEntry
+            name="FORGE-CORE"
+            tagline="Lock-Free User-Space IPC Transport"
+            description="Lock-free user-space IPC transport fabric written in C11 utilizing POSIX shared memory (/dev/shm) and asymmetric core-pinning isolation maps."
+            tech={["C11", "POSIX shared memory", "IPC", "Core pinning"]}
+            status="ACTIVE DEVELOPMENT"
+            evidenceLabel="ACTIVE DEVELOPMENT"
+            repoUrl="https://github.com/naresh-cn2/forge-core"
+            caseStudyUrl="/works/forge-core"
             category="PRODUCT"
           />
         </section>
