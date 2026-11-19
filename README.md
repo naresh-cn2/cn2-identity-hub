@@ -2,24 +2,56 @@
 
 **The digital headquarters of Bukya Naresh — Quantitative Developer**
 
-[Live site](https://cn2-identity-hub.vercel.app) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub) · [ORCID](https://orcid.org/0009-0007-7269-1583) · [Contra](https://contra.com/naresh_cn2)
+[Live site](https://cn2.is-a.dev) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub) · [ORCID](https://orcid.org/0009-0007-7269-1583) · [Contra](https://contra.com/naresh_cn2)
 
 CN2.DEV is a multi-route professional platform covering quantitative development, systematic trading research, engineering services, and published technical writing. Every claim on the site is backed by real artifacts — working systems, test suites, research entries, certificates with verification links — and nothing is invented: no fabricated credentials, clients, metrics, or quotations.
 
-> **Current release `v1.2.0`** — 119 static routes · 305/305 automated assertions green · CI runs on every push to `main`.
+> **Current release `v1.2.1`** — 125 static routes · 305/305 automated assertions green · CI runs on every push to `main`.
 
 ---
 
-## What lives here
+## Professional Identity
 
-| Destination | What it is |
-| --- | --- |
+**CN2 — Quantitative Developer**
+
+*Systems Engineering · Financial Technology · AI Engineering*
+
+| Dimension | What it communicates |
+|---|---|
+| **Who I am** | An independent engineer building computational and intelligent systems. |
+| **How I think** | Systems thinking, analytical reasoning, structured problem-solving. |
+| **What I build** | Software platforms, financial systems, data infrastructure, AI-powered tools. |
+| **How I work** | Human-directed engineering, AI-assisted execution, testing and verification. |
+| **Where I am going** | Building increasingly integrated, reliable and intelligent systems. |
+
+---
+
+## Professional Experiences
+
+CN2.DEV presents three connected but distinct professional experiences:
+
+| Experience | Route | Purpose |
+|---|---|---|
+| **About — Professional Identity** | `/about` | Who I am, how I think, my engineering philosophy, vision, mindset, AI relationship, journey, capabilities, and work. |
+| **CV — Engineering Dossier** | `/cv` | Comprehensive professional record: skills, independent engineering experience, flagship projects, research, certifications, education, and achievements. |
+| **Résumé — Career Opportunity** | `/resume` | Targeted professional presentations: Systems/Backend Engineer, Quantitative Developer, AI Engineer — each a focused, role-specific résumé. |
+
+The About page tells the story. The CV proves the engineering work. The résumé communicates professional relevance.
+
+---
+
+## Complete Website Architecture
+
+### Core routes
+
+| Route | What it is |
+|---|---|
 | `/` | Entrance — code-generated mathematical identity |
-| `/hub` | Headquarters — the master index with central Holographic Data Gate & 8 animated destination scenes |
-| `/builds` | BUILDS — three-section destination: Products (`/builds/products`), Projects (`/builds/projects`), Independent (`/builds/personal`) |
-| `/works` | Catalogue — Products & Platforms (`/works/products`), Projects (`/works/projects`), Independent (`/works/personal-builds`), each item opening a full engineering case study at `/works/<project>` |
-| `/works/context-engineering-labs` | **Context Engineering Labs** — six agent-stack implementations in one repository, with per-unit verification and stated limitations |
-| `/works/cs50-ai` | **Harvard CS50 AI** — twelve applied AI projects, official certificate and validation methodology |
+| `/hub` | Headquarters — master index with Holographic Data Gate & 8 animated destination scenes |
+| `/builds` | BUILDS — three-section destination: Products, Projects, Independent |
+| `/works` | Catalogue — Products & Platforms, Projects, Personal Builds; each item opens a full engineering case study at `/works/<project>` |
+| `/works/context-engineering-labs` | Context Engineering Labs — six agent-stack implementations in one repository, with per-unit verification and stated limitations |
+| `/works/cs50-ai` | Harvard CS50 AI — twelve applied AI projects, official certificate and validation methodology |
 | `/case-studies` | Deep technical proof per project (`/case-studies/<project>`) |
 | `/research` | Research entries with stated method, findings, and Gaussian Probability Density Manifold |
 | `/articles` | Engineering articles & methodologies |
@@ -33,6 +65,10 @@ CN2.DEV is a multi-route professional platform covering quantitative development
 | `/how-i-work` | How engagements actually run — six steps from brief to handover |
 | `/privacy`, `/terms` | Plain-language data handling and ground rules |
 | `/about`, `/identity`, `/cv`, `/proof`, `/links`, `/contact` | Profile, record and contact surfaces |
+| `/resume` | Résumé — professional direction selector |
+| `/resume/systems-backend` | Résumé — Systems/Backend Engineer |
+| `/resume/quantitative-developer` | Résumé — Quantitative Developer |
+| `/resume/ai-engineer` | Résumé — AI Engineer |
 
 The top bar is deliberately minimal — brand, search and the light/dark toggle. Every destination stays reachable through the command palette (<kbd>⌘K</kbd>), the footer route index, `/links` and the hub.
 
@@ -41,7 +77,7 @@ The top bar is deliberately minimal — brand, search and the light/dark toggle.
 Two generations of URL coexist and both resolve. Legacy paths redirect permanently rather than 404:
 
 | Legacy | Now |
-| --- | --- |
+|---|---|
 | `/builds/<project>` (12 slugs) | `/work/<project>` |
 | `/certifications` | `/credentials` |
 | `/quant`, `/quant/<project>` | `/work`, `/work/<project>` |
@@ -50,11 +86,22 @@ Two generations of URL coexist and both resolve. Legacy paths redirect permanent
 
 **Not a redirect — a canonical:** `/builds/projects/cs50-ai` serves the same page as `/works/cs50-ai` and declares `/works/cs50-ai` as its canonical, so the two URLs never compete in search.
 
-`next.config.ts` holds the redirect table. Note that the legacy slugs are enumerated rather than matched by a `:project` wildcard: Next.js checks redirects *before* the filesystem, so a wildcard would shadow the live `/builds/products|projects|personal` pages.
+`next.config.ts` holds the redirect table. Legacy slugs are enumerated rather than matched by a `:project` wildcard: Next.js checks redirects *before* the filesystem, so a wildcard would shadow the live `/builds/products|projects|personal` pages.
 
 ---
 
 ## Release history
+
+### v1.2.1 — Professional identity experiences: About, CV, Résumé
+
+**Added**
+
+- **`/about`** — Professional identity experience: cinematic hero ("I THINK IN SYSTEMS. I BUILD WHAT'S POSSIBLE."), engineering journey timeline, completed project showcase, and professional profile panels linking to CV and Résumé.
+- **`/cv`** — Comprehensive engineering dossier: flagship projects (BusTub, APEX Quant Engine, QRSIP, Market Data Replay, Automated Trading OS, Billing Data Gateway, Context Engineering Labs, StratLab), supporting projects, research & development, verified certifications (CS50x Harvard, CS50AI, WorldQuant, DataTeach.ai, QuantConnect, Reliance Foundation/NSDC, SFJ Business Solutions/NSDC, NASSCOM/NSDC, Unstop), and printable PDF export.
+- **`/resume`** — Professional direction selector with three targeted résumé destinations.
+- **`/resume/systems-backend`** — Targeted résumé: Systems/Backend Engineer — C++20, C11, Python, TypeScript, databases, Docker, Linux/POSIX.
+- **`/resume/quantitative-developer`** — Targeted résumé: Quantitative Developer — deterministic backtesting, point-in-time data, risk engineering, structural controls.
+- **`/resume/ai-engineer`** — Targeted résumé: AI Engineer — agent orchestration, MCP tool protocols, sandboxed execution, lifecycle observability.
 
 ### v1.2.0 — Context Engineering Labs, CS50 AI case study, legacy URL repair
 
@@ -76,17 +123,17 @@ Two generations of URL coexist and both resolve. Legacy paths redirect permanent
 
 **Deliberately unchanged**
 
-- No licence was added — this remains a personal project with all rights reserved.
+- No licence was added — this remains a personal project; all rights reserved.
 - No existing project, case study, research entry or credential record was modified beyond the verification-method field described above.
 - No performance, adoption or user metrics were introduced anywhere. The only numbers on the site are ones that can be reproduced from a repository.
 - Production deployment still requires an explicit push to `main`; nothing auto-publishes from a branch.
 
 ---
 
-## Tech stack & Tooling Architecture
+## Technology Stack & Tooling Architecture
 
 | Category | Technologies & Tools |
-| --- | --- |
+|---|---|
 | **Languages** | C, C++, Python, Rust, TypeScript, JavaScript, C#, R, Scala, Ruby, Java, Bash Script, HTML5, Objective-C, Crystal, Markdown |
 | **Frameworks & Runtimes** | Next.js 16 (App Router, Turbopack), React 19, Node.js, FastAPI, Flask, NestJS, Fastify, Deno.js, Electron, Nuxt, Angular.js, React Native, .NET, JavaFX |
 | **Data, ML & Quant** | NumPy, Pandas, SciPy, CUDA, Anaconda, Power BI, Chart.js, OpenAPI / Swagger |
@@ -110,10 +157,10 @@ npm run dev        # development server → http://localhost:3000
 ```
 
 | Script | Purpose |
-| --- | --- |
+|---|---|
 | `npm run dev` | Development server with hot reload |
 | `npm run lint` | ESLint across the codebase |
-| `npm run build` | Type-check + production build (119 static-prerendered routes) |
+| `npm run build` | Type-check + production build |
 | `npm start` | Serve the production build locally |
 | `npx tsc --noEmit` | Standalone type-check (run after `npm run build`, which emits route types) |
 
@@ -125,7 +172,7 @@ npm run dev        # development server → http://localhost:3000
 - **Cinematic mathematical atmosphere** — living quantitative geometry (implied volatility surfaces, Gaussian probability manifolds, isometric depth mountains), cursor ambient lighting, and dual cyan/crimson signal route transitions.
 - **Responsive** — verified with rendered overflow sweeps from 320 px to 2560 px on every route; touch devices receive enlarged hit areas for compact controls while desktop sizing stays untouched.
 - **Accessible** — keyboard-completable interactions, focus-visible states, reduced-motion freezes every animation at its neutral rest state.
-- **Performance-conscious** — static generation for all 119 content routes; canvases are DPR-capped, pause when the tab is hidden or scrolled out of view, and run at 0% CPU at idle.
+- **Performance-conscious** — static generation for all content routes; canvases are DPR-capped, pause when the tab is hidden or scrolled out of view, and run at 0% CPU at idle.
 - **SEO & Identity** — `app/sitemap.ts`, `app/robots.ts`, per-route metadata and canonical URLs, a site-wide Open Graph share card (`next/og`), icons + web manifest, and JSON-LD (`Person` + `WebSite`).
 
 ### Automated test suites
@@ -133,12 +180,12 @@ npm run dev        # development server → http://localhost:3000
 The rendered-output suites live in `scripts/qa/` and run against any build served on `:3000`:
 
 | Suite | What it asserts | Result |
-| --- | --- | --- |
+|---|---|---|
 | `live-check.ps1` | Site-wide assertions — motion, accessibility, minimal navigation bar, enquiry form, trust pages, 404, permanent redirects, share-card head tags, landmarks | 133 / 133 |
 | `hub-check.ps1` | Hub-universe assertions — portal gate, 8 destination scenes, action links, region labelling, compiled CSS | 56 / 56 |
 | `world-check.ps1` | Project-world assertions — systems architecture, case studies, evidence schema, quantitative lab | 88 / 88 |
 | `api-check.ps1` | End-to-end API checks — reviews + enquiries + health + rate limiters | 18 / 18 |
-| `link-check.ps1` | Crawls 26 seed routes and resolves every internal destination | 4 / 4 (92 destinations) |
+| `link-check.ps1` | Crawls seed routes and resolves every internal destination | 4 / 4 (92 destinations) |
 | `token-check.ps1` | Static design-token contrast — every text token ≥ 4.5:1 on every surface in both themes | 6 / 6 |
 | **Total** | **Continuous automated verification** | **305 / 305** |
 
@@ -168,4 +215,4 @@ CI (`.github/workflows/ci.yml`) runs lint, token contrast, production build, typ
 
 No license file is published — this is a personal project; all rights reserved.
 
-**Bukya Naresh** — Quantitative Developer · [Live site](https://cn2-identity-hub.vercel.app) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub) · [ORCID](https://orcid.org/0009-0007-7269-1583)
+**Bukya Naresh** — Quantitative Developer · [Live site](https://cn2.is-a.dev) · [GitHub](https://github.com/naresh-cn2/cn2-identity-hub) · [ORCID](https://orcid.org/0009-0007-7269-1583)

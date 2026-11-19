@@ -251,7 +251,7 @@ export default async function ResumeDirectionPage({ params }: { params: Promise<
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <Reveal className="mt-14">
               <div className="border border-signal bg-signal/5 p-8 md:p-12 text-center">
-                <p className="label-mono text-signal text-[10px] mb-3">LET'S WORK TOGETHER</p>
+                <p className="label-mono text-signal text-[10px] mb-3">LET&apos;S WORK TOGETHER</p>
                 <h2 className="display text-2xl md:text-3xl font-bold text-foreground mb-4">Ready to discuss your engineering needs?</h2>
                 <p className="text-sm leading-relaxed text-muted mb-6 max-w-2xl mx-auto">I am open to selected work, research collaboration, and partnership opportunities. Reach out through any channel below.</p>
                 <div className="flex flex-wrap justify-center gap-4">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 import PageAtmosphere from "@/components/ui/page-atmosphere";
-import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Résumé — CN2.DEV",
