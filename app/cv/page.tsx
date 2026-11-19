@@ -6,7 +6,10 @@ import PageAtmosphere from "@/components/ui/page-atmosphere";
 import PosterPlate from "@/components/viz/poster-plates";
 import { capabilities } from "@/data/capabilities";
 import { career } from "@/data/career";
+import { credentials } from "@/data/credentials";
+import { researchEntries } from "@/data/research";
 import { site } from "@/data/site";
+import { getAllWorks } from "@/data/works";
 
 export const metadata: Metadata = {
   title: "CV",
@@ -234,7 +237,163 @@ export default function CvPage() {
         </ul>
       </CvSection>
 
-      <CvSection code="08" title="EVIDENCE">
+      <CvSection code="08" title="FLAGSHIP PROJECTS">
+        <div className="space-y-8 print:space-y-5">
+          {getAllWorks()
+            .filter((w) => ["bustub-engine", "apex-quant-engine", "qrsip", "market-data-replay", "automated-trading-os", "billing-data-gateway", "context-engineering-labs", "stratlab"].includes(w.id))
+            .map((project) => (
+              <div key={project.id} className="min-w-0 break-inside-avoid border-t border-line pt-6 print:pt-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+                  <div>
+                    <h3 className="display text-xl">{project.shortTitle}</h3>
+                    <p className="label-mono text-xs text-muted">{project.categoryLabel}</p>
+                  </div>
+                  <span className={`label-mono border px-2.5 py-1 text-[9px] ${
+                    project.status.includes("VERIFIED") || project.status.includes("PRODUCTION") || project.status.includes("RELEASED")
+                      ? "border-signal text-signal"
+                      : "border-research text-research"
+                  }`}>
+                    {project.status.split(" · ")[0]}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{project.summary}</p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {project.technologies.slice(0, 5).map((t) => (
+                    <span key={t} className="px-2 py-0.5 text-[9px] label-mono border border-line bg-background rounded">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-4 flex items-baseline gap-4">
+                  <span className="label-mono text-faint">STATUS</span>
+                  <span className="num-mono text-sm text-foreground">{project.status}</span>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="label-mono text-sm text-signal hover:text-white transition-colors"
+                    >
+                      GITHUB →
+                    </a>
+                  )}
+                </div>
+                {project.metrics.length > 0 && (
+                  <div className="mt-3">
+                    <p className="label-mono text-[9px] text-faint mb-1">RESULTS</p>
+                    <ul className="space-y-1">
+                      {project.metrics.map((m, i) => (
+                        <li key={i} className="flex justify-between text-sm text-muted">
+                          <span>{m.label}</span>
+                          <span className="text-foreground">{m.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {project.evidenceAndResults.length > 0 && (
+                  <div className="mt-3">
+                    <p className="label-mono text-[9px] text-faint mb-1">EVIDENCE</p>
+                    <ul className="space-y-1">
+                      {project.evidenceAndResults.slice(0, 2).map((e, i) => (
+                        <li key={i} className="text-sm text-muted leading-relaxed">{e}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+      </CvSection>
+
+      <CvSection code="09" title="SUPPORTING PROJECTS &amp; RESEARCH">
+        <div className="grid gap-8 sm:grid-cols-2 print:gap-y-4">
+          <div>
+            <p className="label-mono text-[9px] text-signal mb-3">SUPPORTING PROJECTS</p>
+            <ul className="space-y-4">
+              {getAllWorks()
+                .filter((w) => ["ifm-costintel", "forex-platform", "crypto-platform", "settle-iq", "b2b-lead-prospector", "forge-stream", "zero-latency-engine", "forge-core"].includes(w.id))
+                .map((project) => (
+                  <li key={project.id} className="border-t border-line pt-3">
+                    <h4 className="font-mono text-sm font-bold text-foreground">{project.shortTitle}</h4>
+                    <p className="text-xs text-muted leading-relaxed mt-1">{project.summary}</p>
+                    <span className={`label-mono border px-2 py-0.5 text-[8px] ${
+                      project.status.includes("VERIFIED") || project.status.includes("PRODUCTION") || project.status.includes("RELEASED")
+                        ? "border-signal text-signal"
+                        : "border-line text-muted"
+                    }`}>
+                      {project.status}
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          </div>
+          <div>
+            <p className="label-mono text-[9px] text-research mb-3">RESEARCH &amp; DEVELOPMENT</p>
+            <ul className="space-y-4">
+              {researchEntries.map((entry) => (
+                <li key={entry.id} className="border-t border-line pt-3">
+                  <h4 className="font-mono text-sm font-bold text-foreground">{entry.title}</h4>
+                  <p className="text-xs text-muted leading-relaxed mt-1">{entry.result}</p>
+                  <span className={`label-mono border px-2 py-0.5 text-[8px] border-research text-research`}>
+                    {entry.status.toUpperCase()}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </CvSection>
+
+      <CvSection code="10" title="VERIFIED CERTIFICATIONS">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 print:gap-y-4">
+          {credentials
+            .filter((c) => c.state === "VERIFIED" || c.state === "COMPLETED")
+            .map((cert) => (
+              <div key={cert.id} className="border border-line bg-surface p-5 transition-colors hover:border-signal/50">
+                <div className="flex items-baseline justify-between gap-2 mb-2">
+                  <h4 className="font-mono text-sm font-bold text-foreground">{cert.provider}</h4>
+                  <span className={`label-mono border px-2 py-0.5 text-[9px] ${
+                    cert.state === "VERIFIED" ? "border-signal text-signal" : "border-line text-muted"
+                  }`}>
+                    {cert.state}
+                  </span>
+                </div>
+                <p className="font-mono text-base font-bold text-foreground mb-1">{cert.program}</p>
+                <p className="text-xs text-muted leading-relaxed mb-3">{cert.learned}</p>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {cert.skills.slice(0, 3).map((s) => (
+                    <span key={s} className="px-2 py-0.5 text-[9px] label-mono border border-line bg-background rounded">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+                {cert.verificationUrl && (
+                  <a
+                    href={cert.verificationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="label-mono text-[9px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
+                  >
+                    VERIFY CREDENTIAL →
+                  </a>
+                )}
+                {cert.certificateUrl && !cert.verificationUrl && (
+                  <a
+                    href={cert.certificateUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="label-mono text-[9px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
+                  >
+                    VIEW CERTIFICATE →
+                  </a>
+                )}
+              </div>
+            ))}
+        </div>
+      </CvSection>
+
+      <CvSection code="11" title="EVIDENCE">
         <ul className="grid gap-3 sm:grid-cols-3">
           {EVIDENCE_ROUTES.map((route) => (
             <li key={route.href} className="min-w-0">

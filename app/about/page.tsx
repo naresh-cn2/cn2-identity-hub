@@ -13,8 +13,10 @@ import TechStackMatrix from "@/components/capabilities/tech-stack-matrix";
 import KnowledgeGraph from "@/components/viz/knowledge-graph";
 import { aiStages, systemsStages } from "@/data/about";
 import { capabilities } from "@/data/capabilities";
+import { credentials } from "@/data/credentials";
 import { researchEntries } from "@/data/research";
 import { site } from "@/data/site";
+import { getAllWorks } from "@/data/works";
 
 export const metadata: Metadata = {
   title: "About",
@@ -120,12 +122,13 @@ export default function AboutPage() {
                 <span className="block">POSSIBLE.</span>
               </h1>
               <p className="mt-8 max-w-[26rem] text-sm leading-relaxed text-white/75">
-                I&apos;m Bukya Naresh. My interests span quantitative finance, intelligent automation,
-                software engineering, data infrastructure, and computational decision-making.
+                I am interested in what happens when financial intelligence, software engineering,
+                data and artificial intelligence converge. I explore those connections by designing,
+                building and validating systems that solve real problems.
               </p>
               <p className="mt-4 max-w-[26rem] text-sm leading-relaxed text-white/60">
-                I explore how these disciplines connect — and how complex ideas can become useful,
-                measurable, and increasingly automated systems.
+                Every system has an origin. This page is the journey behind mine — how I think,
+                what I build, and where I am going.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-3">
@@ -225,11 +228,193 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* ---- 07 · MY ENGINEERING JOURNEY ------------------------------ */}
+        <section id="journey" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              eyebrow="MY ENGINEERING JOURNEY"
+              lines={["EVERY SYSTEM HAS AN ORIGIN.", "THIS IS THE JOURNEY BEHIND MINE."]}
+              support="From academic foundations to independent engineering, each step represents a deliberate decision to build systems that can be inspected, measured, and trusted."
+            />
+            <div className="mt-16 relative">
+              <div className="absolute inset-y-0 left-3.5rem w-px bg-line/50" aria-hidden="true" />
+              <div className="space-y-12">
+                {[
+                  {
+                    date: "2025–2026",
+                    title: "Independent Engineering",
+                    body: "Building CN2.DEV — a production-grade portfolio platform with 95+ static routes, 305/305 automated QA assertions, and verified credentials. Designed as a digital headquarters where every claim is backed by inspectable artifacts.",
+                    status: "PRODUCTION · LIVE SITE",
+                  },
+                  {
+                    date: "2026",
+                    title: "Harvard CS50x",
+                    body: "Completed CS50x: Introduction to Computer Science and CS50AI: Introduction to Artificial Intelligence with Python — twelve applied AI projects, each assessed against defined rubrics, with independently verifiable certificates.",
+                    status: "VERIFIED · HARVARD",
+                  },
+                  {
+                    date: "2026",
+                    title: "CMU 15-445/645 — BusTub",
+                    body: "Engineered a disk-backed, multi-threaded relational database engine in C++20. All 56 test suites passed across four milestones with AddressSanitizer and UndefinedBehaviorSanitizer verification — zero leaks, zero errors, zero races.",
+                    status: "100% VERIFIED · 56/56",
+                  },
+                  {
+                    date: "2026",
+                    title: "Quantitative Systems Research",
+                    body: "Published seven research entries covering lookahead bias, backtest overfitting, exact decimal arithmetic, risk-first position sizing, multi-timeframe alignment, regime dependence, and deterministic tie-breaking — each with stated methods, findings, and limitations.",
+                    status: "DOCUMENTED · VERIFIED",
+                  },
+                  {
+                    date: "2026",
+                    title: "Context Engineering Labs",
+                    body: "Six agent-stack implementations in one repository — Agent Skills, MCP, Plugins, Subagents, Hooks, and Nano Harness — with 72 test cases reproduced from a fresh clone. Per-unit documentation states where each unit stops matching its own claims.",
+                    status: "72/72 TESTS REPRODUCED",
+                  },
+                  {
+                    date: "2026",
+                    title: "Market-Data Infrastructure",
+                    body: "Built quant-market-data-replay — a point-in-time safe ingestion pipeline with exact decimal arithmetic, nanosecond timestamps, deterministic replay, and adversarial lookahead-bias tests. 70-test suite passes CI on Python 3.10–3.12.",
+                    status: "RELEASED",
+                  },
+                ].map((item, i) => (
+                  <div key={i} className="relative">
+                    <div className="absolute -left-[1.75rem] top-0 w-1rem h-1rem border border-signal bg-signal rounded-full z-10" />
+                    <div className="mb-4">
+                      <span className="label-mono text-signal">{item.date}</span>
+                    </div>
+                    <h3 className="display text-xl mb-1">{item.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted">{item.body}</p>
+                    <span className={`label-mono border px-2.5 py-1 text-[9px] ${
+                      item.status.includes("VERIFIED") || item.status.includes("PRODUCTION")
+                        ? "border-signal text-signal"
+                        : "border-research text-research"
+                    }`}>
+                      {item.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---- 08 · WHAT I&apos;VE BUILT ------------------------------- */}
+        <section id="projects-showcase" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              eyebrow="WHAT I&apos;VE BUILT"
+              lines={["IDEAS ARE EASY TO DESCRIBE.", "ENGINEERING IS DEMONSTRATED THROUGH WHAT GETS BUILT."]}
+              support="Completed projects deserve proper showcase space. Each entry below represents real engineering work with inspectable evidence — repositories, test suites, research entries, and verified credentials."
+            />
+            <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {getAllWorks()
+                .filter((w) => ["bustub-engine", "apex-quant-engine", "qrsip", "market-data-replay", "automated-trading-os", "billing-data-gateway", "context-engineering-labs", "stratlab"].includes(w.id))
+                .map((project) => (
+                  <article key={project.id} className="border border-line bg-surface p-6 md:p-8 transition-colors hover:border-signal/50">
+                    <div className="flex items-baseline justify-between gap-2 mb-3">
+                      <span className={`label-mono text-[9px] border px-2 py-0.5 ${
+                        project.workCategory === "projects" ? "border-signal text-signal" : "border-research text-research"
+                      }`}>
+                        {project.workCategory === "projects" ? "PROJECT" : "PRODUCT"}
+                      </span>
+                      <span className={`label-mono text-[9px] border px-2 py-0.5 ${
+                        project.status.includes("VERIFIED") || project.status.includes("PRODUCTION") || project.status.includes("RELEASED")
+                          ? "border-signal text-signal"
+                          : "border-line text-muted"
+                      }`}>
+                        {project.status.split(" · ")[0]}
+                      </span>
+                    </div>
+                    <h3 className="font-mono text-base font-bold text-foreground mb-2">{project.shortTitle}</h3>
+                    <p className="text-sm leading-relaxed text-muted mb-4">{project.summary}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.technologies.slice(0, 4).map((t) => (
+                        <span key={t} className="px-2 py-0.5 text-[9px] label-mono border border-line bg-background rounded">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <Link
+                      href={`/works/${project.id}`}
+                      className="label-mono inline-flex items-center gap-1 text-[10px] text-signal hover:text-white transition-colors"
+                    >
+                      OPEN PROJECT →
+                    </Link>
+                  </article>
+                ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---- 09 · PROFESSIONAL PROFILE ------------------------------- */}
+        <section id="professional-profile" className="scroll-mt-20 border-t border-line/60 bg-background/80 backdrop-blur-md">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
+            <ChapterHead
+              eyebrow="PROFESSIONAL PROFILE"
+              lines={["UNDERSTAND HOW I THINK.", "EXPLORE WHAT I&apos;VE BUILT.", "DISCOVER WHAT I CAN CONTRIBUTE."]}
+              support="The About page tells the story. The CV proves the engineering work. The résumé communicates professional relevance. Two destinations — choose the one that matches what you need."
+            />
+            <div className="mt-16 grid gap-4 md:grid-cols-2">
+              <article className="border border-line bg-surface p-8 md:p-10 transition-colors hover:border-signal/50 group">
+                <span className="label-mono text-signal text-[10px] mb-3 block">01 · CV</span>
+                <h2 className="display text-2xl md:text-3xl font-bold text-foreground mb-3">Engineering Dossier</h2>
+                <p className="text-sm leading-relaxed text-muted mb-6 max-w-28">
+                  A comprehensive record of the systems I&apos;ve designed, developed, researched and validated. Projects, metrics, certifications, education — every claim backed by inspectable artifacts.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-signal shrink-0">▸</span> 9 flagship and supporting projects
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-signal shrink-0">▸</span> 7 verified research entries
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-signal shrink-0">▸</span> 10 verified credentials
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-signal shrink-0">▸</span> Printable PDF export
+                  </li>
+                </ul>
+                <Link
+                  href="/cv"
+                  className="label-mono border border-signal bg-signal/10 px-5 py-3 text-[10px] text-signal transition-colors duration-300 hover:bg-signal hover:text-white"
+                >
+                  EXPLORE MY CV →
+                </Link>
+              </article>
+              <article className="border border-line bg-surface p-8 md:p-10 transition-colors hover:border-signal/50 group">
+                <span className="label-mono text-research text-[10px] mb-3 block">02 · RÉSUMÉ</span>
+                <h2 className="display text-2xl md:text-3xl font-bold text-foreground mb-3">Career Opportunity</h2>
+                <p className="text-sm leading-relaxed text-muted mb-6 max-w-28">
+                  Targeted professional presentations aligned to specific roles: Systems Engineer, Quantitative Developer, AI Engineer. Each résumé prioritizes the skills, projects and achievements most relevant to the role.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-research shrink-0">▸</span> Systems / Backend Engineer
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-research shrink-0">▸</span> Quantitative Developer
+                  </li>
+                  <li className="flex items-start gap-2 text-sm text-muted">
+                    <span className="text-research shrink-0">▸</span> AI Engineer
+                  </li>
+                </ul>
+                <Link
+                  href="/resume"
+                  className="label-mono border border-research bg-research/10 px-5 py-3 text-[10px] text-research transition-colors duration-300 hover:bg-research hover:text-white"
+                >
+                  EXPLORE MY RÉSUMÉ →
+                </Link>
+              </article>
+            </div>
+          </div>
+        </section>
+
         {/* ---- 07 · THE LONG-TERM DIRECTION ----------------------------- */}
         <section id="vision" className="scroll-mt-20 border-t border-line/60 bg-surface/75 backdrop-blur-md">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28">
             <ChapterHead
-              eyebrow="THE LONG-TERM DIRECTION"
+              eyebrow="LONG-TERM DIRECTION"
               lines={["FROM INDIVIDUAL TOOLS", "TO INTEGRATED INTELLIGENT SYSTEMS."]}
               support="My long-term direction is to develop the knowledge and practical capability to build increasingly sophisticated systems that connect data, computation, decision-making, and automation — moving beyond isolated technologies toward complete, useful solutions."
             />
