@@ -1508,7 +1508,10 @@ export const openVerseItem: ComprehensiveWorkItem = {
   caseStudiesList: [],
   evidenceAndResults: ["Personal AI assistant and unified workspace under active development."],
   screenshotsAndVisuals: [],
-  linksList: [{ label: "GITHUB REPOSITORY", href: "https://github.com/naresh-cn2/OPEN-VERSE", type: "github" }],
+  linksList: [
+    { label: "VISIT OPEN-VERSE", href: "https://open-verse-website.vercel.app", type: "live" },
+    { label: "GITHUB REPOSITORY", href: "https://github.com/naresh-cn2/OPEN-VERSE", type: "github" },
+  ],
   detail: {
     problem: ["Personal AI assistants should not be commercial products with associated pressure."],
     approach: ["Build a personal AI assistant as a unified workspace, not a product."],

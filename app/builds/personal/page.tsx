@@ -68,6 +68,7 @@ export default function PersonalPage() {
             evidenceLabel="LIVE SITE · QA 301/301"
             repoUrl="https://github.com/naresh-cn2/cn2-identity-hub"
             caseStudyUrl="/works/cn2-identity-hub"
+            liveUrl="https://cn2.is-a.dev"
           />
           <PersonalBuildCard
             name="OPEN-VERSE"
@@ -78,6 +79,7 @@ export default function PersonalPage() {
             evidenceLabel="ACTIVE DEVELOPMENT"
             repoUrl="https://github.com/naresh-cn2/OPEN-VERSE"
             caseStudyUrl="/works/open-verse"
+            liveUrl="https://open-verse-website.vercel.app"
           />
         </section>
       </main>

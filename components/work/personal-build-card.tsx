@@ -7,6 +7,7 @@ export interface PersonalBuildCardProps {
   evidenceLabel: string;
   repoUrl: string;
   caseStudyUrl?: string;
+  liveUrl?: string;
 }
 
 export default function PersonalBuildCard({
@@ -18,6 +19,7 @@ export default function PersonalBuildCard({
   evidenceLabel,
   repoUrl,
   caseStudyUrl,
+  liveUrl,
 }: PersonalBuildCardProps) {
   return (
     <article className="relative group border border-line bg-surface/30 rounded-xl p-6 md:p-8 transition-colors hover:border-cyan-500/50 hover:bg-surface/50">
@@ -40,6 +42,19 @@ export default function PersonalBuildCard({
       <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-line">
         <span className="label-mono text-xs text-faint">{evidenceLabel}</span>
         <div className="flex items-center gap-3">
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="corner-ticks group inline-flex items-center gap-2 text-sm label-mono text-cyan-500 dark:text-cyan-400 transition-colors hover:text-white"
+            >
+              <span>LIVE SITE</span>
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </a>
+          )}
           <a
             href={repoUrl}
             target="_blank"

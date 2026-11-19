@@ -26,6 +26,7 @@ function ProductEntry({
   evidenceLabel,
   repoUrl,
   caseStudyUrl,
+  liveUrl,
   category = "PRODUCT",
 }: {
   name: string;
@@ -36,6 +37,7 @@ function ProductEntry({
   evidenceLabel: string;
   repoUrl: string;
   caseStudyUrl?: string;
+  liveUrl?: string;
   category?: string;
 }) {
   return (
@@ -59,6 +61,17 @@ function ProductEntry({
       <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-line">
         <span className="label-mono text-xs text-faint">{evidenceLabel}</span>
         <div className="flex items-center gap-2">
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="corner-ticks group inline-flex items-center gap-2 text-sm label-mono text-muted transition-colors hover:text-signal"
+            >
+              <span>LIVE SITE</span>
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          )}
           {caseStudyUrl && (
             <a
               href={caseStudyUrl}
@@ -119,10 +132,22 @@ export default function ProductsPage() {
               PRODUCTS & PLATFORMS
             </h2>
             <p className="mt-2 label-mono text-xs text-faint">
-              9 PRODUCTS · VERIFIED ARCHITECTURES
+              10 PRODUCTS · VERIFIED ARCHITECTURES
             </p>
           </header>
 
+          <ProductEntry
+            name="STRATA-ENGINE"
+            tagline="Autonomous multi-market quantitative trading engine"
+            description="Institutional-grade algorithmic strategy engine and real-time risk platform with deterministic execution routing, pre-trade margin governors, and high-frequency order book tracking across multiple asset classes. Private repository — source not published."
+            tech={["Rust", "C++20", "Python 3.12", "WebSocket", "ZeroMQ", "Docker", "POSIX Shared Memory"]}
+            status="UNPUBLISHED · NO BENCHMARK RELEASED"
+            evidenceLabel="NO PUBLISHED BENCHMARK · WORKSAMPLE"
+            repoUrl="https://strata-engine.duckdns.org"
+            liveUrl="https://strata-engine.duckdns.org"
+            caseStudyUrl="/works/strata-engine"
+            category="PRODUCT"
+          />
           <ProductEntry
             name="BILLING DATA GATEWAY"
             tagline="High-throughput C11 billing ingestion & validation engine"
