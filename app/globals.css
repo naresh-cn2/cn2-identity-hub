@@ -508,7 +508,126 @@ body {
     font-size: 9px;
     color: #555;
   }
+
+  /* ---------------- CV-specific print styles ---------------- */
+  /* Print the CV as a clean black-on-white engineering dossier */
+
+  .cv-print-only {
+    display: block !important;
+  }
+
+  .cv-screen-only {
+    display: none !important;
+  }
+
+  /* Hide navigation and interactive elements in print */
+  .cv-nav, .scroll-progress, .cv-download-btn, .cv-scroll-indicator {
+    display: none !important;
+  }
+
+  /* Chapter sections break cleanly across pages */
+  section[id^="hero"],
+  section[id^="executive-summary"],
+  section[id^="professional-architecture"],
+  section[id^="core-capabilities"],
+  section[id^="technical-skills"],
+  section[id^="education"],
+  section[id^="certifications"],
+  section[id^="engineering-experience"],
+  section[id^="flagship-projects"],
+  section[id^="supporting-projects"],
+  section[id^="research"],
+  section[id^="achievements"],
+  section[id^="professional-direction"],
+  section[id^="contact-download"] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  /* Chapter headings */
+  .display {
+    color: #000 !important;
+    font-size: 1.875rem !important;
+    line-height: 1.2 !important;
+    text-transform: uppercase !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .label-mono {
+    color: #333 !important;
+  }
+
+  .text-foreground, .text-white {
+    color: #000 !important;
+  }
+
+  .text-muted, .text-faint {
+    color: #555 !important;
+  }
+
+  .bg-surface, .bg-background {
+    background: #fff !important;
+  }
+
+  .border-line, .border {
+    border-color: #ccc !important;
+  }
+
+  .text-signal, .text-research, .text-electric {
+    color: #b91c1c !important;
+  }
+
+  .bg-signal {
+    background: #f8f8f8 !important;
+  }
+
+  .bg-research {
+    background: #f0f4ff !important;
+  }
+
+  .bg-electric {
+    background: #f0f8ff !important;
+  }
+
+  /* Link URLs print inline */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  a[href^="/"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 2cm 2cm 2cm 2cm;
+    @bottom-center {
+      content: "CN2.DEV — Engineering Dossier — Page " counter(page) " of " counter(pages);
+      font-size: 8px;
+      color: #666;
+      font-family: ui-monospace, SF Mono, monospace;
+    }
+    @top-center {
+      content: "BUKYA NARESH — QUANTITATIVE DEVELOPER";
+      font-size: 8px;
+      color: #666;
+      font-family: ui-monospace, SF Mono, monospace;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+  }
 }
+
+/* Set document title for PDF filename */
 
 /* ---------------- CN2.DEV custom SVG wordmark ----------------
    Hand-built vector letterforms with a static horizontal cut.
