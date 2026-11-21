@@ -970,6 +970,124 @@
   }
 }
 
+/* ---------- light theme (driven by the site's existing sun/moon toggle) ---------- */
+
+html:not(.dark) .cv-experience {
+  --cv-red: #c81e1e;
+  --cv-red-deep: #9f1239;
+  --cv-blue: #1d4ed8;
+  --cv-cyan: #0e7490;
+  --cv-ink: #0f172a;
+  --cv-muted: #475569;
+  --cv-dim: #64748b;
+  --cv-bg: #f5f7fb;
+  --cv-panel: rgba(255, 255, 255, 0.9);
+  --cv-edge: rgba(15, 23, 42, 0.14);
+}
+
+html:not(.dark) .cv-rail {
+  border-right-color: var(--cv-edge);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(238, 243, 250, 0.97));
+}
+
+html:not(.dark) .cv-rail-head,
+html:not(.dark) .cv-rail-foot { border-color: var(--cv-edge); }
+
+html:not(.dark) .cv-rail-item:hover { background: rgba(29, 78, 216, 0.07); }
+
+html:not(.dark) .cv-rail-item[data-active="true"] {
+  background: linear-gradient(90deg, rgba(200, 30, 30, 0.11), transparent 78%);
+  border-color: rgba(200, 30, 30, 0.28);
+}
+
+html:not(.dark) .cv-rail-progress,
+html:not(.dark) .cv-meter { background: rgba(15, 23, 42, 0.12); }
+
+html:not(.dark) .cv-top-progress { background: rgba(15, 23, 42, 0.08); }
+
+html:not(.dark) .cv-mobile-bar { background: rgba(255, 255, 255, 0.94); }
+html:not(.dark) .cv-menu-button { background: rgba(29, 78, 216, 0.05); }
+html:not(.dark) .cv-drawer { background: rgba(248, 250, 253, 0.98); }
+
+html:not(.dark) .cv-scene { border-bottom-color: var(--cv-edge); }
+
+html:not(.dark) .cv-scene::before {
+  background:
+    radial-gradient(60% 50% at 78% 32%, rgba(29, 78, 216, 0.11), transparent 70%),
+    radial-gradient(45% 40% at 12% 88%, rgba(200, 30, 30, 0.07), transparent 72%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f8 100%);
+}
+
+html:not(.dark) .cv-scene[data-tone="research"]::before {
+  background:
+    radial-gradient(65% 55% at 78% 30%, rgba(29, 78, 216, 0.13), transparent 70%),
+    radial-gradient(40% 35% at 15% 85%, rgba(14, 116, 144, 0.08), transparent 72%),
+    linear-gradient(180deg, #f7f9fd 0%, #eaf0f8 100%);
+}
+
+html:not(.dark) .cv-grid {
+  opacity: 0.38;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.09) 1px, transparent 1px);
+}
+
+html:not(.dark) .cv-panel:hover { border-color: rgba(29, 78, 216, 0.45); }
+
+html:not(.dark) .cv-pill { background: rgba(29, 78, 216, 0.06); }
+html:not(.dark) .cv-pill[data-tone="red"] {
+  border-color: rgba(200, 30, 30, 0.35);
+  background: rgba(200, 30, 30, 0.06);
+}
+
+html:not(.dark) .cv-status[data-tone="green"] { color: #0f8a5f; }
+
+html:not(.dark) .cv-action:hover { color: #fff; }
+
+html:not(.dark) .cv-node {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(29, 78, 216, 0.45);
+}
+html:not(.dark) .cv-node[data-tone="red"] {
+  color: #9f1239;
+  border-color: rgba(200, 30, 30, 0.5);
+}
+
+html:not(.dark) .cv-portrait-frame {
+  border-color: rgba(29, 78, 216, 0.42);
+  background: linear-gradient(160deg, rgba(29, 78, 216, 0.12), rgba(226, 232, 240, 0.9));
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+}
+html:not(.dark) .cv-portrait-frame::after {
+  background: linear-gradient(180deg, transparent 58%, rgba(15, 23, 42, 0.55) 100%);
+}
+
+html:not(.dark) .cv-hex {
+  background: linear-gradient(150deg, rgba(29, 78, 216, 0.15), rgba(255, 255, 255, 0.92) 58%);
+}
+html:not(.dark) .cv-hex:hover {
+  background: linear-gradient(150deg, rgba(200, 30, 30, 0.16), rgba(255, 255, 255, 0.94) 62%);
+}
+
+html:not(.dark) .cv-pdf {
+  border-color: rgba(29, 78, 216, 0.45);
+  background: linear-gradient(155deg, rgba(29, 78, 216, 0.2), rgba(255, 255, 255, 0.92));
+  box-shadow: 18px 18px 0 -8px rgba(15, 23, 42, 0.14), 0 0 30px rgba(29, 78, 216, 0.18);
+}
+
+html:not(.dark) .cv-globe-sphere {
+  border-color: rgba(29, 78, 216, 0.45);
+  background:
+    radial-gradient(circle at 38% 32%, rgba(29, 78, 216, 0.12), transparent 55%),
+    radial-gradient(circle at 52% 88%, rgba(200, 30, 30, 0.1), transparent 58%);
+  box-shadow: inset 0 0 50px rgba(29, 78, 216, 0.12), 0 0 50px rgba(29, 78, 216, 0.1);
+}
+html:not(.dark) .cv-globe-sphere::before,
+html:not(.dark) .cv-globe-sphere::after,
+html:not(.dark) .cv-globe-lat { border-color: rgba(29, 78, 216, 0.35); }
+html:not(.dark) .cv-orbit { border-color: rgba(29, 78, 216, 0.35); }
+html:not(.dark) .cv-orbit[data-tone="red"] { border-color: rgba(200, 30, 30, 0.38); }
+
 @media print {
   @page cv {
     @bottom-center {
