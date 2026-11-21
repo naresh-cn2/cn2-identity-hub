@@ -1,30 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import Link from "next/link";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { CvGrid, CvHorizon, CvParticles } from "@/components/cv/cv-visuals";
 
 export interface CvChapter {
   id: string;
-  label: string;
   number: string;
-  title: string;
+  label: string;
 }
 
+/** Stable IDs — anchors, links and the scroll-spy depend on these. */
 export const CV_CHAPTERS: CvChapter[] = [
-  { id: "hero", number: "01", label: "Professional Identity", title: "Professional Identity" },
-  { id: "executive-summary", number: "02", label: "Executive Summary", title: "Executive Summary" },
-  { id: "professional-architecture", number: "03", label: "Professional Architecture", title: "Professional Architecture" },
-  { id: "core-capabilities", number: "04", label: "Core Capabilities", title: "Core Capabilities" },
-  { id: "technical-skills", number: "05", label: "Technical Skills", title: "Technical Skills" },
-  { id: "education", number: "06", label: "Education", title: "Education" },
-  { id: "certifications", number: "07", label: "Certifications & Credentials", title: "Certifications & Credentials" },
-  { id: "engineering-experience", number: "08", label: "Engineering Experience", title: "Engineering Experience" },
-  { id: "flagship-projects", number: "09", label: "Flagship Projects", title: "Flagship Projects" },
-  { id: "supporting-projects", number: "10", label: "Supporting Projects & Builds", title: "Supporting Projects" },
-  { id: "research", number: "11", label: "Research & Experiments", title: "Research & Experiments" },
-  { id: "achievements", number: "12", label: "Achievements & Engineering Evidence", title: "Achievements & Engineering Evidence" },
-  { id: "professional-direction", number: "13", label: "Professional Direction", title: "Professional Direction" },
-  { id: "contact-download", number: "14", label: "Contact & CV Download", title: "Contact & Download" },
+  { id: "hero", number: "01", label: "Identity" },
+  { id: "executive-summary", number: "02", label: "Executive" },
+  { id: "professional-architecture", number: "03", label: "Architecture" },
+  { id: "core-capabilities", number: "04", label: "Capabilities" },
+  { id: "technical-skills", number: "05", label: "Toolkit" },
+  { id: "education", number: "06", label: "Education" },
+  { id: "certifications", number: "07", label: "Certifications" },
+  { id: "engineering-experience", number: "08", label: "Experience" },
+  { id: "flagship-projects", number: "09", label: "Projects" },
+  { id: "supporting-projects", number: "10", label: "Portfolio" },
+  { id: "research", number: "11", label: "Research" },
+  { id: "achievements", number: "12", label: "Evidence" },
+  { id: "professional-direction", number: "13", label: "Focus" },
+  { id: "contact-download", number: "14", label: "Contact" },
 ];
 
 interface CvLayoutProps {
@@ -33,175 +33,158 @@ interface CvLayoutProps {
 }
 
 export function CvLayout({ children, className }: CvLayoutProps) {
-  const [activeChapter, setActiveChapter] = useState<string>("hero");
-  const [isNavOpen, setIsNavOpen] = useState(false);
-  const navRef = useRef<HTMLDivElement>(null);
-  const scrollY = useRef(0);
+  const [active, setActive] = useState("hero");
+  const [progress, setProgress] = useState(0);
+  const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      scrollY.current = window.scrollY;
+    let last = 0;
+    const update = () => {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      setProgress(Math.min(100, Math.round((window.scrollY / max) * 100)));
+
+      const marker = window.innerHeight * 0.38;
+      let current = CV_CHAPTERS[0].id;
+      for (const chapter of CV_CHAPTERS) {
+        const el = document.getElementById(chapter.id);
+        if (el && el.getBoundingClientRect().top <= marker) current = chapter.id;
+      }
+      setActive(current);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      const now = performance.now();
+      if (now - last < 60) return;
+      last = now;
+      update();
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
-  const scrollToChapter = (id: string) => {
-    setActiveChapter(id);
-    setIsNavOpen(false);
+  const goTo = useCallback((id: string) => {
+    setActive(id);
+    setDrawer(false);
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const before = window.scrollY;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Some embedded/headless browsers do not run smooth scrolling or rAF at
+    // all — guarantee the chapter is reached even in those environments.
+    window.setTimeout(() => {
+      if (Math.abs(window.scrollY - before) < 2) {
+        window.scrollTo({ top, behavior: "instant" });
+      }
+    }, 200);
+  }, []);
+
+  const railItems = (inDrawer: boolean) =>
+    CV_CHAPTERS.map((chapter) => (
+      <button
+        key={chapter.id}
+        type="button"
+        className={inDrawer ? "cv-drawer-row" : "cv-rail-item"}
+        data-active={active === chapter.id ? "true" : undefined}
+        aria-current={active === chapter.id ? "step" : undefined}
+        onClick={() => goTo(chapter.id)}
+      >
+        {inDrawer ? (
+          <><span>{chapter.label}</span><span className="cv-rail-num">{chapter.number}</span></>
+        ) : (
+          <><span className="cv-rail-num">{chapter.number}</span><span>{chapter.label}</span></>
+        )}
+      </button>
+    ));
 
   return (
-    <div className={`${className ?? ""} relative min-h-screen w-full bg-background`}>
-      {/* Persistent chapter navigation (desktop) */}
-      <nav
-        ref={navRef}
-        className="hidden lg:flex lg:flex-col lg:w-[260px] lg:fixed lg:top-[8rem] lg:bottom-0 lg:z-40 lg:px-6 lg:pb-24 border-r border-line bg-surface/90 backdrop-blur-md"
-        aria-label="CV chapter navigation"
-      >
-        <div className="flex flex-col gap-1">
-          {CV_CHAPTERS.map((chapter) => (
-            <button
-              key={chapter.id}
-              onClick={() => scrollToChapter(chapter.id)}
-              className={`group flex items-start gap-1 px-4 py-3 border-r-2 border-transparent rounded-r-lg text-xs font-mono uppercase tracking-widest transition-all duration-200 ${
-                activeChapter === chapter.id
-                  ? "bg-signal/10 text-signal border-signal/50"
-                  : "text-faint hover:text-signal hover:bg-signal/5"
-              }`}
-            >
-              <span className="text-[9px] text-faint group-hover:text-signal">{chapter.number}</span>
-              <span className="text-[10px] font-semibold leading-tight">{chapter.label}</span>
-            </button>
-          ))}
+    <div className={`cv-experience ${className ?? ""}`}>
+      <div className="cv-top-progress" aria-hidden="true"><i style={{ width: `${progress}%` }} /></div>
+
+      <nav className="cv-rail" aria-label="CV chapter navigation">
+        <div className="cv-rail-head">
+          <span className="cv-rail-brand">CN2<span>.</span>DEV</span>
+          <span className="cv-rail-count">CV / 14</span>
+        </div>
+        <div className="cv-rail-list">{railItems(false)}</div>
+        <div className="cv-rail-foot">
+          <div className="cv-rail-progress"><i style={{ width: `${progress}%` }} /></div>
+          <div className="cv-rail-meta"><span>READING</span><span>{progress}%</span></div>
         </div>
       </nav>
 
-      {/* Mobile nav trigger */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
+      <div className="cv-mobile-bar lg:hidden">
+        <span className="cv-rail-brand">CN2<span>.</span>DEV</span>
         <button
-          onClick={() => setIsNavOpen(!isNavOpen)}
-          className="flex items-center gap-2 border border-line bg-surface px-3 py-2 text-[10px] font-mono text-faint transition-colors hover:text-signal hover:border-signal"
+          type="button"
+          className="cv-menu-button"
+          aria-expanded={drawer}
+          aria-controls="cv-drawer"
+          onClick={() => setDrawer((v) => !v)}
         >
-          <span>MENU</span>
-          <span className={`w-4 h-[1px] bg-current transition-all duration-300 ${
-            isNavOpen ? "rotate-90" : ""
-          }`} />
+          {drawer ? "CLOSE" : "CHAPTERS"}
         </button>
       </div>
 
-      {/* Mobile nav overlay */}
-      {isNavOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-surface/95 backdrop-blur">
-          <div className="absolute top-4 right-4">
-            <button
-              onClick={() => setIsNavOpen(false)}
-              className="border border-line bg-surface px-3 py-2 text-[10px] font-mono text-faint transition-colors hover:text-signal"
-            >
-              CLOSE
-            </button>
-          </div>
-          <div className="p-6 space-y-2">
-            {CV_CHAPTERS.map((chapter) => (
-              <button
-                key={chapter.id}
-                onClick={() => scrollToChapter(chapter.id)}
-                className={`flex items-center justify-between gap-2 px-4 py-3 border-b border-line text-xs font-mono uppercase tracking-widest transition-colors ${
-                  activeChapter === chapter.id
-                    ? "bg-signal/10 text-signal border-signal"
-                    : "text-faint hover:text-signal hover:bg-signal/5"
-                }`}
-              >
-                <span>{chapter.number}</span>
-                <span>{chapter.label}</span>
-              </button>
-            ))}
-          </div>
+      {drawer ? (
+        <div className="cv-drawer lg:hidden" id="cv-drawer" role="dialog" aria-modal="true" aria-label="CV chapters">
+          {railItems(true)}
         </div>
-      )}
+      ) : null}
 
-      {/* Main content area */}
-      <main className="relative lg:ml-[280px] min-h-screen">
-        {children}
-      </main>
-
-      {/* Scroll progress indicator */}
-      <div
-        className="cv-scroll-indicator fixed top-0 left-0 lg:ml-[280px] h-1 bg-signal/20 z-30"
-      >
-        <div
-          className="h-full bg-signal transition-all duration-100"
-          style={{
-            width: `${typeof document !== "undefined" ? Math.min((scrollY.current / Math.max(1, document.body.scrollHeight - window.innerHeight)) * 100, 100) : 0}%`,
-          }}
-        />
-      </div>
+      <main className="cv-main">{children}</main>
     </div>
   );
 }
 
-/**
- * Chapter section wrapper - editorial layout, no cards.
- */
 interface CvChapterSectionProps {
   id: string;
   number: string;
-  title: string;
-  subtitle?: string;
-  support?: string;
-  accent?: "signal" | "research" | "electric";
-  className?: string;
+  title: ReactNode;
+  kicker?: string;
+  lead?: string;
+  visual?: ReactNode;
   children: ReactNode;
+  tone?: "signal" | "research" | "electric";
+  className?: string;
 }
 
+/** A full-height chapter scene: numbered header, content column, optional live visual, horizon. */
 export function CvChapterSection({
   id,
   number,
   title,
-  subtitle,
-  support,
-  accent = "signal",
-  className,
+  kicker,
+  lead,
+  visual,
   children,
+  tone = "signal",
+  className,
 }: CvChapterSectionProps) {
-  const accentCls =
-    accent === "signal"
-      ? "border-signal text-signal"
-      : accent === "research"
-        ? "border-research text-research"
-        : "border-electric text-electric";
-
   return (
-    <section
-      id={id}
-      className={`relative border-t border-line/60 bg-surface/80 backdrop-blur-md ${className ?? ""}`}
-    >
-      <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:py-28 lg:px-12">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-12">
-          <div className="flex flex-col gap-1">
-            <span className={`label-mono text-[10px] ${accentCls}`}>{number}</span>
-            <h2 className="display mt-2 text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.04] text-foreground">
-              {title}
-            </h2>
-            {subtitle && <p className="label-mono mt-2 text-[10px] text-faint">{subtitle}</p>}
-          </div>
-          {support && (
-            <p className="max-w-xl text-base leading-relaxed text-muted">{support}</p>
-          )}
-        </div>
-        <div className="mt-8">{children}</div>
+    <section id={id} className={`cv-scene ${className ?? ""}`} data-tone={tone}>
+      <CvGrid />
+      <CvParticles />
+      <header className="cv-scene-head">
+        <span className="cv-scene-kicker">{kicker ?? `CHAPTER ${number}`}</span>
+        <h2 className="cv-scene-title">
+          <em>{number}</em> <span aria-hidden="true">/</span> {title}
+        </h2>
+        {lead ? <p className="cv-scene-lead">{lead}</p> : null}
+      </header>
+      <div className={`cv-scene-body ${visual ? "has-visual" : ""}`}>
+        <div className="cv-scene-content">{children}</div>
+        {visual ? <div className="cv-scene-visual">{visual}</div> : null}
       </div>
+      <CvHorizon />
     </section>
   );
 }
 
-/**
- * Metric display card - prominent number with provenance label.
- */
 interface CvMetricProps {
   value: string;
   label: string;
@@ -211,51 +194,24 @@ interface CvMetricProps {
 
 export function CvMetric({ value, label, context, provenance }: CvMetricProps) {
   return (
-    <div className="border border-line bg-surface p-5 md:p-6 transition-colors hover:border-signal/50">
-      <p className="num-mono font-semibold leading-none text-[clamp(1.8rem,3.5vw,2.8rem)] text-foreground">
-        {value}
-      </p>
-      <p className="label-mono mt-4 text-[10px] text-foreground">{label}</p>
-      {context && (
-        <p className="label-mono mt-1 text-[9px] text-faint">{context}</p>
-      )}
-      {provenance && (
-        <p className="label-mono mt-3 text-[9px] text-muted leading-relaxed">{provenance}</p>
-      )}
+    <div className="cv-panel" style={{ padding: 22 }}>
+      <p className="num-mono" style={{ fontSize: "clamp(1.6rem,3vw,2.4rem)", lineHeight: 1, color: "var(--cv-red)" }}>{value}</p>
+      <p className="cv-label" style={{ marginTop: 16, color: "var(--cv-ink)" }}>{label}</p>
+      {context ? <p style={{ marginTop: 6, fontSize: 12, color: "var(--cv-muted)" }}>{context}</p> : null}
+      {provenance ? <p className="cv-label" style={{ marginTop: 14, fontSize: 9, lineHeight: 1.5 }}>{provenance}</p> : null}
     </div>
   );
 }
 
-/**
- * Evidence badge - shows verification level.
- */
-interface CvEvidenceBadgeProps {
-  level: string;
+export function CvEvidenceBadge({ level }: { level: string }) {
+  const tone = /VERIFIED|PRODUCTION|COMPLETED|DEMONSTRATED/i.test(level)
+    ? "green"
+    : /ACTIVE|ONGOING|DEVELOPMENT|RESEARCH/i.test(level)
+      ? "red"
+      : undefined;
+  return <span className="cv-status" data-tone={tone}>{level}</span>;
 }
 
-export function CvEvidenceBadge({ level }: CvEvidenceBadgeProps) {
-  const upper = level.toUpperCase();
-  const variants: Record<string, string> = {
-    VERIFIED: "border-signal text-signal",
-    DOCUMENTED: "border-research text-research",
-    "SELF-REPORTED": "border-electric text-electric",
-    UNVERIFIED: "border-faint text-faint",
-    "IN ACTIVE DEVELOPMENT": "border-research text-research",
-    DEMONSTRATED: "border-signal text-signal",
-    "RESEARCH DIRECTION": "border-research text-research",
-    ONGOING: "border-electric text-electric",
-    PRODUCTION: "border-signal text-signal",
-  };
-  return (
-    <span className={`label-mono border px-2.5 py-1 text-[9px] ${variants[upper] ?? "border-faint text-faint"}`}>
-      {level}
-    </span>
-  );
-}
-
-/**
- * Link list - external/internal links with arrow.
- */
 interface CvLinkItem {
   label: string;
   href: string;
@@ -264,17 +220,16 @@ interface CvLinkItem {
 
 export function CvLinkList({ links }: { links: CvLinkItem[] }) {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 18px" }}>
       {links.map((link) => (
         <a
           key={link.href}
           href={link.href}
           target={link.external ? "_blank" : undefined}
           rel={link.external ? "noopener noreferrer" : undefined}
-          className="label-mono inline-flex items-center gap-1.5 text-[10px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
+          className="cv-link"
         >
-          {link.label}
-          {link.external && <span aria-hidden="true">↗</span>}
+          {link.label} {link.external ? "↗" : "→"}
         </a>
       ))}
     </div>

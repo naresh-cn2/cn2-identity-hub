@@ -1,123 +1,114 @@
 "use client";
 
-import Link from "next/link";
-import Reveal from "@/components/ui/reveal";
 import { site } from "@/data/site";
-import { CvChapterSection } from "@/components/cv/cv-layout";
+import { CvChapterSection, CvLinkList } from "@/components/cv/cv-layout";
 
 /**
- * Chapter 14 — Contact & CV Download
- * Closing experience with contact links and downloadable PDF.
+ * Chapter 14 — Contact
+ * Deliberate conclusion: direct channels and a print-ready document.
  */
 
+const links: { label: string; href: string; external?: boolean }[] = [
+  { label: "EMAIL", href: site.links.email },
+  { label: "GITHUB", href: site.links.github, external: true },
+  { label: "LINKEDIN", href: site.links.linkedin, external: true },
+  { label: "CONTRA", href: site.links.contra, external: true },
+  { label: "ORCID", href: site.links.orcid, external: true },
+];
+
 export function CvContactDownload() {
+  const permanentUrl = `${site.url}/cv`;
+
   return (
     <CvChapterSection
       id="contact-download"
       number="14"
-      title="Contact & CV Download"
-      subtitle="Take the engineering dossier with you"
-      accent="signal"
+      title="Contact"
+      lead="The evidence is on the record. If the work is relevant, the next step is a direct conversation."
+      tone="signal"
+      visual={
+        <div style={{ position: "relative", display: "grid", placeItems: "center", minHeight: 400, isolation: "isolate" }}>
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              width: "min(78%, 420px)",
+              aspectRatio: "1",
+              borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(255,48,48,0.22), rgba(27,77,201,0.12) 45%, transparent 70%)",
+              filter: "blur(34px)",
+              zIndex: 0,
+            }}
+          />
+          <div
+            className="cv-pdf"
+            aria-hidden="true"
+            style={{ position: "absolute", transform: "rotate(5deg) translate(16px, 10px)", opacity: 0.45 }}
+          />
+          <div
+            className="cv-pdf"
+            style={{
+              position: "relative",
+              width: 178,
+              zIndex: 1,
+              boxShadow: "20px 22px 0 -10px rgba(9,20,36,0.85), 0 0 60px rgba(255,48,48,0.22), 0 0 90px rgba(27,77,201,0.3)",
+            }}
+          >
+            <div style={{ width: "100%", padding: 18, display: "grid", gap: 7 }}>
+              <span className="cv-label" style={{ fontSize: 8, color: "var(--cv-red)" }}>CN2.DEV / CV</span>
+              <span style={{ fontFamily: "var(--font-plex-mono), monospace", fontSize: 10, letterSpacing: "0.08em", color: "var(--cv-ink)" }}>
+                BUKYA NARESH
+              </span>
+              <hr className="cv-rule" style={{ margin: "3px 0" }} />
+              {[92, 80, 86, 70, 78, 64].map((width, i) => (
+                <i key={i} style={{ display: "block", height: 2, width: `${width}%`, background: "rgba(122,167,255,0.38)" }} />
+              ))}
+              <span className="cv-label" style={{ marginTop: 6, fontSize: 8 }}>14 CHAPTERS · PRINT-READY</span>
+            </div>
+          </div>
+          <p className="cv-label" style={{ position: "absolute", bottom: 6, fontSize: 9, textAlign: "center", color: "var(--cv-dim)" }}>
+            DOCUMENT PREVIEW · GENERATED FROM THIS PAGE
+          </p>
+        </div>
+      }
     >
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
-        {/* Contact Information */}
-        <Reveal>
-          <div className="border border-line bg-surface p-6 md:p-8">
-            <div className="flex items-baseline justify-between gap-3 mb-4">
-              <h3 className="font-mono text-sm font-bold text-foreground">Contact</h3>
-              <span className="label-mono text-[10px] text-faint">Professional</span>
-            </div>
-            <div className="space-y-3">
-              <a
-                href={site.links.email}
-                className="label-mono inline-flex items-center gap-2 text-[10px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
-              >
-                <span>Email</span>
-                <span aria-hidden="true">→</span>
-              </a>
-              <a
-                href={site.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="label-mono inline-flex items-center gap-2 text-[10px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
-              >
-                <span>GitHub</span>
-                <span aria-hidden="true">→</span>
-              </a>
-              <a
-                href={site.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="label-mono inline-flex items-center gap-2 text-[10px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
-              >
-                <span>LinkedIn</span>
-                <span aria-hidden="true">→</span>
-              </a>
-              <a
-                href={site.links.contra}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="label-mono inline-flex items-center gap-2 text-[10px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
-              >
-                <span>Contra</span>
-                <span aria-hidden="true">→</span>
-              </a>
-              <a
-                href={site.links.orcid}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="label-mono inline-flex items-center gap-2 text-[10px] text-signal hover:text-white transition-colors border-b border-signal pb-0.5"
-              >
-                <span>ORCID</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        </Reveal>
+      <p className="cv-statement">
+        A closing record, not a pitch: the chapters above document the work, the methods and the limits. Reach out
+        directly when the fit is real.
+      </p>
 
-        {/* Download PDF */}
-        <Reveal delay={80}>
-          <div className="border border-signal bg-signal/5 p-6 md:p-8 rounded-lg">
-            <p className="label-mono text-[10px] text-signal uppercase tracking-widest mb-3">
-              Engineering Dossier
-            </p>
-            <h3 className="font-mono text-base font-bold text-foreground mb-2">Download Complete CV — PDF</h3>
-            <p className="text-sm leading-relaxed text-muted mb-4">
-              The complete CV — all 14 chapters, project details, certifications,
-              research, and evidence — in a printable, shareable document.
-            </p>
-            <button
-              onClick={() => window.print()}
-              className="w-full border border-signal bg-signal/10 px-5 py-4 text-[10px] font-bold text-signal transition-colors duration-300 hover:bg-signal hover:text-white text-center"
-            >
-              Download CV — PDF
-            </button>
-            <p className="label-mono text-[9px] text-faint">
-              Uses browser print dialog. Select "Save as PDF" in the destination dropdown.
-            </p>
-            <div className="mt-4 flex flex-col gap-1">
-              <span className="label-mono text-[9px] text-faint">Permanent URL:</span>
-              <a
-                href={site.url}
-                className="font-mono text-xs text-signal break-all"
-              >
-                https://cn2-identity-hub.vercel.app/cv
-              </a>
-            </div>
-          </div>
-        </Reveal>
+      <div className="cv-panel" style={{ marginTop: 28, padding: 22 }}>
+        <p className="cv-label">Direct channels</p>
+        <hr className="cv-rule" style={{ margin: "14px 0 16px" }} />
+        <CvLinkList links={links} />
+      </div>
 
-        {/* Print Footer */}
-        <Reveal delay={160} className="border border-line bg-surface p-6 md:p-8 text-center">
-          <p className="label-mono text-[10px] text-signal uppercase tracking-widest mb-2">
-            CN2.DEV — Quantitative Developer
-          </p>
-          <p className="text-sm text-muted">
-            Engineering dossier generated from verifiable artifacts. Every claim
-            backed by working systems, test suites, and certificates with
-            verification links.
-          </p>
-        </Reveal>
+      <div className="cv-panel" style={{ marginTop: 16, padding: 22 }}>
+        <p className="cv-label">Print-ready document</p>
+        <h3 style={{ marginTop: 12, fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)", fontWeight: 600, color: "var(--cv-ink)" }}>
+          Download CV (PDF)
+        </h3>
+        <p style={{ marginTop: 10, fontSize: 13, lineHeight: 1.65, color: "var(--cv-muted)" }}>
+          A print-ready copy of all 14 chapters — evidence, project detail and provenance — generated directly from
+          this page.
+        </p>
+        <button type="button" className="cv-action" onClick={() => window.print()} style={{ marginTop: 18, width: "100%" }}>
+          Download CV (PDF)
+        </button>
+        <p className="cv-label" style={{ marginTop: 12, fontSize: 9, lineHeight: 1.6 }}>
+          Opens your browser print dialog. Choose “Save as PDF” in the destination dropdown.
+        </p>
+        <hr className="cv-rule" style={{ margin: "16px 0 14px" }} />
+        <p className="cv-label" style={{ fontSize: 9 }}>Permanent URL</p>
+        <a href={permanentUrl} className="cv-link" style={{ display: "inline-block", marginTop: 8, fontSize: 11 }}>
+          {permanentUrl}
+        </a>
+      </div>
+
+      <div style={{ marginTop: 22, display: "flex", alignItems: "center", gap: 12 }}>
+        <span className="cv-label" style={{ fontSize: 9, color: "var(--cv-red)" }}>CN2.DEV</span>
+        <span style={{ flex: 1, height: 1, background: "var(--cv-edge)" }} />
+        <span className="cv-label" style={{ fontSize: 9 }}>QUANTITATIVE DEVELOPER</span>
       </div>
     </CvChapterSection>
   );

@@ -3,10 +3,13 @@
 import { useState } from "react";
 import Reveal from "@/components/ui/reveal";
 import { CvChapterSection } from "@/components/cv/cv-layout";
+import { CvGlobe, type CvOrbitNode } from "@/components/cv/cv-visuals";
 
 /**
  * Chapter 03 — Professional Architecture
- * Interactive network diagram showing how disciplines connect.
+ * A layered orbital stack: the full seven-domain graph mapped onto the globe,
+ * with ten live connections. Selecting a domain reveals its problems,
+ * evidence and neighbours in the detail panel.
  */
 
 interface ArchitectureNode {
@@ -92,81 +95,146 @@ const architectureEdges: [string, string][] = [
   ["ai-engineering", "research-systems"],
 ];
 
+const globeNodes: CvOrbitNode[] = architectureNodes.map((n): CvOrbitNode => ({
+  id: n.id,
+  label: n.label,
+  x: n.x,
+  y: n.y,
+  tone: n.color === "signal" ? "red" : "blue",
+}));
+
+function toneColor(color: ArchitectureNode["color"]) {
+  if (color === "signal") return "var(--cv-red)";
+  if (color === "research") return "var(--cv-blue)";
+  return "var(--cv-cyan)";
+}
+
 export function CvProfessionalArchitecture() {
   const [selected, setSelected] = useState<string | null>(null);
   const node = architectureNodes.find((n) => n.id === selected);
 
-  const nodeColor = (id: string) => {
-    const n = architectureNodes.find((x) => x.id === id);
-    if (!n) return "border-faint text-faint";
-    if (selected === id) {
-      return n.color === "signal" ? "border-signal bg-signal text-white" :
-          n.color === "research" ? "border-research bg-research text-white" :
-          "border-electric bg-electric text-white";
-    }
-    return n.color === "signal" ? "border-signal/30 text-signal" :
-        n.color === "research" ? "border-research/30 text-research" :
-        "border-electric/30 text-electric";
-  };
+  const connections = architectureEdges
+    .filter(([a, b]) => a === selected || b === selected)
+    .map(([a, b]) =>
+      architectureNodes.find((n) => n.id === (a === selected ? b : a))?.label
+    )
+    .filter((label): label is string => Boolean(label));
 
   return (
     <CvChapterSection
       id="professional-architecture"
       number="03"
       title="Professional Architecture"
-      subtitle="How my disciplines connect"
-      support="Six capability domains form a connected architecture. Each domain links to real work — repositories, test suites, research entries, and verified credentials."
-      accent="signal"
-    >
-      <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
-        {/* Architecture Network Visualization */}
-        <Reveal>
-          <div className="relative h-[600px] w-full max-w-full">
-            <svg
-              viewBox="0 0 100 100"
-              className="absolute inset-0 w-full h-full overflow-visible"
-              aria-hidden="true"
-            >
-              {architectureEdges.map(([a, b]) => {
-                const na = architectureNodes.find((n) => n.id === a);
-                const nb = architectureNodes.find((n) => n.id === b);
-                if (!na || !nb) return null;
-                const active = selected === a || selected === b;
-                return (
-                  <line
-                    key={`${a}-${b}`}
-                    x1={na.x}
-                    y1={na.y}
-                    x2={nb.x}
-                    y2={nb.y}
-                    className={
-                      active
-                        ? "stroke-signal/60 stroke-2"
-                        : "stroke-line stroke-1"
-                    }
-                    strokeWidth={active ? 2 : 1}
-                  />
-                );
-              })}
-            </svg>
+      kicker="How the disciplines connect"
+      lead="Seven domains form one stack. Each node links to real work — repositories, test suites, research entries and verified credentials."
+      tone="signal"
+      visual={
+        <div style={{ position: "relative", maxWidth: 560, margin: "0 auto" }}>
+          <svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+              zIndex: 0,
+            }}
+          >
+            <defs>
+              <linearGradient id="cv-arch-edge" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#ff3030" />
+                <stop offset="100%" stopColor="#7aa7ff" />
+              </linearGradient>
+            </defs>
+            {architectureEdges.map(([a, b]) => {
+              const na = architectureNodes.find((n) => n.id === a);
+              const nb = architectureNodes.find((n) => n.id === b);
+              if (!na || !nb) return null;
+              const active = selected === a || selected === b;
+              return (
+                <line
+                  key={`${a}-${b}`}
+                  x1={na.x}
+                  y1={na.y}
+                  x2={nb.x}
+                  y2={nb.y}
+                  stroke="url(#cv-arch-edge)"
+                  strokeWidth={active ? 0.65 : 0.28}
+                  opacity={active ? 0.9 : 0.3}
+                />
+              );
+            })}
+          </svg>
 
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <CvGlobe
+              nodes={globeNodes}
+              selected={selected}
+              onSelect={(id) =>
+                setSelected((prev) => (prev === id ? null : id))
+              }
+              caption="SELECT A DOMAIN TO INSPECT"
+            />
+          </div>
+
+          <span
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 2,
+              pointerEvents: "none",
+              textAlign: "center",
+              fontFamily: "var(--font-plex-mono), monospace",
+              fontSize: 9,
+              letterSpacing: "0.16em",
+              lineHeight: 1.7,
+              color: "var(--cv-ink)",
+              textShadow: "0 0 10px #03070d, 0 0 20px #03070d",
+            }}
+          >
+            CN2
+            <br />
+            ENGINEERING
+            <br />
+            STACK
+          </span>
+        </div>
+      }
+    >
+      <div style={{ display: "grid", gap: 24 }}>
+        <Reveal>
+          <p className="cv-label" style={{ color: "var(--cv-red)" }}>
+            Architecture map · 07 domains · 10 links
+          </p>
+          <p className="cv-statement" style={{ marginTop: 14, fontSize: "1.05rem" }}>
+            Select any domain on the stack to inspect the problems it addresses,
+            the evidence behind it and the domains it connects to.
+          </p>
+        </Reveal>
+
+        <Reveal delay={80}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {architectureNodes.map((n) => {
-              const isSelected = selected === n.id;
+              const active = selected === n.id;
               return (
                 <button
                   key={n.id}
-                  onClick={() => setSelected(selected === n.id ? null : n.id)}
-                  className={`absolute rounded-full border px-3 py-2 text-[9px] leading-tight transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                    isSelected
-                      ? n.color === "signal" ? "border-signal bg-signal text-white shadow-[0_0_20px_rgba(255,48,48,0.4)]"
-                      : n.color === "research" ? "border-research bg-research text-white shadow-[0_0_20px_rgba(122,167,255,0.4)]"
-                      : "border-electric bg-electric text-white shadow-[0_0_20px_rgba(22,119,255,0.4)]"
-                      : nodeColor(n.id)
-                  }`}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() =>
+                    setSelected((prev) => (prev === n.id ? null : n.id))
+                  }
+                  className="cv-pill"
                   style={{
-                    left: `${n.x}%`,
-                    top: `${n.y}%`,
-                    transform: "translate(-50%, -50%)",
+                    cursor: "pointer",
+                    color: active ? "var(--cv-ink)" : toneColor(n.color),
+                    borderColor: active ? toneColor(n.color) : undefined,
+                    background: active ? "rgba(255,48,48,0.12)" : undefined,
                   }}
                 >
                   {n.label}
@@ -176,40 +244,115 @@ export function CvProfessionalArchitecture() {
           </div>
         </Reveal>
 
-        {/* Selected Node Detail Panel */}
-        <Reveal>
-          <div className="border border-line bg-surface p-6 md:p-8">
-            {selected ? (
+        <Reveal delay={140}>
+          <div className="cv-panel">
+            {node ? (
               <>
-                <p className="label-mono text-[10px] text-faint uppercase tracking-widest mb-2">
-                  {node?.label}
-                </p>
-                <h3 className="font-mono text-base font-bold text-foreground mb-2">{node?.label}</h3>
-                <p className="text-sm leading-relaxed text-muted mb-4">{node?.description}</p>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    gap: 16,
+                  }}
+                >
+                  <div>
+                    <p className="cv-label">Selected domain</p>
+                    <h3
+                      style={{
+                        marginTop: 8,
+                        fontSize: "clamp(1.25rem, 2.4vw, 1.8rem)",
+                        fontWeight: 700,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {node.label}
+                    </h3>
+                  </div>
+                  <button
+                    type="button"
+                    className="cv-link"
+                    onClick={() => setSelected(null)}
+                    style={{ cursor: "pointer", background: "none", border: 0 }}
+                  >
+                    Clear
+                  </button>
+                </div>
 
-                <p className="label-mono text-[9px] text-faint uppercase tracking-widest mb-1">
-                  Problems It Addresses
+                <p
+                  style={{
+                    marginTop: 16,
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                    color: "var(--cv-muted)",
+                  }}
+                >
+                  {node.description}
                 </p>
-                <ul className="space-y-2 mb-4">
-                  {node?.problems.map((p, i) => (
-                    <li key={i} className="flex gap-2 text-sm text-foreground/90">
-                      <span className="mt-1 h-px w-3 bg-signal shrink-0" />
-                      {p}
-                    </li>
+
+                <p className="cv-label" style={{ marginTop: 22, color: "var(--cv-blue)" }}>
+                  Problems addressed
+                </p>
+                <ul className="cv-list" style={{ marginTop: 12 }}>
+                  {node.problems.map((p) => (
+                    <li className="cv-list-item" key={p}>{p}</li>
                   ))}
                 </ul>
 
-                <div className="border-t border-line pt-4">
-                  <p className="label-mono text-[9px] text-faint uppercase tracking-widest mb-1">Evidence</p>
-                  <p className="text-sm leading-relaxed text-foreground">{node?.evidence}</p>
+                <div
+                  style={{
+                    marginTop: 20,
+                    borderTop: "1px solid var(--cv-edge)",
+                    paddingTop: 16,
+                  }}
+                >
+                  <p className="cv-label">Evidence</p>
+                  <p
+                    style={{
+                      marginTop: 8,
+                      fontSize: 13,
+                      lineHeight: 1.7,
+                      color: "var(--cv-ink)",
+                    }}
+                  >
+                    {node.evidence}
+                  </p>
                 </div>
+
+                {connections.length ? (
+                  <div
+                    style={{
+                      marginTop: 18,
+                      borderTop: "1px solid var(--cv-edge)",
+                      paddingTop: 16,
+                    }}
+                  >
+                    <p className="cv-label">Connected domains</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                      {connections.map((label) => (
+                        <span className="cv-pill" key={label}>{label}</span>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </>
             ) : (
-              <div className="text-center py-10">
-                <p className="label-mono text-[10px] text-faint uppercase tracking-widest mb-2">
-                  Select a domain
+              <div style={{ padding: "18px 0" }}>
+                <p className="cv-label" style={{ color: "var(--cv-red)" }}>
+                  Awaiting selection
                 </p>
-                <p className="text-sm text-muted">Click any node in the architecture to see its problems, evidence, and connections.</p>
+                <p
+                  style={{
+                    marginTop: 12,
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                    color: "var(--cv-muted)",
+                  }}
+                >
+                  Choose a node in the orbital stack — or a domain above — to
+                  read its description, the problems it addresses, its evidence
+                  and its connections.
+                </p>
               </div>
             )}
           </div>
