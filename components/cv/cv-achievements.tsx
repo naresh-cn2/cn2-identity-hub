@@ -180,16 +180,16 @@ export function CvAchievements() {
   return (
     <CvChapterSection
       id="achievements"
-      number="12"
-      title="Technical Evidence"
-      kicker="Measurements and provenance"
+      number="10"
+      title="Achievements"
+      kicker="Results"
       lead="Every figure states what was measured, the conditions, and the standard it was measured under. Simulated results are never presented as verified live performance."
       tone="signal"
       visual={
         <div style={{ display: "grid", gap: 16 }}>
           <div className="cv-panel" style={{ padding: "18px 12px 22px" }}>
             <p className="cv-label" style={{ textAlign: "center", marginBottom: 6 }}>
-              PRIMARY MEASUREMENT / BACKTEST
+              Measurement
             </p>
             <CvGauge
               value="11.9M+"
@@ -237,9 +237,9 @@ export function CvAchievements() {
 
       <div className="cv-panel" style={{ marginTop: 20, padding: 22 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <p className="cv-label">Provenance standards</p>
+          <p className="cv-label">Sources</p>
           <span className="cv-label" style={{ fontSize: 9, color: "var(--cv-dim)" }}>
-            STANDARDS
+            Labels
           </span>
         </div>
         <hr className="cv-rule" style={{ margin: "14px 0 4px" }} />

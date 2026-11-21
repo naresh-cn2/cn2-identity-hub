@@ -2,7 +2,7 @@ import Reveal from "@/components/ui/reveal";
 import { CvChapterSection } from "@/components/cv/cv-layout";
 
 /**
- * Chapter — Executive Summary
+ * Chapter — Summary
  * One editorial statement, a working-principles column, an asymmetric
  * evidence column, and a live four-domain network. No equal card grid.
  */
@@ -44,8 +44,8 @@ export function CvExecutiveSummary() {
   return (
     <CvChapterSection
       id="executive-summary"
-      number="02"
-      title="Executive Summary"
+      number="01"
+      title="Summary"
       kicker="Overview"
       lead="The work, the engineering approach and the evidence behind it."
       tone="research"
@@ -153,7 +153,7 @@ export function CvExecutiveSummary() {
             </svg>
           </div>
           <p className="cv-label" style={{ textAlign: "center", marginTop: 14 }}>
-            Four domains · one evidence discipline
+            Four domains
           </p>
         </div>
       }
@@ -161,7 +161,7 @@ export function CvExecutiveSummary() {
       <div style={{ display: "grid", gap: 36 }}>
         <Reveal>
           <p className="cv-label" style={{ color: "var(--cv-blue)" }}>
-            Professional summary
+            Summary
           </p>
           <p
             className="cv-statement"
@@ -186,7 +186,7 @@ export function CvExecutiveSummary() {
           >
             <div>
               <p className="cv-label" style={{ color: "var(--cv-blue)" }}>
-                Working principles
+                Approach
               </p>
               <ul className="cv-list" style={{ marginTop: 14 }}>
                 {principles.map((p) => (
@@ -199,7 +199,7 @@ export function CvExecutiveSummary() {
 
             <div>
               <p className="cv-label" style={{ color: "var(--cv-blue)" }}>
-                At a glance
+                Overview
               </p>
               <div style={{ marginTop: 14 }}>
                 {facts.map((f) => (
@@ -235,7 +235,7 @@ export function CvExecutiveSummary() {
                     padding: "12px 0",
                   }}
                 >
-                  <p className="cv-label">Primary domains</p>
+                  <p className="cv-label">Domains</p>
                   <p style={{ marginTop: 6, fontSize: 13, color: "var(--cv-ink)" }}>
                     Systems · Quant · FinTech · AI · Data
                   </p>

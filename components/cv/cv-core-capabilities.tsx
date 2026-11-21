@@ -21,7 +21,7 @@ import {
 import { CvHexTile } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter — Engineering Capabilities
+ * Chapter — Technical Skills
  * A seven-cell honeycomb: six hexagons orbit a core capability. Selecting a
  * cell opens its full purpose, problems and evidence; a compact evidence
  * index below keeps every link and work label visible at a glance.
@@ -65,9 +65,9 @@ export function CvCoreCapabilities() {
   return (
     <CvChapterSection
       id="core-capabilities"
-      number="04"
-      title="Engineering Capabilities"
-      kicker="Practice areas"
+      number="02"
+      title="Technical Skills"
+      kicker="Skills"
       lead="Seven practice areas, one method: define the problem, build the representation, verify the result. Each capability shows its evidence status and links to supporting work."
       tone="research"
       visual={
@@ -164,7 +164,7 @@ export function CvCoreCapabilities() {
       <div style={{ display: "grid", gap: 8 }}>
         <Reveal>
           <p className="cv-label" style={{ color: "var(--cv-red)" }}>
-            Capability map · select a cell
+            Skills map
           </p>
         </Reveal>
 
@@ -180,7 +180,7 @@ export function CvCoreCapabilities() {
             >
               <div>
                 <p className="cv-label">
-                  Selected capability
+                  Selected skill
                 </p>
                 <h3
                   style={{
@@ -208,7 +208,7 @@ export function CvCoreCapabilities() {
             </p>
 
             <p className="cv-label" style={{ marginTop: 22, color: "var(--cv-blue)" }}>
-              Problems addressed
+              Problems
             </p>
             <ul className="cv-list" style={{ marginTop: 12 }}>
               {active.problems.map((p) => (
@@ -239,7 +239,7 @@ export function CvCoreCapabilities() {
         <Reveal delay={120}>
           <hr className="cv-rule" style={{ marginTop: 30 }} />
           <p className="cv-label" style={{ marginTop: 18, color: "var(--cv-blue)" }}>
-            Evidence index
+            Evidence
           </p>
           <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
             {capabilities.map((cap, i) => (

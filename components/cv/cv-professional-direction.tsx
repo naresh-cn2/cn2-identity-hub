@@ -116,9 +116,9 @@ export function CvProfessionalDirection() {
   return (
     <CvChapterSection
       id="professional-direction"
-      number="13"
-      title="Professional Interests"
-      kicker="Areas of focus"
+      number="12"
+      title="Interests"
+      kicker="Focus"
       lead="Three areas of practice, each grounded in shipped systems and reproducible work, with the focus following the evidence."
       tone="research"
     >
@@ -128,7 +128,7 @@ export function CvProfessionalDirection() {
       </p>
 
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 26 }}>
-        <span className="cv-label" style={{ fontSize: 9 }}>Practice areas</span>
+        <span className="cv-label" style={{ fontSize: 9 }}>Areas</span>
         <span style={{ flex: 1, height: 1, background: "linear-gradient(90deg, var(--cv-red), rgba(122,167,255,0.4), transparent)" }} />
       </div>
 

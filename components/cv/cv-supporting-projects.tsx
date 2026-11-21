@@ -103,19 +103,19 @@ function ProjectRow({ project, index }: { project: ComprehensiveWorkItem; index:
 
         {project.keyCapabilities.length > 0 ? (
           <p style={{ marginTop: 10, fontSize: 11.5, lineHeight: 1.6, color: "var(--cv-muted)" }}>
-            <span className="cv-label" style={{ color: "var(--cv-red)" }}>CAPABILITIES </span>
+            <span className="cv-label" style={{ color: "var(--cv-red)" }}>Skills </span>
             {project.keyCapabilities.map((c) => c.title).join(" · ")}
           </p>
         ) : null}
         {project.metrics.length > 0 ? (
           <p style={{ marginTop: 5, fontSize: 11.5, lineHeight: 1.6, color: "var(--cv-muted)" }}>
-            <span className="cv-label" style={{ color: "var(--cv-red)" }}>METRICS </span>
+            <span className="cv-label" style={{ color: "var(--cv-red)" }}>Results </span>
             {project.metrics.map((m) => `${m.value} ${m.label}${m.context ? ` — ${m.context}` : ""}`).join(" · ")}
           </p>
         ) : null}
         {project.evidenceAndResults.length > 0 ? (
           <p style={{ marginTop: 5, fontSize: 11.5, lineHeight: 1.6, color: "var(--cv-muted)" }}>
-            <span className="cv-label" style={{ color: "var(--cv-red)" }}>EVIDENCE </span>
+            <span className="cv-label" style={{ color: "var(--cv-red)" }}>Evidence </span>
             {project.evidenceAndResults.join(" ")}
           </p>
         ) : null}
@@ -147,7 +147,7 @@ function LandscapeVisual({ projects }: { projects: ComprehensiveWorkItem[] }) {
     <div style={{ display: "grid", gap: 20 }}>
       <div className="cv-panel">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}>
-          <span className="cv-label">LIFECYCLE DISTRIBUTION</span>
+          <span className="cv-label">Status</span>
           <span className="num-mono" style={{ color: "var(--cv-red)", fontSize: 20 }}>{String(projects.length).padStart(2, "0")}</span>
         </div>
         <div style={{ display: "grid", gap: 14, marginTop: 20 }}>
@@ -164,7 +164,7 @@ function LandscapeVisual({ projects }: { projects: ComprehensiveWorkItem[] }) {
       </div>
 
       <div className="cv-panel">
-        <span className="cv-label">BUILD CONSTELLATION / ONE NODE PER PROJECT</span>
+        <span className="cv-label">Project map</span>
         <svg viewBox="0 0 520 280" width="100%" role="img" aria-label="Supporting portfolio constellation" style={{ display: "block", marginTop: 14 }}>
           {dots.map((d, i) => (
             <g key={d.id}>
@@ -191,16 +191,16 @@ export function CvSupportingProjects() {
   return (
     <CvChapterSection
       id="supporting-projects"
-      number="10"
-      title="Project Portfolio"
-      kicker="Supporting work"
+      number="08"
+      title="Projects"
+      kicker="Other work"
       lead="An engineering index of additional builds. Each state label is derived from the project's own status string — completed, verified, active development, research-experimental and private-unpublished are kept distinct."
       tone="research"
       visual={<LandscapeVisual projects={projects} />}
     >
       <div style={{ display: "grid", gap: 18 }}>
         <div className="cv-panel" style={{ padding: 16 }}>
-          <span className="cv-label">STATUS LEGEND</span>
+          <span className="cv-label">Status key</span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 18px", marginTop: 12 }}>
             {GROUP_ORDER.map((group) => <StatusDot key={group} group={group} />)}
           </div>

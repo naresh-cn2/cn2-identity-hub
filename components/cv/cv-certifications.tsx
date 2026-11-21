@@ -169,7 +169,7 @@ function CredentialRow({ cert, position }: { cert: CredentialRecord; position: n
         </div>
         {cert.credentialId ? (
           <p className="cv-label" style={{ marginTop: 8, fontSize: 9, wordBreak: "break-all" }}>
-            Credential ID: {cert.credentialId}
+            ID: {cert.credentialId}
           </p>
         ) : null}
         {cert.notes && cert.notes.length > 0 ? (
@@ -191,9 +191,9 @@ export function CvCertifications() {
   return (
     <CvChapterSection
       id="certifications"
-      number="07"
+      number="05"
       title="Certifications"
-      kicker="Verified credentials"
+      kicker="Credentials"
       lead="Issued, dated and checkable. Every record here carries its provider, its printed identifier and a route back to the source — an issuer verification page or the certificate document itself."
       tone="research"
       visual={<CredentialLattice count={verified.length} />}
@@ -239,7 +239,7 @@ export function CvCertifications() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14, marginTop: 18 }}>
           <div>
-            <p className="cv-label">Credential ID</p>
+            <p className="cv-label">ID</p>
             <p
               style={{
                 marginTop: 4,
@@ -253,7 +253,7 @@ export function CvCertifications() {
             </p>
           </div>
           <div>
-            <p className="cv-label">Coverage</p>
+            <p className="cv-label">Topics</p>
             <p style={{ marginTop: 4, fontSize: 11, color: "var(--cv-muted)", lineHeight: 1.55 }}>
               {featured.topics.length} applied topics · {featured.skills.length} named skills
             </p>
@@ -290,7 +290,7 @@ export function CvCertifications() {
 
       <div style={{ marginTop: 30, display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 10 }}>
         <p className="cv-label">Verified records · {String(remaining.length).padStart(2, "0")} more</p>
-        <p className="cv-label">Issuer link or certificate document</p>
+        <p className="cv-label">Verification</p>
       </div>
       <hr className="cv-rule" style={{ margin: "12px 0 6px" }} />
       {remaining.map((cert, i) => (
@@ -300,7 +300,7 @@ export function CvCertifications() {
       {credentialBadges.length > 0 ? (
         <div className="cv-panel" style={{ marginTop: 30 }}>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 10 }}>
-            <p className="cv-label">Digital badges · issued as presented</p>
+            <p className="cv-label">Badges</p>
             <span className="cv-status" data-tone="green">Issued</span>
           </div>
           {credentialBadges.map((badge) => (

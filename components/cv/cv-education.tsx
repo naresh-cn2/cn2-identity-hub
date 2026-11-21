@@ -101,9 +101,9 @@ export function CvEducation() {
   return (
     <CvChapterSection
       id="education"
-      number="06"
+      number="04"
       title="Education"
-      kicker="Academic background"
+      kicker="Background"
       lead="No formal education record exists in this repository. What follows is a self-directed learning path — no provider, no certificate, no assessment — shown with the working systems it has already produced."
       tone="research"
       visual={<LearningPathVisual />}
@@ -111,7 +111,7 @@ export function CvEducation() {
       <div className="cv-panel" style={{ marginBottom: 28 }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 14 }}>
           <span className="cv-status" data-tone="red">No formal record</span>
-          <span className="cv-label">Degrees · institutions · graduation dates</span>
+          <span className="cv-label">Academic record</span>
         </div>
         <p style={{ fontSize: 13, color: "var(--cv-muted)", lineHeight: 1.7, marginBottom: 12 }}>
           No formal education records (degrees, institutions, graduation dates) are present in the
@@ -125,8 +125,8 @@ export function CvEducation() {
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: 10 }}>
-        <p className="cv-label">Self-directed study tracks · 06 ongoing</p>
-        <span className="cv-label" style={{ color: "var(--cv-blue)" }}>No provider · no certificate</span>
+        <p className="cv-label">Study tracks</p>
+        <span className="cv-label" style={{ color: "var(--cv-blue)" }}>Self-directed</span>
       </div>
       <hr className="cv-rule" style={{ margin: "12px 0 24px" }} />
 

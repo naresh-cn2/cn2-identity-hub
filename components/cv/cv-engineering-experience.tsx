@@ -5,7 +5,7 @@ import { career } from "@/data/career";
 import { CvChapterSection, CvEvidenceBadge } from "@/components/cv/cv-layout";
 
 /**
- * Professional Experience — independent engineering work: systems, scope and evidence.
+ * Experience — independent engineering work: systems, scope and evidence.
  * Presented as self-directed work, not salaried employment.
  */
 
@@ -141,9 +141,9 @@ export function CvEngineeringExperience() {
   return (
     <CvChapterSection
       id="engineering-experience"
-      number="08"
-      title="Professional Experience"
-      kicker="Engineering history"
+      number="06"
+      title="Experience"
+      kicker="Work"
       lead="Five systems built end to end through independent, self-directed engineering, with the role, scope, metrics and supporting evidence recorded for each."
       tone="signal"
       visual={<SkylineVisual />}
@@ -186,7 +186,7 @@ export function CvEngineeringExperience() {
               {entry.scope}
             </p>
             <div style={{ marginTop: 10, borderLeft: "1px solid rgba(255,48,48,0.4)", paddingLeft: 12 }}>
-              <p className="cv-label">Metrics</p>
+              <p className="cv-label">Results</p>
               <p
                 style={{
                   marginTop: 4,

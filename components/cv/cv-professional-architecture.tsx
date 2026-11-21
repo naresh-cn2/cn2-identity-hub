@@ -6,10 +6,10 @@ import { CvChapterSection } from "@/components/cv/cv-layout";
 import { CvGlobe, type CvOrbitNode } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter — Technical Architecture
- * A layered orbital stack: the full seven-domain graph mapped onto the globe,
- * with ten live connections. Selecting a domain reveals its problems,
- * evidence and neighbours in the detail panel.
+ * Chapter — Contributions
+ * An interactive map of the seven areas built, with their evidence and related
+ * areas. Selecting an area reveals the problems it addressed, the evidence
+ * behind it and the areas it connects to.
  */
 
 interface ArchitectureNode {
@@ -123,10 +123,10 @@ export function CvProfessionalArchitecture() {
   return (
     <CvChapterSection
       id="professional-architecture"
-      number="03"
-      title="Technical Architecture"
-      kicker="Systems and domains"
-      lead="Seven engineering domains mapped as one stack. Each node links to repositories, test suites, research entries and verified credentials."
+      number="11"
+      title="Contributions"
+      kicker="Systems"
+      lead="Seven areas of contribution, each backed by repositories, test suites, research entries and verified credentials."
       tone="signal"
       visual={
         <div style={{ position: "relative", maxWidth: 560, margin: "0 auto" }}>
@@ -183,7 +183,7 @@ export function CvProfessionalArchitecture() {
               onSelect={(id) =>
                 setSelected((prev) => (prev === id ? null : id))
               }
-              caption="SELECT A DOMAIN TO INSPECT"
+              caption="SELECT AN AREA TO INSPECT"
             />
           </div>
 
@@ -206,9 +206,9 @@ export function CvProfessionalArchitecture() {
           >
             CN2
             <br />
-            ENGINEERING
+            CONTRIBUTION
             <br />
-            STACK
+            MAP
           </span>
         </div>
       }
@@ -216,11 +216,11 @@ export function CvProfessionalArchitecture() {
       <div style={{ display: "grid", gap: 24 }}>
         <Reveal>
           <p className="cv-label" style={{ color: "var(--cv-red)" }}>
-            Architecture map · 07 domains · 10 links
+            Contribution map
           </p>
           <p className="cv-statement" style={{ marginTop: 14, fontSize: "1.05rem" }}>
-            Select any domain on the stack to inspect the problems it addresses,
-            the evidence behind it and the domains it connects to.
+            Select any area to see the problems it addressed, the evidence
+            behind it and the areas it connects to.
           </p>
         </Reveal>
 
@@ -264,7 +264,7 @@ export function CvProfessionalArchitecture() {
                   }}
                 >
                   <div>
-                    <p className="cv-label">Selected domain</p>
+                    <p className="cv-label">Selected area</p>
                     <h3
                       style={{
                         marginTop: 8,
@@ -298,7 +298,7 @@ export function CvProfessionalArchitecture() {
                 </p>
 
                 <p className="cv-label" style={{ marginTop: 22, color: "var(--cv-blue)" }}>
-                  Problems addressed
+                  Problems
                 </p>
                 <ul className="cv-list" style={{ marginTop: 12 }}>
                   {node.problems.map((p) => (
@@ -334,7 +334,7 @@ export function CvProfessionalArchitecture() {
                       paddingTop: 16,
                     }}
                   >
-                    <p className="cv-label">Connected domains</p>
+                    <p className="cv-label">Related areas</p>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
                       {connections.map((label) => (
                         <span className="cv-pill" key={label}>{label}</span>
@@ -346,7 +346,7 @@ export function CvProfessionalArchitecture() {
             ) : (
               <div style={{ padding: "18px 0" }}>
                 <p className="cv-label" style={{ color: "var(--cv-red)" }}>
-                  Awaiting selection
+                  Select an area
                 </p>
                 <p
                   style={{
@@ -356,9 +356,9 @@ export function CvProfessionalArchitecture() {
                     color: "var(--cv-muted)",
                   }}
                 >
-                  Choose a node in the orbital stack — or a domain above — to
-                  read its description, the problems it addresses, its evidence
-                  and its connections.
+                  Choose an area in the map — or from the list above — to read
+                  what was built, the problems it addressed, its evidence and
+                  related areas.
                 </p>
               </div>
             )}

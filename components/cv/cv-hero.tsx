@@ -1,23 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowDown, Download } from "lucide-react";
 import Reveal from "@/components/ui/reveal";
 import { site } from "@/data/site";
 import { CvChapterSection, CvLinkList } from "@/components/cv/cv-layout";
-import { CvGlobe, type CvOrbitNode } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter — Professional Profile
- * Cinematic opening: the person first, a short credible statement, and an
- * orbital map of the four domains. No repeated brand or dossier wording.
+ * Chapter — Introduction
+ * Cinematic opening: the person first, a short credible statement, and a
+ * portrait. No repeated brand or dossier wording.
  */
-
-const orbitNodes: CvOrbitNode[] = [
-  { id: "systems", label: "Systems", x: 14, y: 18, tone: "blue" },
-  { id: "markets", label: "Markets", x: 86, y: 18, tone: "red" },
-  { id: "data", label: "Data", x: 14, y: 82, tone: "blue" },
-  { id: "ai", label: "AI", x: 86, y: 82, tone: "blue" },
-];
 
 const links = [
   { label: "GitHub", href: site.links.github, external: true },
@@ -38,12 +31,25 @@ export function CvHero() {
   return (
     <CvChapterSection
       id="hero"
-      number="01"
-      title="Professional Profile"
+      className="cv-hero-scene"
+      number="00"
+      title="Bukya Naresh"
       kicker="Quantitative Developer"
       lead="Systems engineering, financial technology, data engineering and AI — one connected technical practice."
       tone="signal"
-      visual={<CvGlobe nodes={orbitNodes} caption="CN2 · SYSTEMS · MARKETS · DATA · AI" />}
+      visual={
+        <div className="cv-portrait-frame">
+          <Image
+            src="/cv/portrait.png"
+            alt="Bukya Naresh, Quantitative Developer"
+            fill
+            sizes="(max-width: 1024px) 90vw, 45vw"
+            className="cv-portrait-img"
+            priority
+          />
+          <span className="cv-portrait-caption">BUKYA NARESH · QUANTITATIVE DEVELOPER</span>
+        </div>
+      }
     >
       <div style={{ display: "grid", gap: 34 }}>
         <Reveal>

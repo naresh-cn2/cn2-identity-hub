@@ -697,6 +697,60 @@
   to { transform: rotate(336deg) scaleY(0.42); }
 }
 
+/* ---------- portrait (hero) ---------- */
+
+.cv-portrait-frame {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 4 / 5;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(122, 167, 255, 0.42);
+  background: linear-gradient(160deg, rgba(122, 167, 255, 0.12), rgba(9, 20, 36, 0.9));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 0 50px rgba(27, 77, 201, 0.18);
+}
+
+.cv-portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 58%, rgba(3, 7, 13, 0.62) 100%);
+}
+
+.cv-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.cv-portrait-frame::before {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  width: 34px;
+  height: 34px;
+  border-top: 2px solid var(--cv-red);
+  border-right: 2px solid var(--cv-red);
+  z-index: 2;
+}
+
+.cv-portrait-caption {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 2;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 /* ---------- hexagons ---------- */
 
 .cv-hex-grid {
@@ -875,6 +929,13 @@
   .cv-scene { min-height: auto; padding: 64px 24px 120px; }
   .cv-scene-body.has-visual { grid-template-columns: 1fr; }
   .cv-scene-body { margin-top: 36px; }
+  .cv-hero-scene .cv-scene-body.has-visual {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 28px;
+  }
+  .cv-hero-scene .cv-scene-visual { width: 100%; }
   .cv-top-progress { left: 0; }
 }
 
@@ -885,6 +946,7 @@
 
 @media (max-width: 640px) {
   .cv-globe-wrap { max-width: 380px; }
+  .cv-portrait-frame { max-width: 360px; aspect-ratio: 4 / 5; }
   .cv-node { font-size: 8px; padding: 5px 8px; min-height: 28px; }
   .cv-hex-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cv-scene-title { font-size: clamp(2.2rem, 11vw, 3rem); }

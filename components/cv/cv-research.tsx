@@ -41,7 +41,7 @@ function WaveMesh() {
   return (
     <div className="cv-panel" style={{ padding: 0, overflow: "hidden" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid var(--cv-edge)" }}>
-        <span className="cv-label">SIGNAL FIELD / WAVE MESH</span>
+        <span className="cv-label">Research map</span>
         <span className="cv-label" style={{ color: "var(--cv-red)" }}>RESEARCH</span>
       </div>
       <div style={{ padding: "10px 12px 16px" }}>
@@ -83,7 +83,7 @@ function ResearchTracks() {
   return (
     <div className="cv-panel">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-        <span className="cv-label">RESEARCH TRACKS</span>
+        <span className="cv-label">Topics</span>
         <span className="num-mono" style={{ fontSize: 14, color: "var(--cv-blue)" }}>{String(categories.length).padStart(2, "0")}</span>
       </div>
       <div style={{ display: "grid", gap: 14, marginTop: 18 }}>
@@ -150,7 +150,7 @@ function InvestigationRecord({ entry, index }: { entry: ResearchEntry; index: nu
 
       {entry.relatedProject ? (
         <footer style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, flexWrap: "wrap", marginTop: 20, paddingTop: 14, borderTop: "1px solid var(--cv-edge)" }}>
-          <span className="cv-label">RELATED PROJECT</span>
+          <span className="cv-label">Project</span>
           <a className="cv-link" href={`/works/${entry.relatedProject}`}>
             {entry.relatedProject} ↗
           </a>
@@ -164,9 +164,9 @@ export function CvResearch() {
   return (
     <CvChapterSection
       id="research"
-      number="11"
-      title="Research & Development"
-      kicker="Documented investigations"
+      number="09"
+      title="Research"
+      kicker="Research"
       lead="Registered questions, stated methods, recorded results and explicit limitations. An unfinished study is marked ongoing; a structural guarantee is not presented as a profitable strategy."
       tone="research"
     >
@@ -175,7 +175,7 @@ export function CvResearch() {
           <WaveMesh />
           <ResearchTracks />
           <p className="cv-label" style={{ lineHeight: 1.8, color: "var(--cv-dim)" }}>
-            {String(researchEntries.length).padStart(2, "0")} INVESTIGATIONS · TRACKS DERIVED FROM THE RECORDED CATEGORIES
+            {String(researchEntries.length).padStart(2, "0")} INVESTIGATIONS · TOPICS FROM THE RECORDED CATEGORIES
           </p>
         </aside>
 

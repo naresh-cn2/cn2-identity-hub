@@ -11,20 +11,20 @@ export interface CvChapter {
 
 /** Stable IDs — anchors, links and the scroll-spy depend on these. */
 export const CV_CHAPTERS: CvChapter[] = [
-  { id: "hero", number: "01", label: "Professional Profile" },
-  { id: "executive-summary", number: "02", label: "Executive Summary" },
-  { id: "professional-architecture", number: "03", label: "Technical Architecture" },
-  { id: "core-capabilities", number: "04", label: "Engineering Capabilities" },
-  { id: "technical-skills", number: "05", label: "Technology Stack" },
-  { id: "education", number: "06", label: "Education" },
-  { id: "certifications", number: "07", label: "Certifications" },
-  { id: "engineering-experience", number: "08", label: "Professional Experience" },
-  { id: "flagship-projects", number: "09", label: "Selected Projects" },
-  { id: "supporting-projects", number: "10", label: "Project Portfolio" },
-  { id: "research", number: "11", label: "Research & Development" },
-  { id: "achievements", number: "12", label: "Technical Evidence" },
-  { id: "professional-direction", number: "13", label: "Professional Interests" },
-  { id: "contact-download", number: "14", label: "Contact Information" },
+  { id: "executive-summary", number: "01", label: "Summary" },
+  { id: "core-capabilities", number: "02", label: "Technical Skills" },
+  { id: "technical-skills", number: "03", label: "Technology Stack" },
+  { id: "education", number: "04", label: "Education" },
+  { id: "certifications", number: "05", label: "Certifications" },
+  { id: "engineering-experience", number: "06", label: "Experience" },
+  { id: "flagship-projects", number: "07", label: "Featured Projects" },
+  { id: "supporting-projects", number: "08", label: "Projects" },
+  { id: "research", number: "09", label: "Research" },
+  { id: "achievements", number: "10", label: "Achievements" },
+  { id: "professional-architecture", number: "11", label: "Contributions" },
+  { id: "professional-direction", number: "12", label: "Interests" },
+  { id: "contact-download", number: "13", label: "Contact" },
+  { id: "download-cv", number: "14", label: "Download CV" },
 ];
 
 interface CvLayoutProps {

@@ -41,7 +41,7 @@ function StageFrame({ code, caption, children }: { code: string; caption: string
         }}
       >
         <span className="cv-label">{code}</span>
-        <span className="cv-label" style={{ color: "var(--cv-red)" }}>SCHEMATIC</span>
+        <span className="cv-label" style={{ color: "var(--cv-red)" }}>Diagram</span>
       </div>
       <div style={{ padding: "16px 14px 18px" }}>
         {children}
@@ -383,9 +383,9 @@ export function CvFlagshipProjects() {
   return (
     <CvChapterSection
       id="flagship-projects"
-      number="09"
-      title="Selected Projects"
-      kicker="Systems and evidence"
+      number="07"
+      title="Featured Projects"
+      kicker="Projects"
       lead="Eight systems, presented one at a time. Each shows the engineering problem, the architecture, the implementation and the evidence as recorded in the source data."
       tone="signal"
       visual={<ProjectDiagram projectId={project.id} />}
@@ -435,7 +435,7 @@ export function CvFlagshipProjects() {
             <button type="button" className="cv-action subtle" style={{ minHeight: 38, fontSize: 10 }} onClick={() => go(selected + 1)}>
               NEXT →
             </button>
-            <span className="cv-label" style={{ marginLeft: "auto" }}>← / → TO NAVIGATE</span>
+            <span className="cv-label" style={{ marginLeft: "auto" }}>Use arrow keys to navigate</span>
           </div>
         </div>
 
@@ -459,13 +459,13 @@ export function CvFlagshipProjects() {
           <hr className="cv-rule" />
 
           <section style={{ display: "grid", gap: 8 }}>
-            <span className="cv-label">WHAT IT IS</span>
+            <span className="cv-label">Overview</span>
             <p style={{ fontSize: 14, lineHeight: 1.75, color: "var(--cv-muted)" }}>{project.summary}</p>
           </section>
 
           {project.tags.length > 0 ? (
             <section style={{ display: "grid", gap: 10 }}>
-              <span className="cv-label">CLASSIFICATION</span>
+              <span className="cv-label">Status</span>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
                 {project.tags.map((t) => <CvTechPill key={`tag-${t}`} label={t} tone="red" />)}
               </div>
@@ -474,7 +474,7 @@ export function CvFlagshipProjects() {
 
           {project.engineeringChallenges.length > 0 ? (
             <section style={{ display: "grid", gap: 10 }}>
-              <span className="cv-label">ENGINEERING PROBLEM → RESOLUTION</span>
+              <span className="cv-label">Problem</span>
               <div className="cv-list" style={{ gap: 14 }}>
                 {project.engineeringChallenges.map((c, i) => (
                   <div className="cv-list-item" key={i}>
@@ -487,7 +487,7 @@ export function CvFlagshipProjects() {
 
           {project.keyCapabilities.length > 0 ? (
             <section style={{ display: "grid", gap: 10 }}>
-              <span className="cv-label">ARCHITECTURE / IMPLEMENTATION</span>
+              <span className="cv-label">Implementation</span>
               <div className="cv-list">
                 {project.keyCapabilities.map((cap, i) => (
                   <div className="cv-list-item" key={i}>
@@ -503,7 +503,7 @@ export function CvFlagshipProjects() {
 
           {project.metrics.length > 0 ? (
             <section style={{ display: "grid", gap: 12 }}>
-              <span className="cv-label">MEASURED / VERIFIED RESULTS</span>
+              <span className="cv-label">Results</span>
               <div style={{ display: "grid", gap: 12 }}>
                 {project.metrics.map((m, i) => (
                   <div key={i} style={{ display: "grid", gridTemplateColumns: "minmax(90px, auto) 1fr", gap: 14, alignItems: "baseline" }}>
@@ -534,14 +534,14 @@ export function CvFlagshipProjects() {
           ) : null}
 
           <section style={{ display: "grid", gap: 10 }}>
-            <span className="cv-label">TECHNOLOGY SURFACE</span>
+            <span className="cv-label">Technologies</span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
               {project.technologies.map((t) => <CvTechPill key={t} label={t} />)}
             </div>
           </section>
 
           <section style={{ display: "grid", gap: 12 }}>
-            <span className="cv-label">LINKS &amp; ARTIFACTS</span>
+            <span className="cv-label">Links</span>
             <CvLinkList links={links} />
           </section>
         </article>

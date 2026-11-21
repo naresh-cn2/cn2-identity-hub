@@ -191,9 +191,9 @@ export function CvTechnicalSkills() {
   return (
     <CvChapterSection
       id="technical-skills"
-      number="05"
+      number="03"
       title="Technology Stack"
-      kicker="Languages and systems"
+      kicker="Technologies"
       lead="Seven evidence-backed domains, arranged as a working stack. Every technology is tied to a system, a test suite, or a verified credential — never to a self-reported rating."
       tone="research"
       visual={

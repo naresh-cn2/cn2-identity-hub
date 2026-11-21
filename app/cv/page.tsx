@@ -14,6 +14,7 @@ import { CvResearch } from "@/components/cv/cv-research";
 import { CvAchievements } from "@/components/cv/cv-achievements";
 import { CvProfessionalDirection } from "@/components/cv/cv-professional-direction";
 import { CvContactDownload } from "@/components/cv/cv-contact-download";
+import { CvDownload } from "@/components/cv/cv-download";
 import "./cv.css";
 
 export const metadata: Metadata = {
@@ -27,47 +28,50 @@ export default function CvPage() {
   return (
     <CvLayout>
       <div className="relative">
-        {/* 01 Hero */}
+        {/* Visual introduction */}
         <CvHero />
 
-        {/* 02 Executive Summary */}
+        {/* 01 Summary */}
         <CvExecutiveSummary />
 
-        {/* 03 Technical Architecture */}
-        <CvProfessionalArchitecture />
-
-        {/* 04 Core Capabilities */}
+        {/* 02 Technical Skills */}
         <CvCoreCapabilities />
 
-        {/* 05 Technical Skills */}
+        {/* 03 Technology Stack */}
         <CvTechnicalSkills />
 
-        {/* 06 Education */}
+        {/* 04 Education */}
         <CvEducation />
 
-        {/* 07 Certifications */}
+        {/* 05 Certifications */}
         <CvCertifications />
 
-        {/* 08 Engineering Experience */}
+        {/* 06 Experience */}
         <CvEngineeringExperience />
 
-        {/* 09 Flagship Projects */}
+        {/* 07 Featured Projects */}
         <CvFlagshipProjects />
 
-        {/* 10 Supporting Projects */}
+        {/* 08 Projects */}
         <CvSupportingProjects />
 
-        {/* 11 Research */}
+        {/* 09 Research */}
         <CvResearch />
 
-        {/* 12 Achievements */}
+        {/* 10 Achievements */}
         <CvAchievements />
 
-        {/* 13 Professional Direction */}
+        {/* 11 Contributions */}
+        <CvProfessionalArchitecture />
+
+        {/* 12 Interests */}
         <CvProfessionalDirection />
 
-        {/* 14 Contact & Download */}
+        {/* 13 Contact */}
         <CvContactDownload />
+
+        {/* 14 Download CV */}
+        <CvDownload />
       </div>
 
     </CvLayout>
