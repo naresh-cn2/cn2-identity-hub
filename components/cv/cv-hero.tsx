@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDown, Download } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import Reveal from "@/components/ui/reveal";
 import { site } from "@/data/site";
 import { CvChapterSection, CvLinkList } from "@/components/cv/cv-layout";
@@ -103,18 +103,10 @@ export function CvHero() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
             <button
               type="button"
-              className="cv-action"
-              onClick={() => window.print()}
-            >
-              <Download size={15} aria-hidden="true" />
-              Download CV
-            </button>
-            <button
-              type="button"
               className="cv-action subtle"
               onClick={explore}
             >
-              Explore chapters
+              Explore
               <ArrowDown size={15} aria-hidden="true" />
             </button>
           </div>
@@ -126,17 +118,6 @@ export function CvHero() {
             Elsewhere
           </p>
           <CvLinkList links={links} />
-          <p
-            className="cv-label"
-            style={{
-              marginTop: 16,
-              fontSize: 9,
-              letterSpacing: "0.06em",
-              textTransform: "none",
-            }}
-          >
-            Browser print dialog → Save as PDF · {site.url}/cv
-          </p>
         </Reveal>
       </div>
     </CvChapterSection>

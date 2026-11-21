@@ -148,7 +148,7 @@ export function CvLayout({ children, className }: CvLayoutProps) {
     <div ref={rootRef} className={`cv-experience ${className ?? ""}`}>
       <div className="cv-top-progress" aria-hidden="true"><i style={{ width: `${progress}%` }} /></div>
 
-      <nav className="cv-rail" aria-label="CV chapter navigation">
+      <nav className="cv-rail" aria-label="CV section navigation">
         <div className="cv-rail-head">
           <span className="cv-rail-brand">CN2<span>.</span>DEV</span>
           <span className="cv-rail-count">CV / 14</span>
@@ -169,12 +169,12 @@ export function CvLayout({ children, className }: CvLayoutProps) {
           aria-controls="cv-drawer"
           onClick={() => setDrawer((v) => !v)}
         >
-          {drawer ? "CLOSE" : "CHAPTERS"}
+          {drawer ? "CLOSE" : "SECTIONS"}
         </button>
       </div>
 
       {drawer ? (
-        <div className="cv-drawer lg:hidden" id="cv-drawer" role="dialog" aria-modal="true" aria-label="CV chapters">
+        <div className="cv-drawer lg:hidden" id="cv-drawer" role="dialog" aria-modal="true" aria-label="CV sections">
           {railItems(true)}
         </div>
       ) : null}
