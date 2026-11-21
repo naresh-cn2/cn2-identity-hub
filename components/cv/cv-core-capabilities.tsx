@@ -21,7 +21,7 @@ import {
 import { CvHexTile } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 04 — Core Capabilities
+ * Chapter — Engineering Capabilities
  * A seven-cell honeycomb: six hexagons orbit a core capability. Selecting a
  * cell opens its full purpose, problems and evidence; a compact evidence
  * index below keeps every link and work label visible at a glance.
@@ -66,9 +66,9 @@ export function CvCoreCapabilities() {
     <CvChapterSection
       id="core-capabilities"
       number="04"
-      title="Core Capabilities"
-      kicker="Domains, problems, evidence"
-      lead="Seven disciplines, one method: understand the problem, build the representation, verify the result. Every capability carries an honest status and links to real work."
+      title="Engineering Capabilities"
+      kicker="Practice areas"
+      lead="Seven practice areas, one method: define the problem, build the representation, verify the result. Each capability shows its evidence status and links to supporting work."
       tone="research"
       visual={
         <div
@@ -102,6 +102,7 @@ export function CvCoreCapabilities() {
             {hexPositions.slice(1).map((p, i) => (
               <line
                 key={i}
+                className={i === 0 || i === 3 ? "cv-flow" : i === 5 ? "cv-trace" : undefined}
                 x1="50"
                 y1="50"
                 x2={p.x}
@@ -179,7 +180,7 @@ export function CvCoreCapabilities() {
             >
               <div>
                 <p className="cv-label">
-                  Capability {String(selected + 1).padStart(2, "0")} / 07
+                  Selected capability
                 </p>
                 <h3
                   style={{

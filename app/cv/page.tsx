@@ -33,7 +33,7 @@ export default function CvPage() {
         {/* 02 Executive Summary */}
         <CvExecutiveSummary />
 
-        {/* 03 Professional Architecture */}
+        {/* 03 Technical Architecture */}
         <CvProfessionalArchitecture />
 
         {/* 04 Core Capabilities */}

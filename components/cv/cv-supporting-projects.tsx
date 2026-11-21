@@ -5,8 +5,8 @@ import { CvChapterSection } from "@/components/cv/cv-layout";
 import { CvMeter, CvTechPill } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 10 — Supporting Portfolio.
- * A dense engineering index grouped by the real lifecycle state in each
+ * Supporting portfolio.
+ * An engineering index grouped by the real lifecycle state in each
  * project's `status` string. No status is substituted for another.
  */
 
@@ -192,9 +192,9 @@ export function CvSupportingProjects() {
     <CvChapterSection
       id="supporting-projects"
       number="10"
-      title="Supporting Portfolio"
-      kicker="CHAPTER 10 / ENGINEERING INDEX"
-      lead="A dense index of additional builds. Each state label is derived from the project's own status string — completed, verified, active development, research-experimental and private-unpublished are kept distinct."
+      title="Project Portfolio"
+      kicker="Supporting work"
+      lead="An engineering index of additional builds. Each state label is derived from the project's own status string — completed, verified, active development, research-experimental and private-unpublished are kept distinct."
       tone="research"
       visual={<LandscapeVisual projects={projects} />}
     >

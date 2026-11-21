@@ -7,7 +7,7 @@ import { CvChapterSection, CvLinkList } from "@/components/cv/cv-layout";
 import { CvGlobe, type CvOrbitNode } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 01 — Identity
+ * Chapter — Professional Profile
  * Cinematic opening: the person first, a short credible statement, and an
  * orbital map of the four domains. No repeated brand or dossier wording.
  */
@@ -39,9 +39,9 @@ export function CvHero() {
     <CvChapterSection
       id="hero"
       number="01"
-      title="Identity"
+      title="Professional Profile"
       kicker="Quantitative Developer"
-      lead="Systems, markets, data and AI — one connected engineering practice."
+      lead="Systems engineering, financial technology, data engineering and AI — one connected technical practice."
       tone="signal"
       visual={<CvGlobe nodes={orbitNodes} caption="CN2 · SYSTEMS · MARKETS · DATA · AI" />}
     >
@@ -87,9 +87,9 @@ export function CvHero() {
 
         <Reveal delay={80}>
           <p className="cv-statement">
-            Independent quantitative developer engineering software,
-            financial infrastructure, and AI-powered systems with
-            verifiable evidence.
+            Independent quantitative developer building software, financial
+            infrastructure and AI-assisted systems. The work is documented with
+            inspectable artifacts and verification links.
           </p>
         </Reveal>
 

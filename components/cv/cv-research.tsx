@@ -5,7 +5,7 @@ import { CvChapterSection } from "@/components/cv/cv-layout";
 import { CvMeter } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 11 — Research & Experiments.
+ * Research and development.
  * Scientific composition: a wave-mesh field and research tracks on the left,
  * investigation records on the right. Every recorded field is preserved.
  */
@@ -49,11 +49,12 @@ function WaveMesh() {
           {[60, 120, 180, 240].map((y) => <line key={y} x1="0" y1={y} x2="420" y2={y} stroke={BLUE} strokeOpacity={0.1} />)}
           {[70, 140, 210, 280, 350].map((x) => <line key={x} x1={x} y1="40" x2={x} y2="260" stroke={BLUE} strokeOpacity={0.08} />)}
           {blueWaves.map((d, i) => (
-            <path key={`b${i}`} d={d} fill="none" stroke={i % 2 ? CYAN : BLUE} strokeOpacity={0.3 + i * 0.08} strokeWidth="1.2" />
+            <path key={`b${i}`} className={i === 1 ? "cv-flow" : undefined} d={d} fill="none" stroke={i % 2 ? CYAN : BLUE} strokeOpacity={0.3 + i * 0.08} strokeWidth="1.2" />
           ))}
           {redWaves.map((d, i) => (
             <path
               key={`r${i}`}
+              className={i === 1 ? "cv-trace" : undefined}
               d={d}
               fill="none"
               stroke={RED}
@@ -164,8 +165,8 @@ export function CvResearch() {
     <CvChapterSection
       id="research"
       number="11"
-      title="Research & Experiments"
-      kicker="CHAPTER 11 / INVESTIGATION RECORDS"
+      title="Research & Development"
+      kicker="Documented investigations"
       lead="Registered questions, stated methods, recorded results and explicit limitations. An unfinished study is marked ongoing; a structural guarantee is not presented as a profitable strategy."
       tone="research"
     >

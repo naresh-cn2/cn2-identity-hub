@@ -255,6 +255,7 @@
     radial-gradient(60% 50% at 78% 32%, rgba(27, 77, 201, 0.16), transparent 70%),
     radial-gradient(45% 40% at 12% 88%, rgba(255, 48, 48, 0.09), transparent 72%),
     linear-gradient(180deg, #040a13 0%, #03070d 100%);
+  animation: cvAmbient 16s ease-in-out infinite alternate;
 }
 
 .cv-grid {
@@ -268,6 +269,42 @@
     linear-gradient(90deg, rgba(120, 170, 230, 0.055) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: linear-gradient(180deg, black, transparent 88%);
+  animation: cvGridDrift 48s linear infinite;
+}
+
+@keyframes cvGridDrift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 128px, 128px 0; }
+}
+
+@keyframes cvAmbient {
+  from { opacity: 0.82; }
+  to { opacity: 1; }
+}
+
+@keyframes cvFlow {
+  to { stroke-dashoffset: -112; }
+}
+
+@keyframes cvParticleDrift {
+  0%, 100% { transform: translateY(0); opacity: var(--cv-p-op, 0.5); }
+  50% { transform: translateY(-7px); opacity: calc(var(--cv-p-op, 0.5) + 0.28); }
+}
+
+/* Animated technical flow lines used in SVG diagrams. */
+.cv-flow {
+  stroke-dasharray: 5 9;
+  animation: cvFlow 6s linear infinite;
+}
+
+.cv-trace {
+  stroke-dasharray: 3 7;
+  animation: cvFlow 10s linear infinite reverse;
+}
+
+.cv-particle {
+  animation: cvParticleDrift 7s ease-in-out infinite;
+  animation-delay: var(--cv-p-delay, 0s);
 }
 
 .cv-scene[data-tone="research"]::before {
@@ -336,6 +373,35 @@
 .cv-scene-content { min-width: 0; }
 .cv-scene-visual { min-width: 0; }
 
+/* Chapter-entry choreography. Only active once JS marks motion as ready,
+   so a failed script never leaves content invisible. */
+.cv-motion-ready .cv-scene .cv-scene-head,
+.cv-motion-ready .cv-scene .cv-scene-content > *,
+.cv-motion-ready .cv-scene .cv-scene-visual > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 620ms cubic-bezier(0.22, 1, 0.36, 1), transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cv-motion-ready .cv-scene.is-inview .cv-scene-head,
+.cv-motion-ready .cv-scene.is-inview .cv-scene-content > *,
+.cv-motion-ready .cv-scene.is-inview .cv-scene-visual > * {
+  opacity: 1;
+  transform: none;
+}
+
+.cv-motion-ready .cv-scene.is-inview .cv-scene-content > :nth-child(2) { transition-delay: 70ms; }
+.cv-motion-ready .cv-scene.is-inview .cv-scene-content > :nth-child(3) { transition-delay: 140ms; }
+.cv-motion-ready .cv-scene.is-inview .cv-scene-content > :nth-child(4) { transition-delay: 210ms; }
+.cv-motion-ready .cv-scene.is-inview .cv-scene-visual > * { transition-delay: 120ms; }
+
+@keyframes cvIndicator {
+  from, to { transform: scaleY(0.7); opacity: 0.7; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+.cv-rail-item[data-active="true"]::before { animation: cvIndicator 2.4s ease-in-out infinite; }
+
 .cv-scene-horizon {
   position: absolute;
   left: 0;
@@ -373,6 +439,12 @@
   padding: clamp(20px, 2.4vw, 30px);
   position: relative;
   backdrop-filter: blur(6px);
+  transition: border-color 240ms ease, transform 240ms ease;
+}
+
+.cv-panel:hover {
+  border-color: rgba(122, 167, 255, 0.45);
+  transform: translateY(-2px);
 }
 
 .cv-panel::after {
@@ -828,6 +900,12 @@
     transition-duration: 0.001ms !important;
   }
   .cv-globe-core { transform: none; }
+  .cv-motion-ready .cv-scene .cv-scene-head,
+  .cv-motion-ready .cv-scene .cv-scene-content > *,
+  .cv-motion-ready .cv-scene .cv-scene-visual > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @media print {
@@ -841,6 +919,13 @@
   }
 
   .cv-experience { page: cv; }
+
+  .cv-motion-ready .cv-scene .cv-scene-head,
+  .cv-motion-ready .cv-scene .cv-scene-content > *,
+  .cv-motion-ready .cv-scene .cv-scene-visual > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 
   .cv-rail,
   .cv-top-progress,

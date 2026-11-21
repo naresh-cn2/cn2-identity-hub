@@ -4,8 +4,7 @@ import { site } from "@/data/site";
 import { CvChapterSection, CvLinkList } from "@/components/cv/cv-layout";
 
 /**
- * Chapter 14 — Contact
- * Deliberate conclusion: direct channels and a print-ready document.
+ * Contact chapter: direct channels and a print-ready document.
  */
 
 const links: { label: string; href: string; external?: boolean }[] = [
@@ -23,7 +22,8 @@ export function CvContactDownload() {
     <CvChapterSection
       id="contact-download"
       number="14"
-      title="Contact"
+      title="Contact Information"
+      kicker="Professional contact"
       lead="The evidence is on the record. If the work is relevant, the next step is a direct conversation."
       tone="signal"
       visual={
@@ -63,7 +63,7 @@ export function CvContactDownload() {
               {[92, 80, 86, 70, 78, 64].map((width, i) => (
                 <i key={i} style={{ display: "block", height: 2, width: `${width}%`, background: "rgba(122,167,255,0.38)" }} />
               ))}
-              <span className="cv-label" style={{ marginTop: 6, fontSize: 8 }}>14 CHAPTERS · PRINT-READY</span>
+              <span className="cv-label" style={{ marginTop: 6, fontSize: 8 }}>PRINT-READY CV</span>
             </div>
           </div>
           <p className="cv-label" style={{ position: "absolute", bottom: 6, fontSize: 9, textAlign: "center", color: "var(--cv-dim)" }}>
@@ -73,8 +73,8 @@ export function CvContactDownload() {
       }
     >
       <p className="cv-statement">
-        A closing record, not a pitch: the chapters above document the work, the methods and the limits. Reach out
-        directly when the fit is real.
+        This chapter closes the record. The sections above document the work, the methods and their limits. Use the
+        channels below for direct contact.
       </p>
 
       <div className="cv-panel" style={{ marginTop: 28, padding: 22 }}>
@@ -89,7 +89,7 @@ export function CvContactDownload() {
           Download CV (PDF)
         </h3>
         <p style={{ marginTop: 10, fontSize: 13, lineHeight: 1.65, color: "var(--cv-muted)" }}>
-          A print-ready copy of all 14 chapters — evidence, project detail and provenance — generated directly from
+          A print-ready copy of the full record — evidence, project detail and provenance — generated directly from
           this page.
         </p>
         <button type="button" className="cv-action" onClick={() => window.print()} style={{ marginTop: 18, width: "100%" }}>

@@ -5,8 +5,7 @@ import { CvChapterSection } from "@/components/cv/cv-layout";
 import { CvGlobe, CvTechPill } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 05 — Technical Toolkit
- * The complete evidence-backed skills archive, rebuilt as layered stack bands.
+ * Technology Stack — evidence-backed skills archive, arranged as layered stack bands.
  * No percentage ratings: every technology is tied to a system or test suite.
  */
 
@@ -193,14 +192,14 @@ export function CvTechnicalSkills() {
     <CvChapterSection
       id="technical-skills"
       number="05"
-      title="Technical Toolkit"
-      kicker="CHAPTER 05 · TOOLKIT"
+      title="Technology Stack"
+      kicker="Languages and systems"
       lead="Seven evidence-backed domains, arranged as a working stack. Every technology is tied to a system, a test suite, or a verified credential — never to a self-reported rating."
       tone="research"
       visual={
         <div>
           <CvGlobe
-            caption="CN2 / EVIDENCE-BACKED TOOLKIT"
+            caption="CN2 / TECHNOLOGY STACK"
             core={<span>STACK</span>}
             nodes={orbitPills.map(({ id, label, x, y, tone }) => ({ id, label, x, y, tone }))}
             selected={selectedPill}

@@ -4,8 +4,7 @@ import { CvChapterSection } from "@/components/cv/cv-layout";
 import { CvGauge } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 12 — Evidence
- * Premium engineering telemetry. Every figure states what was measured,
+ * Technical evidence. Every figure states what was measured,
  * the conditions, and the standard it was measured under.
  */
 
@@ -182,7 +181,8 @@ export function CvAchievements() {
     <CvChapterSection
       id="achievements"
       number="12"
-      title="Evidence"
+      title="Technical Evidence"
+      kicker="Measurements and provenance"
       lead="Every figure states what was measured, the conditions, and the standard it was measured under. Simulated results are never presented as verified live performance."
       tone="signal"
       visual={
@@ -217,8 +217,9 @@ export function CvAchievements() {
       }
     >
       <p className="cv-statement">
-        An engineering record is only as good as its provenance. These are measured results with their methods
-        attached — reproducible, self-benchmarked or simulated, each labelled as such.
+        Each figure below records what was measured, the conditions and the measurement standard. Results are
+        classified as independently reproducible, self-benchmarked or simulated, with the basis stated alongside
+        every entry.
       </p>
 
       <div
@@ -238,7 +239,7 @@ export function CvAchievements() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
           <p className="cv-label">Provenance standards</p>
           <span className="cv-label" style={{ fontSize: 9, color: "var(--cv-dim)" }}>
-            04 STANDARDS
+            STANDARDS
           </span>
         </div>
         <hr className="cv-rule" style={{ margin: "14px 0 4px" }} />

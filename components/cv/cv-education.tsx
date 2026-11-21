@@ -5,9 +5,8 @@ import { studyTracks } from "@/data/credentials";
 import { CvChapterSection } from "@/components/cv/cv-layout";
 
 /**
- * Chapter 06 — Education
- * An honest learning path: no formal records exist, so six self-directed
- * study tracks are shown with the working systems that evidence them.
+ * Education — six self-directed study tracks shown with the working systems that evidence them.
+ * No formal academic records exist in the repository.
  */
 
 /** Deterministic sine mesh — no Math.random, so SSR and client agree. */
@@ -57,13 +56,14 @@ function LearningPathVisual() {
         {wavePaths.map((d, i) => (
           <path
             key={i}
+            className={i % 3 === 0 ? "cv-flow" : undefined}
             d={d}
             fill="none"
             stroke="url(#cv-edu-wave)"
             strokeWidth={i % 3 === 0 ? 1.2 : 0.7}
           />
         ))}
-        <path d={pathD} fill="none" stroke="rgba(255,48,48,0.85)" strokeWidth="1.4" strokeDasharray="4 5" />
+        <path d={pathD} fill="none" stroke="rgba(255,48,48,0.85)" strokeWidth="1.4" className="cv-trace" />
         {pathNodes.map((node) => (
           <g key={node.id}>
             <circle cx={node.x} cy={node.y} r="30" fill="url(#cv-edu-glow)" filter="url(#cv-edu-blur)" />
@@ -103,7 +103,7 @@ export function CvEducation() {
       id="education"
       number="06"
       title="Education"
-      kicker="CHAPTER 06 · EDUCATION"
+      kicker="Academic background"
       lead="No formal education record exists in this repository. What follows is a self-directed learning path — no provider, no certificate, no assessment — shown with the working systems it has already produced."
       tone="research"
       visual={<LearningPathVisual />}

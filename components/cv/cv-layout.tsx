@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { CvGrid, CvHorizon, CvParticles } from "@/components/cv/cv-visuals";
 
 export interface CvChapter {
@@ -11,20 +11,20 @@ export interface CvChapter {
 
 /** Stable IDs — anchors, links and the scroll-spy depend on these. */
 export const CV_CHAPTERS: CvChapter[] = [
-  { id: "hero", number: "01", label: "Identity" },
-  { id: "executive-summary", number: "02", label: "Executive" },
-  { id: "professional-architecture", number: "03", label: "Architecture" },
-  { id: "core-capabilities", number: "04", label: "Capabilities" },
-  { id: "technical-skills", number: "05", label: "Toolkit" },
+  { id: "hero", number: "01", label: "Professional Profile" },
+  { id: "executive-summary", number: "02", label: "Executive Summary" },
+  { id: "professional-architecture", number: "03", label: "Technical Architecture" },
+  { id: "core-capabilities", number: "04", label: "Engineering Capabilities" },
+  { id: "technical-skills", number: "05", label: "Technology Stack" },
   { id: "education", number: "06", label: "Education" },
   { id: "certifications", number: "07", label: "Certifications" },
-  { id: "engineering-experience", number: "08", label: "Experience" },
-  { id: "flagship-projects", number: "09", label: "Projects" },
-  { id: "supporting-projects", number: "10", label: "Portfolio" },
-  { id: "research", number: "11", label: "Research" },
-  { id: "achievements", number: "12", label: "Evidence" },
-  { id: "professional-direction", number: "13", label: "Focus" },
-  { id: "contact-download", number: "14", label: "Contact" },
+  { id: "engineering-experience", number: "08", label: "Professional Experience" },
+  { id: "flagship-projects", number: "09", label: "Selected Projects" },
+  { id: "supporting-projects", number: "10", label: "Project Portfolio" },
+  { id: "research", number: "11", label: "Research & Development" },
+  { id: "achievements", number: "12", label: "Technical Evidence" },
+  { id: "professional-direction", number: "13", label: "Professional Interests" },
+  { id: "contact-download", number: "14", label: "Contact Information" },
 ];
 
 interface CvLayoutProps {
@@ -36,6 +36,49 @@ export function CvLayout({ children, className }: CvLayoutProps) {
   const [active, setActive] = useState("hero");
   const [progress, setProgress] = useState(0);
   const [drawer, setDrawer] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    rootRef.current?.classList.add("cv-motion-ready");
+    const scenes = [...document.querySelectorAll<HTMLElement>(".cv-scene")];
+    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      scenes.forEach((scene) => scene.classList.add("is-inview"));
+      return;
+    }
+    let sawIntersection = false;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            sawIntersection = true;
+            entry.target.classList.add("is-inview");
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.06, rootMargin: "0px 0px -5% 0px" }
+    );
+    scenes.forEach((scene) => io.observe(scene));
+    // Keep the first screen visible even if the observer is slow, without
+    // revealing chapters the visitor has not reached yet.
+    const fallback = window.setTimeout(() => {
+      if (sawIntersection) return;
+      scenes.forEach((scene) => {
+        if (scene.getBoundingClientRect().top < window.innerHeight * 1.5) {
+          scene.classList.add("is-inview");
+        }
+      });
+    }, 1500);
+    // Last-resort safety: never leave content hidden in a broken runtime.
+    const safety = window.setTimeout(() => {
+      if (!sawIntersection) scenes.forEach((scene) => scene.classList.add("is-inview"));
+    }, 6000);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+      window.clearTimeout(safety);
+    };
+  }, []);
 
   useEffect(() => {
     let last = 0;
@@ -102,7 +145,7 @@ export function CvLayout({ children, className }: CvLayoutProps) {
     ));
 
   return (
-    <div className={`cv-experience ${className ?? ""}`}>
+    <div ref={rootRef} className={`cv-experience ${className ?? ""}`}>
       <div className="cv-top-progress" aria-hidden="true"><i style={{ width: `${progress}%` }} /></div>
 
       <nav className="cv-rail" aria-label="CV chapter navigation">
@@ -166,14 +209,12 @@ export function CvChapterSection({
   className,
 }: CvChapterSectionProps) {
   return (
-    <section id={id} className={`cv-scene ${className ?? ""}`} data-tone={tone}>
+    <section id={id} data-chapter={number} className={`cv-scene ${className ?? ""}`} data-tone={tone}>
       <CvGrid />
       <CvParticles />
       <header className="cv-scene-head">
-        <span className="cv-scene-kicker">{kicker ?? `CHAPTER ${number}`}</span>
-        <h2 className="cv-scene-title">
-          <em>{number}</em> <span aria-hidden="true">/</span> {title}
-        </h2>
+        {kicker ? <span className="cv-scene-kicker">{kicker}</span> : null}
+        <h2 className="cv-scene-title">{title}</h2>
         {lead ? <p className="cv-scene-lead">{lead}</p> : null}
       </header>
       <div className={`cv-scene-body ${visual ? "has-visual" : ""}`}>

@@ -4,8 +4,7 @@ import { credentials, credentialBadges, type CredentialRecord } from "@/data/cre
 import { CvChapterSection, CvEvidenceBadge } from "@/components/cv/cv-layout";
 
 /**
- * Chapter 07 — Verified Credentials
- * A single featured credential in glass, then a disciplined verification ledger.
+ * Certifications — a featured credential followed by a verification ledger.
  * Only genuine issued records from @/data/credentials appear here.
  */
 
@@ -193,8 +192,8 @@ export function CvCertifications() {
     <CvChapterSection
       id="certifications"
       number="07"
-      title="Certifications & Credentials"
-      kicker="CHAPTER 07 · CREDENTIALS"
+      title="Certifications"
+      kicker="Verified credentials"
       lead="Issued, dated and checkable. Every record here carries its provider, its printed identifier and a route back to the source — an issuer verification page or the certificate document itself."
       tone="research"
       visual={<CredentialLattice count={verified.length} />}

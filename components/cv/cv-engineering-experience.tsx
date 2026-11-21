@@ -5,9 +5,8 @@ import { career } from "@/data/career";
 import { CvChapterSection, CvEvidenceBadge } from "@/components/cv/cv-layout";
 
 /**
- * Chapter 08 — Engineering Experience
- * Independent engineering history: real systems, real scope, real evidence.
- * Presented as self-directed work — never as salaried employment.
+ * Professional Experience — independent engineering work: systems, scope and evidence.
+ * Presented as self-directed work, not salaried employment.
  */
 
 interface Tower {
@@ -88,6 +87,7 @@ function SkylineVisual() {
                 x2={tower.x + tower.width / 2}
                 y2="440"
                 stroke={tower.red ? "rgba(255,48,48,0.28)" : "rgba(122,167,255,0.24)"}
+                className={tower.red ? "cv-trace" : undefined}
               />
               <line
                 x1={tower.x}
@@ -130,7 +130,7 @@ function SkylineVisual() {
         <rect x="0" y="440" width="520" height="46" fill="url(#cv-exp-ground)" opacity="0.35" />
         <line x1="0" y1="440" x2="520" y2="440" stroke="rgba(255,48,48,0.55)" strokeWidth="1" />
         <text x="260" y="500" textAnchor="middle" fill="#6d819c" fontSize="9" letterSpacing="3" fontFamily="ui-monospace, monospace">
-          FIVE SYSTEMS / ONE ENGINEER
+          FIVE SYSTEMS / SELF-DIRECTED
         </text>
       </svg>
     </div>
@@ -142,9 +142,9 @@ export function CvEngineeringExperience() {
     <CvChapterSection
       id="engineering-experience"
       number="08"
-      title="Engineering Experience"
-      kicker="CHAPTER 08 · EXPERIENCE"
-      lead="Five systems built end to end. Independent, self-directed engineering — sole architect on each — with the scope, constraints and evidence recorded as they stand."
+      title="Professional Experience"
+      kicker="Engineering history"
+      lead="Five systems built end to end through independent, self-directed engineering, with the role, scope, metrics and supporting evidence recorded for each."
       tone="signal"
       visual={<SkylineVisual />}
     >

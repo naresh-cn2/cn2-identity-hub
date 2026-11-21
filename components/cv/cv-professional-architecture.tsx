@@ -6,7 +6,7 @@ import { CvChapterSection } from "@/components/cv/cv-layout";
 import { CvGlobe, type CvOrbitNode } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 03 — Professional Architecture
+ * Chapter — Technical Architecture
  * A layered orbital stack: the full seven-domain graph mapped onto the globe,
  * with ten live connections. Selecting a domain reveals its problems,
  * evidence and neighbours in the detail panel.
@@ -124,9 +124,9 @@ export function CvProfessionalArchitecture() {
     <CvChapterSection
       id="professional-architecture"
       number="03"
-      title="Professional Architecture"
-      kicker="How the disciplines connect"
-      lead="Seven domains form one stack. Each node links to real work — repositories, test suites, research entries and verified credentials."
+      title="Technical Architecture"
+      kicker="Systems and domains"
+      lead="Seven engineering domains mapped as one stack. Each node links to repositories, test suites, research entries and verified credentials."
       tone="signal"
       visual={
         <div style={{ position: "relative", maxWidth: 560, margin: "0 auto" }}>
@@ -149,7 +149,7 @@ export function CvProfessionalArchitecture() {
                 <stop offset="100%" stopColor="#7aa7ff" />
               </linearGradient>
             </defs>
-            {architectureEdges.map(([a, b]) => {
+            {architectureEdges.map(([a, b], i) => {
               const na = architectureNodes.find((n) => n.id === a);
               const nb = architectureNodes.find((n) => n.id === b);
               if (!na || !nb) return null;
@@ -157,6 +157,13 @@ export function CvProfessionalArchitecture() {
               return (
                 <line
                   key={`${a}-${b}`}
+                  className={
+                    i === 0 || i === 3 || i === 6
+                      ? "cv-flow"
+                      : i === 8
+                        ? "cv-trace"
+                        : undefined
+                  }
                   x1={na.x}
                   y1={na.y}
                   x2={nb.x}

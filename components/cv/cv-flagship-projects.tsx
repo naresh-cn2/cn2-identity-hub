@@ -6,7 +6,7 @@ import { CvChapterSection, CvEvidenceBadge, CvLinkList } from "@/components/cv/c
 import { CvHexTile, CvTechPill } from "@/components/cv/cv-visuals";
 
 /**
- * Chapter 09 — Flagship Projects.
+ * Flagship projects.
  * One selected system at a time, with a distinct schematic per project.
  * Every fact shown here comes from getAllWorks(); nothing is invented.
  */
@@ -118,7 +118,7 @@ function ProjectDiagram({ projectId }: { projectId: string }) {
               />
             ))}
             {[116, 236, 356].map((x) => (
-              <path key={x} d={`M${x} 92 L${x + 24} 92`} stroke={RED} strokeWidth="1.5" markerEnd="url(#cv-arrow-red)" />
+              <path key={x} className="cv-flow" d={`M${x} 92 L${x + 24} 92`} stroke={RED} strokeWidth="1.5" markerEnd="url(#cv-arrow-red)" />
             ))}
             <defs>
               <marker id="cv-arrow-red" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
@@ -175,7 +175,7 @@ function ProjectDiagram({ projectId }: { projectId: string }) {
               [70, 82, 190, 82], [190, 82, 310, 82], [310, 82, 430, 82],
               [310, 82, 350, 226], [430, 82, 350, 226], [350, 226, 170, 226],
             ].map(([x1, y1, x2, y2]) => (
-              <line key={`${x1}-${x2}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={BLUE} strokeOpacity={0.45} strokeWidth="1.4" />
+              <line key={`${x1}-${x2}`} className="cv-flow" x1={x1} y1={y1} x2={x2} y2={y2} stroke={BLUE} strokeOpacity={0.45} strokeWidth="1.4" />
             ))}
             <GraphNode x={70} y={82} label="HYPOTHESIS" />
             <GraphNode x={190} y={82} label="EXPERIMENT" />
@@ -229,7 +229,7 @@ function ProjectDiagram({ projectId }: { projectId: string }) {
               );
             })}
             {[152, 318].map((x) => (
-              <path key={x} d={`M${x} 56 L${x + 14} 56`} stroke={RED} strokeWidth="1.5" />
+              <path key={x} className="cv-flow" d={`M${x} 56 L${x + 14} 56`} stroke={RED} strokeWidth="1.5" />
             ))}
             <text x="260" y="326" textAnchor="middle" fill={DIM} fontSize="9" fontFamily="monospace" letterSpacing="2">
               CONSUMERS CANNOT OPT OUT OF POINT-IN-TIME READS
@@ -280,7 +280,7 @@ function ProjectDiagram({ projectId }: { projectId: string }) {
           <SvgCanvas label="Parallel ingestion lanes converging into an output bus">
             {[52, 100, 148, 196, 244].map((y, i) => (
               <g key={y}>
-                <path d={`M28 ${y} L300 ${y} L360 148`} fill="none" stroke={i % 2 ? BLUE : CYAN} strokeOpacity={0.5} />
+                <path d={`M28 ${y} L300 ${y} L360 148`} className="cv-trace" fill="none" stroke={i % 2 ? BLUE : CYAN} strokeOpacity={0.5} />
                 <circle cx={70 + i * 18} cy={y} r="3" fill={RED} />
                 <circle cx={150 + i * 10} cy={y} r="2" fill={CYAN} />
                 <text x="28" y={y - 8} fill={DIM} fontSize="7" fontFamily="monospace">LANE 0{i + 1}</text>
@@ -384,9 +384,9 @@ export function CvFlagshipProjects() {
     <CvChapterSection
       id="flagship-projects"
       number="09"
-      title="Flagship Projects"
-      kicker="CHAPTER 09 / SELECTED SYSTEMS"
-      lead="Eight systems, one at a time. Each stage shows the engineering problem, the architecture, the evidence and the lifecycle status as recorded in the source data."
+      title="Selected Projects"
+      kicker="Systems and evidence"
+      lead="Eight systems, presented one at a time. Each shows the engineering problem, the architecture, the implementation and the evidence as recorded in the source data."
       tone="signal"
       visual={<ProjectDiagram projectId={project.id} />}
     >
@@ -487,7 +487,7 @@ export function CvFlagshipProjects() {
 
           {project.keyCapabilities.length > 0 ? (
             <section style={{ display: "grid", gap: 10 }}>
-              <span className="cv-label">ARCHITECTURE / DISTINCTIVE WORK</span>
+              <span className="cv-label">ARCHITECTURE / IMPLEMENTATION</span>
               <div className="cv-list">
                 {project.keyCapabilities.map((cap, i) => (
                   <div className="cv-list-item" key={i}>

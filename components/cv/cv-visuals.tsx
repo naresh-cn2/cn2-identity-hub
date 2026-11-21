@@ -17,6 +17,7 @@ export function CvParticles({ count = 26 }: { count?: number }) {
         return (
           <span
             key={i}
+            className="cv-particle"
             style={{
               position: "absolute",
               left: `${x}%`,
@@ -26,7 +27,8 @@ export function CvParticles({ count = 26 }: { count?: number }) {
               borderRadius: "50%",
               background: i % 4 === 0 ? "rgba(255,48,48,0.65)" : "rgba(122,167,255,0.55)",
               boxShadow: "0 0 8px currentColor",
-              opacity: 0.35 + (i % 5) * 0.1,
+              ["--cv-p-op" as string]: 0.35 + (i % 5) * 0.1,
+              ["--cv-p-delay" as string]: `${(i % 9) * 0.7}s`,
             }}
           />
         );

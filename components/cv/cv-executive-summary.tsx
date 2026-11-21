@@ -2,18 +2,18 @@ import Reveal from "@/components/ui/reveal";
 import { CvChapterSection } from "@/components/cv/cv-layout";
 
 /**
- * Chapter 02 — Executive briefing
+ * Chapter — Executive Summary
  * One editorial statement, a working-principles column, an asymmetric
  * evidence column, and a live four-domain network. No equal card grid.
  */
 
 const summary =
-  "I am a quantitative developer who engineers software systems, financial infrastructure, and AI-powered tools. My work sits at the convergence of quantitative finance, software engineering, data infrastructure, and artificial intelligence — connected through systems thinking. Every claim in this CV is backed by inspectable artifacts: working systems, test suites, research entries, and certificates with verification links.";
+  "As a quantitative developer, I build software systems, financial infrastructure and AI-assisted tools across quantitative finance, software engineering, data infrastructure and artificial intelligence. The work is grounded in systems engineering and documented with inspectable artifacts — working repositories, test suites, research entries and certificates with verification links.";
 
 const principles = [
   "I build systems where correctness precedes performance — every result carries explicit provenance labels, never presented as live trading returns.",
   "I treat engineering as an evidence discipline: hypotheses are explicit, experiments are reproducible, and promotion decisions are backed by verified artifacts.",
-  "I see AI as a way to extend human capability — never a replacement for understanding the problem. Human judgment accepts, rejects, or revises. Accountability is never automated.",
+  "AI extends human capability; it does not replace understanding of the problem. Human judgment accepts, rejects or revises, and accountability stays with the operator.",
 ];
 
 const facts = [
@@ -46,8 +46,8 @@ export function CvExecutiveSummary() {
       id="executive-summary"
       number="02"
       title="Executive Summary"
-      kicker="The briefing"
-      lead="What I build, how I think, and the evidence behind it."
+      kicker="Overview"
+      lead="The work, the engineering approach and the evidence behind it."
       tone="research"
       visual={
         <div>
@@ -98,10 +98,17 @@ export function CvExecutiveSummary() {
                 strokeDasharray="1 2"
               />
 
-              {networkEdges.map((d) => (
+              {networkEdges.map((d, i) => (
                 <path
                   key={d}
                   d={d}
+                  className={
+                    i === 0 || i === 3
+                      ? "cv-flow"
+                      : i === 4
+                        ? "cv-trace"
+                        : undefined
+                  }
                   fill="none"
                   stroke="url(#cv-exec-link)"
                   strokeWidth="0.45"
