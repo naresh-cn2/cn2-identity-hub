@@ -500,6 +500,14 @@ export default function AboutPage() {
                   CONTACT ↗
                 </a>
               </div>
+              <nav aria-label="Footer destinations" className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2">
+                <Link href="/work" className="label-mono text-[10px] text-white/55 transition-colors duration-300 hover:text-signal">
+                  WORK ↗
+                </Link>
+                <Link href="/research" className="label-mono text-[10px] text-white/55 transition-colors duration-300 hover:text-signal">
+                  RESEARCH ↗
+                </Link>
+              </nav>
               <p className="label-mono mt-12 text-[10px] text-white/30">
                 c 2026 CN2.DEV — all systems self-engineered
               </p>

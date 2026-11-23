@@ -1,0 +1,170 @@
+/* Additive premium polish. No existing component or layout is removed. */
+
+.premium-layer {
+  --premium-accent: 90, 150, 255;
+  --premium-signal: 255, 48, 48;
+  --premium-edge: rgba(130, 180, 240, 0.32);
+  --premium-fill: rgba(28, 78, 150, 0.055);
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+html:not(.dark) .premium-layer {
+  --premium-accent: 29, 78, 216;
+  --premium-signal: 200, 30, 30;
+  --premium-edge: rgba(29, 78, 216, 0.28);
+  --premium-fill: rgba(29, 78, 216, 0.045);
+}
+
+.premium-halo {
+  position: absolute;
+  left: calc(50% + var(--premium-x, 0) * 14vw - 34vw);
+  top: calc(46% + var(--premium-y, 0) * 10vh - 34vw);
+  width: 68vw;
+  height: 68vw;
+  max-width: 920px;
+  max-height: 920px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(var(--premium-accent), 0.09) 0%,
+    rgba(var(--premium-accent), 0.03) 42%,
+    transparent 68%
+  );
+  filter: blur(12px);
+  transition: opacity 600ms ease;
+}
+
+.premium-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.024;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+.premium-object {
+  position: absolute;
+  right: -56px;
+  top: 24vh;
+  width: 300px;
+  height: 300px;
+  perspective: 900px;
+  opacity: 0.72;
+  transform: translate3d(
+    calc(var(--premium-x, 0) * -16px),
+    calc(var(--premium-y, 0) * -12px),
+    0
+  );
+}
+
+.premium-cube {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 112px;
+  height: 112px;
+  margin: -56px 0 0 -56px;
+  transform-style: preserve-3d;
+  animation: premium-cube-spin 34s linear infinite;
+}
+
+.premium-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--premium-edge);
+  background: var(--premium-fill);
+  box-shadow: inset 0 0 22px rgba(var(--premium-accent), 0.06);
+}
+
+.premium-face.face-1 { transform: rotateY(0deg) translateZ(56px); }
+.premium-face.face-2 { transform: rotateY(90deg) translateZ(56px); }
+.premium-face.face-3 { transform: rotateY(180deg) translateZ(56px); }
+.premium-face.face-4 { transform: rotateY(270deg) translateZ(56px); }
+.premium-face.face-5 { transform: rotateX(90deg) translateZ(56px); }
+.premium-face.face-6 { transform: rotateX(-90deg) translateZ(56px); }
+
+.premium-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 258px;
+  height: 258px;
+  margin: -129px 0 0 -129px;
+  border: 1px solid var(--premium-edge);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+}
+
+.premium-orbit.orbit-a { animation: premium-orbit-a 26s linear infinite; }
+.premium-orbit.orbit-b {
+  width: 220px;
+  height: 220px;
+  margin: -110px 0 0 -110px;
+  border-color: rgba(var(--premium-signal), 0.22);
+  animation: premium-orbit-b 32s linear infinite;
+}
+.premium-orbit.orbit-c {
+  width: 180px;
+  height: 180px;
+  margin: -90px 0 0 -90px;
+  animation: premium-orbit-c 22s linear infinite reverse;
+}
+
+.premium-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70px;
+  height: 70px;
+  margin: -35px 0 0 -35px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(var(--premium-accent), 0.16) 0%,
+    rgba(var(--premium-signal), 0.06) 45%,
+    transparent 70%
+  );
+  animation: premium-core-breath 9s ease-in-out infinite;
+}
+
+@keyframes premium-cube-spin {
+  from { transform: rotateX(-18deg) rotateY(0deg) rotateZ(8deg); }
+  to { transform: rotateX(-18deg) rotateY(360deg) rotateZ(8deg); }
+}
+@keyframes premium-orbit-a {
+  from { transform: rotateX(70deg) rotateZ(0deg); }
+  to { transform: rotateX(70deg) rotateZ(360deg); }
+}
+@keyframes premium-orbit-b {
+  from { transform: rotateX(64deg) rotateY(28deg) rotateZ(0deg); }
+  to { transform: rotateX(64deg) rotateY(28deg) rotateZ(360deg); }
+}
+@keyframes premium-orbit-c {
+  from { transform: rotateX(78deg) rotateY(-34deg) rotateZ(0deg); }
+  to { transform: rotateX(78deg) rotateY(-34deg) rotateZ(360deg); }
+}
+@keyframes premium-core-breath {
+  0%, 100% { opacity: 0.55; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@media (max-width: 1023px) {
+  .premium-object { display: none; }
+  .premium-halo { width: 100vw; height: 100vw; left: calc(50% - 50vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-cube,
+  .premium-orbit,
+  .premium-core { animation: none !important; }
+  .premium-object,
+  .premium-halo { transform: none !important; }
+}
+
+@media print {
+  .premium-layer { display: none !important; }
+}
