@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { studyTracks } from "@/data/credentials";
+import { formalEducation, studyTracks } from "@/data/credentials";
 import { CvChapterSection } from "@/components/cv/cv-layout";
 
 /**
- * Education — six self-directed study tracks shown with the working systems that evidence them.
- * No formal academic records exist in the repository.
+ * Education — formal academic record (B.Com, BRAOU) plus six self-directed study tracks
+ * shown with the working systems that evidence them.
  */
 
 /** Deterministic sine mesh — no Math.random, so SSR and client agree. */
@@ -104,25 +104,34 @@ export function CvEducation() {
       number="04"
       title="Education"
       kicker="Background"
-      lead="No formal education record exists in this repository. What follows is a self-directed learning path — no provider, no certificate, no assessment — shown with the working systems it has already produced."
+      lead="Formal undergraduate education alongside six self-directed technical study tracks shown with the working systems they produced."
       tone="research"
       visual={<LearningPathVisual />}
     >
-      <div className="cv-panel" style={{ marginBottom: 28 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 14 }}>
-          <span className="cv-status" data-tone="red">No formal record</span>
-          <span className="cv-label">Academic record</span>
+      {formalEducation.map((edu) => (
+        <div className="cv-panel" style={{ marginBottom: 28 }} key={edu.id}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginBottom: 14 }}>
+            <span className="cv-status" data-tone="blue">{edu.status}</span>
+            <span className="cv-label">{edu.standing}</span>
+          </div>
+          <h3
+            style={{
+              fontFamily: "var(--font-plex-mono), monospace",
+              fontSize: 15,
+              color: "var(--cv-ink)",
+              marginBottom: 4,
+            }}
+          >
+            {edu.degree}
+          </h3>
+          <p style={{ fontSize: 13, color: "var(--cv-muted)", lineHeight: 1.6, marginBottom: 10 }}>
+            {edu.institution}
+          </p>
+          <p style={{ fontSize: 11, color: "var(--cv-dim)", lineHeight: 1.6 }}>
+            {edu.note}
+          </p>
         </div>
-        <p style={{ fontSize: 13, color: "var(--cv-muted)", lineHeight: 1.7, marginBottom: 12 }}>
-          No formal education records (degrees, institutions, graduation dates) are present in the
-          repository. All technical capabilities below are demonstrated through working systems,
-          test suites, and verified credentials rather than academic credentials.
-        </p>
-        <p style={{ fontSize: 11, color: "var(--cv-dim)", lineHeight: 1.6 }}>
-          Education is demonstrated through evidence: 56/56 test suites, 352 deterministic tests,
-          72/72 agent-stack tests, and 10 verified certificates — not through institutional credentials.
-        </p>
-      </div>
+      ))}
 
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: 10 }}>
         <p className="cv-label">Study tracks</p>

@@ -61,6 +61,9 @@ const nextConfig: NextConfig = {
       { source: "/career", destination: "/about#capability-map", permanent: true },
       { source: "/capabilities", destination: "/about#capability-map", permanent: true },
       { source: "/about/capabilities", destination: "/about#capability-map", permanent: true },
+      { source: "/resume/systems-backend", destination: "/resume", permanent: true },
+      { source: "/resume/quantitative-developer", destination: "/resume", permanent: true },
+      { source: "/resume/ai-engineer", destination: "/resume", permanent: true },
     ];
   },
 };

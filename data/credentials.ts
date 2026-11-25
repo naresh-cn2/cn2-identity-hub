@@ -457,6 +457,31 @@ export const studyTracks: StudyTrack[] = [
   },
 ];
 
+export interface FormalEducationRecord {
+  id: string;
+  degree: string;
+  institution: string;
+  status: "CURRENTLY PURSUING" | "COMPLETED";
+  standing: string;
+  note: string;
+}
+
+/**
+ * Formal academic education.
+ * Recorded strictly from verified academic status — no invented graduation year,
+ * percentage, CGPA, or degree completion.
+ */
+export const formalEducation: FormalEducationRecord[] = [
+  {
+    id: "braou-bcom",
+    degree: "Bachelor of Commerce (B.Com)",
+    institution: "Dr. B.R. Ambedkar Open University (BRAOU), Hyderabad",
+    status: "CURRENTLY PURSUING",
+    standing: "Semester III / Second Year",
+    note: "Undergraduate commerce degree currently in progress. Technical capabilities are established separately through verified engineering systems, test suites, and technical credentials — not claimed as a technical degree.",
+  },
+];
+
 export const credentialStates: { state: CredentialState; meaning: string }[] = [
   { state: "PLANNED", meaning: "Intended, not yet started." },
   { state: "IN PROGRESS", meaning: "Started, not yet finished." },

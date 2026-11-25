@@ -46,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/terms",
     "/links",
     "/cv",
+    "/resume",
   ];
   const builds = allArchiveProjects.map((p) => `/work/${p.id}`);
   const studies = caseStudies.map((p) => `/case-studies/${p.id}`);

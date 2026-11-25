@@ -12,6 +12,7 @@ import {
   credentialBadges,
   credentialStates,
   credentials,
+  formalEducation,
   studyTracks,
 } from "@/data/credentials";
 import { site } from "@/data/site";
@@ -120,7 +121,7 @@ export default function CredentialsPage() {
                 <span className="text-signal">/</span> CONTINUOUS LEARNING
               </p>
               <p className="label-mono text-faint">
-                {credentials.length} FORMAL · {studyTracks.length} SELF-DIRECTED
+                {formalEducation.length} DEGREE · {credentials.length} CERTIFICATES · {studyTracks.length} STUDY TRACKS
               </p>
             </div>
           </Reveal>
@@ -148,6 +149,48 @@ export default function CredentialsPage() {
           </Reveal>
         </div>
       </header>
+
+      {/* ---- formal education ---- */}
+      <section id="formal-education" aria-label="Formal education" className="scroll-mt-28 border-b border-line">
+        <div className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 md:py-20">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <div>
+                <p className="label-mono text-signal">FORMAL EDUCATION</p>
+                <h2 className="display mt-4 text-3xl md:text-4xl">
+                  ACADEMIC RECORD
+                </h2>
+              </div>
+              <p className="label-mono text-faint">VERIFIED STATUS · NO INVENTED SCORES OR DATES</p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <div className="mt-8 grid gap-6">
+              {formalEducation.map((edu) => (
+                <div
+                  key={edu.id}
+                  className="border border-line-strong bg-surface/60 p-6 sm:p-8"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <span className="label-mono border border-research/60 px-3 py-1 text-[11px] text-research">
+                      {edu.status} · {edu.standing.toUpperCase()}
+                    </span>
+                    <span className="label-mono text-faint">UNDERGRADUATE DEGREE</span>
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold text-foreground sm:text-2xl">
+                    {edu.degree}
+                  </h3>
+                  <p className="mt-1 text-base text-muted">{edu.institution}</p>
+                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-faint">
+                    {edu.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ---- professional development timeline ---- */}
       <section id="timeline" aria-label="Professional development timeline" className="scroll-mt-28 border-b border-line">
